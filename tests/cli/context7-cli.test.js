@@ -85,12 +85,14 @@ describe('Context7 CLI', () => {
     it('should display help when no arguments provided', async () => {
       const result = await runCLI([]);
       
-      expect(result.stdout).toContain('context7');
-      expect(result.stdout).toContain('Context7 MCP integration CLI');
-      expect(result.stdout).toContain('Commands:');
-      expect(result.stdout).toContain('init');
-      expect(result.stdout).toContain('validate');
-      expect(result.stdout).toContain('serve');
+      // Commander.js outputs help to stderr when no arguments are provided
+      const output = result.stderr || result.stdout;
+      expect(output).toContain('context7');
+      expect(output).toContain('Context7 MCP integration CLI');
+      expect(output).toContain('Commands:');
+      expect(output).toContain('init');
+      expect(output).toContain('validate');
+      expect(output).toContain('serve');
     });
 
     it('should display help with --help flag', async () => {

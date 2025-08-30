@@ -179,7 +179,7 @@ export class SecurityAnalyzer extends BaseAnalyzer {
     const maxScore = 4;
     
     const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx', '.json', '.env']);
-    let secretsFound = 0;
+    const secretsFound = 0;
     let envUsage = 0;
     let hardcodedSecrets = 0;
     

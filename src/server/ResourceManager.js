@@ -90,36 +90,36 @@ export class ResourceManager {
       let mimeType = 'text/markdown';
       
       switch (uri) {
-        case 'context7://standards/tech-stack':
-          filePath = path.join(this.projectRoot, this.agentOsPath, 'standards', 'tech-stack.md');
-          break;
-        case 'context7://standards/code-style':
-          filePath = path.join(this.projectRoot, this.agentOsPath, 'standards', 'code-style.md');
-          break;
-        case 'context7://standards/context7-standards':
-          filePath = path.join(this.projectRoot, this.agentOsPath, 'standards', 'context7-standards.md');
-          break;
-        case 'context7://product/mission':
-          filePath = path.join(this.projectRoot, this.agentOsPath, 'product', 'mission.md');
-          break;
-        case 'context7://product/roadmap':
-          filePath = path.join(this.projectRoot, this.agentOsPath, 'product', 'roadmap.md');
-          break;
-        case 'context7://instructions/ai-development':
-          filePath = path.join(this.projectRoot, this.agentOsPath, 'instructions', 'ai-development.md');
-          break;
-        case 'context7://patterns/component-patterns':
-          filePath = await this.findPatternFile();
-          mimeType = 'text/typescript';
-          break;
-        default:
-          // Handle custom resources
-          if (uri.startsWith('context7://custom/')) {
-            const resourceName = uri.replace('context7://custom/', '');
-            filePath = path.join(this.projectRoot, this.agentOsPath, 'resources', `${resourceName}.md`);
-          } else {
-            throw new Error(`Unknown resource: ${uri}`);
-          }
+      case 'context7://standards/tech-stack':
+        filePath = path.join(this.projectRoot, this.agentOsPath, 'standards', 'tech-stack.md');
+        break;
+      case 'context7://standards/code-style':
+        filePath = path.join(this.projectRoot, this.agentOsPath, 'standards', 'code-style.md');
+        break;
+      case 'context7://standards/context7-standards':
+        filePath = path.join(this.projectRoot, this.agentOsPath, 'standards', 'context7-standards.md');
+        break;
+      case 'context7://product/mission':
+        filePath = path.join(this.projectRoot, this.agentOsPath, 'product', 'mission.md');
+        break;
+      case 'context7://product/roadmap':
+        filePath = path.join(this.projectRoot, this.agentOsPath, 'product', 'roadmap.md');
+        break;
+      case 'context7://instructions/ai-development':
+        filePath = path.join(this.projectRoot, this.agentOsPath, 'instructions', 'ai-development.md');
+        break;
+      case 'context7://patterns/component-patterns':
+        filePath = await this.findPatternFile();
+        mimeType = 'text/typescript';
+        break;
+      default:
+        // Handle custom resources
+        if (uri.startsWith('context7://custom/')) {
+          const resourceName = uri.replace('context7://custom/', '');
+          filePath = path.join(this.projectRoot, this.agentOsPath, 'resources', `${resourceName}.md`);
+        } else {
+          throw new Error(`Unknown resource: ${uri}`);
+        }
       }
       
       let content;

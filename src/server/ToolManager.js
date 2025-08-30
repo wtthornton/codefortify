@@ -87,18 +87,18 @@ export class ToolManager {
 
   async executeTool(name, args) {
     switch (name) {
-      case 'validate_context7_compliance':
-        return await this.validateContext7Compliance(args);
-      case 'get_pattern_examples':
-        return await this.getPatternExamples(args);
-      case 'check_naming_conventions':
-        return await this.checkNamingConventions(args);
-      case 'suggest_improvements':
-        return await this.suggestImprovements(args);
-      case 'generate_component_scaffold':
-        return await this.generateComponentScaffold(args);
-      default:
-        throw new Error(`Unknown tool: ${name}`);
+    case 'validate_context7_compliance':
+      return await this.validateContext7Compliance(args);
+    case 'get_pattern_examples':
+      return await this.getPatternExamples(args);
+    case 'check_naming_conventions':
+      return await this.checkNamingConventions(args);
+    case 'suggest_improvements':
+      return await this.suggestImprovements(args);
+    case 'generate_component_scaffold':
+      return await this.generateComponentScaffold(args);
+    default:
+      throw new Error(`Unknown tool: ${name}`);
     }
   }
 
@@ -237,40 +237,40 @@ export class ToolManager {
       const suggestions = [];
       
       switch (context) {
-        case 'component':
-          if (!name.match(/^[A-Z][a-zA-Z0-9]*$/)) {
-            issues.push('Component names should use PascalCase');
-            suggestions.push(`Rename to: ${name.charAt(0).toUpperCase() + name.slice(1).replace(/[^a-zA-Z0-9]/g, '')}`);
-          }
-          if (!name.endsWith('.tsx') && name.includes('.')) {
-            issues.push('React components should use .tsx extension');
-            suggestions.push(`Rename to: ${name.replace(/\.[^.]*$/, '.tsx')}`);
-          }
-          break;
+      case 'component':
+        if (!name.match(/^[A-Z][a-zA-Z0-9]*$/)) {
+          issues.push('Component names should use PascalCase');
+          suggestions.push(`Rename to: ${name.charAt(0).toUpperCase() + name.slice(1).replace(/[^a-zA-Z0-9]/g, '')}`);
+        }
+        if (!name.endsWith('.tsx') && name.includes('.')) {
+          issues.push('React components should use .tsx extension');
+          suggestions.push(`Rename to: ${name.replace(/\.[^.]*$/, '.tsx')}`);
+        }
+        break;
           
-        case 'hook':
-          if (!name.startsWith('use')) {
-            issues.push('Custom hooks should start with "use"');
-            suggestions.push(`Rename to: use${name.charAt(0).toUpperCase() + name.slice(1)}`);
-          }
-          if (!name.match(/^use[A-Z][a-zA-Z0-9]*$/)) {
-            issues.push('Hook names should use camelCase after "use"');
-          }
-          break;
+      case 'hook':
+        if (!name.startsWith('use')) {
+          issues.push('Custom hooks should start with "use"');
+          suggestions.push(`Rename to: use${name.charAt(0).toUpperCase() + name.slice(1)}`);
+        }
+        if (!name.match(/^use[A-Z][a-zA-Z0-9]*$/)) {
+          issues.push('Hook names should use camelCase after "use"');
+        }
+        break;
           
-        case 'file':
-          if (name.includes(' ')) {
-            issues.push('File names should not contain spaces');
-            suggestions.push(`Rename to: ${name.replace(/\s+/g, '-').toLowerCase()}`);
-          }
+      case 'file':
+        if (name.includes(' ')) {
+          issues.push('File names should not contain spaces');
+          suggestions.push(`Rename to: ${name.replace(/\s+/g, '-').toLowerCase()}`);
+        }
           
-          // Check for project-specific naming conventions
-          const conventions = this.config.validation?.namingConventions;
-          if (conventions?.files === 'kebab-case' && !name.match(/^[a-z][a-z0-9-]*$/)) {
-            issues.push('Files should use kebab-case naming');
-            suggestions.push(`Rename to: ${name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`);
-          }
-          break;
+        // Check for project-specific naming conventions
+        const conventions = this.config.validation?.namingConventions;
+        if (conventions?.files === 'kebab-case' && !name.match(/^[a-z][a-z0-9-]*$/)) {
+          issues.push('Files should use kebab-case naming');
+          suggestions.push(`Rename to: ${name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`);
+        }
+        break;
       }
       
       return {

@@ -11,6 +11,7 @@
  */
 
 import path from 'path';
+import fs from 'fs/promises';
 import { BaseAnalyzer } from './BaseAnalyzer.js';
 
 export class StructureAnalyzer extends BaseAnalyzer {
@@ -699,6 +700,34 @@ export class StructureAnalyzer extends BaseAnalyzer {
   async countFiles() {
     const allFiles = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx', '.vue', '.svelte']);
     return allFiles.length;
+  }
+
+  async getAllDirectories() {
+    const directories = [];
+    
+    async function walkDirectory(relativePath) {
+      try {
+        const fullPath = path.join(this.projectRoot, relativePath);
+        const contents = await fs.readdir(fullPath, { withFileTypes: true });
+        
+        for (const item of contents) {
+          if (item.isDirectory()) {
+            const dirPath = relativePath ? path.join(relativePath, item.name) : item.name;
+            directories.push(dirPath);
+            
+            // Skip node_modules and hidden directories for performance
+            if (!item.name.startsWith('.') && item.name !== 'node_modules') {
+              await walkDirectory.call(this, dirPath);
+            }
+          }
+        }
+      } catch (error) {
+        // Skip directories we can't access
+      }
+    }
+    
+    await walkDirectory.call(this, '');
+    return directories;
   }
 
   async getDirectoryStructure() {

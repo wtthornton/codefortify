@@ -14,16 +14,16 @@ export class PatternProvider {
     const framework = this.config.projectType;
     
     switch (framework) {
-      case 'react-webapp':
-        return this.getReactPatterns();
-      case 'vue-webapp':
-        return this.getVuePatterns();
-      case 'svelte-webapp':
-        return this.getSveltePatterns();
-      case 'node-api':
-        return this.getNodePatterns();
-      default:
-        return this.getJavaScriptPatterns();
+    case 'react-webapp':
+      return this.getReactPatterns();
+    case 'vue-webapp':
+      return this.getVuePatterns();
+    case 'svelte-webapp':
+      return this.getSveltePatterns();
+    case 'node-api':
+      return this.getNodePatterns();
+    default:
+      return this.getJavaScriptPatterns();
     }
   }
 
@@ -682,15 +682,15 @@ function validateResult(result) {
 
   // Generic test patterns
   getVueTestPattern() {
-    return `// Vue test pattern would go here`;
+    return '// Vue test pattern would go here';
   }
 
   getNodeTestPattern() {
-    return `// Node.js test pattern would go here`;
+    return '// Node.js test pattern would go here';
   }
 
   getJavaScriptTestPattern() {
-    return `// JavaScript test pattern would go here`;
+    return '// JavaScript test pattern would go here';
   }
 
   async generateComponentScaffold(componentName, componentType, framework, props) {

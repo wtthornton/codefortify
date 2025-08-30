@@ -27,7 +27,7 @@ const packageRoot = path.join(__dirname, '..');
 const program = new Command();
 
 // Global configuration
-let globalConfig = {
+const globalConfig = {
   verbose: false,
   projectRoot: process.cwd(),
 };
@@ -116,7 +116,6 @@ program
 program
   .command('generate <type>')
   .description('Generate Context7-compliant code scaffolds')
-  .argument('<type>', 'Type to generate (component, hook, service, etc.)')
   .option('-n, --name <name>', 'Name for the generated code')
   .option('-f, --framework <framework>', 'Target framework')
   .action(async (type, options) => {
@@ -263,9 +262,22 @@ async function addToExistingProject(options) {
 async function testMCPServer(options) {
   console.log(chalk.blue('🧪 Testing MCP Server'));
   
-  const spinner = ora('Starting MCP server test...').start();
+  const spinner = ora('Checking MCP server setup...').start();
   
   try {
+    // Check if server file exists
+    const serverPath = path.resolve(globalConfig.projectRoot, options.server);
+    
+    try {
+      await fs.access(serverPath);
+    } catch (error) {
+      spinner.fail(`MCP server file not found: ${options.server}`);
+      console.log(chalk.yellow('\n💡 Hint: Run `context7 init` or `context7 add` to set up MCP server'));
+      process.exit(1);
+    }
+    
+    spinner.text = 'Starting MCP server test...';
+    
     const tester = new MCPConnectionTester({
       projectRoot: globalConfig.projectRoot,
       serverPath: options.server,

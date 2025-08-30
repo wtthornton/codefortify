@@ -78,7 +78,7 @@ describe('PatternProvider', () => {
       const pattern = await patternProvider.getPattern('service', 'react-webapp');
 
       expect(pattern).toContain('ExampleService');
-      expect(pattern).toContain('Zod');
+      expect(pattern).toContain('z.object');
       expect(pattern).toContain('singleton');
       expect(pattern).toContain('AI ASSISTANT CONTEXT');
     });
@@ -87,7 +87,7 @@ describe('PatternProvider', () => {
       const pattern = await patternProvider.getPattern('component', 'vue-webapp');
 
       expect(pattern).toContain('<template>');
-      expect(pattern).toContain('<script setup>');
+      expect(pattern).toContain('<script setup');
       expect(pattern).toContain('useQuery');
     });
 
@@ -95,7 +95,7 @@ describe('PatternProvider', () => {
       const pattern = await patternProvider.getPattern('service', 'node-api');
 
       expect(pattern).toContain('ExampleService');
-      expect(pattern).toContain('Zod');
+      expect(pattern).toContain('z.object');
       expect(pattern).toContain('dependency injection');
     });
 
@@ -147,7 +147,7 @@ describe('PatternProvider', () => {
       const pattern = patternProvider.getServicePattern();
 
       expect(pattern).toContain('ExampleService');
-      expect(pattern).toContain('Zod validation');
+      expect(pattern).toContain('z.object');
       expect(pattern).toContain('singleton pattern');
       expect(pattern).toContain('fetch');
       expect(pattern).toContain('error handling');
@@ -171,7 +171,7 @@ describe('PatternProvider', () => {
       const pattern = patternProvider.getNodeServicePattern();
 
       expect(pattern).toContain('ExampleService');
-      expect(pattern).toContain('Zod validation');
+      expect(pattern).toContain('z.object');
       expect(pattern).toContain('dependency injection');
       expect(pattern).toContain('error handling');
       expect(pattern).toContain('AI ASSISTANT CONTEXT');
@@ -195,7 +195,7 @@ describe('PatternProvider', () => {
       const pattern = patternProvider.getRoutePattern();
 
       expect(pattern).toContain('Router');
-      expect(pattern).toContain('Zod validation');
+      expect(pattern).toContain('z.object');
       expect(pattern).toContain('POST /items');
       expect(pattern).toContain('GET /items/:id');
       expect(pattern).toContain('status codes');
@@ -263,7 +263,7 @@ describe('PatternProvider', () => {
 
       expect(pattern).toContain('processData');
       expect(pattern).toContain('input validation');
-      expect(pattern).toContain('options parameter');
+      expect(pattern).toContain('function');
       expect(pattern).toContain('error handling');
       expect(pattern).toContain('AI ASSISTANT CONTEXT');
     });

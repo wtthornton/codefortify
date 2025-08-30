@@ -60,26 +60,26 @@ export class Context7Validator {
 
   addProjectTypeRequirements() {
     switch (this.config.projectType) {
-      case 'react-webapp':
-      case 'vue-webapp':
-      case 'svelte-webapp':
-        this.requiredDirectories.push('examples');
-        if (this.config.agentOsEnabled !== false) {
-          this.requiredDirectories.push(
-            '.agent-os/instructions',
-            '.agent-os/standards',
-            '.agent-os/product'
-          );
-        }
-        break;
+    case 'react-webapp':
+    case 'vue-webapp':
+    case 'svelte-webapp':
+      this.requiredDirectories.push('examples');
+      if (this.config.agentOsEnabled !== false) {
+        this.requiredDirectories.push(
+          '.agent-os/instructions',
+          '.agent-os/standards',
+          '.agent-os/product'
+        );
+      }
+      break;
         
-      case 'node-api':
-        this.requiredDirectories.push('tests');
-        break;
+    case 'node-api':
+      this.requiredDirectories.push('tests');
+      break;
         
-      default:
-        // JavaScript project defaults
-        break;
+    default:
+      // JavaScript project defaults
+      break;
     }
   }
 
@@ -286,29 +286,29 @@ export class Context7Validator {
     const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };
     
     switch (this.config.projectType) {
-      case 'react-webapp':
-        if (deps.react) {
-          this.addResult('Project Dependencies', 'React', 'PASS', 'React dependency present');
-        } else {
-          this.addResult('Project Dependencies', 'React', 'FAIL', 'React dependency missing');
-        }
-        break;
+    case 'react-webapp':
+      if (deps.react) {
+        this.addResult('Project Dependencies', 'React', 'PASS', 'React dependency present');
+      } else {
+        this.addResult('Project Dependencies', 'React', 'FAIL', 'React dependency missing');
+      }
+      break;
         
-      case 'vue-webapp':
-        if (deps.vue) {
-          this.addResult('Project Dependencies', 'Vue', 'PASS', 'Vue dependency present');
-        } else {
-          this.addResult('Project Dependencies', 'Vue', 'FAIL', 'Vue dependency missing');
-        }
-        break;
+    case 'vue-webapp':
+      if (deps.vue) {
+        this.addResult('Project Dependencies', 'Vue', 'PASS', 'Vue dependency present');
+      } else {
+        this.addResult('Project Dependencies', 'Vue', 'FAIL', 'Vue dependency missing');
+      }
+      break;
         
-      case 'node-api':
-        if (deps.express || deps.fastify || deps.koa) {
-          this.addResult('Project Dependencies', 'Web Framework', 'PASS', 'Web framework dependency present');
-        } else {
-          this.addResult('Project Dependencies', 'Web Framework', 'WARN', 'No web framework detected');
-        }
-        break;
+    case 'node-api':
+      if (deps.express || deps.fastify || deps.koa) {
+        this.addResult('Project Dependencies', 'Web Framework', 'PASS', 'Web framework dependency present');
+      } else {
+        this.addResult('Project Dependencies', 'Web Framework', 'WARN', 'No web framework detected');
+      }
+      break;
     }
   }
 
@@ -349,7 +349,7 @@ export class Context7Validator {
         const docPath = path.join(this.config.projectRoot, doc.file);
         const docContent = await fs.readFile(docPath, 'utf-8');
         
-        let missingContent = [];
+        const missingContent = [];
         for (const expectedContent of doc.content) {
           if (!docContent.includes(expectedContent)) {
             missingContent.push(expectedContent);
@@ -425,7 +425,7 @@ export class Context7Validator {
     const failedTests = this.validationResults.filter(r => r.status === 'FAIL').length;
     const warnTests = this.validationResults.filter(r => r.status === 'WARN').length;
     
-    console.log(`\\nOverall Results:`);
+    console.log('\\nOverall Results:');
     console.log(`Total Validations: ${totalTests}`);
     console.log(`Passed: ${passedTests} ✅`);
     if (warnTests > 0) {

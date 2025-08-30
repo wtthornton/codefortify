@@ -40,27 +40,27 @@ export class RecommendationEngine {
     const percentage = (categoryResult.score / categoryResult.maxScore) * 100;
     
     switch (categoryKey) {
-      case 'structure':
-        recommendations.push(...this.getStructureRecommendations(categoryResult, percentage));
-        break;
-      case 'quality':
-        recommendations.push(...this.getQualityRecommendations(categoryResult, percentage));
-        break;
-      case 'performance':
-        recommendations.push(...this.getPerformanceRecommendations(categoryResult, percentage));
-        break;
-      case 'testing':
-        recommendations.push(...this.getTestingRecommendations(categoryResult, percentage));
-        break;
-      case 'security':
-        recommendations.push(...this.getSecurityRecommendations(categoryResult, percentage));
-        break;
-      case 'developerExperience':
-        recommendations.push(...this.getDeveloperExperienceRecommendations(categoryResult, percentage));
-        break;
-      case 'completeness':
-        recommendations.push(...this.getCompletenessRecommendations(categoryResult, percentage));
-        break;
+    case 'structure':
+      recommendations.push(...this.getStructureRecommendations(categoryResult, percentage));
+      break;
+    case 'quality':
+      recommendations.push(...this.getQualityRecommendations(categoryResult, percentage));
+      break;
+    case 'performance':
+      recommendations.push(...this.getPerformanceRecommendations(categoryResult, percentage));
+      break;
+    case 'testing':
+      recommendations.push(...this.getTestingRecommendations(categoryResult, percentage));
+      break;
+    case 'security':
+      recommendations.push(...this.getSecurityRecommendations(categoryResult, percentage));
+      break;
+    case 'developerExperience':
+      recommendations.push(...this.getDeveloperExperienceRecommendations(categoryResult, percentage));
+      break;
+    case 'completeness':
+      recommendations.push(...this.getCompletenessRecommendations(categoryResult, percentage));
+      break;
     }
     
     return recommendations;
@@ -379,11 +379,11 @@ export class RecommendationEngine {
 
   getPriorityWeight(priority) {
     switch (priority) {
-      case 'critical': return 1;
-      case 'high': return 2;
-      case 'medium': return 3;
-      case 'low': return 4;
-      default: return 5;
+    case 'critical': return 1;
+    case 'high': return 2;
+    case 'medium': return 3;
+    case 'low': return 4;
+    default: return 5;
     }
   }
 

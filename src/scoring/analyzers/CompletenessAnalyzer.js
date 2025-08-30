@@ -37,8 +37,8 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
   async analyzeContext7MCPCompliance() {
     let score = 0;
     const maxBonusScore = 2;
-    let complianceIssues = [];
-    let complianceFeatures = [];
+    const complianceIssues = [];
+    const complianceFeatures = [];
 
     try {
       // 1. AGENTS.md deep validation (0.5pts)

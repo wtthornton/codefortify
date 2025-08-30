@@ -279,7 +279,7 @@ export class TestingAnalyzer extends BaseAnalyzer {
       '.spec.js', '.spec.ts', '.spec.jsx', '.spec.tsx'
     ];
     
-    let testFiles = [];
+    const testFiles = [];
     
     // Find files with test patterns
     for (const pattern of testPatterns) {

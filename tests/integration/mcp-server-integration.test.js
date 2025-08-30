@@ -1,0 +1,325 @@
+/**
+ * Integration tests for Context7 MCP Server
+ */
+
+import { describe, it, expect, beforeEach } from 'vitest';
+import { Context7MCPServer } from '../../src/server/Context7MCPServer.js';
+
+describe('Context7 MCP Server Integration', () => {
+  let server;
+  let testConfig;
+
+  beforeEach(() => {
+    testConfig = {
+      projectRoot: process.cwd(),
+      projectType: 'react-webapp',
+      projectName: 'test-project'
+    };
+  });
+
+  describe('Server Initialization', () => {
+    it('should create server with default configuration', () => {
+      server = new Context7MCPServer();
+      
+      expect(server).toBeDefined();
+      expect(server.config).toBeDefined();
+      expect(server.server).toBeDefined();
+      expect(server.resourceManager).toBeDefined();
+      expect(server.toolManager).toBeDefined();
+    });
+
+    it('should create server with custom configuration', () => {
+      server = new Context7MCPServer(testConfig);
+      
+      expect(server.config.projectRoot).toBe(testConfig.projectRoot);
+      expect(server.config.projectType).toBe(testConfig.projectType);
+      expect(server.config.projectName).toBe(testConfig.projectName);
+    });
+
+    it('should auto-detect project configuration', async () => {
+      const config = await Context7MCPServer.detectProjectConfig(process.cwd());
+      
+      expect(config).toBeDefined();
+      expect(config.projectRoot).toBe(process.cwd());
+      expect(config.projectType).toBeDefined();
+      expect(config.projectName).toBeDefined();
+    });
+  });
+
+  describe('Resource Management', () => {
+    beforeEach(() => {
+      server = new Context7MCPServer(testConfig);
+    });
+
+    it('should list available resources', async () => {
+      const result = await server.resourceManager.listResources();
+      
+      expect(result).toHaveProperty('resources');
+      expect(Array.isArray(result.resources)).toBe(true);
+      expect(result.resources.length).toBeGreaterThan(0);
+      
+      // Check resource structure
+      result.resources.forEach(resource => {
+        expect(resource).toHaveProperty('uri');
+        expect(resource).toHaveProperty('name');
+        expect(resource).toHaveProperty('description');
+        expect(resource).toHaveProperty('mimeType');
+        expect(resource.uri).toMatch(/^context7:\/\//);
+      });
+    });
+
+    it('should read pattern resources', async () => {
+      const uri = 'context7://patterns/component-patterns';
+      const result = await server.resourceManager.readResource(uri);
+      
+      expect(result).toHaveProperty('contents');
+      expect(Array.isArray(result.contents)).toBe(true);
+      expect(result.contents).toHaveLength(1);
+      
+      const content = result.contents[0];
+      expect(content.uri).toBe(uri);
+      expect(content.mimeType).toBe('text/typescript');
+      expect(content.text).toBeDefined();
+      expect(content.text.length).toBeGreaterThan(0);
+    });
+
+    it('should handle invalid resource URIs', async () => {
+      await expect(
+        server.resourceManager.readResource('context7://invalid/resource')
+      ).rejects.toThrow();
+    });
+  });
+
+  describe('Tool Management', () => {
+    beforeEach(() => {
+      server = new Context7MCPServer(testConfig);
+    });
+
+    it('should list available tools', async () => {
+      const result = await server.toolManager.listTools();
+      
+      expect(result).toHaveProperty('tools');
+      expect(Array.isArray(result.tools)).toBe(true);
+      expect(result.tools.length).toBeGreaterThan(0);
+      
+      // Check tool structure
+      result.tools.forEach(tool => {
+        expect(tool).toHaveProperty('name');
+        expect(tool).toHaveProperty('description');
+        expect(tool).toHaveProperty('inputSchema');
+        
+        // Validate JSON Schema structure
+        expect(tool.inputSchema).toHaveProperty('type', 'object');
+        expect(tool.inputSchema).toHaveProperty('properties');
+      });
+    });
+
+    it('should execute validation tool', async () => {
+      const testCode = 'export const TestComponent: React.FC = () => <div>Test</div>;';
+      
+      const result = await server.toolManager.executeTool('validate_context7_compliance', {
+        code: testCode,
+        language: 'typescript',
+        component_type: 'react'
+      });
+      
+      expect(result).toHaveProperty('content');
+      expect(Array.isArray(result.content)).toBe(true);
+      expect(result.content[0]).toHaveProperty('type', 'text');
+      expect(result.content[0]).toHaveProperty('text');
+      
+      // Validate response is valid JSON
+      const response = JSON.parse(result.content[0].text);
+      expect(response).toHaveProperty('compliance_score');
+      expect(response).toHaveProperty('issues');
+      expect(response).toHaveProperty('suggestions');
+    });
+
+    it('should execute pattern generation tool', async () => {
+      const result = await server.toolManager.executeTool('get_pattern_examples', {
+        pattern_type: 'component',
+        framework: 'react'
+      });
+      
+      expect(result).toHaveProperty('content');
+      expect(Array.isArray(result.content)).toBe(true);
+      expect(result.content[0]).toHaveProperty('type', 'text');
+      
+      const pattern = result.content[0].text;
+      expect(pattern).toContain('React');
+      expect(pattern).toContain('AI ASSISTANT CONTEXT');
+    });
+
+    it('should validate tool input parameters', async () => {
+      await expect(
+        server.toolManager.executeTool('validate_context7_compliance', {
+          // Missing required 'code' parameter
+          language: 'typescript'
+        })
+      ).rejects.toThrow();
+    });
+
+    it('should handle unknown tools', async () => {
+      await expect(
+        server.toolManager.executeTool('nonexistent_tool', {})
+      ).rejects.toThrow('Unknown tool');
+    });
+  });
+
+  describe('Pattern Generation', () => {
+    beforeEach(() => {
+      server = new Context7MCPServer(testConfig);
+    });
+
+    it('should generate React patterns', async () => {
+      const patterns = await server.patternProvider.generatePatterns();
+      
+      expect(patterns).toBeDefined();
+      expect(typeof patterns).toBe('string');
+      expect(patterns).toContain('React');
+      expect(patterns).toContain('AI ASSISTANT CONTEXT');
+    });
+
+    it('should generate specific pattern types', async () => {
+      const componentPattern = await server.patternProvider.getPattern('component', 'react-webapp');
+      
+      expect(componentPattern).toBeDefined();
+      expect(typeof componentPattern).toBe('string');
+      expect(componentPattern).toContain('React.FC');
+      expect(componentPattern).toContain('useQuery');
+    });
+
+    it('should handle different project types', async () => {
+      const vueServer = new Context7MCPServer({
+        ...testConfig,
+        projectType: 'vue-webapp'
+      });
+      
+      const vuePattern = await vueServer.patternProvider.getPattern('component', 'vue-webapp');
+      
+      expect(vuePattern).toBeDefined();
+      expect(vuePattern).toContain('<template>');
+      expect(vuePattern).toContain('<script setup');
+    });
+  });
+
+  describe('Project Detection', () => {
+    it('should detect React project type', async () => {
+      const config = await Context7MCPServer.detectProjectConfig(process.cwd());
+      
+      // This project should be detected as react-webapp based on package.json
+      expect(config.projectType).toBe('react-webapp');
+    });
+
+    it('should provide fallback for unknown projects', async () => {
+      const config = await Context7MCPServer.detectProjectConfig('/nonexistent/path');
+      
+      expect(config.projectType).toBe('javascript');
+      expect(config.agentOsPath).toBe('.agent-os');
+    });
+  });
+
+  describe('End-to-End Workflow', () => {
+    beforeEach(() => {
+      server = new Context7MCPServer(testConfig);
+    });
+
+    it('should complete full resource workflow', async () => {
+      // 1. List resources
+      const resourceList = await server.resourceManager.listResources();
+      expect(resourceList.resources.length).toBeGreaterThan(0);
+      
+      // 2. Read a specific resource
+      const uri = resourceList.resources[0].uri;
+      const resource = await server.resourceManager.readResource(uri);
+      expect(resource.contents).toHaveLength(1);
+      
+      // 3. Validate the content format
+      const content = resource.contents[0];
+      expect(content.uri).toBe(uri);
+      expect(content.mimeType).toBeDefined();
+      expect(content.text).toBeDefined();
+    });
+
+    it('should complete full tool workflow', async () => {
+      // 1. List tools
+      const toolList = await server.toolManager.listTools();
+      expect(toolList.tools.length).toBeGreaterThan(0);
+      
+      // 2. Find validation tool
+      const validationTool = toolList.tools.find(
+        tool => tool.name === 'validate_context7_compliance'
+      );
+      expect(validationTool).toBeDefined();
+      
+      // 3. Execute validation
+      const result = await server.toolManager.executeTool('validate_context7_compliance', {
+        code: 'const example = "test";',
+        language: 'javascript'
+      });
+      
+      expect(result.content).toHaveLength(1);
+      const response = JSON.parse(result.content[0].text);
+      expect(typeof response.compliance_score).toBe('number');
+    });
+  });
+
+  describe('Error Handling', () => {
+    beforeEach(() => {
+      server = new Context7MCPServer(testConfig);
+    });
+
+    it('should handle malformed resource URIs gracefully', async () => {
+      const invalidUris = [
+        'invalid://uri',
+        'context7://invalid',
+        'context7://invalid/too/many/segments',
+        ''
+      ];
+
+      for (const uri of invalidUris) {
+        await expect(
+          server.resourceManager.readResource(uri)
+        ).rejects.toThrow();
+      }
+    });
+
+    it('should handle malformed tool parameters', async () => {
+      const invalidParams = [
+        null,
+        undefined,
+        'string instead of object',
+        { code: null },
+        { language: 123 }
+      ];
+
+      for (const params of invalidParams) {
+        await expect(
+          server.toolManager.executeTool('validate_context7_compliance', params)
+        ).rejects.toThrow();
+      }
+    });
+
+    it('should maintain stability under concurrent requests', async () => {
+      const requests = Array(10).fill(null).map(async (_, index) => {
+        try {
+          return await server.toolManager.executeTool('validate_context7_compliance', {
+            code: \`const test\${index} = "concurrent";\`,
+            language: 'javascript'
+          });
+        } catch (error) {
+          return { error: error.message };
+        }
+      });
+
+      const results = await Promise.all(requests);
+      
+      // All requests should complete (either success or handled error)
+      expect(results).toHaveLength(10);
+      
+      // At least some should succeed
+      const successful = results.filter(r => !r.error);
+      expect(successful.length).toBeGreaterThan(0);
+    });
+  });
+});
