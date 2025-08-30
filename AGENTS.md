@@ -7,12 +7,14 @@ This file provides context and instructions to help AI coding agents work effect
 This is a Node.js package that provides Context7 MCP (Model Context Protocol) integration for AI-assisted development. The package enables AI assistants to access project standards, patterns, and configurations in real-time through a standardized MCP server interface.
 
 **Key Components:**
-- MCP Server for real-time Context7 integration
+- MCP Server for real-time Context7 integration with modular pattern system
 - CLI tool for project setup and management (`context7` command)
-- Project quality scoring system with 7-category evaluation
+- Enhanced project quality scoring system with real tool integration (7 categories)
 - Validation system for Context7 compliance
-- Comprehensive testing infrastructure with Vitest
-- Code pattern generation for multiple frameworks
+- Professional testing infrastructure with Vitest and c8 coverage
+- Modular code pattern generation (React, Vue, Node.js patterns)
+- Bundle analysis and performance monitoring tools
+- Security scanning with npm audit integration
 
 **Target Frameworks:** React, Vue, Svelte, Node.js APIs, JavaScript/TypeScript projects
 
@@ -42,31 +44,40 @@ npm run dev
 # Test with CLI commands
 npx context7 validate
 npx context7 test-mcp
-npx context7 score
+npx context7 score --detailed --recommendations
 
-# Code quality checks
-npm run lint
-npm run format
-npm run type-check
+# Enhanced quality and performance analysis
+npm run lint            # ESLint code quality
+npm run lint:fix        # Auto-fix linting issues
+npm run format          # Prettier formatting
+npm run coverage        # c8 test coverage reports
+npm run analyze         # Bundle size analysis
+npm run size-check      # Package size monitoring
+npm run audit           # Security vulnerability scanning
 ```
 
 **Package Structure:**
 - `src/server/` - MCP server implementation
-- `src/scoring/` - Project quality scoring system
-  - `analyzers/` - 7 specialized quality analyzers
+  - `patterns/` - Modular pattern system (ReactPatterns.js, VuePatterns.js, NodePatterns.js)
+- `src/scoring/` - Enhanced project quality scoring system
+  - `analyzers/` - 7 specialized quality analyzers with real tool integration
 - `src/validation/` - Context7 compliance validation
 - `src/testing/` - MCP connection testing
-- `tests/` - Comprehensive test suite with Vitest
-- `bin/context7.js` - CLI entry point with scoring integration
+- `tests/` - Comprehensive test suite with Vitest and c8 coverage
+  - `integration/` - Full MCP server integration tests
+- `bin/context7.js` - CLI entry point with enhanced scoring integration
 - `templates/` - Configuration templates
+- `scripts/` - Bundle analysis and performance monitoring tools
 
 ## Testing Instructions
 
-**Comprehensive test suite** using Vitest with unit and integration tests:
+**Comprehensive test suite** using Vitest with unit, integration, and MCP server tests:
 
 1. **Full Test Suite:**
    ```bash
-   npm run test           # Run all tests with coverage
+   npm run test           # Run all tests with Vitest
+   npm run coverage       # Run tests with c8 coverage reports
+   npm run test:integration  # Run MCP server integration tests
    npm run test:watch     # Run tests in watch mode
    npm run test:ui        # Run tests with Vitest UI
    ```
@@ -87,9 +98,10 @@ npm run type-check
 
 **Test Structure:**
 - `tests/unit/` - Unit tests for individual classes
-- `tests/integration/` - MCP protocol and server integration tests
-- `tests/cli/` - CLI command functionality tests
+- `tests/integration/` - Comprehensive MCP server integration tests with resource/tool workflows
+- `tests/cli/` - CLI command functionality tests with enhanced error handling
 - `tests/fixtures/` - Test data and mock projects
+- Coverage reports generated in `coverage/` directory with c8
 
 **When adding tests:**
 - Follow Vitest patterns with `describe`, `it`, `expect`
@@ -109,10 +121,12 @@ npm run type-check
 # Run before committing
 npm run validate      # Context7 compliance
 npm run test         # Full test suite
+npm run coverage     # Test coverage with c8
 npm run lint         # ESLint code quality
 npm run format       # Prettier formatting
-npm run type-check   # TypeScript checking
-npm run score        # Project quality analysis
+npm run audit        # Security vulnerability scanning
+npm run size-check   # Package size monitoring
+npm run score --detailed --recommendations  # Project quality analysis
 ```
 
 **Code Quality Requirements:**
@@ -127,11 +141,13 @@ npm run score        # Project quality analysis
 
 **Key Files to Validate:**
 - `src/server/Context7MCPServer.js` - Core MCP server
-- `src/scoring/ProjectScorer.js` - Scoring system orchestrator
-- `src/scoring/analyzers/` - Quality analyzers (7 classes)
-- `bin/context7.js` - CLI functionality with scoring integration
-- `tests/` - Test suite coverage
-- `package.json` - Dependencies and scripts
+- `src/server/patterns/` - Modular pattern system (React, Vue, Node.js)
+- `src/scoring/ProjectScorer.js` - Enhanced scoring system orchestrator
+- `src/scoring/analyzers/` - Quality analyzers (7 classes with real tool integration)
+- `bin/context7.js` - CLI functionality with enhanced scoring integration
+- `tests/integration/` - MCP server integration tests
+- `scripts/` - Bundle analysis and performance monitoring
+- `package.json` - Dependencies and npm scripts
 - `templates/` - Configuration templates
 
 ## Project Quality Scoring System

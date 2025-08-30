@@ -8,16 +8,24 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # Development and testing
 npm run dev          # Start MCP server for development
 npm run test         # Run comprehensive test suite with Vitest
+npm run coverage     # Generate test coverage reports with c8
+npm run test:integration  # Run MCP server integration tests
 npm run validate     # Validate Context7 compliance
 npm run score        # Analyze project quality across 7 categories
 
+# Performance and bundle analysis
+npm run analyze      # Comprehensive package size analysis
+npm run size-check   # Monitor package size limits and warnings
+
 # Code quality and formatting
 npm run lint         # Run ESLint for code quality checks
+npm run lint:fix     # Auto-fix ESLint issues
 npm run format       # Format code with Prettier
-npm run type-check   # Run TypeScript type checking
+npm run audit        # Security vulnerability scanning
 
-# Package management
-npm run build        # No build step required (pure ESM)
+# Production and deployment
+npm run build        # No build step needed (ESM package)
+npm run start        # Start CLI (same as context7 command)
 npm run prepublishOnly  # Runs tests before publishing
 ```
 
@@ -31,7 +39,11 @@ This is a Context7 MCP (Model Context Protocol) integration package that provide
 - `Context7MCPServer.js` - Main MCP server class with resource/tool/prompt handlers
 - `ResourceManager.js` - Handles Context7 standards and documentation resources
 - `ToolManager.js` - Provides validation and pattern generation tools
-- `PatternProvider.js` - Generates framework-specific code patterns
+- `PatternProvider.js` - Orchestrates pattern generation across frameworks
+- `patterns/` - Modular pattern system with framework-specific implementations:
+  - `ReactPatterns.js` - React components, hooks, and testing patterns
+  - `VuePatterns.js` - Vue Composition API and component patterns
+  - `NodePatterns.js` - Express routes, services, and middleware patterns
 
 **CLI Interface (`bin/context7.js`)**:
 - Full-featured CLI for project initialization and management
@@ -56,8 +68,10 @@ This is a Context7 MCP (Model Context Protocol) integration package that provide
 
 **Testing (`src/testing/` & `tests/`)**:
 - `MCPTester.js` - Tests MCP server functionality and connection handling
-- Comprehensive test suite with Vitest, unit tests, integration tests
+- `tests/integration/` - Full MCP server integration testing with resource/tool workflows
+- Comprehensive test suite with Vitest, c8 coverage integration, unit and integration tests
 - GitHub Actions CI/CD pipeline for automated testing
+- Real-time MCP server testing with timeout and error handling
 
 ### Project Types Supported
 - `react-webapp` - React applications with TypeScript/Tailwind
@@ -153,7 +167,14 @@ context7 score --categories structure,quality,testing
 - `prettier` - Code formatting
 - `@testing-library/react` - React component testing utilities
 
+**Performance & Analysis:**
+- `c8` - Advanced test coverage reporting with line/branch/function metrics
+- `webpack-bundle-analyzer` - Bundle size analysis and optimization
+- Custom bundle analysis scripts with size monitoring and recommendations
+
 **Development Tools:**
 - Node.js ESM modules throughout
 - GitHub Actions CI/CD pipeline
-- Comprehensive test coverage with unit and integration tests
+- Comprehensive test coverage with c8 integration
+- Professional bundle analysis and performance monitoring
+- Security vulnerability scanning with npm audit integration
