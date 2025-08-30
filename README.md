@@ -7,8 +7,9 @@ A comprehensive toolkit for integrating Context7 standards with Model Context Pr
 This package provides everything you need to add Context7 MCP integration to any project:
 
 - **MCP Server** - Real-time AI assistant integration
+- **Project Quality Scoring** - Comprehensive 7-category code quality evaluation
 - **Validation System** - Automated Context7 compliance checking  
-- **Testing Infrastructure** - Comprehensive MCP testing tools
+- **Testing Infrastructure** - Comprehensive MCP testing tools with Vitest
 - **CLI Interface** - Easy setup and management
 - **Pattern Templates** - Framework-specific code patterns
 - **Multi-framework Support** - React, Vue, Node.js, and more
@@ -38,6 +39,9 @@ context7 validate
 # Test MCP server
 context7 test-mcp
 
+# Analyze project quality
+context7 score
+
 # Start MCP server for AI assistants
 context7 serve
 ```
@@ -50,6 +54,13 @@ context7 serve
 - **Pattern Examples** - Framework-specific code patterns and scaffolding
 - **Naming Convention Checks** - Validate file and component naming
 - **Improvement Suggestions** - Context7-aware code improvement recommendations
+
+### 📊 Project Quality Scoring
+- **7-Category Analysis** - Structure, Quality, Performance, Testing, Security, DevEx, Completeness
+- **Multiple Output Formats** - Console with colors, JSON for CI/CD, HTML for reports
+- **Actionable Recommendations** - Prioritized suggestions for improvement
+- **Industry Standards Alignment** - Based on Google, AWS, and OpenAI best practices
+- **AI-Optimized Evaluation** - Scores projects for AI assistant compatibility
 
 ### 🔍 Validation System
 - **Project Structure Validation** - Check directory structure and required files
@@ -115,6 +126,15 @@ context7 validate [options]
 context7 test-mcp [options]
   --server <path>          Path to MCP server file (default: src/mcp-server.js)
   --timeout <ms>           Request timeout in milliseconds
+
+# Analyze project quality
+context7 score [options]
+  --categories <categories> Comma-separated list of categories to analyze
+  --format <format>        Output format (console, json, html)
+  --output <file>          Output file path (for json/html formats)
+  --detailed               Include detailed analysis and metrics
+  --recommendations        Include improvement recommendations
+  --no-color               Disable colored output
 ```
 
 ### Server Management
@@ -224,6 +244,24 @@ const result = await tester.runTests();
 console.log(\`Tests passed: \${result.report.passed}/\${result.report.total}\`);
 ```
 
+### Project Scoring
+```javascript
+import { ProjectScorer } from '@yourname/context7-mcp';
+
+const scorer = new ProjectScorer({
+  projectRoot: './my-project',
+  projectType: 'react-webapp',
+});
+
+const results = await scorer.scoreProject({
+  categories: ['structure', 'quality', 'testing'],
+  detailed: true
+});
+
+console.log(\`Overall Score: \${results.overall.score}/100\`);
+console.log(\`Grade: \${results.overall.grade}\`);
+```
+
 ## 🎨 Code Patterns
 
 The package includes Context7-compliant patterns for:
@@ -280,11 +318,18 @@ context7 serve  # Starts MCP server on stdio transport
 
 ## 🛣️ Roadmap
 
+### v1.0 ✅ Completed
+- [x] Project Quality Scoring System (7 categories)
+- [x] Comprehensive testing with Vitest
+- [x] ESLint and Prettier integration
+- [x] Multiple output formats (console, JSON, HTML)
+- [x] GitHub Actions CI/CD pipeline
+
 ### v1.1
 - [ ] Auto-fix validation issues
 - [ ] More code generation templates
 - [ ] VS Code extension
-- [ ] GitHub Actions integration
+- [ ] Enhanced security analysis with OWASP integration
 
 ### v1.2
 - [ ] Python/Django support

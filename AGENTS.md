@@ -9,8 +9,9 @@ This is a Node.js package that provides Context7 MCP (Model Context Protocol) in
 **Key Components:**
 - MCP Server for real-time Context7 integration
 - CLI tool for project setup and management (`context7` command)
+- Project quality scoring system with 7-category evaluation
 - Validation system for Context7 compliance
-- Testing infrastructure for MCP functionality
+- Comprehensive testing infrastructure with Vitest
 - Code pattern generation for multiple frameworks
 
 **Target Frameworks:** React, Vue, Svelte, Node.js APIs, JavaScript/TypeScript projects
@@ -41,41 +42,61 @@ npm run dev
 # Test with CLI commands
 npx context7 validate
 npx context7 test-mcp
+npx context7 score
+
+# Code quality checks
+npm run lint
+npm run format
+npm run type-check
 ```
 
 **Package Structure:**
 - `src/server/` - MCP server implementation
+- `src/scoring/` - Project quality scoring system
+  - `analyzers/` - 7 specialized quality analyzers
 - `src/validation/` - Context7 compliance validation
 - `src/testing/` - MCP connection testing
-- `bin/context7.js` - CLI entry point
+- `tests/` - Comprehensive test suite with Vitest
+- `bin/context7.js` - CLI entry point with scoring integration
 - `templates/` - Configuration templates
 
 ## Testing Instructions
 
-**No formal test suite exists yet** - this package uses functional testing through:
+**Comprehensive test suite** using Vitest with unit and integration tests:
 
-1. **MCP Server Testing:**
+1. **Full Test Suite:**
    ```bash
-   npm run test  # Runs src/testing/MCPTester.js
+   npm run test           # Run all tests with coverage
+   npm run test:watch     # Run tests in watch mode
+   npm run test:ui        # Run tests with Vitest UI
    ```
 
-2. **Validation Testing:**
+2. **Specific Test Categories:**
    ```bash
-   npm run validate  # Runs src/validation/Context7Validator.js
+   npm run test tests/unit/           # Unit tests only
+   npm run test tests/integration/    # Integration tests only
+   npm run test tests/cli/            # CLI command tests
    ```
 
-3. **CLI Testing:**
+3. **Manual Testing:**
    ```bash
-   # Test CLI commands manually
-   npx context7 --help
-   npx context7 init --help
+   npx context7 --help        # CLI help
+   npx context7 validate      # Context7 compliance
+   npx context7 score         # Project quality scoring
    ```
+
+**Test Structure:**
+- `tests/unit/` - Unit tests for individual classes
+- `tests/integration/` - MCP protocol and server integration tests
+- `tests/cli/` - CLI command functionality tests
+- `tests/fixtures/` - Test data and mock projects
 
 **When adding tests:**
-- Follow the existing pattern in `src/testing/MCPTester.js`
-- Test MCP protocol compliance
-- Validate Context7 standards integration
-- Test CLI command functionality
+- Follow Vitest patterns with `describe`, `it`, `expect`
+- Use `tests/setup.js` for test configuration
+- Mock external dependencies appropriately
+- Test both success and error scenarios
+- Include tests for new scoring analyzers
 
 ## PR Instructions
 
@@ -86,11 +107,12 @@ npx context7 test-mcp
 **Pre-commit Validation:**
 ```bash
 # Run before committing
-npm run validate
-npm run test
-
-# Check code quality (when linting is set up)
-npm run lint  # TODO: Configure ESLint
+npm run validate      # Context7 compliance
+npm run test         # Full test suite
+npm run lint         # ESLint code quality
+npm run format       # Prettier formatting
+npm run type-check   # TypeScript checking
+npm run score        # Project quality analysis
 ```
 
 **Code Quality Requirements:**
@@ -99,15 +121,56 @@ npm run lint  # TODO: Configure ESLint
 - Maintain Context7 standards compliance
 - Add JSDoc comments for public APIs
 - Ensure CLI commands work across platforms
+- Follow ESLint and Prettier configurations
+- Write tests for new functionality
+- Maintain scoring system analyzer patterns
 
 **Key Files to Validate:**
 - `src/server/Context7MCPServer.js` - Core MCP server
-- `bin/context7.js` - CLI functionality
+- `src/scoring/ProjectScorer.js` - Scoring system orchestrator
+- `src/scoring/analyzers/` - Quality analyzers (7 classes)
+- `bin/context7.js` - CLI functionality with scoring integration
+- `tests/` - Test suite coverage
 - `package.json` - Dependencies and scripts
 - `templates/` - Configuration templates
+
+## Project Quality Scoring System
+
+**Integrated scoring system** evaluates projects across 7 categories (100 points total):
+
+**Scoring Architecture:**
+- `ProjectScorer.js` - Main orchestrator with category management
+- `ScoringReport.js` - Multi-format output generation (console, JSON, HTML)
+- `RecommendationEngine.js` - Prioritized improvement suggestions
+- `BaseAnalyzer.js` - Abstract base class for all analyzers
+
+**7 Analyzer Categories:**
+1. **StructureAnalyzer** (20pts) - File organization, architecture, dependencies
+2. **QualityAnalyzer** (20pts) - ESLint/Prettier, documentation, complexity
+3. **PerformanceAnalyzer** (15pts) - Bundle optimization, code splitting
+4. **TestingAnalyzer** (15pts) - Test coverage, organization, frameworks
+5. **SecurityAnalyzer** (15pts) - Vulnerabilities, secrets, error handling
+6. **DeveloperExperienceAnalyzer** (10pts) - Tooling, documentation, workflow
+7. **CompletenessAnalyzer** (5pts) - TODO completion, production readiness
+
+**Usage Examples:**
+```bash
+# Basic console scoring
+context7 score
+
+# Detailed analysis with recommendations
+context7 score --detailed --recommendations
+
+# Generate CI/CD compatible JSON
+context7 score --format json --output results.json
+
+# Create visual HTML reports
+context7 score --format html --output report.html
+```
 
 **Development Notes:**
 - This is a pure ESM package (no build step required)
 - MCP server uses stdio transport by default
 - CLI auto-detects project types from package.json dependencies
 - Configuration templates are copied from `templates/` directory
+- Scoring system supports multiple output formats and customizable categories
