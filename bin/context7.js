@@ -18,6 +18,7 @@ import { fileURLToPath } from 'url';
 import { Context7MCPServer } from '../src/server/Context7MCPServer.js';
 import { Context7Validator } from '../src/validation/Context7Validator.js';
 import { MCPConnectionTester } from '../src/testing/MCPTester.js';
+import { ProjectScorer } from '../src/scoring/ProjectScorer.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -71,8 +72,24 @@ program
   .description('Validate project compliance with Context7 standards')
   .option('-s, --strict', 'Enable strict validation mode')
   .option('--fix', 'Attempt to fix validation issues automatically')
+  .option('--with-score', 'Include project quality scoring with validation')
   .action(async (options) => {
     await validateProject(options);
+  });
+
+// Score command
+program
+  .command('score')
+  .description('Analyze and score project quality across multiple dimensions')
+  .option('--categories <categories>', 'Comma-separated list of categories to analyze (structure,quality,performance,testing,security,developerExperience,completeness)', 'all')
+  .option('--format <format>', 'Output format (console, json, html)', 'console')
+  .option('--output <file>', 'Output file path (for json/html formats)')
+  .option('--detailed', 'Include detailed analysis and metrics')
+  .option('--recommendations', 'Include improvement recommendations')
+  .option('--compare', 'Compare with previous scoring results (if available)')
+  .option('--no-color', 'Disable colored output')
+  .action(async (options) => {
+    await scoreProject(options);
   });
 
 // Test command
@@ -242,43 +259,6 @@ async function addToExistingProject(options) {
   }
 }
 
-async function validateProject(options) {
-  console.log(chalk.blue('🔍 Validating Context7 compliance'));
-  
-  const spinner = ora('Running validation...').start();
-  
-  try {
-    const validator = new Context7Validator({
-      projectRoot: globalConfig.projectRoot,
-      strictMode: options.strict,
-    });
-    
-    spinner.text = 'Checking project structure and configuration...';
-    
-    const result = await validator.runValidation();
-    
-    if (result.success) {
-      spinner.succeed('Project validation passed!');
-    } else {
-      spinner.fail('Project validation failed');
-      
-      if (options.fix) {
-        console.log(chalk.yellow('\\n🔧 Attempting to fix issues...'));
-        // TODO: Implement auto-fix functionality
-        console.log(chalk.gray('Auto-fix functionality coming soon!'));
-      }
-    }
-    
-    process.exit(result.success ? 0 : 1);
-    
-  } catch (error) {
-    spinner.fail(`Validation error: ${error.message}`);
-    if (globalConfig.verbose) {
-      console.error(chalk.red(error.stack));
-    }
-    process.exit(1);
-  }
-}
 
 async function testMCPServer(options) {
   console.log(chalk.blue('🧪 Testing MCP Server'));
@@ -602,6 +582,219 @@ function showNextSteps(config) {
   
   if (config.agentOsEnabled) {
     console.log(chalk.gray('-'), '.agent-os/ - Agent OS configuration');
+  }
+}
+
+async function scoreProject(options) {
+  console.log(chalk.blue('🎯 Analyzing project quality...'));
+  console.log('════════════════════════════════════');
+  
+  const spinner = ora('Initializing project scorer...').start();
+  
+  try {
+    // Parse categories
+    const categories = options.categories === 'all' 
+      ? ['all'] 
+      : options.categories.split(',').map(c => c.trim());
+    
+    // Configure scorer
+    const scorerConfig = {
+      projectRoot: globalConfig.projectRoot,
+      verbose: globalConfig.verbose,
+      categories
+    };
+    
+    spinner.text = 'Running quality analysis...';
+    
+    // Auto-detect project and run scoring
+    const results = await ProjectScorer.autoDetectAndScore(globalConfig.projectRoot, {
+      ...scorerConfig,
+      categories,
+      detailed: options.detailed,
+      recommendations: options.recommendations
+    });
+    
+    spinner.succeed('Analysis complete!');
+    
+    // Handle different output formats
+    if (options.format === 'json') {
+      const output = JSON.stringify(results, null, 2);
+      
+      if (options.output) {
+        await fs.writeFile(options.output, output);
+        console.log(chalk.green(`\n📄 Results saved to: ${options.output}`));
+      } else {
+        console.log(output);
+      }
+      return;
+    }
+    
+    if (options.format === 'html') {
+      const { ScoringReport } = await import('../src/scoring/ScoringReport.js');
+      const reportGenerator = new ScoringReport(scorerConfig);
+      const htmlOutput = await reportGenerator.generateHTML(results);
+      
+      const outputFile = options.output || `context7-score-${Date.now()}.html`;
+      await fs.writeFile(outputFile, htmlOutput);
+      console.log(chalk.green(`\n📄 HTML report saved to: ${outputFile}`));
+      return;
+    }
+    
+    // Console output (default)
+    await displayScoringResults(results, options);
+    
+  } catch (error) {
+    spinner.fail(`Scoring failed: ${error.message}`);
+    if (globalConfig.verbose) {
+      console.error(chalk.red(error.stack));
+    }
+    process.exit(1);
+  }
+}
+
+async function displayScoringResults(results, options) {
+  const { overall, categories, recommendations } = results;
+  const useColor = !options.noColor;
+  
+  // Overall score header
+  console.log(`\n${useColor ? chalk.bold.cyan('📊 PROJECT QUALITY SCORE') : '📊 PROJECT QUALITY SCORE'}`);
+  console.log('═'.repeat(60));
+  
+  // Overall score
+  const gradeColorFunc = getGradeColor(overall.grade, useColor);
+  const coloredGrade = gradeColorFunc(overall.grade);
+  console.log(`${useColor ? chalk.bold('Overall Score:') : 'Overall Score:'} ${overall.score}/${overall.maxScore} (${coloredGrade})\n`);
+  
+  // Category breakdown
+  console.log(`${useColor ? chalk.bold('📈 Category Breakdown:') : '📈 Category Breakdown:'}`);
+  console.log('─'.repeat(60));
+  
+  for (const [categoryKey, result] of Object.entries(categories)) {
+    const percentage = Math.round((result.score / result.maxScore) * 100);
+    const progressBar = generateProgressBar(percentage, 20, useColor);
+    const categoryName = result.categoryName.padEnd(35);
+    const score = `${result.score}/${result.maxScore}`.padStart(6);
+    
+    let status = '';
+    if (percentage < 70) status = useColor ? chalk.red(' ⚠️') : ' ⚠️';
+    else if (percentage < 85) status = useColor ? chalk.yellow(' ⚡') : ' ⚡';
+    else status = useColor ? chalk.green(' ✅') : ' ✅';
+    
+    console.log(`├─ ${categoryName} ${score}  ${progressBar} ${percentage}%${status}`);
+  }
+  
+  // Show issues and recommendations
+  if (recommendations && recommendations.length > 0) {
+    console.log(`\n${useColor ? chalk.bold('🎯 Priority Improvements:') : '🎯 Priority Improvements:'}`);
+    console.log('─'.repeat(60));
+    
+    recommendations.slice(0, 5).forEach((rec, index) => {
+      const impact = useColor ? chalk.green(`[+${rec.impact}pts]`) : `[+${rec.impact}pts]`;
+      console.log(`${index + 1}. ${impact} ${rec.suggestion}`);
+      if (rec.description) {
+        console.log(`   ${useColor ? chalk.gray(rec.description) : rec.description}`);
+      }
+    });
+    
+    if (options.recommendations && recommendations.length > 5) {
+      console.log(`\n${useColor ? chalk.gray('...and ' + (recommendations.length - 5) + ' more recommendations') : '...and ' + (recommendations.length - 5) + ' more recommendations'}`);
+    }
+  }
+  
+  // Show summary message
+  console.log('\n' + '═'.repeat(60));
+  
+  if (overall.score >= 90) {
+    console.log(`${useColor ? chalk.green('🎉 Excellent!') : '🎉 Excellent!'} Your project demonstrates high quality standards.`);
+  } else if (overall.score >= 80) {
+    console.log(`${useColor ? chalk.cyan('👍 Good job!') : '👍 Good job!'} Your project follows solid practices with room for improvement.`);
+  } else if (overall.score >= 70) {
+    console.log(`${useColor ? chalk.yellow('⚡ Getting there!') : '⚡ Getting there!'} Focus on the priority improvements above.`);
+  } else {
+    console.log(`${useColor ? chalk.red('🔧 Needs attention.') : '🔧 Needs attention.'} Consider addressing the key issues identified.`);
+  }
+  
+  console.log(`\n${useColor ? chalk.gray('💡 Run with --detailed for comprehensive metrics') : '💡 Run with --detailed for comprehensive metrics'}`);
+  console.log(`${useColor ? chalk.gray('📈 Run with --format html for visual reports') : '📈 Run with --format html for visual reports'}`);
+}
+
+function getGradeColor(grade, useColor) {
+  if (!useColor) return (text) => text;
+  
+  if (grade.startsWith('A')) return chalk.green;
+  if (grade.startsWith('B')) return chalk.cyan;
+  if (grade.startsWith('C')) return chalk.yellow;
+  if (grade.startsWith('D')) return chalk.magenta;
+  return chalk.red;
+}
+
+function generateProgressBar(percentage, length = 20, useColor = true) {
+  const filled = Math.round((percentage / 100) * length);
+  const empty = length - filled;
+  
+  let bar = '█'.repeat(filled) + '░'.repeat(empty);
+  
+  if (useColor) {
+    if (percentage >= 85) bar = chalk.green(bar);
+    else if (percentage >= 70) bar = chalk.yellow(bar);
+    else bar = chalk.red(bar);
+  }
+  
+  return bar;
+}
+
+// Enhanced validate function to support --with-score option
+async function validateProject(options) {
+  console.log(chalk.blue('🔍 Validating Context7 compliance'));
+  
+  const spinner = ora('Running validation...').start();
+  
+  try {
+    const validator = new Context7Validator({
+      projectRoot: globalConfig.projectRoot,
+      strictMode: options.strict,
+    });
+    
+    spinner.text = 'Checking project structure and configuration...';
+    
+    const result = await validator.runValidation();
+    
+    if (result.success) {
+      spinner.succeed('Project validation passed!');
+    } else {
+      spinner.fail('Project validation failed');
+      
+      if (options.fix) {
+        console.log(chalk.yellow('\n🔧 Attempting to fix issues...'));
+        // TODO: Implement auto-fix functionality
+        console.log(chalk.gray('Auto-fix functionality coming soon!'));
+      }
+    }
+    
+    // Add scoring if requested
+    if (options.withScore) {
+      console.log(chalk.blue('\n🎯 Including project quality score...'));
+      
+      try {
+        const scoreResults = await ProjectScorer.autoDetectAndScore(globalConfig.projectRoot, {
+          verbose: globalConfig.verbose
+        });
+        
+        await displayScoringResults(scoreResults, { noColor: false });
+        
+      } catch (scoreError) {
+        console.log(chalk.yellow('⚠️  Could not generate quality score: ' + scoreError.message));
+      }
+    }
+    
+    process.exit(result.success ? 0 : 1);
+    
+  } catch (error) {
+    spinner.fail(`Validation error: ${error.message}`);
+    if (globalConfig.verbose) {
+      console.error(chalk.red(error.stack));
+    }
+    process.exit(1);
   }
 }
 

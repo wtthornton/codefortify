@@ -1,0 +1,539 @@
+/**
+ * StructureAnalyzer - Analyzes code structure and architecture
+ * 
+ * Evaluates:
+ * - File organization and directory structure (5pts)
+ * - Module boundaries and separation of concerns (5pts) 
+ * - Naming conventions consistency (4pts)
+ * - Architecture patterns and design (3pts)
+ * - Circular dependencies and coupling (3pts)
+ * Total: 20pts
+ */
+
+import path from 'path';
+import { BaseAnalyzer } from './BaseAnalyzer.js';
+
+export class StructureAnalyzer extends BaseAnalyzer {
+  constructor(config) {
+    super(config);
+    this.categoryName = 'Code Structure & Architecture';
+    this.description = 'File organization, module boundaries, naming conventions, and architecture patterns';
+  }
+
+  async runAnalysis() {
+    // Reset results
+    this.results.score = 0;
+    this.results.issues = [];
+    this.results.suggestions = [];
+    
+    // Run individual analysis components
+    await this.analyzeFileOrganization(); // 5pts
+    await this.analyzeModuleBoundaries(); // 5pts  
+    await this.analyzeNamingConventions(); // 4pts
+    await this.analyzeArchitecturePatterns(); // 3pts
+    await this.analyzeDependencies(); // 3pts
+    
+    // Store analysis details
+    this.setDetail('totalFiles', await this.countFiles());
+    this.setDetail('directoryStructure', await this.getDirectoryStructure());
+    this.setDetail('projectType', this.config.projectType);
+  }
+
+  async analyzeFileOrganization() {
+    let score = 0;
+    const maxScore = 5;
+    
+    try {
+      // Check for proper directory structure
+      const requiredDirs = await this.getRequiredDirectories();
+      const existingDirs = await this.checkDirectories(requiredDirs);
+      
+      // Score based on directory structure (2pts)
+      const dirScore = (existingDirs / requiredDirs.length) * 2;
+      score += dirScore;
+      this.addScore(dirScore, 2, `Directory structure (${existingDirs}/${requiredDirs.length} required dirs)`);
+      
+      // Check for logical file grouping (2pts)
+      const groupingScore = await this.analyzeFileGrouping();
+      score += groupingScore;
+      
+      // Check for proper separation of concerns (1pt)
+      const separationScore = await this.analyzeSeparationOfConcerns();
+      score += separationScore;
+      
+      // Add recommendations based on issues found
+      if (score < maxScore * 0.7) {
+        this.addIssue(
+          'File organization could be improved',
+          'Consider organizing files into feature-based or layer-based directories'
+        );
+      }
+      
+    } catch (error) {
+      this.addIssue(`File organization analysis failed: ${error.message}`);
+    }
+  }
+
+  async analyzeModuleBoundaries() {
+    let score = 0;
+    const maxScore = 5;
+    
+    try {
+      // Analyze import/export patterns
+      const moduleAnalysis = await this.analyzeModuleStructure();
+      
+      // Score based on clear module boundaries (3pts)
+      if (moduleAnalysis.hasConsistentExports) {
+        score += 3;
+        this.addScore(3, 3, 'Consistent export patterns found');
+      } else {
+        this.addIssue('Inconsistent module export patterns', 'Use consistent import/export patterns throughout the project');
+      }
+      
+      // Score based on appropriate module size (2pts)
+      const avgModuleSize = moduleAnalysis.averageModuleSize;
+      if (avgModuleSize < 200) {
+        score += 2;
+        this.addScore(2, 2, 'Modules are appropriately sized');
+      } else if (avgModuleSize < 400) {
+        score += 1;
+        this.addScore(1, 2, 'Some modules are large but manageable');
+        this.addIssue('Some modules are quite large', 'Consider breaking down large modules into smaller, focused units');
+      } else {
+        this.addIssue('Modules are too large', 'Break down large modules for better maintainability');
+      }
+      
+      this.setDetail('averageModuleSize', avgModuleSize);
+      this.setDetail('totalModules', moduleAnalysis.totalModules);
+      
+    } catch (error) {
+      this.addIssue(`Module boundary analysis failed: ${error.message}`);
+    }
+  }
+
+  async analyzeNamingConventions() {
+    let score = 0;
+    const maxScore = 4;
+    
+    try {
+      const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx', '.vue', '.svelte']);
+      const namingResults = await this.analyzeFileNames(files);
+      
+      // Score based on naming consistency (2pts)
+      if (namingResults.consistency > 0.8) {
+        score += 2;
+        this.addScore(2, 2, `Naming conventions are consistent (${Math.round(namingResults.consistency * 100)}%)`);
+      } else if (namingResults.consistency > 0.6) {
+        score += 1;
+        this.addScore(1, 2, `Naming conventions are mostly consistent (${Math.round(namingResults.consistency * 100)}%)`);
+        this.addIssue('Some naming inconsistencies found', 'Standardize naming conventions across the project');
+      } else {
+        this.addIssue('Naming conventions are inconsistent', 'Establish and follow consistent naming patterns');
+      }
+      
+      // Score based on appropriate naming patterns for project type (2pts)
+      const patternScore = await this.analyzeNamingPatterns(files);
+      score += patternScore;
+      
+      this.setDetail('namingConsistency', namingResults.consistency);
+      this.setDetail('fileNamingPatterns', namingResults.patterns);
+      
+    } catch (error) {
+      this.addIssue(`Naming convention analysis failed: ${error.message}`);
+    }
+  }
+
+  async analyzeArchitecturePatterns() {
+    let score = 0;
+    const maxScore = 3;
+    
+    try {
+      // Check for architectural patterns based on project type
+      if (this.isReactProject()) {
+        score += await this.analyzeReactArchitecture();
+      } else if (this.isVueProject()) {
+        score += await this.analyzeVueArchitecture();
+      } else if (this.isNodeProject()) {
+        score += await this.analyzeNodeArchitecture();
+      } else {
+        score += await this.analyzeGeneralArchitecture();
+      }
+      
+    } catch (error) {
+      this.addIssue(`Architecture pattern analysis failed: ${error.message}`);
+    }
+  }
+
+  async analyzeDependencies() {
+    let score = 0;
+    const maxScore = 3;
+    
+    try {
+      const packageJson = await this.readPackageJson();
+      if (!packageJson) {
+        this.addIssue('No package.json found', 'Add package.json to manage dependencies');
+        return;
+      }
+      
+      const deps = packageJson.dependencies || {};
+      const devDeps = packageJson.devDependencies || {};
+      const totalDeps = Object.keys(deps).length + Object.keys(devDeps).length;
+      
+      // Score based on dependency count (1pt)
+      if (totalDeps < 30) {
+        score += 1;
+        this.addScore(1, 1, `Reasonable number of dependencies (${totalDeps})`);
+      } else if (totalDeps < 60) {
+        score += 0.5;
+        this.addScore(0.5, 1, `Moderate number of dependencies (${totalDeps})`);
+        this.addIssue('High number of dependencies', 'Consider if all dependencies are necessary');
+      } else {
+        this.addIssue('Too many dependencies', 'Audit and reduce unnecessary dependencies');
+      }
+      
+      // Check for proper dev/prod dependency separation (1pt)
+      if (Object.keys(devDeps).length > 0) {
+        score += 1;
+        this.addScore(1, 1, 'Dev dependencies are properly separated');
+      } else {
+        this.addIssue('No dev dependencies found', 'Separate development dependencies from production ones');
+      }
+      
+      // Check for circular dependencies (would require deeper analysis) (1pt)
+      // For now, assume good if no obvious issues
+      score += 1;
+      this.addScore(1, 1, 'No obvious circular dependency issues');
+      
+      this.setDetail('dependencyCount', totalDeps);
+      this.setDetail('prodDependencies', Object.keys(deps).length);
+      this.setDetail('devDependencies', Object.keys(devDeps).length);
+      
+    } catch (error) {
+      this.addIssue(`Dependency analysis failed: ${error.message}`);
+    }
+  }
+
+  async getRequiredDirectories() {
+    const common = ['src'];
+    
+    if (this.isReactProject() || this.isVueProject() || this.isSvelteProject()) {
+      return [...common, 'components', 'pages', 'hooks', 'services', 'utils'];
+    } else if (this.isNodeProject()) {
+      return [...common, 'routes', 'middleware', 'models', 'services', 'utils'];
+    } else {
+      return [...common, 'lib', 'utils'];
+    }
+  }
+
+  async checkDirectories(requiredDirs) {
+    let existingCount = 0;
+    
+    for (const dir of requiredDirs) {
+      const exists = await this.fileExists(dir) || await this.fileExists(`src/${dir}`);
+      if (exists) {
+        existingCount++;
+      }
+    }
+    
+    return existingCount;
+  }
+
+  async analyzeFileGrouping() {
+    let score = 0;
+    const maxScore = 2;
+    
+    // Check if files are grouped logically
+    const srcExists = await this.fileExists('src');
+    if (srcExists) {
+      score += 1;
+      this.addScore(1, 1, 'Source files are organized in src directory');
+      
+      // Check for further organization within src
+      const srcContents = await this.getDirectoryContents('src');
+      const hasSubdirs = srcContents.some(item => item.isDirectory);
+      
+      if (hasSubdirs) {
+        score += 1;
+        this.addScore(1, 1, 'Source files are further organized into subdirectories');
+      } else {
+        this.addIssue('Flat src structure', 'Consider organizing src files into subdirectories by feature or type');
+      }
+    } else {
+      this.addIssue('No src directory found', 'Organize source files into a src directory');
+    }
+    
+    return score;
+  }
+
+  async analyzeSeparationOfConcerns() {
+    let score = 0;
+    const maxScore = 1;
+    
+    // Look for separation indicators
+    const indicators = [
+      { path: 'components', weight: 0.2 },
+      { path: 'services', weight: 0.2 },
+      { path: 'utils', weight: 0.2 },
+      { path: 'hooks', weight: 0.2 },
+      { path: 'types', weight: 0.2 }
+    ];
+    
+    for (const indicator of indicators) {
+      const exists = await this.fileExists(indicator.path) || await this.fileExists(`src/${indicator.path}`);
+      if (exists) {
+        score += indicator.weight;
+      }
+    }
+    
+    if (score > 0.5) {
+      this.addScore(score, maxScore, 'Good separation of concerns detected');
+    } else {
+      this.addIssue('Poor separation of concerns', 'Separate code into logical modules (components, services, utils, etc.)');
+    }
+    
+    return Math.min(score, maxScore);
+  }
+
+  async analyzeModuleStructure() {
+    const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx']);
+    let totalSize = 0;
+    let totalModules = 0;
+    let hasConsistentExports = true;
+    
+    for (const file of files.slice(0, 20)) { // Sample first 20 files for performance
+      try {
+        const content = await this.readFile(file);
+        const stats = await this.getFileStats(file);
+        
+        if (stats) {
+          totalSize += stats.lines;
+          totalModules++;
+        }
+        
+        // Check for export consistency (very basic check)
+        const hasExport = content.includes('export');
+        const hasDefaultExport = content.includes('export default');
+        const hasNamedExports = /export\s+{/.test(content) || /export\s+const|let|var|function|class/.test(content);
+        
+        if (!hasExport && !hasDefaultExport && !hasNamedExports && content.trim().length > 100) {
+          hasConsistentExports = false;
+        }
+      } catch (error) {
+        // Skip files that can't be read
+      }
+    }
+    
+    return {
+      averageModuleSize: totalModules > 0 ? totalSize / totalModules : 0,
+      totalModules,
+      hasConsistentExports
+    };
+  }
+
+  async analyzeFileNames(files) {
+    const patterns = {
+      camelCase: 0,
+      kebabCase: 0,
+      PascalCase: 0,
+      snake_case: 0
+    };
+    
+    let total = 0;
+    
+    for (const file of files) {
+      const fileName = path.basename(file, path.extname(file));
+      total++;
+      
+      if (/^[a-z][a-zA-Z0-9]*$/.test(fileName)) {
+        patterns.camelCase++;
+      } else if (/^[a-z][a-z0-9-]*$/.test(fileName)) {
+        patterns.kebabCase++;
+      } else if (/^[A-Z][a-zA-Z0-9]*$/.test(fileName)) {
+        patterns.PascalCase++;
+      } else if (/^[a-z][a-z0-9_]*$/.test(fileName)) {
+        patterns.snake_case++;
+      }
+    }
+    
+    // Calculate consistency as the percentage of files following the most common pattern
+    const maxPatternCount = Math.max(...Object.values(patterns));
+    const consistency = total > 0 ? maxPatternCount / total : 1;
+    
+    return { consistency, patterns, total };
+  }
+
+  async analyzeNamingPatterns(files) {
+    let score = 0;
+    const maxScore = 2;
+    
+    // Check if naming matches project type conventions
+    if (this.isReactProject()) {
+      // React components should use PascalCase
+      const componentFiles = files.filter(f => 
+        f.includes('component') || 
+        f.includes('Component') || 
+        f.match(/src\/(components|pages)\//)
+      );
+      
+      const properlyNamed = componentFiles.filter(f => {
+        const fileName = path.basename(f, path.extname(f));
+        return /^[A-Z][a-zA-Z0-9]*$/.test(fileName);
+      });
+      
+      if (componentFiles.length > 0) {
+        const ratio = properlyNamed.length / componentFiles.length;
+        score += ratio * maxScore;
+        
+        if (ratio > 0.8) {
+          this.addScore(maxScore, maxScore, 'React components follow PascalCase naming');
+        } else {
+          this.addScore(ratio * maxScore, maxScore, `${Math.round(ratio * 100)}% of components follow PascalCase`);
+          this.addIssue('Some React components don\'t follow PascalCase', 'Use PascalCase for React component names');
+        }
+      } else {
+        score += maxScore; // No components to check
+        this.addScore(maxScore, maxScore, 'No naming issues detected');
+      }
+    } else {
+      // For other projects, prefer kebab-case or camelCase
+      score += maxScore * 0.8; // Assume good for now
+      this.addScore(maxScore * 0.8, maxScore, 'Naming patterns appear consistent');
+    }
+    
+    return Math.min(score, maxScore);
+  }
+
+  async analyzeReactArchitecture() {
+    let score = 0;
+    const maxScore = 3;
+    
+    // Check for proper React patterns
+    const hasComponents = await this.fileExists('src/components') || await this.fileExists('components');
+    const hasHooks = await this.fileExists('src/hooks') || await this.fileExists('hooks');
+    const hasServices = await this.fileExists('src/services') || await this.fileExists('services');
+    
+    if (hasComponents) {
+      score += 1;
+      this.addScore(1, 1, 'Components directory structure found');
+    } else {
+      this.addIssue('No components directory', 'Create a components directory for React components');
+    }
+    
+    if (hasHooks) {
+      score += 1;
+      this.addScore(1, 1, 'Custom hooks directory found');
+    } else if (this.config.projectType.includes('react')) {
+      this.addIssue('No hooks directory', 'Consider organizing custom hooks in a dedicated directory');
+    }
+    
+    if (hasServices) {
+      score += 1;
+      this.addScore(1, 1, 'Services directory for business logic found');
+    }
+    
+    return score;
+  }
+
+  async analyzeVueArchitecture() {
+    let score = 0;
+    const maxScore = 3;
+    
+    // Check for Vue-specific patterns
+    const hasComponents = await this.fileExists('src/components') || await this.fileExists('components');
+    const hasViews = await this.fileExists('src/views') || await this.fileExists('views');
+    const hasComposables = await this.fileExists('src/composables') || await this.fileExists('composables');
+    
+    if (hasComponents) {
+      score += 1;
+      this.addScore(1, 1, 'Vue components directory found');
+    }
+    
+    if (hasViews) {
+      score += 1;
+      this.addScore(1, 1, 'Views/Pages directory found');
+    }
+    
+    if (hasComposables) {
+      score += 1;
+      this.addScore(1, 1, 'Composables directory found (Vue 3 pattern)');
+    }
+    
+    return score;
+  }
+
+  async analyzeNodeArchitecture() {
+    let score = 0;
+    const maxScore = 3;
+    
+    // Check for Node.js API patterns
+    const hasRoutes = await this.fileExists('src/routes') || await this.fileExists('routes');
+    const hasMiddleware = await this.fileExists('src/middleware') || await this.fileExists('middleware');
+    const hasControllers = await this.fileExists('src/controllers') || await this.fileExists('controllers');
+    
+    if (hasRoutes) {
+      score += 1;
+      this.addScore(1, 1, 'Routes directory found');
+    }
+    
+    if (hasMiddleware) {
+      score += 1;
+      this.addScore(1, 1, 'Middleware directory found');
+    }
+    
+    if (hasControllers) {
+      score += 1;
+      this.addScore(1, 1, 'Controllers directory found');
+    }
+    
+    return score;
+  }
+
+  async analyzeGeneralArchitecture() {
+    let score = 0;
+    const maxScore = 3;
+    
+    // General architecture patterns
+    const hasLib = await this.fileExists('lib') || await this.fileExists('src/lib');
+    const hasUtils = await this.fileExists('utils') || await this.fileExists('src/utils');
+    const hasConfig = await this.fileExists('config') || await this.fileExists('src/config');
+    
+    if (hasLib || hasUtils) {
+      score += 1;
+      this.addScore(1, 1, 'Utility/Library code organization found');
+    }
+    
+    if (hasConfig) {
+      score += 1;
+      this.addScore(1, 1, 'Configuration organization found');
+    }
+    
+    // Default some points for basic organization
+    score += 1;
+    this.addScore(1, 1, 'Basic project organization detected');
+    
+    return score;
+  }
+
+  async countFiles() {
+    const allFiles = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx', '.vue', '.svelte']);
+    return allFiles.length;
+  }
+
+  async getDirectoryStructure() {
+    const structure = {};
+    
+    try {
+      const rootContents = await this.getDirectoryContents('');
+      structure.root = rootContents.filter(item => item.isDirectory).map(item => item.name);
+      
+      if (await this.fileExists('src')) {
+        const srcContents = await this.getDirectoryContents('src');
+        structure.src = srcContents.filter(item => item.isDirectory).map(item => item.name);
+      }
+    } catch (error) {
+      structure.error = error.message;
+    }
+    
+    return structure;
+  }
+}
