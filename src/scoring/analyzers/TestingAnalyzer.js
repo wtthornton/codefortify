@@ -9,6 +9,7 @@
  */
 
 import { BaseAnalyzer } from './BaseAnalyzer.js';
+import { execSync } from 'child_process';
 
 export class TestingAnalyzer extends BaseAnalyzer {
   constructor(config) {
@@ -41,32 +42,157 @@ export class TestingAnalyzer extends BaseAnalyzer {
       return;
     }
     
-    // Calculate rough test coverage based on file count ratio
-    const coverageRatio = sourceFiles.length > 0 ? testFiles.length / sourceFiles.length : 0;
+    // PHASE 1 UPGRADE: Use real coverage tools (c8, nyc, jest) for actual coverage metrics
+    const coverageResult = await this.runCoverageAnalysis();
     
-    if (coverageRatio >= 0.8) {
-      score += 8;
-      this.addScore(8, 8, `Excellent test coverage (~${Math.round(coverageRatio * 100)}%)`);
-    } else if (coverageRatio >= 0.6) {
-      score += 6;
-      this.addScore(6, 8, `Good test coverage (~${Math.round(coverageRatio * 100)}%)`);
-    } else if (coverageRatio >= 0.4) {
-      score += 4;
-      this.addScore(4, 8, `Moderate test coverage (~${Math.round(coverageRatio * 100)}%)`);
-      this.addIssue('Test coverage could be improved', 'Aim for 80%+ test coverage');
-    } else if (coverageRatio >= 0.2) {
-      score += 2;
-      this.addScore(2, 8, `Low test coverage (~${Math.round(coverageRatio * 100)}%)`);
-      this.addIssue('Low test coverage', 'Significantly increase test coverage');
+    if (coverageResult.success) {
+      const { lines, functions, branches, statements } = coverageResult.data;
+      const avgCoverage = (lines + functions + branches + statements) / 4;
+      
+      // Score based on actual coverage metrics (8pts)
+      if (avgCoverage >= 80) {
+        score += 8;
+        this.addScore(8, 8, `Excellent test coverage (${avgCoverage.toFixed(1)}% avg)`);
+      } else if (avgCoverage >= 70) {
+        score += 6;
+        this.addScore(6, 8, `Good test coverage (${avgCoverage.toFixed(1)}% avg)`);
+      } else if (avgCoverage >= 50) {
+        score += 4;
+        this.addScore(4, 8, `Moderate test coverage (${avgCoverage.toFixed(1)}% avg)`);
+        this.addIssue('Test coverage could be improved', 'Aim for 80%+ test coverage');
+      } else if (avgCoverage >= 30) {
+        score += 2;
+        this.addScore(2, 8, `Low test coverage (${avgCoverage.toFixed(1)}% avg)`);
+        this.addIssue('Low test coverage', 'Significantly increase test coverage');
+      } else {
+        score += 1;
+        this.addScore(1, 8, `Very low test coverage (${avgCoverage.toFixed(1)}% avg)`);
+        this.addIssue('Very low test coverage', 'Add comprehensive test suite');
+      }
+
+      this.setDetail('realCoverage', coverageResult.data);
     } else {
-      score += 1;
-      this.addScore(1, 8, `Very low test coverage (~${Math.round(coverageRatio * 100)}%)`);
-      this.addIssue('Very low test coverage', 'Add comprehensive test suite');
+      // Fallback to file count ratio if coverage tools unavailable
+      const coverageRatio = sourceFiles.length > 0 ? testFiles.length / sourceFiles.length : 0;
+      
+      if (coverageRatio >= 0.8) {
+        score += 6; // Slightly lower score for approximation
+        this.addScore(6, 8, `Test file ratio suggests good coverage (~${Math.round(coverageRatio * 100)}%)`);
+      } else if (coverageRatio >= 0.6) {
+        score += 4;
+        this.addScore(4, 8, `Test file ratio suggests moderate coverage (~${Math.round(coverageRatio * 100)}%)`);
+      } else if (coverageRatio >= 0.4) {
+        score += 3;
+        this.addScore(3, 8, `Test file ratio suggests fair coverage (~${Math.round(coverageRatio * 100)}%)`);
+        this.addIssue('Test coverage could be improved', 'Add coverage tool (c8, nyc, jest --coverage)');
+      } else if (coverageRatio >= 0.2) {
+        score += 2;
+        this.addScore(2, 8, `Test file ratio suggests low coverage (~${Math.round(coverageRatio * 100)}%)`);
+        this.addIssue('Low test coverage', 'Add coverage tool and more tests');
+      } else {
+        score += 1;
+        this.addScore(1, 8, `Very few test files found (~${Math.round(coverageRatio * 100)}%)`);
+        this.addIssue('Very low test coverage', 'Add comprehensive test suite with coverage');
+      }
+
+      // Enhanced error message with specific installation guidance
+      if (coverageResult.error.includes('No test script found')) {
+        this.addIssue('No test script configured', 'Add "test": "vitest" or "test": "jest" to package.json scripts');
+      } else if (coverageResult.error.includes('No coverage tool detected')) {
+        this.addIssue('No coverage tool available', 'Install coverage: npm install --save-dev c8 (for vitest) or jest --coverage');
+      } else {
+        this.addIssue('Coverage analysis failed', `${coverageResult.error}. Install: npm install --save-dev c8 nyc jest`);
+      }
     }
     
     this.setDetail('testFiles', testFiles.length);
     this.setDetail('sourceFiles', sourceFiles.length);
-    this.setDetail('testCoverage', coverageRatio);
+  }
+
+  /**
+   * Run coverage analysis using c8, nyc, or jest
+   * @returns {Promise<{success: boolean, data?: any, error?: string}>}
+   */
+  async runCoverageAnalysis() {
+    try {
+      // Check package.json for test script and coverage setup
+      const packageJson = await this.readPackageJson();
+      if (!packageJson || !packageJson.scripts || !packageJson.scripts.test) {
+        return { success: false, error: 'No test script found in package.json' };
+      }
+
+      const testScript = packageJson.scripts.test;
+      let coverageCommand = null;
+
+      // Detect coverage tools and build appropriate command
+      const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };
+      
+      if (deps['c8']) {
+        coverageCommand = `c8 --reporter=json ${testScript}`;
+      } else if (deps['nyc']) {
+        coverageCommand = `nyc --reporter=json ${testScript}`;
+      } else if (deps['jest']) {
+        coverageCommand = `${testScript} --coverage --coverageReporters=json`;
+      } else if (testScript.includes('vitest')) {
+        coverageCommand = `${testScript} --coverage --reporter=json`;
+      } else {
+        return { 
+          success: false, 
+          error: 'No coverage tool detected (c8, nyc, jest, vitest)' 
+        };
+      }
+
+      // Run coverage command
+      const output = execSync(coverageCommand, {
+        encoding: 'utf8',
+        timeout: 60000, // 60 second timeout
+        cwd: this.config.projectRoot || process.cwd(),
+        stdio: ['pipe', 'pipe', 'pipe']
+      });
+
+      // Parse coverage results based on tool
+      let coverageData;
+      
+      if (deps['c8'] || deps['nyc']) {
+        // c8/nyc JSON format
+        const jsonOutput = output.split('\n').find(line => line.startsWith('{'));
+        if (jsonOutput) {
+          const coverage = JSON.parse(jsonOutput);
+          const total = coverage.total;
+          coverageData = {
+            lines: total.lines.pct,
+            functions: total.functions.pct,
+            branches: total.branches.pct,
+            statements: total.statements.pct
+          };
+        }
+      } else if (deps['jest'] || testScript.includes('vitest')) {
+        // Jest/Vitest coverage format - look for coverage summary
+        const lines = output.split('\n');
+        const summaryLine = lines.find(line => line.includes('coverage'));
+        if (summaryLine) {
+          // Simple regex to extract percentages
+          const percentages = summaryLine.match(/(\d+\.?\d*)%/g);
+          if (percentages && percentages.length >= 4) {
+            coverageData = {
+              lines: parseFloat(percentages[0]),
+              functions: parseFloat(percentages[1]),
+              branches: parseFloat(percentages[2]),
+              statements: parseFloat(percentages[3])
+            };
+          }
+        }
+      }
+
+      if (!coverageData) {
+        return { success: false, error: 'Could not parse coverage output' };
+      }
+
+      return { success: true, data: coverageData };
+
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
   }
 
   async analyzeTestOrganization() {

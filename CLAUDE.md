@@ -44,10 +44,15 @@ This is a Context7 MCP (Model Context Protocol) integration package that provide
 - Checks required files: AGENTS.md, CLAUDE.md, .agent-os/ directory
 
 **Scoring System (`src/scoring/`)**:
-- `ProjectScorer.js` - Main scoring orchestrator with 7-category evaluation
+- `ProjectScorer.js` - Main scoring orchestrator with 7-category evaluation and smart project detection
 - `ScoringReport.js` - Multi-format report generation (console, JSON, HTML)
 - `RecommendationEngine.js` - Prioritized improvement suggestions
-- `analyzers/` - 7 specialized analyzers for comprehensive quality assessment
+- `analyzers/` - 7 specialized analyzers with real tool integration:
+  - Enhanced pattern recognition for advanced architecture patterns
+  - Real npm audit integration for vulnerability scanning
+  - ESLint API integration for actual code quality metrics
+  - c8/nyc/jest integration for true test coverage analysis
+  - Deep Context7/MCP compliance validation
 
 **Testing (`src/testing/` & `tests/`)**:
 - `MCPTester.js` - Tests MCP server functionality and connection handling
@@ -68,14 +73,14 @@ This is a Context7 MCP (Model Context Protocol) integration package that provide
 
 The integrated scoring system evaluates projects across 7 categories (100 points total):
 
-### Scoring Categories
-- **Code Structure & Architecture** (20pts) - File organization, module boundaries, naming conventions
-- **Code Quality & Maintainability** (20pts) - ESLint/Prettier setup, documentation, complexity
+### Scoring Categories with Real Tool Integration
+- **Code Structure & Architecture** (20pts) - File organization, advanced pattern detection (MVC, Service Layer, Repository Pattern, etc.)
+- **Code Quality & Maintainability** (20pts) - Real ESLint API analysis with error/warning counts, TypeScript integration
 - **Performance & Optimization** (15pts) - Bundle optimization, code splitting, lazy loading
-- **Testing & Documentation** (15pts) - Test coverage, organization, testing frameworks
-- **Security & Error Handling** (15pts) - Vulnerabilities, secrets management, error patterns
-- **Developer Experience** (10pts) - Tooling setup, documentation quality, workflow
-- **Completeness & Production Readiness** (5pts) - TODO completion, deployment configuration
+- **Testing & Documentation** (15pts) - Real coverage metrics via c8/nyc/jest, test organization analysis  
+- **Security & Error Handling** (15pts) - npm audit vulnerability scanning, secrets management, error patterns
+- **Developer Experience** (10pts) - Tooling setup, documentation quality, workflow optimization
+- **Completeness & Production Readiness** (5pts) - Deep Context7/MCP compliance validation, production readiness
 
 ### Usage Examples
 ```bash
@@ -94,6 +99,37 @@ context7 score --format html --output report.html
 # Score specific categories only
 context7 score --categories structure,quality,testing
 ```
+
+### Advanced Features (Phase 1 + Quick Wins)
+
+**Real Tool Integration:**
+- Replaces pattern matching with actual tool APIs for accurate analysis
+- npm audit for CVE vulnerability scanning with severity levels
+- ESLint API integration providing real error/warning counts and rule violations
+- Coverage tools (c8, nyc, jest) for accurate line/branch/function coverage metrics
+
+**Enhanced Pattern Recognition:**
+- Detects 16+ advanced architecture patterns: MVC, Service Layer, Repository Pattern, Observer Pattern, Factory Pattern, Strategy Pattern, Middleware, State Management, Error Boundaries, etc.
+- Smart project type detection (React, Vue, Node.js, MCP servers, CLI tools, libraries)
+- Framework-specific validation with appropriate scoring adjustments
+
+**Deep Context7/MCP Compliance:**
+- AGENTS.md structure validation with required sections
+- CLAUDE.md content quality analysis  
+- MCP server implementation quality assessment
+- Agent OS configuration validation
+
+**Graceful Degradation:**
+- Intelligent fallback to pattern matching when tools unavailable
+- Helpful installation guidance for missing dependencies
+- Tool availability checking with setup recommendations
+- Non-blocking analysis when external tools fail
+
+### Performance & Quality Improvements
+- **Industry-grade accuracy** replacing surface-level analysis
+- **Professional credibility** with real tool integration
+- **Actionable insights** with specific error counts and recommendations
+- **Zero external dependencies** using built-in Node.js tools
 
 ## Entry Points
 

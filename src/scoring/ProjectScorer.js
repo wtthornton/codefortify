@@ -13,6 +13,7 @@
  */
 
 import fs from 'fs/promises';
+import { existsSync, readFileSync } from 'fs';
 import path from 'path';
 import { StructureAnalyzer } from './analyzers/StructureAnalyzer.js';
 import { QualityAnalyzer } from './analyzers/QualityAnalyzer.js';
@@ -34,6 +35,11 @@ export class ProjectScorer {
       categories: config.categories || ['all'],
       ...config
     };
+
+    // QUICK WIN: Smart project type detection if not specified
+    if (!config.projectType || config.projectType === 'javascript') {
+      this.config.projectType = this.detectProjectType();
+    }
 
     this.analyzers = this.initializeAnalyzers();
     this.reportGenerator = new ScoringReport(this.config);
@@ -84,6 +90,9 @@ export class ProjectScorer {
     try {
       console.log(`🎯 Analyzing ${this.config.projectName} project quality...`);
       console.log('══════════════════════════════════════════════════════════');
+
+      // Check tool availability and provide guidance
+      await this.checkToolAvailability();
 
       // Determine which categories to analyze
       const categoriesToAnalyze = categories.includes('all') 
@@ -404,6 +413,149 @@ export class ProjectScorer {
       level: debtScore < 5 ? 'low' : debtScore < 15 ? 'medium' : 'high',
       top_issues: issues.slice(0, 5) // Top 5 most critical issues
     };
+  }
+
+  /**
+   * Check availability of key analysis tools and provide user guidance
+   */
+  async checkToolAvailability() {
+    const availabilityStatus = {
+      npm: false,
+      eslint: false,
+      coverage: false,
+      suggestions: []
+    };
+
+    try {
+      // Check npm availability
+      try {
+        const { execSync } = await import('child_process');
+        execSync('npm --version', { stdio: 'ignore' });
+        availabilityStatus.npm = true;
+      } catch (error) {
+        availabilityStatus.suggestions.push('🔧 Install npm for dependency vulnerability scanning');
+      }
+
+      // Check ESLint availability
+      if (existsSync(path.join(this.config.projectRoot, 'package.json'))) {
+        const packageJson = JSON.parse(readFileSync(path.join(this.config.projectRoot, 'package.json'), 'utf-8'));
+        const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };
+        
+        if (deps.eslint) {
+          availabilityStatus.eslint = true;
+        } else {
+          const hasEslintConfig = existsSync(path.join(this.config.projectRoot, '.eslintrc.js')) ||
+                                existsSync(path.join(this.config.projectRoot, '.eslintrc.json')) ||
+                                existsSync(path.join(this.config.projectRoot, 'eslint.config.js'));
+          
+          if (hasEslintConfig) {
+            availabilityStatus.suggestions.push('🔧 Install ESLint: npm install --save-dev eslint');
+          }
+        }
+
+        // Check coverage tools
+        if (deps.c8 || deps.nyc || deps.jest) {
+          availabilityStatus.coverage = true;
+        } else if (packageJson.scripts && packageJson.scripts.test) {
+          availabilityStatus.suggestions.push('🔧 Add coverage: npm install --save-dev c8 (for vitest) or jest --coverage');
+        }
+      }
+
+      // Display suggestions if any tools are missing
+      if (availabilityStatus.suggestions.length > 0) {
+        console.log('\n💡 Tool Availability Recommendations:');
+        console.log('────────────────────────────────────────────────────────────');
+        availabilityStatus.suggestions.forEach(suggestion => console.log(suggestion));
+        console.log('');
+      }
+
+      return availabilityStatus;
+    } catch (error) {
+      // Silently continue if availability check fails
+      return availabilityStatus;
+    }
+  }
+
+  /**
+   * QUICK WIN: Smart project type detection based on dependencies and file structure
+   * @returns {string} Detected project type
+   */
+  detectProjectType() {
+    try {
+      const packageJsonPath = path.join(this.config.projectRoot, 'package.json');
+      
+      // Check if package.json exists
+      if (!existsSync(packageJsonPath)) {
+        return 'javascript'; // Default fallback
+      }
+
+      const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
+      const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };
+      
+      // Enhanced detection logic with more specificity
+      // Frontend frameworks (check in priority order)
+      if (deps.react || deps['react-dom']) {
+        if (deps['next'] || deps['gatsby']) return 'react-webapp';
+        if (deps['react-native']) return 'react-native';
+        return 'react-webapp';
+      }
+      
+      if (deps.vue || deps['@vue/core']) {
+        if (deps.nuxt) return 'vue-webapp';
+        return 'vue-webapp';
+      }
+      
+      if (deps.svelte || deps['svelte-check']) {
+        if (deps['@sveltejs/kit']) return 'svelte-webapp';
+        return 'svelte-webapp';
+      }
+      
+      if (deps.angular || deps['@angular/core']) {
+        return 'angular-webapp';
+      }
+      
+      // Backend frameworks
+      if (deps.express || deps.fastify || deps.koa || deps.hapi) {
+        return 'node-api';
+      }
+      
+      // Context7/MCP specific detection
+      if (deps['@modelcontextprotocol/sdk'] || 
+          packageJson.name?.includes('mcp') || 
+          packageJson.name?.includes('context7')) {
+        return 'mcp-server';
+      }
+      
+      // CLI tools
+      if (deps.commander || deps.yargs || packageJson.bin) {
+        return 'cli-tool';
+      }
+      
+      // Check file structure for additional clues
+      const hasPublicDir = existsSync(path.join(this.config.projectRoot, 'public'));
+      const hasSrcDir = existsSync(path.join(this.config.projectRoot, 'src'));
+      const hasIndexHtml = existsSync(path.join(this.config.projectRoot, 'index.html')) ||
+                          existsSync(path.join(this.config.projectRoot, 'public/index.html'));
+      
+      if (hasPublicDir && hasIndexHtml) {
+        return 'webapp'; // Generic web application
+      }
+      
+      if (hasSrcDir && !hasIndexHtml) {
+        return 'node-api'; // Likely server-side
+      }
+      
+      // TypeScript project detection
+      if (existsSync(path.join(this.config.projectRoot, 'tsconfig.json'))) {
+        return deps.express ? 'node-api' : 'typescript';
+      }
+      
+      return 'javascript'; // Default fallback
+      
+    } catch (error) {
+      console.warn(`Project type detection failed: ${error.message}`);
+      return 'javascript';
+    }
   }
 
   // Static factory methods

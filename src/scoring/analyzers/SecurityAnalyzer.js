@@ -10,6 +10,7 @@
  */
 
 import { BaseAnalyzer } from './BaseAnalyzer.js';
+import { execSync } from 'child_process';
 
 export class SecurityAnalyzer extends BaseAnalyzer {
   constructor(config) {
@@ -47,35 +48,47 @@ export class SecurityAnalyzer extends BaseAnalyzer {
       this.addScore(3, 6, 'No external dependencies (no vulnerability risk)');
       return;
     }
-    
-    // Check for security-related packages
-    const securityPackages = [
-      'helmet', 'cors', 'express-rate-limit', 'bcrypt', 'bcryptjs',
-      'jsonwebtoken', 'passport', 'express-validator', 'sanitize-html',
-      'dompurify', 'xss', 'csrf'
-    ];
-    
-    const hasSecurityPackages = securityPackages.some(pkg => deps[pkg]);
-    if (hasSecurityPackages) {
-      score += 2;
-      this.addScore(2, 2, 'Security-focused packages detected');
-    }
-    
-    // Check for known problematic packages or patterns
-    const problematicPackages = [
-      'eval', 'vm2', 'serialize-javascript', 'node-serialize',
-      'safer-eval'
-    ];
-    
-    const hasProblematicPackages = problematicPackages.some(pkg => deps[pkg]);
-    if (hasProblematicPackages) {
-      this.addIssue('Potentially unsafe packages detected', 'Review usage of eval-like packages');
+
+    // PHASE 1 UPGRADE: Use npm audit for real vulnerability scanning
+    const auditResult = await this.runNpmAudit();
+    if (auditResult.success) {
+      const vulnData = auditResult.data;
+      const totalVulns = vulnData.metadata?.vulnerabilities?.total || 0;
+      const highVulns = vulnData.metadata?.vulnerabilities?.high || 0;
+      const criticalVulns = vulnData.metadata?.vulnerabilities?.critical || 0;
+
+      // Score based on actual vulnerability scan results
+      if (totalVulns === 0) {
+        score += 4;
+        this.addScore(4, 4, 'No vulnerabilities found in dependencies (npm audit)');
+      } else if (criticalVulns === 0 && highVulns === 0) {
+        score += 3;
+        this.addScore(3, 4, `Only low/moderate vulnerabilities found (${totalVulns} total)`);
+      } else if (criticalVulns === 0) {
+        score += 2;
+        this.addScore(2, 4, `High vulnerabilities found (${highVulns} high, ${totalVulns} total)`);
+        this.addIssue(`${highVulns} high severity vulnerabilities`, 'Run npm audit fix to resolve security issues');
+      } else {
+        score += 1;
+        this.addScore(1, 4, `Critical vulnerabilities detected (${criticalVulns} critical, ${totalVulns} total)`);
+        this.addIssue(`${criticalVulns} critical vulnerabilities`, 'Immediately run npm audit fix - critical security risk');
+      }
+
+      this.setDetail('npmAuditResult', {
+        total: totalVulns,
+        critical: criticalVulns,
+        high: highVulns,
+        moderate: vulnData.metadata?.vulnerabilities?.moderate || 0,
+        low: vulnData.metadata?.vulnerabilities?.low || 0
+      });
     } else {
-      score += 1;
-      this.addScore(1, 1, 'No obviously unsafe packages detected');
+      // Graceful degradation: Fallback to pattern matching with helpful guidance
+      this.addScore(2, 4, 'npm audit unavailable - using pattern analysis (install npm for better accuracy)');
+      this.addIssue('npm audit not available', 'For accurate vulnerability scanning, ensure npm is installed and project has package.json');
+      await this.fallbackVulnerabilityAnalysis(deps, score);
     }
     
-    // Check for outdated package indicators
+    // Check for outdated package indicators (2pts remaining)
     const hasPackageLock = await this.fileExists('package-lock.json') || 
                           await this.fileExists('yarn.lock') ||
                           await this.fileExists('pnpm-lock.yaml');
@@ -95,17 +108,70 @@ export class SecurityAnalyzer extends BaseAnalyzer {
       this.addIssue('No audit script in package.json', 'Add "audit": "npm audit" script for vulnerability checking');
     }
     
-    // Check dependency count (fewer is generally more secure)
-    if (depsCount < 20) {
-      score += 1;
-      this.addScore(1, 1, `Reasonable dependency count (${depsCount})`);
-    } else if (depsCount > 100) {
-      this.addIssue('High dependency count', 'Large dependency trees increase attack surface');
+    this.setDetail('dependencyCount', depsCount);
+    this.setDetail('hasLockFile', hasPackageLock);
+  }
+
+  /**
+   * Run npm audit and parse results
+   * @returns {Promise<{success: boolean, data: any}>}
+   */
+  async runNpmAudit() {
+    try {
+      // Run npm audit with JSON output
+      const output = execSync('npm audit --json', { 
+        encoding: 'utf8',
+        timeout: 30000, // 30 second timeout
+        cwd: this.config.projectRoot || process.cwd()
+      });
+      
+      const auditData = JSON.parse(output);
+      return { success: true, data: auditData };
+    } catch (error) {
+      // npm audit returns non-zero exit code when vulnerabilities found
+      if (error.stdout) {
+        try {
+          const auditData = JSON.parse(error.stdout);
+          return { success: true, data: auditData };
+        } catch (parseError) {
+          return { success: false, error: 'Failed to parse npm audit output' };
+        }
+      }
+      
+      return { success: false, error: error.message };
+    }
+  }
+
+  /**
+   * Fallback vulnerability analysis using pattern matching
+   * @param {Object} deps - Dependencies object
+   * @param {number} currentScore - Current score
+   */
+  async fallbackVulnerabilityAnalysis(deps, currentScore) {
+    // Check for security-related packages
+    const securityPackages = [
+      'helmet', 'cors', 'express-rate-limit', 'bcrypt', 'bcryptjs',
+      'jsonwebtoken', 'passport', 'express-validator', 'sanitize-html',
+      'dompurify', 'xss', 'csrf'
+    ];
+    
+    const hasSecurityPackages = securityPackages.some(pkg => deps[pkg]);
+    if (hasSecurityPackages) {
+      this.addScore(1, 1, 'Security-focused packages detected');
     }
     
-    this.setDetail('dependencyCount', depsCount);
-    this.setDetail('hasSecurityPackages', hasSecurityPackages);
-    this.setDetail('hasLockFile', hasPackageLock);
+    // Check for known problematic packages
+    const problematicPackages = [
+      'eval', 'vm2', 'serialize-javascript', 'node-serialize',
+      'safer-eval'
+    ];
+    
+    const hasProblematicPackages = problematicPackages.some(pkg => deps[pkg]);
+    if (hasProblematicPackages) {
+      this.addIssue('Potentially unsafe packages detected', 'Review usage of eval-like packages');
+    } else {
+      this.addScore(1, 1, 'No obviously unsafe packages detected');
+    }
   }
 
   async analyzeSecretsManagement() {

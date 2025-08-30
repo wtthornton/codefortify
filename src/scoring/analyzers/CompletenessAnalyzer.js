@@ -25,6 +25,257 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
     await this.analyzeTodoAndPlaceholders(); // 2pts
     await this.analyzeProductionReadiness(); // 2pts
     await this.analyzeProjectMetadata(); // 1pt
+    
+    // QUICK WIN: Context7/MCP compliance deep validation (+2 bonus points)
+    await this.analyzeContext7MCPCompliance(); // bonus 2pts
+  }
+
+  /**
+   * QUICK WIN: Deep Context7/MCP compliance validation
+   * @returns {Promise<void>}
+   */
+  async analyzeContext7MCPCompliance() {
+    let score = 0;
+    const maxBonusScore = 2;
+    let complianceIssues = [];
+    let complianceFeatures = [];
+
+    try {
+      // 1. AGENTS.md deep validation (0.5pts)
+      const agentsCompliance = await this.validateAgentsFileStructure();
+      if (agentsCompliance.isValid) {
+        score += 0.5;
+        complianceFeatures.push('AGENTS.md structure');
+      } else {
+        complianceIssues.push(...agentsCompliance.issues);
+      }
+
+      // 2. CLAUDE.md deep validation (0.5pts)
+      const claudeCompliance = await this.validateClaudeFileStructure();
+      if (claudeCompliance.isValid) {
+        score += 0.5;
+        complianceFeatures.push('CLAUDE.md structure');
+      } else {
+        complianceIssues.push(...claudeCompliance.issues);
+      }
+
+      // 3. MCP Server implementation quality (0.5pts)
+      const mcpServerQuality = await this.analyzeMCPServerImplementation();
+      if (mcpServerQuality.isValid) {
+        score += 0.5;
+        complianceFeatures.push('MCP server implementation');
+      } else {
+        complianceIssues.push(...mcpServerQuality.issues);
+      }
+
+      // 4. Agent OS configuration quality (0.5pts)
+      const agentOsCompliance = await this.validateAgentOSConfiguration();
+      if (agentOsCompliance.isValid) {
+        score += 0.5;
+        complianceFeatures.push('Agent OS configuration');
+      } else {
+        complianceIssues.push(...agentOsCompliance.issues);
+      }
+
+      // Apply scoring
+      if (score > 0) {
+        this.addScore(score, maxBonusScore, `Context7/MCP compliance features: ${complianceFeatures.join(', ')}`);
+      }
+
+      // Report issues
+      for (const issue of complianceIssues) {
+        this.addIssue(issue.title, issue.description);
+      }
+
+      this.setDetail('context7Compliance', {
+        score,
+        features: complianceFeatures,
+        issues: complianceIssues.length
+      });
+
+    } catch (error) {
+      this.addIssue('Context7/MCP compliance analysis failed', error.message);
+    }
+  }
+
+  /**
+   * Validate AGENTS.md file structure and content
+   */
+  async validateAgentsFileStructure() {
+    try {
+      if (!await this.fileExists('AGENTS.md')) {
+        return { isValid: false, issues: [{ title: 'AGENTS.md missing', description: 'Create AGENTS.md following Context7 standards' }] };
+      }
+
+      const content = await this.readFile('AGENTS.md');
+      const issues = [];
+      let validSections = 0;
+
+      // Check for required sections
+      const requiredSections = [
+        'Project Overview',
+        'Dev Environment Tips', 
+        'Testing Instructions',
+        'PR Instructions'
+      ];
+
+      for (const section of requiredSections) {
+        if (content.includes(section) || content.includes(section.toLowerCase())) {
+          validSections++;
+        } else {
+          issues.push({ title: `AGENTS.md missing ${section}`, description: `Add ${section} section to AGENTS.md` });
+        }
+      }
+
+      // Check for development commands
+      if (!content.includes('npm') && !content.includes('yarn') && !content.includes('scripts')) {
+        issues.push({ title: 'AGENTS.md missing development commands', description: 'Add setup and development commands section' });
+      } else {
+        validSections++;
+      }
+
+      return { isValid: validSections >= 4, issues };
+    } catch (error) {
+      return { isValid: false, issues: [{ title: 'AGENTS.md validation failed', description: error.message }] };
+    }
+  }
+
+  /**
+   * Validate CLAUDE.md file structure and content  
+   */
+  async validateClaudeFileStructure() {
+    try {
+      if (!await this.fileExists('CLAUDE.md')) {
+        return { isValid: false, issues: [{ title: 'CLAUDE.md missing', description: 'Create CLAUDE.md following Context7 standards' }] };
+      }
+
+      const content = await this.readFile('CLAUDE.md');
+      const issues = [];
+      let validSections = 0;
+
+      // Check for development commands section
+      if (content.includes('Development Commands') || content.includes('Scripts')) {
+        validSections++;
+      } else {
+        issues.push({ title: 'CLAUDE.md missing development commands', description: 'Add Development Commands section' });
+      }
+
+      // Check for project architecture description
+      if (content.includes('Architecture') || content.includes('Project Structure') || content.includes('Components')) {
+        validSections++;
+      } else {
+        issues.push({ title: 'CLAUDE.md missing architecture info', description: 'Add project architecture description' });
+      }
+
+      // Check for dependency information
+      if (content.includes('Dependencies') || content.includes('Key Dependencies')) {
+        validSections++;
+      } else {
+        issues.push({ title: 'CLAUDE.md missing dependency info', description: 'Add key dependencies section' });
+      }
+
+      return { isValid: validSections >= 2, issues };
+    } catch (error) {
+      return { isValid: false, issues: [{ title: 'CLAUDE.md validation failed', description: error.message }] };
+    }
+  }
+
+  /**
+   * Analyze MCP server implementation quality
+   */
+  async analyzeMCPServerImplementation() {
+    try {
+      const issues = [];
+      let qualityScore = 0;
+
+      // Check for MCP server file
+      const mcpServerExists = await this.fileExists('src/mcp-server.js') || 
+                            await this.fileExists('mcp-server.js') ||
+                            await this.fileExists('src/server/mcp-server.js');
+
+      if (!mcpServerExists) {
+        return { isValid: false, issues: [{ title: 'MCP server missing', description: 'Create MCP server implementation' }] };
+      }
+
+      // Find and analyze MCP server file
+      const serverFiles = ['src/mcp-server.js', 'mcp-server.js', 'src/server/mcp-server.js'];
+      let serverContent = '';
+
+      for (const file of serverFiles) {
+        if (await this.fileExists(file)) {
+          serverContent = await this.readFile(file);
+          break;
+        }
+      }
+
+      if (serverContent) {
+        // Check for MCP protocol implementation
+        if (serverContent.includes('@modelcontextprotocol') || serverContent.includes('MCP')) {
+          qualityScore++;
+        }
+
+        // Check for resource handlers
+        if (serverContent.includes('list_resources') || serverContent.includes('listResources')) {
+          qualityScore++;
+        }
+
+        // Check for tool handlers  
+        if (serverContent.includes('list_tools') || serverContent.includes('listTools')) {
+          qualityScore++;
+        }
+
+        // Check for proper error handling
+        if (serverContent.includes('try') && serverContent.includes('catch')) {
+          qualityScore++;
+        }
+      }
+
+      return { isValid: qualityScore >= 3, issues: qualityScore < 3 ? 
+        [{ title: 'MCP server implementation incomplete', description: 'Enhance MCP server with proper resource/tool handlers' }] : [] };
+
+    } catch (error) {
+      return { isValid: false, issues: [{ title: 'MCP server analysis failed', description: error.message }] };
+    }
+  }
+
+  /**
+   * Validate Agent OS configuration
+   */
+  async validateAgentOSConfiguration() {
+    try {
+      const issues = [];
+      let validConfig = 0;
+
+      // Check for .agent-os directory
+      if (!await this.fileExists('.agent-os')) {
+        return { isValid: false, issues: [{ title: 'Agent OS directory missing', description: 'Create .agent-os configuration directory' }] };
+      }
+
+      // Check for agent-os config file
+      const configExists = await this.fileExists('.agent-os/config.yml') ||
+                          await this.fileExists('.agent-os/config.yaml') ||
+                          await this.fileExists('.agent-os/agent-os.yml');
+
+      if (configExists) {
+        validConfig++;
+      } else {
+        issues.push({ title: 'Agent OS config missing', description: 'Add agent-os configuration file' });
+      }
+
+      // Check for MCP configuration  
+      const mcpConfigExists = await this.fileExists('.agent-os/mcp-config.json') ||
+                             await this.fileExists('.agent-os/mcp.json');
+
+      if (mcpConfigExists) {
+        validConfig++;
+      } else {
+        issues.push({ title: 'MCP configuration missing', description: 'Add MCP configuration in .agent-os/' });
+      }
+
+      return { isValid: validConfig >= 1, issues };
+    } catch (error) {
+      return { isValid: false, issues: [{ title: 'Agent OS validation failed', description: error.message }] };
+    }
   }
 
   async analyzeTodoAndPlaceholders() {

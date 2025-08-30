@@ -136,7 +136,7 @@ npm run score        # Project quality analysis
 
 ## Project Quality Scoring System
 
-**Integrated scoring system** evaluates projects across 7 categories (100 points total):
+**Enhanced scoring system with real tool integration** evaluates projects across 7 categories (100 points total):
 
 **Scoring Architecture:**
 - `ProjectScorer.js` - Main orchestrator with category management
@@ -144,14 +144,14 @@ npm run score        # Project quality analysis
 - `RecommendationEngine.js` - Prioritized improvement suggestions
 - `BaseAnalyzer.js` - Abstract base class for all analyzers
 
-**7 Analyzer Categories:**
-1. **StructureAnalyzer** (20pts) - File organization, architecture, dependencies
-2. **QualityAnalyzer** (20pts) - ESLint/Prettier, documentation, complexity
-3. **PerformanceAnalyzer** (15pts) - Bundle optimization, code splitting
-4. **TestingAnalyzer** (15pts) - Test coverage, organization, frameworks
-5. **SecurityAnalyzer** (15pts) - Vulnerabilities, secrets, error handling
-6. **DeveloperExperienceAnalyzer** (10pts) - Tooling, documentation, workflow
-7. **CompletenessAnalyzer** (5pts) - TODO completion, production readiness
+**7 Enhanced Analyzer Categories:**
+1. **StructureAnalyzer** (20pts) - Advanced pattern detection (MVC, Service Layer, Repository, etc.), smart project type detection
+2. **QualityAnalyzer** (20pts) - Real ESLint API integration with error/warning counts, TypeScript analysis
+3. **PerformanceAnalyzer** (15pts) - Bundle optimization, code splitting analysis
+4. **TestingAnalyzer** (15pts) - Real coverage integration (c8, nyc, jest), test organization
+5. **SecurityAnalyzer** (15pts) - npm audit CVE scanning, secrets management, error handling
+6. **DeveloperExperienceAnalyzer** (10pts) - Enhanced tooling analysis, documentation quality
+7. **CompletenessAnalyzer** (5pts) - Deep Context7/MCP compliance validation, production readiness
 
 **Usage Examples:**
 ```bash
@@ -169,8 +169,10 @@ context7 score --format html --output report.html
 ```
 
 **Development Notes:**
-- This is a pure ESM package (no build step required)
-- MCP server uses stdio transport by default
-- CLI auto-detects project types from package.json dependencies
-- Configuration templates are copied from `templates/` directory
-- Scoring system supports multiple output formats and customizable categories
+- Pure ESM package with real tool integration (Phase 1 + Quick Wins implemented)
+- Enhanced with npm audit, ESLint API, and coverage tool integration
+- Smart project type detection with 10+ supported project types
+- Advanced architecture pattern recognition (16+ patterns detected)
+- Graceful degradation with helpful setup guidance when tools unavailable
+- Deep Context7/MCP compliance validation
+- Multiple output formats with industry-grade accuracy

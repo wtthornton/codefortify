@@ -148,20 +148,202 @@ export class StructureAnalyzer extends BaseAnalyzer {
     const maxScore = 3;
     
     try {
-      // Check for architectural patterns based on project type
+      // QUICK WIN: Enhanced pattern recognition for architecture
+      const architecturePatterns = await this.detectArchitecturePatterns();
+      
       if (this.isReactProject()) {
-        score += await this.analyzeReactArchitecture();
+        score += await this.analyzeReactArchitecture(architecturePatterns);
       } else if (this.isVueProject()) {
-        score += await this.analyzeVueArchitecture();
+        score += await this.analyzeVueArchitecture(architecturePatterns);
       } else if (this.isNodeProject()) {
-        score += await this.analyzeNodeArchitecture();
+        score += await this.analyzeNodeArchitecture(architecturePatterns);
       } else {
-        score += await this.analyzeGeneralArchitecture();
+        score += await this.analyzeGeneralArchitecture(architecturePatterns);
       }
+
+      // Bonus points for advanced patterns
+      score += this.scoreAdvancedPatterns(architecturePatterns);
+      
+      this.setDetail('detectedPatterns', architecturePatterns);
       
     } catch (error) {
       this.addIssue(`Architecture pattern analysis failed: ${error.message}`);
     }
+  }
+
+  /**
+   * QUICK WIN: Detect advanced architecture patterns
+   * @returns {Promise<Object>} Detected patterns
+   */
+  async detectArchitecturePatterns() {
+    const patterns = {
+      mvc: false,
+      layeredArchitecture: false,
+      serviceLayer: false,
+      repositoryPattern: false,
+      observerPattern: false,
+      singletonPattern: false,
+      factoryPattern: false,
+      strategyPattern: false,
+      middlewarePattern: false,
+      compositionPattern: false,
+      moduleFederation: false,
+      microServices: false,
+      eventDriven: false,
+      stateManagement: false,
+      errorBoundaries: false,
+      dependencyInjection: false
+    };
+
+    const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx']);
+    
+    for (const file of files.slice(0, 20)) { // Analyze sample files
+      try {
+        const content = await this.readFile(file);
+        const lowerContent = content.toLowerCase();
+        
+        // MVC Pattern
+        if (file.includes('controller') || file.includes('model') || file.includes('view') ||
+            lowerContent.includes('controller') || lowerContent.includes('model')) {
+          patterns.mvc = true;
+        }
+        
+        // Service Layer
+        if (file.includes('service') || file.includes('Service') || lowerContent.includes('service')) {
+          patterns.serviceLayer = true;
+        }
+        
+        // Repository Pattern
+        if (file.includes('repository') || file.includes('Repository') || 
+            lowerContent.includes('repository') || lowerContent.includes('findby') || 
+            lowerContent.includes('findall')) {
+          patterns.repositoryPattern = true;
+        }
+        
+        // Observer Pattern
+        if (content.includes('addEventListener') || content.includes('subscribe') ||
+            content.includes('observer') || content.includes('Observer') ||
+            content.includes('EventEmitter')) {
+          patterns.observerPattern = true;
+        }
+        
+        // Singleton Pattern
+        if (content.includes('getInstance') || content.includes('singleton') ||
+            content.match(/class\s+\w+\s*{[\s\S]*static\s+instance/)) {
+          patterns.singletonPattern = true;
+        }
+        
+        // Factory Pattern
+        if (content.includes('createInstance') || content.includes('factory') ||
+            content.includes('Factory') || content.includes('create()')) {
+          patterns.factoryPattern = true;
+        }
+        
+        // Middleware Pattern
+        if (content.includes('middleware') || content.includes('next()') ||
+            content.includes('(req, res, next)') || file.includes('middleware')) {
+          patterns.middlewarePattern = true;
+        }
+        
+        // Strategy Pattern
+        if (content.includes('strategy') || content.includes('Strategy') ||
+            content.match(/\w+Strategy/)) {
+          patterns.strategyPattern = true;
+        }
+        
+        // React/Vue specific patterns
+        if (content.includes('React.memo') || content.includes('useMemo') ||
+            content.includes('useCallback') || content.includes('HOC') ||
+            content.includes('withRouter') || content.includes('compose(')) {
+          patterns.compositionPattern = true;
+        }
+        
+        // State Management
+        if (content.includes('Redux') || content.includes('Vuex') ||
+            content.includes('Zustand') || content.includes('Pinia') ||
+            content.includes('useContext') || content.includes('createContext')) {
+          patterns.stateManagement = true;
+        }
+        
+        // Error Boundaries (React)
+        if (content.includes('componentDidCatch') || content.includes('ErrorBoundary') ||
+            content.includes('getDerivedStateFromError')) {
+          patterns.errorBoundaries = true;
+        }
+        
+        // Dependency Injection
+        if (content.includes('inject') || content.includes('@Injectable') ||
+            content.includes('container.resolve') || content.includes('DI')) {
+          patterns.dependencyInjection = true;
+        }
+        
+        // Event-driven architecture
+        if (content.includes('EventBus') || content.includes('emit(') ||
+            content.includes('dispatch(') || content.includes('publish(')) {
+          patterns.eventDriven = true;
+        }
+        
+      } catch (error) {
+        // Skip files that can't be read
+      }
+    }
+    
+    // Check for layered architecture in directory structure
+    const directories = await this.getAllDirectories();
+    if (directories.some(d => d.includes('models')) &&
+        directories.some(d => d.includes('views')) &&
+        directories.some(d => d.includes('controllers') || d.includes('services'))) {
+      patterns.layeredArchitecture = true;
+    }
+    
+    return patterns;
+  }
+
+  /**
+   * Score advanced architectural patterns (+0.5 bonus points each, max +2pts)
+   */
+  scoreAdvancedPatterns(patterns) {
+    let bonusScore = 0;
+    const detectedAdvancedPatterns = [];
+    
+    if (patterns.layeredArchitecture) {
+      bonusScore += 0.5;
+      detectedAdvancedPatterns.push('Layered Architecture');
+    }
+    
+    if (patterns.serviceLayer) {
+      bonusScore += 0.3;
+      detectedAdvancedPatterns.push('Service Layer');
+    }
+    
+    if (patterns.repositoryPattern) {
+      bonusScore += 0.4;
+      detectedAdvancedPatterns.push('Repository Pattern');
+    }
+    
+    if (patterns.stateManagement) {
+      bonusScore += 0.3;
+      detectedAdvancedPatterns.push('State Management');
+    }
+    
+    if (patterns.errorBoundaries) {
+      bonusScore += 0.2;
+      detectedAdvancedPatterns.push('Error Boundaries');
+    }
+    
+    if (patterns.middlewarePattern) {
+      bonusScore += 0.3;
+      detectedAdvancedPatterns.push('Middleware Pattern');
+    }
+    
+    // Cap bonus at +2 points
+    bonusScore = Math.min(bonusScore, 2);
+    
+    if (bonusScore > 0) {
+      this.addScore(bonusScore, 2, `Advanced patterns detected: ${detectedAdvancedPatterns.join(', ')}`);
+    }
+    
+    return bonusScore;
   }
 
   async analyzeDependencies() {

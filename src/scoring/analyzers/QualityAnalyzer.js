@@ -11,6 +11,7 @@
  */
 
 import { BaseAnalyzer } from './BaseAnalyzer.js';
+import path from 'path';
 
 export class QualityAnalyzer extends BaseAnalyzer {
   constructor(config) {
@@ -35,33 +36,151 @@ export class QualityAnalyzer extends BaseAnalyzer {
     let score = 0;
     const maxScore = 6;
     
-    // Check for ESLint configuration
-    const hasEslint = await this.fileExists('.eslintrc.js') || 
-                     await this.fileExists('.eslintrc.json') || 
-                     await this.fileExists('.eslintrc.yaml') ||
-                     await this.fileExists('eslint.config.js');
+    // PHASE 1 UPGRADE: Use ESLint API for real code quality analysis
+    const eslintResult = await this.runESLintAnalysis();
     
-    if (hasEslint) {
-      score += 3;
-      this.addScore(3, 3, 'ESLint configuration found');
+    if (eslintResult.success && eslintResult.hasConfig) {
+      const { errorCount, warningCount, ruleViolations } = eslintResult.data;
+      
+      // Score based on actual ESLint results (4pts)
+      if (errorCount === 0 && warningCount === 0) {
+        score += 4;
+        this.addScore(4, 4, 'No ESLint errors or warnings found');
+      } else if (errorCount === 0) {
+        score += 3;
+        this.addScore(3, 4, `Only ${warningCount} ESLint warnings found`);
+        this.addIssue(`${warningCount} ESLint warnings`, 'Fix ESLint warnings to improve code quality');
+      } else if (errorCount < 10) {
+        score += 2;
+        this.addScore(2, 4, `${errorCount} ESLint errors, ${warningCount} warnings`);
+        this.addIssue(`${errorCount} ESLint errors`, 'Fix ESLint errors for better code quality');
+      } else {
+        score += 1;
+        this.addScore(1, 4, `Many ESLint issues (${errorCount} errors, ${warningCount} warnings)`);
+        this.addIssue('High ESLint error count', 'Significant code quality issues detected');
+      }
+
+      this.setDetail('eslintAnalysis', {
+        errorCount,
+        warningCount,
+        topRuleViolations: ruleViolations.slice(0, 5)
+      });
+    } else if (eslintResult.hasConfig) {
+      // ESLint config exists but API failed - graceful degradation with helpful guidance
+      score += 2;
+      this.addScore(2, 4, 'ESLint configured but analysis failed - using config detection');
+      this.addIssue('ESLint analysis failed', `${eslintResult.error || 'Unable to run ESLint analysis'}. Try running: npx eslint --fix src/`);
     } else {
-      this.addIssue('No ESLint configuration found', 'Add ESLint for automated code quality checks');
+      // No ESLint configuration found - provide setup guidance
+      this.addIssue('No ESLint configuration found', 'Add ESLint: npx eslint --init');
     }
     
-    // Check for Prettier configuration
+    // Check for Prettier configuration (2pts)
     const hasPrettier = await this.fileExists('.prettierrc') ||
                        await this.fileExists('.prettierrc.json') ||
-                       await this.fileExists('prettier.config.js');
+                       await this.fileExists('prettier.config.js') ||
+                       await this.fileExists('.prettierrc.js');
     
     if (hasPrettier) {
-      score += 3;
-      this.addScore(3, 3, 'Prettier configuration found');
+      score += 2;
+      this.addScore(2, 2, 'Prettier configuration found');
     } else {
       this.addIssue('No Prettier configuration found', 'Add Prettier for consistent code formatting');
     }
     
-    this.setDetail('hasEslint', hasEslint);
     this.setDetail('hasPrettier', hasPrettier);
+    this.setDetail('hasEslintConfig', eslintResult.hasConfig);
+  }
+
+  /**
+   * Run ESLint analysis using the Node.js API
+   * @returns {Promise<{success: boolean, hasConfig: boolean, data?: any, error?: string}>}
+   */
+  async runESLintAnalysis() {
+    try {
+      // First check if ESLint config exists
+      const hasConfig = await this.fileExists('.eslintrc.js') || 
+                       await this.fileExists('.eslintrc.json') || 
+                       await this.fileExists('.eslintrc.yaml') ||
+                       await this.fileExists('eslint.config.js') ||
+                       await this.fileExists('.eslintrc.yml');
+
+      if (!hasConfig) {
+        return { success: false, hasConfig: false };
+      }
+
+      // Dynamic import ESLint to avoid requiring it as a dependency
+      const { ESLint } = await import('eslint').catch(() => ({ ESLint: null }));
+      
+      if (!ESLint) {
+        return { 
+          success: false, 
+          hasConfig: true, 
+          error: 'ESLint not installed. Run: npm install --save-dev eslint' 
+        };
+      }
+
+      // Create ESLint instance
+      const eslint = new ESLint({ 
+        cwd: this.config.projectRoot || process.cwd(),
+        useEslintrc: true
+      });
+
+      // Get files to lint
+      const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx']);
+      
+      if (files.length === 0) {
+        return { 
+          success: true, 
+          hasConfig: true, 
+          data: { errorCount: 0, warningCount: 0, ruleViolations: [] } 
+        };
+      }
+
+      // Lint files (limit to first 10 for performance)
+      const filesToLint = files.slice(0, 10).map(f => 
+        path.resolve(this.config.projectRoot || process.cwd(), f)
+      );
+      
+      const results = await eslint.lintFiles(filesToLint);
+      
+      // Aggregate results
+      let errorCount = 0;
+      let warningCount = 0;
+      const ruleViolations = {};
+
+      for (const result of results) {
+        errorCount += result.errorCount;
+        warningCount += result.warningCount;
+        
+        for (const message of result.messages) {
+          const rule = message.ruleId || 'unknown';
+          ruleViolations[rule] = (ruleViolations[rule] || 0) + 1;
+        }
+      }
+
+      // Sort rule violations by frequency
+      const sortedViolations = Object.entries(ruleViolations)
+        .map(([rule, count]) => ({ rule, count }))
+        .sort((a, b) => b.count - a.count);
+
+      return {
+        success: true,
+        hasConfig: true,
+        data: {
+          errorCount,
+          warningCount,
+          ruleViolations: sortedViolations
+        }
+      };
+
+    } catch (error) {
+      return { 
+        success: false, 
+        hasConfig: true, 
+        error: error.message 
+      };
+    }
   }
 
   async analyzeDocumentation() {
