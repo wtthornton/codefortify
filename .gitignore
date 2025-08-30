@@ -77,3 +77,8 @@ __pycache__/
 .temp/
 .tmp/
 *.tmp
+
+# Scoring system outputs
+scoring-*.json
+scoring-*.html
+nul
