@@ -107,7 +107,7 @@ describe('ProjectScorer', () => {
     });
 
     it.skip('should handle errors in categories', () => {
-      // Skipped due to complex results structure initialization  
+      // Skipped due to complex results structure initialization
       // Core functionality tested in integration tests
     });
 
@@ -131,7 +131,7 @@ describe('ProjectScorer', () => {
     });
 
     it.skip('should create scorer via static autoDetectAndScore method', async () => {
-      // Skipped due to long execution time and timeout issues  
+      // Skipped due to long execution time and timeout issues
       // Core functionality tested in integration tests
     });
 

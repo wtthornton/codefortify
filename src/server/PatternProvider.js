@@ -32,7 +32,7 @@ export class PatternProvider {
       default:
         patterns = this.getJavaScriptPatterns();
       }
-      
+
       console.error('PatternProvider: Patterns generated successfully');
       return patterns;
     } catch (error) {
@@ -44,7 +44,7 @@ export class PatternProvider {
   async getPattern(patternType, framework = this.config.projectType) {
     try {
       console.error(`PatternProvider: Getting pattern ${patternType} for ${framework}`);
-      
+
       const patterns = {
         react: {
           component: () => this.getReactComponentPattern(),
@@ -73,11 +73,11 @@ export class PatternProvider {
       const frameworkKey = framework.split('-')[0]; // react-webapp -> react
       const frameworkPatterns = patterns[frameworkKey] || patterns.javascript;
       const patternGenerator = frameworkPatterns[patternType];
-      
+
       if (!patternGenerator) {
         return `Pattern '${patternType}' not found for framework '${framework}'. Available patterns: ${Object.keys(frameworkPatterns).join(', ')}`;
       }
-      
+
       const result = patternGenerator();
       console.error('PatternProvider: Pattern retrieved successfully');
       return result;
@@ -736,14 +736,14 @@ function validateResult(result) {
   async generateComponentScaffold(componentName, componentType, framework, props) {
     try {
       console.error(`PatternProvider: Generating scaffold for ${componentName} (${componentType})`);
-      
+
       if (!componentName || !componentType) {
         throw new Error('Component name and type are required');
       }
-      
+
       const propsArray = Array.isArray(props) ? props : [];
       const frameworkKey = framework ? framework.split('-')[0] : 'javascript';
-      
+
       let scaffold;
       switch (frameworkKey) {
       case 'react':
@@ -758,7 +758,7 @@ function validateResult(result) {
       default:
         scaffold = this.generateJavaScriptScaffold(componentName, componentType, propsArray);
       }
-      
+
       console.error('PatternProvider: Component scaffold generated successfully');
       return scaffold;
     } catch (error) {
@@ -766,7 +766,7 @@ function validateResult(result) {
       throw new Error(`Component scaffold generation failed: ${error.message}`);
     }
   }
-  
+
   generateReactScaffold(componentName, componentType, props) {
     return `// Generated ${componentName} scaffold for React
 // Component type: ${componentType}
@@ -792,7 +792,7 @@ export const ${componentName}: React.FC<${componentName}Props> = ({
 
 export default ${componentName};`;
   }
-  
+
   generateVueScaffold(componentName, componentType, props) {
     return `<!-- Generated ${componentName} scaffold for Vue -->
 <!-- Component type: ${componentType} -->
@@ -815,7 +815,7 @@ defineProps<Props>();
 // AI ASSISTANT CONTEXT: ${componentName} - ${componentType} component
 </script>`;
   }
-  
+
   generateSvelteScaffold(componentName, componentType, props) {
     return `<!-- Generated ${componentName} scaffold for Svelte -->
 <!-- Component type: ${componentType} -->
@@ -831,7 +831,7 @@ defineProps<Props>();
   <!-- Component implementation -->
 </div>`;
   }
-  
+
   generateJavaScriptScaffold(componentName, componentType, props) {
     return `// Generated ${componentName} scaffold for JavaScript
 // Component type: ${componentType}

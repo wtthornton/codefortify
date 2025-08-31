@@ -96,11 +96,11 @@ export class ToolManager {
   async executeTool(name, args) {
     try {
       console.error(`ToolManager: Executing tool ${name}`);
-      
+
       if (!args) {
         args = {};
       }
-      
+
       let result;
       switch (name) {
       case 'validate_context7_compliance':
@@ -121,7 +121,7 @@ export class ToolManager {
       default:
         throw new Error(`Unknown tool: ${name}`);
       }
-      
+
       console.error('ToolManager: Tool executed successfully');
       return result;
     } catch (error) {
@@ -133,7 +133,7 @@ export class ToolManager {
   async validateContext7Compliance(args) {
     try {
       const { code, language, component_type } = args;
-      
+
       if (!code) {
         throw new Error('Code parameter is required');
       }
@@ -251,7 +251,7 @@ export class ToolManager {
   async getPatternExamples(args) {
     try {
       const { pattern_type, framework = this.config.projectType } = args;
-      
+
       if (!pattern_type) {
         throw new Error('Pattern type parameter is required');
       }
@@ -276,7 +276,7 @@ export class ToolManager {
   async checkNamingConventions(args) {
     try {
       const { names, context } = args;
-      
+
       if (!names || !Array.isArray(names)) {
         throw new Error('Names parameter must be an array');
       }
@@ -351,7 +351,7 @@ export class ToolManager {
   async suggestImprovements(args) {
     try {
       const { code, file_path, focus_area } = args;
-      
+
       if (!code) {
         throw new Error('Code parameter is required');
       }
@@ -432,7 +432,7 @@ export class ToolManager {
   async generateComponentScaffold(args) {
     try {
       const { component_name, component_type, framework = this.config.projectType, props = [] } = args;
-      
+
       if (!component_name || !component_type) {
         throw new Error('Component name and type are required');
       }

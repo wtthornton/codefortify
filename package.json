@@ -1,86 +1,83 @@
 {
-  "name": "@wtthornton/context7-mcp",
+  "name": "@wtthornton/codefortify",
   "version": "1.0.0",
-  "description": "Context7 Model Context Protocol integration for AI-assisted development",
+  "description": "CodeFortify - AI-powered code strengthening and security enhancement for modern development",
   "type": "module",
   "main": "src/index.js",
   "bin": {
-    "context7": "bin/context7.js"
+    "codefortify": "bin/codefortify.js"
   },
   "scripts": {
-    "dev": "node src/server/Context7MCPServer.js",
-    
+    "dev": "node src/server/CodeFortifyMCPServer.js",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:unit": "vitest run tests/unit",
     "test:integration": "vitest run tests/integration",
     "test:cli": "vitest run tests/cli",
     "test:e2e": "vitest run tests/e2e",
-    
     "coverage": "vitest run --coverage",
     "coverage:open": "vitest run --coverage && open coverage/index.html",
     "coverage:threshold": "vitest run --coverage --reporter=verbose",
     "coverage:watch": "vitest --coverage --watch",
     "coverage:ci": "vitest run --coverage",
-    
     "test:performance": "vitest run tests/**/*.bench.js",
     "test:all": "npm run test && npm run test:integration && npm run test:cli",
     "test:ci": "npm run coverage:ci && npm run lint && npm run format:check",
     "test:debug": "vitest run --reporter=verbose --no-coverage",
-    
     "analyze": "node scripts/analyze-bundle.js",
     "size-check": "node scripts/check-size.js",
     "test:legacy": "node src/testing/MCPTester.js",
     "validate": "node src/validation/Context7Validator.js",
-    
     "audit": "npm audit",
     "audit:fix": "npm audit fix",
     "audit:ci": "npm audit --audit-level=moderate",
-    
-    "start": "node bin/context7.js",
+    "start": "node bin/codefortify.js",
     "build": "echo 'No build step needed for ESM project' && exit 0",
-    
     "lint": "eslint src/ bin/ tests/",
     "lint:fix": "eslint src/ bin/ tests/ --fix",
     "lint:ci": "eslint src/ bin/ tests/ --format=junit --output-file=test-results/eslint-results.xml",
-    
     "format": "prettier --write src/ bin/ tests/",
     "format:check": "prettier --check src/ bin/ tests/",
     "format:ci": "prettier --check src/ bin/ tests/ --log-level=error",
-    
     "typecheck": "echo 'TypeScript checking would go here'",
     "quality": "npm run lint && npm run format:check && npm run coverage",
     "quality:fix": "npm run lint:fix && npm run format && npm run test",
-    
     "prepublishOnly": "npm run test:ci && npm run quality",
     "precommit": "npm run lint:fix && npm run format && npm run test:unit",
     "ci": "npm run test:ci && npm run audit:ci",
-    
     "mcp:dev": "node src/mcp-server.js",
-    "mcp:test": "context7 test-mcp",
+    "mcp:test": "codefortify test-mcp",
+    "codefortify:validate": "codefortify validate",
+    "score": "codefortify score",
+    "score:detailed": "codefortify score --detailed --recommendations --bundle-analysis --performance",
+    "codefortify:score": "codefortify score",
+    "codefortify:test-mcp": "codefortify test-mcp",
     "context7:validate": "context7 validate",
-    "score": "context7 score",
-    "score:detailed": "context7 score --detailed --recommendations --bundle-analysis --performance"
+    "context7:score": "context7 score",
+    "context7:test-mcp": "context7 test-mcp"
   },
   "keywords": [
-    "context7",
+    "codefortify",
+    "code-security",
+    "ai-development",
     "mcp",
     "model-context-protocol",
-    "ai-assistant",
+    "code-quality",
     "development-tools",
     "code-patterns",
-    "agent-os"
+    "security-analysis",
+    "project-scaffolding"
   ],
   "author": "wtthornton",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wtthornton/context7-mcp.git"
+    "url": "https://github.com/wtthornton/codefortify.git"
   },
   "bugs": {
-    "url": "https://github.com/wtthornton/context7-mcp/issues"
+    "url": "https://github.com/wtthornton/codefortify/issues"
   },
-  "homepage": "https://github.com/wtthornton/context7-mcp#readme",
+  "homepage": "https://github.com/wtthornton/codefortify#readme",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.17.4",
     "chalk": "^5.3.0",

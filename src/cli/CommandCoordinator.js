@@ -6,6 +6,7 @@
 
 import { InitCommand } from './commands/InitCommand.js';
 import { ScoreCommand } from './commands/ScoreCommand.js';
+import { ProjectTypeDetector } from '../scoring/core/ProjectTypeDetector.js';
 
 export class CommandCoordinator {
   constructor(globalConfig, packageRoot) {
@@ -25,6 +26,11 @@ export class CommandCoordinator {
 
   async executeScore(options) {
     return await this.commands.score.execute(options);
+  }
+
+  async detectProjectType() {
+    const detector = new ProjectTypeDetector(this.globalConfig.projectRoot);
+    return detector.detectProjectType();
   }
 
   // Legacy command handlers (to be extracted later)
@@ -143,14 +149,14 @@ export class CommandCoordinator {
   async validateProject(options) {
     const chalk = (await import('chalk')).default;
     const ora = (await import('ora')).default;
-    const { Context7Validator } = await import('../validation/Context7Validator.js');
+    const { CodeFortifyValidator } = await import('../validation/CodeFortifyValidator.js');
 
-    console.log(chalk.bold.blue('🔍 Validating Context7 Project Compliance'));
+    console.log(chalk.bold.blue('🔍 Validating CodeFortify Project Compliance'));
 
     const spinner = ora('Running validation checks...').start();
 
     try {
-      const validator = new Context7Validator(this.globalConfig.projectRoot);
+      const validator = new CodeFortifyValidator(this.globalConfig.projectRoot);
       const results = await validator.validateProject({
         strict: options.strict,
         autoFix: options.fix
@@ -162,7 +168,7 @@ export class CommandCoordinator {
       console.log(`\n${chalk.bold('Validation Results:')}`);
 
       if (results.isValid) {
-        console.log(chalk.green('✅ Project is Context7 compliant!'));
+        console.log(chalk.green('✅ Project is CodeFortify compliant!'));
       } else {
         console.log(chalk.red('❌ Project has compliance issues:'));
         results.errors.forEach(error => {

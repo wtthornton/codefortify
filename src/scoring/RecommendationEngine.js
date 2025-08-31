@@ -4,14 +4,23 @@
  * Analyzes scoring results and provides prioritized, actionable recommendations
  */
 
+import { RecommendationHistory } from './RecommendationHistory.js';
+
 export class RecommendationEngine {
   constructor(config = {}) {
     this.config = config;
+    this.projectType = null;
+    this.seenRecommendations = new Set();
+    this.history = new RecommendationHistory(config);
   }
 
   async generateRecommendations(results) {
     const recommendations = [];
     const { categories } = results;
+
+    // Detect project type for filtering
+    this.projectType = this.detectProjectType(results);
+    this.seenRecommendations.clear();
 
     // Generate recommendations for each category
     for (const [categoryKey, categoryResult] of Object.entries(categories)) {
@@ -19,20 +28,29 @@ export class RecommendationEngine {
       recommendations.push(...categoryRecs);
     }
 
+    // Add general recommendations based on overall score
+    const generalRecs = this.getGeneralRecommendations(results);
+    recommendations.push(...generalRecs);
+
+    // Apply smart filtering and deduplication
+    const filteredRecs = this.filterAndDeduplicateRecommendations(recommendations);
+
     // Sort by impact (highest first) and priority
-    recommendations.sort((a, b) => {
+    filteredRecs.sort((a, b) => {
       if (a.impact !== b.impact) {
         return b.impact - a.impact;
       }
       return this.getPriorityWeight(a.priority) - this.getPriorityWeight(b.priority);
     });
 
-    // Add general recommendations based on overall score
-    const generalRecs = this.getGeneralRecommendations(results);
-    recommendations.push(...generalRecs);
+    // Add progress tracking
+    const recsWithProgress = await this.history.getRecommendationsWithProgress(filteredRecs);
+
+    // Track these recommendations
+    await this.history.trackRecommendations(recsWithProgress, results.overall?.score || 0);
 
     // Limit to most impactful recommendations
-    return recommendations.slice(0, 20);
+    return recsWithProgress.slice(0, 20);
   }
 
   async getRecommendationsForCategory(categoryKey, categoryResult) {
@@ -115,7 +133,15 @@ export class RecommendationEngine {
         priority: 'high',
         suggestion: 'Configure ESLint and Prettier for code quality',
         description: 'Automated code formatting and linting prevents bugs and improves consistency.',
-        action: 'Run: npm install --save-dev eslint prettier && npx eslint --init'
+        action: 'Run: npm install --save-dev eslint prettier && npx eslint --init',
+        executable: {
+          commands: [
+            'npm install --save-dev eslint prettier',
+            'npx eslint --init'
+          ],
+          confirmationMessage: 'Install ESLint and Prettier development tools?',
+          requiresInteraction: true
+        }
       });
     }
 
@@ -232,7 +258,12 @@ export class RecommendationEngine {
         priority: 'critical',
         suggestion: 'Fix security vulnerabilities in dependencies',
         description: 'Security vulnerabilities can expose your application to attacks.',
-        action: 'Run npm audit --fix and update vulnerable packages'
+        action: 'Run npm audit --fix and update vulnerable packages',
+        executable: {
+          commands: ['npm audit --fix'],
+          confirmationMessage: 'Automatically fix security vulnerabilities?',
+          requiresInteraction: false
+        }
       });
     }
 
@@ -387,6 +418,104 @@ export class RecommendationEngine {
     }
   }
 
+  detectProjectType(results) {
+    // Simple project type detection based on patterns and files
+    const patterns = results.detectedPatterns || [];
+    const files = results.files || [];
+
+    if (patterns.some(p => p.includes('React')) || files.some(f => f.includes('jsx'))) {
+      return 'react';
+    }
+    if (patterns.some(p => p.includes('Vue')) || files.some(f => f.includes('.vue'))) {
+      return 'vue';
+    }
+    if (patterns.some(p => p.includes('Express')) || files.some(f => f.includes('server'))) {
+      return 'node-api';
+    }
+    if (files.some(f => f.includes('bin/') || f.includes('cli'))) {
+      return 'cli';
+    }
+    return 'javascript';
+  }
+
+  filterAndDeduplicateRecommendations(recommendations) {
+    const filtered = [];
+    const categoryConflicts = new Map();
+
+    for (const rec of recommendations) {
+      // Generate a key for similarity detection
+      const similarityKey = this.generateSimilarityKey(rec);
+
+      // Skip if we've seen this recommendation before
+      if (this.seenRecommendations.has(similarityKey)) {
+        continue;
+      }
+
+      // Filter by project type relevance
+      if (!this.isRelevantForProjectType(rec)) {
+        continue;
+      }
+
+      // Handle category conflicts (choose highest impact)
+      const conflictKey = `${rec.category}-${rec.suggestion.substring(0, 20)}`;
+      const existing = categoryConflicts.get(conflictKey);
+
+      if (existing && existing.impact >= rec.impact) {
+        continue;
+      }
+
+      if (existing) {
+        // Replace lower impact recommendation
+        const index = filtered.indexOf(existing);
+        filtered.splice(index, 1);
+        this.seenRecommendations.delete(this.generateSimilarityKey(existing));
+      }
+
+      categoryConflicts.set(conflictKey, rec);
+      this.seenRecommendations.add(similarityKey);
+      filtered.push(rec);
+    }
+
+    return filtered;
+  }
+
+  generateSimilarityKey(recommendation) {
+    // Create a key based on the core action/suggestion
+    const key = `${recommendation.category}-${recommendation.action}`.toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w-]/g, '');
+    return key;
+  }
+
+  isRelevantForProjectType(recommendation) {
+    if (!this.projectType) {return true;}
+
+    const action = recommendation.action.toLowerCase();
+    const suggestion = recommendation.suggestion.toLowerCase();
+
+    // Filter out irrelevant recommendations based on project type
+    switch (this.projectType) {
+    case 'react':
+      if (action.includes('vue') && !action.includes('react')) {return false;}
+      if (suggestion.includes('express routes') && !suggestion.includes('api')) {return false;}
+      break;
+    case 'vue':
+      if (action.includes('react') && !action.includes('vue')) {return false;}
+      if (action.includes('jsx') && !action.includes('vue')) {return false;}
+      break;
+    case 'node-api':
+      if (action.includes('react.lazy') || action.includes('vue async')) {return false;}
+      if (suggestion.includes('component') && !suggestion.includes('api')) {return false;}
+      break;
+    case 'cli':
+      if (action.includes('webpack-bundle-analyzer')) {return false;}
+      if (suggestion.includes('lazy loading') && suggestion.includes('routes')) {return false;}
+      break;
+    }
+
+    return true;
+  }
+
   // Generate specific action plans
   generateActionPlan(recommendations) {
     const phases = {
@@ -406,5 +535,123 @@ export class RecommendationEngine {
         longTerm: '1-3 months'
       }
     };
+  }
+
+  // Execute a specific recommendation
+  async executeRecommendation(recommendation, options = {}) {
+    if (!recommendation.executable) {
+      throw new Error('This recommendation is not executable');
+    }
+
+    const { commands, requiresInteraction } = recommendation.executable;
+    const results = [];
+
+    for (const command of commands) {
+      try {
+        const result = await this.executeCommand(command, {
+          interactive: requiresInteraction,
+          ...options
+        });
+        results.push({ command, success: true, output: result });
+      } catch (error) {
+        results.push({ command, success: false, error: error.message });
+        if (options.stopOnError !== false) {
+          break;
+        }
+      }
+    }
+
+    const success = results.every(r => r.success);
+
+    // Track completion in history
+    await this.history.markRecommendationCompleted(recommendation, success);
+
+    return {
+      recommendation: recommendation.suggestion,
+      results,
+      success
+    };
+  }
+
+  async executeCommand(command, options = {}) {
+    const { exec } = await import('child_process');
+    const { promisify } = await import('util');
+    const execAsync = promisify(exec);
+
+    return new Promise((resolve, reject) => {
+      const childProcess = exec(command, {
+        cwd: options.cwd || process.cwd(),
+        timeout: options.timeout || 30000,
+        maxBuffer: options.maxBuffer || 1024 * 1024
+      });
+
+      let stdout = '';
+      let stderr = '';
+
+      childProcess.stdout?.on('data', (data) => {
+        stdout += data;
+        if (options.onOutput) {options.onOutput(data.toString());}
+      });
+
+      childProcess.stderr?.on('data', (data) => {
+        stderr += data;
+        if (options.onError) {options.onError(data.toString());}
+      });
+
+      childProcess.on('close', (code) => {
+        if (code === 0) {
+          resolve({ stdout, stderr, exitCode: code });
+        } else {
+          reject(new Error(`Command failed with exit code ${code}: ${stderr || stdout}`));
+        }
+      });
+
+      childProcess.on('error', (error) => {
+        reject(error);
+      });
+    });
+  }
+
+  // Get all executable recommendations
+  getExecutableRecommendations(recommendations) {
+    return recommendations.filter(rec => rec.executable);
+  }
+
+  // Batch execute multiple recommendations
+  async executeBatch(recommendations, options = {}) {
+    const executableRecs = this.getExecutableRecommendations(recommendations);
+    const results = [];
+
+    for (const rec of executableRecs) {
+      try {
+        const result = await this.executeRecommendation(rec, options);
+        results.push(result);
+      } catch (error) {
+        results.push({
+          recommendation: rec.suggestion,
+          success: false,
+          error: error.message
+        });
+      }
+    }
+
+    return results;
+  }
+
+  // Progress tracking helpers
+  async getRecommendationHistory() {
+    return await this.history.getStats();
+  }
+
+  async clearRecommendationHistory() {
+    return await this.history.clearHistory();
+  }
+
+  async exportRecommendationHistory() {
+    return await this.history.exportHistory();
+  }
+
+  async markManualCompletion(recommendation) {
+    await this.history.markRecommendationCompleted(recommendation, true);
   }
 }

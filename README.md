@@ -25,27 +25,27 @@ npm install -g @wtthornton/context7-mcp
 
 ### Initialize New Project
 ```bash
-# Create new project with Context7 integration
-context7 init --type react-webapp
+# Create new project with CodeFortify integration
+codefortify init --type react-webapp
 
 # Or add to existing project
 cd your-existing-project
-context7 add
+codefortify add
 ```
 
 ### Instant AI Integration
 ```bash
-# Validate Context7 compliance
-context7 validate
+# Validate CodeFortify compliance
+codefortify validate
 
 # Test MCP server
-context7 test-mcp
+codefortify test-mcp
 
 # Analyze project quality with detailed insights
-context7 score --detailed --recommendations
+codefortify score --detailed --recommendations
 
 # Generate professional reports
-context7 score --format html --output report.html
+codefortify score --format html --output report.html
 
 # Monitor bundle size and performance
 npm run analyze
@@ -55,23 +55,23 @@ npm run size-check
 npm run coverage
 
 # Start MCP server for AI assistants
-context7 serve
+codefortify serve
 ```
 
 ## 📋 Features
 
 ### 🤖 MCP Server
-- **Real-time Context7 Access** - AI assistants can access project standards instantly
-- **Code Validation Tools** - Automated Context7 compliance checking
-- **Pattern Examples** - Framework-specific code patterns and scaffolding
-- **Naming Convention Checks** - Validate file and component naming
-- **Improvement Suggestions** - Context7-aware code improvement recommendations
+- **Real-time Security Access** - AI assistants can access security standards instantly
+- **Code Validation Tools** - Automated security and quality compliance checking
+- **Pattern Examples** - Security-first code patterns and scaffolding
+- **Naming Convention Checks** - Validate secure file and component naming
+- **Improvement Suggestions** - Security-aware code improvement recommendations
 
 ### 📊 Advanced Project Quality Scoring
 - **Real Tool Integration** - npm audit CVE scanning, ESLint API analysis, coverage metrics (c8/nyc/jest)
 - **Advanced Pattern Recognition** - Detects 16+ architecture patterns (MVC, Service Layer, Repository, etc.)  
 - **Smart Project Detection** - Auto-detects React, Vue, Node.js, MCP servers, CLI tools, libraries
-- **Deep Context7/MCP Compliance** - Validates AGENTS.md, CLAUDE.md, MCP server quality
+- **Deep CodeFortify/MCP Compliance** - Validates AGENTS.md, CLAUDE.md, MCP server quality
 - **7-Category Analysis** - Structure, Quality, Performance, Testing, Security, DevEx, Completeness
 - **Multiple Output Formats** - Console with colors, JSON for CI/CD, HTML for reports
 - **Graceful Degradation** - Helpful setup guidance when tools unavailable

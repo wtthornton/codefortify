@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 
 /**
- * Context7 Validation System - Reusable Package
+ * CodeFortify Validation System - AI-Powered Code Security
  *
- * This validates that projects comply with Context7 standards
- * and Agent OS requirements across different project types.
+ * This validates that projects comply with CodeFortify standards
+ * for security, quality, and best practices across project types.
  */
 
 import fs from 'fs/promises';
 import path from 'path';
 
-export class Context7Validator {
+export class CodeFortifyValidator {
   constructor(config = {}) {
     this.config = {
       projectRoot: config.projectRoot || process.cwd(),

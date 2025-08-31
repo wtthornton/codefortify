@@ -37,7 +37,18 @@
       "Bash(context7 test-mcp:*)",
       "Bash(npm publish:*)",
       "Bash(npm view:*)",
-      "Bash(npm:*)"
+      "Bash(npm:*)",
+      "Bash(git tag:*)",
+      "Read(C:\\cursor\\ha-ingestor/**)",
+      "Read(C:\\cursor\\ha-ingestor/**)",
+      "Read(C:\\cursor\\ha-ingestor/**)",
+      "Read(C:\\cursor\\ha-ingestor/**)",
+      "Read(C:\\cursor\\ha-ingestor/**)",
+      "Read(C:\\cursor\\ha-ingestor/**)",
+      "Read(C:\\cursor\\ha-ingestor/**)",
+      "Bash(context7 init:*)",
+      "Read(C:\\cursor\\ha-ingestor/**)",
+      "Bash(git remote set-url:*)"
     ],
     "deny": [],
     "ask": []

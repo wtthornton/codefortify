@@ -25,70 +25,70 @@ export class ResourceManager {
           description: 'Project technology stack and standards',
           mimeType: 'text/markdown'
         },
-      {
-        uri: 'context7://standards/code-style',
-        name: 'Code Style Guidelines',
-        description: 'Code style and formatting standards',
-        mimeType: 'text/markdown'
-      },
-      {
-        uri: 'context7://standards/context7-standards',
-        name: 'Context7 Implementation Standards',
-        description: 'Context7 specific patterns and standards',
-        mimeType: 'text/markdown'
-      },
-      {
-        uri: 'context7://product/mission',
-        name: 'Product Mission',
-        description: 'Project mission and objectives',
-        mimeType: 'text/markdown'
-      },
-      {
-        uri: 'context7://product/roadmap',
-        name: 'Product Roadmap',
-        description: 'Development roadmap and priorities',
-        mimeType: 'text/markdown'
-      },
-      {
-        uri: 'context7://instructions/ai-development',
-        name: 'AI Development Guide',
-        description: 'Instructions for AI-assisted development',
-        mimeType: 'text/markdown'
-      },
-      {
-        uri: 'context7://patterns/component-patterns',
-        name: 'Component Patterns',
-        description: 'Established component patterns for the project type',
-        mimeType: 'text/typescript'
-      }
-    ];
-
-    // Add project-specific resources if they exist
-    try {
-      const customResourcesPath = path.join(this.projectRoot, this.agentOsPath, 'resources');
-      const customResources = await fs.readdir(customResourcesPath);
-
-      for (const resource of customResources) {
-        if (resource.endsWith('.md')) {
-          const resourceName = resource.replace('.md', '');
-          resources.push({
-            uri: `context7://custom/${resourceName}`,
-            name: `Custom: ${resourceName}`,
-            description: `Project-specific ${resourceName} documentation`,
-            mimeType: 'text/markdown'
-          });
+        {
+          uri: 'context7://standards/code-style',
+          name: 'Code Style Guidelines',
+          description: 'Code style and formatting standards',
+          mimeType: 'text/markdown'
+        },
+        {
+          uri: 'context7://standards/context7-standards',
+          name: 'Context7 Implementation Standards',
+          description: 'Context7 specific patterns and standards',
+          mimeType: 'text/markdown'
+        },
+        {
+          uri: 'context7://product/mission',
+          name: 'Product Mission',
+          description: 'Project mission and objectives',
+          mimeType: 'text/markdown'
+        },
+        {
+          uri: 'context7://product/roadmap',
+          name: 'Product Roadmap',
+          description: 'Development roadmap and priorities',
+          mimeType: 'text/markdown'
+        },
+        {
+          uri: 'context7://instructions/ai-development',
+          name: 'AI Development Guide',
+          description: 'Instructions for AI-assisted development',
+          mimeType: 'text/markdown'
+        },
+        {
+          uri: 'context7://patterns/component-patterns',
+          name: 'Component Patterns',
+          description: 'Established component patterns for the project type',
+          mimeType: 'text/typescript'
         }
-      }
-    } catch (error) {
-      // No custom resources directory
-    }
+      ];
 
-    console.error('ResourceManager: Resources listed successfully');
-    return { resources };
-  } catch (error) {
-    console.error('ResourceManager: Resource listing failed:', error.message);
-    throw new Error(`Resource listing failed: ${error.message}`);
-  }
+      // Add project-specific resources if they exist
+      try {
+        const customResourcesPath = path.join(this.projectRoot, this.agentOsPath, 'resources');
+        const customResources = await fs.readdir(customResourcesPath);
+
+        for (const resource of customResources) {
+          if (resource.endsWith('.md')) {
+            const resourceName = resource.replace('.md', '');
+            resources.push({
+              uri: `context7://custom/${resourceName}`,
+              name: `Custom: ${resourceName}`,
+              description: `Project-specific ${resourceName} documentation`,
+              mimeType: 'text/markdown'
+            });
+          }
+        }
+      } catch (error) {
+      // No custom resources directory
+      }
+
+      console.error('ResourceManager: Resources listed successfully');
+      return { resources };
+    } catch (error) {
+      console.error('ResourceManager: Resource listing failed:', error.message);
+      throw new Error(`Resource listing failed: ${error.message}`);
+    }
   }
 
   async readResource(uri) {
@@ -180,7 +180,7 @@ export class ResourceManager {
   async generatePatternsContent() {
     try {
       console.error('ResourceManager: Generating patterns content...');
-      
+
       // Try to read existing pattern file first
       const patternFile = await this.findPatternFile();
 

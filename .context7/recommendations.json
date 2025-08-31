@@ -1,0 +1,595 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-08-31T18:05:41.074Z",
+  "recommendations": {
+    "run_1756663456814_3b4c0yju9": {
+      "timestamp": "2025-08-31T18:04:16.814Z",
+      "score": 75,
+      "recommendations": [
+        {
+          "id": "security_fix_security_vulnerabilities_in_dependenc",
+          "category": "security",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix security vulnerabilities in dependencies",
+          "action": "Run npm audit --fix and update vulnerable packages",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_improve_code_documentation_add_jsdoc_comme",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve code documentation",
+          "action": "Add JSDoc comments to functions and classes, create README sections",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_reduce_code_complexity_break_down_large_fu",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Reduce code complexity",
+          "action": "Break down large functions, extract utilities, use early returns",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756663456822_9oqyfv64x": {
+      "timestamp": "2025-08-31T18:04:16.822Z",
+      "score": 75,
+      "recommendations": [
+        {
+          "id": "security_fix_security_vulnerabilities_in_dependenc",
+          "category": "security",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix security vulnerabilities in dependencies",
+          "action": "Run npm audit --fix and update vulnerable packages",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_improve_code_documentation_add_jsdoc_comme",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve code documentation",
+          "action": "Add JSDoc comments to functions and classes, create README sections",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_reduce_code_complexity_break_down_large_fu",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Reduce code complexity",
+          "action": "Break down large functions, extract utilities, use early returns",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756663456824_m2me30fxw": {
+      "timestamp": "2025-08-31T18:04:16.824Z",
+      "score": 75,
+      "recommendations": [
+        {
+          "id": "security_fix_security_vulnerabilities_in_dependenc",
+          "category": "security",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix security vulnerabilities in dependencies",
+          "action": "Run npm audit --fix and update vulnerable packages",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_improve_code_documentation_add_jsdoc_comme",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve code documentation",
+          "action": "Add JSDoc comments to functions and classes, create README sections",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_reduce_code_complexity_break_down_large_fu",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Reduce code complexity",
+          "action": "Break down large functions, extract utilities, use early returns",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756663467442_s2fsczklr": {
+      "timestamp": "2025-08-31T18:04:27.441Z",
+      "score": 75,
+      "recommendations": [
+        {
+          "id": "security_fix_security_vulnerabilities_in_dependenc",
+          "category": "security",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix security vulnerabilities in dependencies",
+          "action": "Run npm audit --fix and update vulnerable packages",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_improve_code_documentation_add_jsdoc_comme",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve code documentation",
+          "action": "Add JSDoc comments to functions and classes, create README sections",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_reduce_code_complexity_break_down_large_fu",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Reduce code complexity",
+          "action": "Break down large functions, extract utilities, use early returns",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756663467447_o5lxetnsl": {
+      "timestamp": "2025-08-31T18:04:27.447Z",
+      "score": 75,
+      "recommendations": [
+        {
+          "id": "security_fix_security_vulnerabilities_in_dependenc",
+          "category": "security",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix security vulnerabilities in dependencies",
+          "action": "Run npm audit --fix and update vulnerable packages",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_improve_code_documentation_add_jsdoc_comme",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve code documentation",
+          "action": "Add JSDoc comments to functions and classes, create README sections",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_reduce_code_complexity_break_down_large_fu",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Reduce code complexity",
+          "action": "Break down large functions, extract utilities, use early returns",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756663467450_2oealt5tt": {
+      "timestamp": "2025-08-31T18:04:27.450Z",
+      "score": 75,
+      "recommendations": [
+        {
+          "id": "security_fix_security_vulnerabilities_in_dependenc",
+          "category": "security",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix security vulnerabilities in dependencies",
+          "action": "Run npm audit --fix and update vulnerable packages",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_improve_code_documentation_add_jsdoc_comme",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve code documentation",
+          "action": "Add JSDoc comments to functions and classes, create README sections",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_reduce_code_complexity_break_down_large_fu",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Reduce code complexity",
+          "action": "Break down large functions, extract utilities, use early returns",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756663488758_2kw2tktuy": {
+      "timestamp": "2025-08-31T18:04:48.757Z",
+      "score": 75,
+      "recommendations": [
+        {
+          "id": "security_fix_security_vulnerabilities_in_dependenc",
+          "category": "security",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix security vulnerabilities in dependencies",
+          "action": "Run npm audit --fix and update vulnerable packages",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_improve_code_documentation_add_jsdoc_comme",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve code documentation",
+          "action": "Add JSDoc comments to functions and classes, create README sections",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_reduce_code_complexity_break_down_large_fu",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Reduce code complexity",
+          "action": "Break down large functions, extract utilities, use early returns",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756663488765_circrhd67": {
+      "timestamp": "2025-08-31T18:04:48.765Z",
+      "score": 75,
+      "recommendations": [
+        {
+          "id": "security_fix_security_vulnerabilities_in_dependenc",
+          "category": "security",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix security vulnerabilities in dependencies",
+          "action": "Run npm audit --fix and update vulnerable packages",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_improve_code_documentation_add_jsdoc_comme",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve code documentation",
+          "action": "Add JSDoc comments to functions and classes, create README sections",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_reduce_code_complexity_break_down_large_fu",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Reduce code complexity",
+          "action": "Break down large functions, extract utilities, use early returns",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756663488769_zug88ary6": {
+      "timestamp": "2025-08-31T18:04:48.769Z",
+      "score": 75,
+      "recommendations": [
+        {
+          "id": "security_fix_security_vulnerabilities_in_dependenc",
+          "category": "security",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix security vulnerabilities in dependencies",
+          "action": "Run npm audit --fix and update vulnerable packages",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_improve_code_documentation_add_jsdoc_comme",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve code documentation",
+          "action": "Add JSDoc comments to functions and classes, create README sections",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_reduce_code_complexity_break_down_large_fu",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Reduce code complexity",
+          "action": "Break down large functions, extract utilities, use early returns",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756663541074_btn2ghfsv": {
+      "timestamp": "2025-08-31T18:05:41.074Z",
+      "score": 69,
+      "recommendations": [
+        {
+          "id": "testing_increase_test_coverage_to_80_focus_on_unit",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Focus on unit tests for business logic and integration tests for user flows",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "structure_improve_project_organization_and_file_st",
+          "category": "structure",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Improve project organization and file structure",
+          "action": "Reorganize files into logical directories (components, services, utils, etc.)",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_configure_eslint_and_prettier_for_code_qua",
+          "category": "quality",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Configure ESLint and Prettier for code quality",
+          "action": "Run: npm install --save-dev eslint prettier && npx eslint --init",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_improve_code_documentation_add_jsdoc_comme",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve code documentation",
+          "action": "Add JSDoc comments to functions and classes, create README sections",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    }
+  },
+  "completedActions": [
+    "security_fix_vulnerabilities_npm_audit_fix"
+  ],
+  "stats": {
+    "totalRecommendations": 7,
+    "completedRecommendations": 3,
+    "executedActions": 3,
+    "lastScoreImprovement": -6
+  }
+}

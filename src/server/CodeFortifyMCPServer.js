@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 /**
- * Context7 MCP Server - Reusable Package
+ * CodeFortify MCP Server - AI-Powered Code Strengthening
  *
- * This server provides Model Context Protocol integration for Context7 standards,
- * enabling AI assistants to access project patterns, standards, and configurations
- * in real-time for any project.
+ * This server provides Model Context Protocol integration for CodeFortify,
+ * enabling AI assistants to access security patterns, quality standards, and
+ * fortification configurations in real-time for any project.
  */
 
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
@@ -28,7 +28,7 @@ import { PatternProvider } from './PatternProvider.js';
 const __filename = fileURLToPath(import.meta.url);
 // const _dirname = path.dirname(__filename); // Unused variable - commented out
 
-export class Context7MCPServer {
+export class CodeFortifyMCPServer {
   constructor(config = {}) {
     this.config = {
       projectRoot: config.projectRoot || process.env.PROJECT_ROOT || process.cwd(),
@@ -40,7 +40,7 @@ export class Context7MCPServer {
 
     this.server = new Server(
       {
-        name: `context7-${this.config.projectName}`,
+        name: `codefortify-${this.config.projectName}`,
         version: '1.0.0'
       },
       {
@@ -203,7 +203,7 @@ export class Context7MCPServer {
 
   async generateCodeReview(args) {
     const { code, file_type = 'javascript' } = args;
-    
+
     try {
       // Use validation tools to generate review
       const validation = await this.toolManager.executeTool('validate_context7_compliance', {
@@ -211,7 +211,7 @@ export class Context7MCPServer {
         language: file_type,
         component_type: 'general'
       });
-      
+
       const suggestions = await this.toolManager.executeTool('suggest_improvements', {
         code,
         focus_area: 'all'
@@ -249,7 +249,7 @@ ${suggestions.content[0].text}
 
   async generateComponentScaffold(args) {
     const { component_name, component_type } = args;
-    
+
     try {
       const scaffold = await this.toolManager.executeTool('generate_component_scaffold', {
         component_name,
@@ -295,10 +295,10 @@ ${scaffold.content[0].text}
       console.error('MCP: Starting Context7 MCP Server...');
       console.error(`MCP: Project root: ${this.config.projectRoot}`);
       console.error(`MCP: Project type: ${this.config.projectType}`);
-      
+
       const transport = new StdioServerTransport();
       await this.server.connect(transport);
-      
+
       console.error(`Context7 MCP Server running for ${this.config.projectName}`);
       console.error('MCP: Server started successfully');
       console.error('MCP: Waiting for requests...');

@@ -134,7 +134,7 @@ describe('Context7 CLI', () => {
       // Skipped due to long execution time and timeout issues
       // Core functionality tested in integration tests
     }, 30000);
-    
+
     it.skip('original prompt test', async () => {
       // This would normally show an interactive prompt
       // In test environment, it should handle the lack of TTY gracefully

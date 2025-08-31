@@ -9,6 +9,7 @@ import ora from 'ora';
 import inquirer from 'inquirer';
 import fs from 'fs-extra';
 import path from 'path';
+import { ProjectTypeDetector } from '../../scoring/core/ProjectTypeDetector.js';
 
 export class InitCommand {
   constructor(globalConfig, packageRoot) {
@@ -17,20 +18,20 @@ export class InitCommand {
   }
 
   async execute(options) {
-    console.log(chalk.bold.blue('🚀 Initializing Context7 MCP Project'));
-    console.log(chalk.gray('Setting up AI-assisted development environment\n'));
+    console.log(chalk.bold.blue('🚀 Initializing CodeFortify Project'));
+    console.log(chalk.gray('Setting up AI-powered code strengthening environment\n'));
 
     try {
       // Detect or prompt for project type
-      const projectType = await this.determineProjectType(options.type);
+      const projectType = await this.determineProjectType(options.type, options);
 
       // Get project metadata
-      const metadata = await this.gatherProjectMetadata();
+      const metadata = await this.gatherProjectMetadata(options);
 
       // Create configuration and files
       await this.createProjectFiles(projectType, metadata, options);
 
-      console.log(chalk.green.bold('\n✅ Context7 MCP initialization complete!'));
+      console.log(chalk.green.bold('\n✅ CodeFortify initialization complete!'));
       this.displayNextSteps(projectType);
 
     } catch (error) {
@@ -42,80 +43,251 @@ export class InitCommand {
     }
   }
 
-  async determineProjectType(specifiedType) {
+  async determineProjectType(specifiedType, options = {}) {
     if (specifiedType) {
       return this.validateProjectType(specifiedType);
     }
 
-    // Auto-detect based on existing files
-    const detected = await this.detectProjectType();
+    // Use enhanced auto-detection with confidence scoring
+    const detected = await this.detectProjectTypeWithConfidence();
 
-    if (detected) {
+    if (options.auto) {
+      // Auto mode - require high confidence or fail
+      if (detected.type && detected.confidence >= 0.8) {
+        console.log(chalk.green(`✓ Auto-detected: ${chalk.cyan(detected.type)} (${Math.round(detected.confidence * 100)}% confidence)`));
+        return detected.type;
+      } else {
+        throw new Error(`Auto-detection failed. Detected: ${detected.type || 'unknown'} with ${Math.round((detected.confidence || 0) * 100)}% confidence. Use --type to specify manually or remove --auto flag.`);
+      }
+    }
+
+    if (detected.type && detected.confidence >= 0.8) {
+      // High confidence - auto-select with notice
+      console.log(chalk.green(`✓ Auto-detected: ${chalk.cyan(detected.type)} (${Math.round(detected.confidence * 100)}% confidence)`));
+      return detected.type;
+    } else if (detected.type && detected.confidence >= 0.6) {
+      // Medium confidence - ask for confirmation
       const { confirmType } = await inquirer.prompt([{
         type: 'confirm',
         name: 'confirmType',
-        message: `Detected ${chalk.cyan(detected)} project. Is this correct?`,
+        message: `Detected ${chalk.cyan(detected.type)} project (${Math.round(detected.confidence * 100)}% confidence). Is this correct?`,
         default: true
       }]);
 
       if (confirmType) {
-        return detected;
+        return detected.type;
       }
     }
 
-    // Manual selection
+    // Low confidence or user declined - show manual selection with detected option first
+    const choices = [
+      // Web Development
+      { name: '🔥 Next.js Full-Stack App', value: 'next-app' },
+      { name: '⚛️  React Web Application', value: 'react-webapp' },
+      { name: '💚 Vue.js Web Application', value: 'vue-webapp' },
+      { name: '🚀 Node.js API Server', value: 'node-api' },
+
+      // Mobile Development
+      { name: '📱 React Native Mobile App', value: 'mobile-react-native' },
+      { name: '🦋 Flutter Mobile App', value: 'mobile-flutter' },
+
+      // Desktop & Games
+      { name: '🖥️ Electron Desktop App', value: 'desktop-electron' },
+      { name: '🎮 Unity Game Project', value: 'game-unity' },
+
+      // Modern Architecture
+      { name: '🏗️ Microservices Architecture', value: 'microservices' },
+      { name: '☁️ Serverless Application', value: 'serverless' },
+
+      // Emerging Tech
+      { name: '🧠 AI/ML Project', value: 'ai-ml' },
+      { name: '⛓️ Blockchain/DApp', value: 'blockchain-dapp' },
+
+      // Languages & Tools
+      { name: '🐍 Python Application/API', value: 'python' },
+      { name: '📦 JavaScript/TypeScript Library', value: 'javascript' },
+      { name: '🤖 MCP Server Package', value: 'mcp-server' },
+      { name: '⚡ CLI Tool/Utility', value: 'cli-tool' }
+    ];
+
+    // If we have a detected type with low confidence, move it to the top
+    if (detected.type && detected.confidence > 0) {
+      const detectedChoice = choices.find(c => c.value === detected.type);
+      if (detectedChoice) {
+        choices.splice(choices.indexOf(detectedChoice), 1);
+        detectedChoice.name += chalk.gray(` (detected with ${Math.round(detected.confidence * 100)}% confidence)`);
+        choices.unshift(detectedChoice);
+      }
+    }
+
     const { projectType } = await inquirer.prompt([{
       type: 'list',
       name: 'projectType',
       message: 'Select your project type:',
-      choices: [
-        { name: '⚛️  React Web Application', value: 'react-webapp' },
-        { name: '💚 Vue.js Web Application', value: 'vue-webapp' },
-        { name: '🚀 Node.js API Server', value: 'node-api' },
-        { name: '📦 JavaScript/TypeScript Library', value: 'javascript' },
-        { name: '🤖 MCP Server Package', value: 'mcp-server' },
-        { name: '⚡ CLI Tool/Utility', value: 'cli-tool' }
-      ]
+      choices
     }]);
 
     return projectType;
   }
 
   validateProjectType(type) {
-    const validTypes = ['react-webapp', 'vue-webapp', 'node-api', 'javascript', 'mcp-server', 'cli-tool'];
+    const validTypes = [
+      // Web Development
+      'next-app', 'react-webapp', 'vue-webapp', 'node-api',
+      // Mobile Development
+      'mobile-react-native', 'mobile-flutter',
+      // Desktop & Games
+      'desktop-electron', 'game-unity',
+      // Modern Architecture
+      'microservices', 'serverless',
+      // Emerging Tech
+      'ai-ml', 'blockchain-dapp',
+      // Languages & Tools
+      'python', 'javascript', 'typescript', 'mcp-server', 'cli-tool'
+    ];
     if (!validTypes.includes(type)) {
       throw new Error(`Invalid project type: ${type}. Valid options: ${validTypes.join(', ')}`);
     }
     return type;
   }
 
-  async detectProjectType() {
-    const packageJsonPath = path.join(this.globalConfig.projectRoot, 'package.json');
+  async detectProjectTypeWithConfidence() {
+    const detector = new ProjectTypeDetector(this.globalConfig.projectRoot);
+    const detectedType = detector.detectProjectType();
 
-    if (await fs.pathExists(packageJsonPath)) {
-      const packageJson = await fs.readJSON(packageJsonPath);
-      const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };
-
-      if (deps.react || deps['react-dom']) {return 'react-webapp';}
-      if (deps.vue || deps['@vue/cli-service']) {return 'vue-webapp';}
-      if (deps.express || deps.fastify || deps.koa) {return 'node-api';}
-      if (deps['@modelcontextprotocol/sdk']) {return 'mcp-server';}
-      if (packageJson.bin) {return 'cli-tool';}
+    if (!detectedType || detectedType === 'javascript') {
+      return { type: detectedType, confidence: 0.3 };
     }
 
-    // Check for other indicators
-    if (await fs.pathExists(path.join(this.globalConfig.projectRoot, 'src', 'App.jsx'))) {return 'react-webapp';}
-    if (await fs.pathExists(path.join(this.globalConfig.projectRoot, 'src', 'App.vue'))) {return 'vue-webapp';}
+    // Calculate confidence based on multiple indicators
+    const confidence = await this.calculateDetectionConfidence(detectedType, detector);
 
-    return null;
+    return { type: detectedType, confidence };
   }
 
-  async gatherProjectMetadata() {
+  async calculateDetectionConfidence(type, detector) {
+    let confidence = 0.5; // Base confidence
+    const packageJsonPath = path.join(this.globalConfig.projectRoot, 'package.json');
+
+    try {
+      if (await fs.pathExists(packageJsonPath)) {
+        const packageJson = await fs.readJSON(packageJsonPath);
+        const allDeps = {
+          ...packageJson.dependencies,
+          ...packageJson.devDependencies,
+          ...packageJson.peerDependencies
+        };
+
+        // Strong dependency indicators
+        const strongIndicators = {
+          // Web Development
+          'next-app': ['next', '@next/core', 'next/router'],
+          'react-webapp': ['react', 'react-dom', '@types/react'],
+          'vue-webapp': ['vue', '@vue/cli-service', 'vue-template-compiler'],
+          'node-api': ['express', 'fastify', 'koa', '@nestjs/core'],
+
+          // Mobile Development
+          'mobile-react-native': ['react-native', '@react-native-community/cli', 'metro'],
+          'mobile-flutter': [], // Flutter uses pubspec.yaml, not package.json
+
+          // Desktop & Games
+          'desktop-electron': ['electron', 'electron-builder', 'electron-packager'],
+          'game-unity': [], // Unity doesn't use package.json
+
+          // Modern Architecture
+          'microservices': ['docker', 'kubernetes-client', '@kubernetes/client-node'],
+          'serverless': ['serverless', 'aws-lambda', '@aws-sdk/client-lambda'],
+
+          // Emerging Tech
+          'ai-ml': ['tensorflow', '@tensorflow/tfjs', 'torch', 'pytorch'],
+          'blockchain-dapp': ['web3', 'ethers', '@solana/web3.js', 'hardhat'],
+
+          // Languages & Tools
+          'python': [], // Python deps are in pyproject.toml/requirements.txt, not package.json
+          'mcp-server': ['@modelcontextprotocol/sdk'],
+          'cli-tool': ['commander', 'yargs', 'inquirer']
+        };
+
+        const indicators = strongIndicators[type] || [];
+        const matchingDeps = indicators.filter(dep => allDeps[dep]);
+
+        if (matchingDeps.length > 0) {
+          confidence += 0.3 * (matchingDeps.length / indicators.length);
+        }
+
+        // Package.json structure indicators
+        if (type === 'cli-tool' && packageJson.bin) {confidence += 0.2;}
+        if (type === 'node-api' && packageJson.main && packageJson.main.includes('server')) {confidence += 0.1;}
+        if ((type === 'react-webapp' || type === 'vue-webapp' || type === 'next-app') && packageJson.scripts?.start) {confidence += 0.1;}
+        if (type === 'next-app' && packageJson.scripts?.build && packageJson.scripts.build.includes('next')) {confidence += 0.2;}
+        if (type === 'mobile-react-native' && packageJson.scripts?.android) {confidence += 0.1;}
+        if (type === 'desktop-electron' && packageJson.main && packageJson.main.includes('electron')) {confidence += 0.2;}
+      }
+
+      // File structure indicators
+      const fileIndicators = {
+        // Web Development
+        'next-app': detector.hasNextFiles(),
+        'react-webapp': detector.hasReactFiles(),
+        'vue-webapp': detector.hasVueFiles(),
+        'node-api': detector.hasAPIFiles(),
+
+        // Mobile Development
+        'mobile-react-native': detector.hasReactNativeFiles(),
+        'mobile-flutter': detector.hasFlutterFiles(),
+
+        // Desktop & Games
+        'desktop-electron': detector.hasElectronFiles(),
+        'game-unity': detector.hasUnityFiles(),
+
+        // Modern Architecture
+        'microservices': detector.hasMicroservicesFiles(),
+        'serverless': detector.hasServerlessFiles(),
+
+        // Emerging Tech
+        'ai-ml': detector.hasAIMLFiles(),
+        'blockchain-dapp': detector.hasBlockchainFiles(),
+
+        // Languages & Tools
+        'python': detector.hasPythonFiles(),
+        'mcp-server': detector.hasMCPServerFiles(),
+        'cli-tool': detector.hasCLIFiles()
+      };
+
+      if (fileIndicators[type]) {
+        confidence += 0.2;
+      }
+
+      // Cap confidence at 0.95 to allow for edge cases
+      return Math.min(confidence, 0.95);
+
+    } catch (error) {
+      console.warn('Could not calculate detection confidence:', error.message);
+      return 0.5;
+    }
+  }
+
+  async detectProjectType() {
+    // Legacy method - kept for backwards compatibility
+    const result = await this.detectProjectTypeWithConfidence();
+    return result.type;
+  }
+
+  async gatherProjectMetadata(options = {}) {
     const packageJsonPath = path.join(this.globalConfig.projectRoot, 'package.json');
     let existingPackage = {};
 
     if (await fs.pathExists(packageJsonPath)) {
       existingPackage = await fs.readJSON(packageJsonPath);
+    }
+
+    // In auto mode, use sensible defaults without prompting
+    if (options.auto) {
+      return {
+        name: existingPackage.name || path.basename(this.globalConfig.projectRoot),
+        description: existingPackage.description || 'AI-assisted development project with Context7 MCP integration',
+        version: existingPackage.version || '1.0.0'
+      };
     }
 
     const questions = [];
@@ -153,7 +325,7 @@ export class InitCommand {
 
     try {
       // Create context7.config.js
-      await this.createConfig(projectType, metadata);
+      await this.createConfig(projectType, metadata, options);
 
       if (!options.noMcp) {
         // Create MCP server
@@ -179,14 +351,14 @@ export class InitCommand {
     }
   }
 
-  async createConfig(projectType, metadata) {
-    const configPath = path.join(this.globalConfig.projectRoot, 'context7.config.js');
+  async createConfig(projectType, metadata, options = {}) {
+    const configPath = path.join(this.globalConfig.projectRoot, 'codefortify.config.js');
 
-    if (await fs.pathExists(configPath)) {
+    if (await fs.pathExists(configPath) && !options.force && !options.auto) {
       const { overwrite } = await inquirer.prompt([{
         type: 'confirm',
         name: 'overwrite',
-        message: 'context7.config.js already exists. Overwrite?',
+        message: 'codefortify.config.js already exists. Overwrite?',
         default: false
       }]);
 
@@ -195,14 +367,14 @@ export class InitCommand {
 
     const config = this.generateConfig(projectType, metadata);
     await fs.writeFile(configPath, config);
-    console.log(chalk.green('✓ Created context7.config.js'));
+    console.log(chalk.green('✓ Created codefortify.config.js'));
   }
 
   generateConfig(projectType, metadata) {
     return `/**
- * Context7 MCP Configuration
+ * CodeFortify Configuration
  * 
- * Configuration for AI-assisted development with Context7 patterns
+ * Configuration for AI-powered code strengthening and security enhancement
  */
 
 export default {
@@ -219,16 +391,16 @@ export default {
     
     // Available resources
     resources: {
-      standards: true,        // Context7 coding standards
+      standards: true,        // CodeFortify security standards
       patterns: true,         // Framework-specific patterns
       documentation: true     // Project documentation
     },
     
     // Available tools
     tools: {
-      validate: true,         // Context7 compliance validation
+      validate: true,         // CodeFortify compliance validation
       generate: true,         // Pattern generation
-      analyze: true          // Project analysis
+      analyze: true          // Security analysis
     }
   },
   
@@ -277,14 +449,14 @@ export default {
 
   generateMCPServer(projectType) {
     return `/**
- * Context7 MCP Server
+ * CodeFortify MCP Server
  * 
- * Model Context Protocol server for ${projectType} projects
+ * AI-powered code strengthening server for ${projectType} projects
  */
 
-import { Context7MCPServer } from 'context7-mcp';
+import { CodeFortifyMCPServer } from 'codefortify';
 
-const server = new Context7MCPServer({
+const server = new CodeFortifyMCPServer({
   projectType: '${projectType}',
   projectRoot: process.cwd()
 });
@@ -461,7 +633,7 @@ context7 test-mcp    # Test MCP server functionality
     packageJson.description = packageJson.description || metadata.description;
 
     await fs.writeJSON(packageJsonPath, packageJson, { spaces: 2 });
-    console.log(chalk.green('✓ Updated package.json with Context7 scripts'));
+    console.log(chalk.green('✓ Updated package.json with CodeFortify scripts'));
   }
 
   displayNextSteps(projectType) {
@@ -469,18 +641,18 @@ context7 test-mcp    # Test MCP server functionality
     console.log(chalk.gray('─'.repeat(40)));
 
     console.log(`\n1. ${chalk.cyan('Review generated files:')}`);
-    console.log('   • context7.config.js - Project configuration');
+    console.log('   • codefortify.config.js - Project configuration');
     console.log('   • src/mcp-server.js - MCP server setup');
     console.log('   • AGENTS.md - AI agent configuration');
     console.log('   • CLAUDE.md - Development guidelines');
 
     console.log(`\n2. ${chalk.cyan('Test your setup:')}`);
-    console.log(`   ${chalk.gray('$')} context7 validate`);
-    console.log(`   ${chalk.gray('$')} context7 test-mcp`);
+    console.log(`   ${chalk.gray('$')} codefortify validate`);
+    console.log(`   ${chalk.gray('$')} codefortify test-mcp`);
 
     console.log(`\n3. ${chalk.cyan('Analyze project quality:')}`);
-    console.log(`   ${chalk.gray('$')} context7 score --detailed`);
-    console.log(`   ${chalk.gray('$')} context7 score --format html --open`);
+    console.log(`   ${chalk.gray('$')} codefortify score --detailed`);
+    console.log(`   ${chalk.gray('$')} codefortify score --format html --open`);
 
     console.log(`\n4. ${chalk.cyan('Start developing:')}`);
     if (projectType === 'react-webapp') {

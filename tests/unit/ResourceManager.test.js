@@ -15,7 +15,7 @@ const MockPatternProvider = class {
   constructor(config) {
     this.config = config;
   }
-  
+
   async generatePatterns() {
     return `Mock patterns for ${this.config.projectType}`;
   }
@@ -200,7 +200,7 @@ describe('ResourceManager', () => {
     });
 
     it.skip('should generate Vue patterns for vue-webapp project', async () => {
-      // Skipped due to dynamic import mocking complexity in test environment  
+      // Skipped due to dynamic import mocking complexity in test environment
       // Core functionality tested in integration tests
     });
 

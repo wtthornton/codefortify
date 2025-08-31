@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 /**
- * Context7 CLI - Command Line Interface
+ * CodeFortify CLI - Command Line Interface
  *
- * Main CLI entry point for Context7 MCP package operations
+ * Main CLI entry point for CodeFortify AI-powered development operations
  */
 
 import { Command } from 'commander';
@@ -26,8 +26,8 @@ const globalConfig = {
 };
 
 program
-  .name('context7')
-  .description('Context7 MCP integration CLI for AI-assisted development')
+  .name('codefortify')
+  .description('CodeFortify - AI-powered code strengthening and security enhancement CLI')
   .version('1.0.0')
   .option('-v, --verbose', 'Enable verbose logging')
   .option('-p, --project-root <path>', 'Set project root directory', process.cwd())
@@ -40,9 +40,10 @@ program
 // Initialize command
 program
   .command('init')
-  .description('Initialize Context7 MCP in a new or existing project')
+  .description('Initialize CodeFortify in a new or existing project')
   .option('-t, --type <type>', 'Project type (react-webapp, vue-webapp, node-api, etc.)')
   .option('-f, --force', 'Force initialization even if files exist')
+  .option('--auto', 'Auto-detect and initialize without prompts (requires high confidence)')
   .option('--no-mcp', 'Skip MCP server setup')
   .option('--no-agent-os', 'Skip Agent OS setup')
   .action(async (options) => {
@@ -53,7 +54,7 @@ program
 // Add command (for existing projects)
 program
   .command('add')
-  .description('Add Context7 MCP to an existing project')
+  .description('Add CodeFortify to an existing project')
   .option('-t, --type <type>', 'Project type (auto-detect if not specified)')
   .option('--existing', 'Preserve existing configuration files')
   .action(async (options) => {
@@ -64,7 +65,7 @@ program
 // Validate command
 program
   .command('validate')
-  .description('Validate project compliance with Context7 standards')
+  .description('Validate project compliance with CodeFortify standards')
   .option('-s, --strict', 'Enable strict validation mode')
   .option('--fix', 'Attempt to fix validation issues automatically')
   .option('--with-score', 'Include project quality scoring with validation')
@@ -106,7 +107,7 @@ program
 // Serve command
 program
   .command('serve')
-  .description('Start the Context7 MCP server')
+  .description('Start the CodeFortify MCP server')
   .option('--config <path>', 'Path to configuration file')
   .option('--port <port>', 'Server port (for HTTP transport)')
   .action(async (options) => {
@@ -117,7 +118,7 @@ program
 // Generate command
 program
   .command('generate <type>')
-  .description('Generate Context7-compliant code scaffolds')
+  .description('Generate CodeFortify-compliant code scaffolds')
   .option('-n, --name <name>', 'Name for the generated code')
   .option('-f, --framework <framework>', 'Target framework')
   .action(async (type, options) => {
@@ -128,7 +129,7 @@ program
 // Update command
 program
   .command('update')
-  .description('Update Context7 MCP configuration and templates')
+  .description('Update CodeFortify configuration and templates')
   .option('--templates', 'Update code templates only')
   .option('--config', 'Update configuration only')
   .action(async (options) => {
