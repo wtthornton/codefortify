@@ -21,7 +21,7 @@
     "coverage:open": "vitest run --coverage && open coverage/index.html",
     "coverage:threshold": "vitest run --coverage --reporter=verbose",
     "coverage:watch": "vitest --coverage --watch",
-    "coverage:ci": "vitest run --coverage --reporter=json --reporter=lcov --reporter=text-summary",
+    "coverage:ci": "vitest run --coverage",
     
     "test:performance": "vitest run tests/**/*.bench.js",
     "test:all": "npm run test && npm run test:integration && npm run test:cli",
@@ -107,7 +107,12 @@
     "src/",
     "bin/",
     "templates/",
+    "examples/",
     "README.md",
-    "LICENSE"
-  ]
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
 }

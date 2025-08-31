@@ -1,0 +1,14 @@
+// Generated Context7 MCP Server for {{projectType}}
+
+import { Context7MCPServer } from '@wtthornton/context7-mcp';
+
+const server = new Context7MCPServer({
+  projectRoot: process.cwd(),
+  projectType: '{{projectType}}',
+  projectName: '{{projectName}}'
+});
+
+server.start().catch(error => {
+  console.error('Failed to start MCP server:', error);
+  process.exit(1);
+});

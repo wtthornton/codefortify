@@ -34,7 +34,10 @@
       "Bash(npm run coverage:*)",
       "Bash(dir:*)",
       "Bash(context7 score:*)",
-      "Bash(context7 test-mcp:*)"
+      "Bash(context7 test-mcp:*)",
+      "Bash(npm publish:*)",
+      "Bash(npm view:*)",
+      "Bash(npm:*)"
     ],
     "deny": [],
     "ask": []
