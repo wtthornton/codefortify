@@ -1,6 +1,6 @@
 /**
  * CompletenessAnalyzer - Analyzes project completeness and production readiness
- * 
+ *
  * Evaluates:
  * - TODO and placeholder code completion (2pts)
  * - Production configuration and deployment readiness (2pts)
@@ -21,11 +21,11 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
     this.results.score = 0;
     this.results.issues = [];
     this.results.suggestions = [];
-    
+
     await this.analyzeTodoAndPlaceholders(); // 2pts
     await this.analyzeProductionReadiness(); // 2pts
     await this.analyzeProjectMetadata(); // 1pt
-    
+
     // QUICK WIN: Context7/MCP compliance deep validation (+2 bonus points)
     await this.analyzeContext7MCPCompliance(); // bonus 2pts
   }
@@ -109,7 +109,7 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
       // Check for required sections
       const requiredSections = [
         'Project Overview',
-        'Dev Environment Tips', 
+        'Dev Environment Tips',
         'Testing Instructions',
         'PR Instructions'
       ];
@@ -136,7 +136,7 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
   }
 
   /**
-   * Validate CLAUDE.md file structure and content  
+   * Validate CLAUDE.md file structure and content
    */
   async validateClaudeFileStructure() {
     try {
@@ -184,7 +184,7 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
       let qualityScore = 0;
 
       // Check for MCP server file
-      const mcpServerExists = await this.fileExists('src/mcp-server.js') || 
+      const mcpServerExists = await this.fileExists('src/mcp-server.js') ||
                             await this.fileExists('mcp-server.js') ||
                             await this.fileExists('src/server/mcp-server.js');
 
@@ -214,7 +214,7 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
           qualityScore++;
         }
 
-        // Check for tool handlers  
+        // Check for tool handlers
         if (serverContent.includes('list_tools') || serverContent.includes('listTools')) {
           qualityScore++;
         }
@@ -225,7 +225,7 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
         }
       }
 
-      return { isValid: qualityScore >= 3, issues: qualityScore < 3 ? 
+      return { isValid: qualityScore >= 3, issues: qualityScore < 3 ?
         [{ title: 'MCP server implementation incomplete', description: 'Enhance MCP server with proper resource/tool handlers' }] : [] };
 
     } catch (error) {
@@ -238,8 +238,8 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
    */
   async validateAgentOSConfiguration() {
     // Agent OS is disabled for this project - always return valid
-    return { 
-      isValid: true, 
+    return {
+      isValid: true,
       issues: [],
       message: 'Agent OS validation disabled for Context7 MCP projects'
     };
@@ -248,32 +248,32 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
   async analyzeTodoAndPlaceholders() {
     let _score = 0;
     const _maxScore = 2;
-    
+
     const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx', '.md', '.json']);
     let todoCount = 0;
     let placeholderCount = 0;
     let fixmeCount = 0;
-    
+
     for (const file of files) {
       try {
         const content = await this.readFile(file);
-        
+
         // Count TODOs, FIXMEs, and placeholder patterns
         const todoMatches = content.match(/\/\/\s*TODO|\/\*\s*TODO|\btodo\b/gi);
         const fixmeMatches = content.match(/\/\/\s*FIXME|\/\*\s*FIXME|\bfixme\b/gi);
         const placeholderMatches = content.match(/placeholder|xxx|changeme|replace.*this|implement.*here/gi);
-        
-        if (todoMatches) todoCount += todoMatches.length;
-        if (fixmeMatches) fixmeCount += fixmeMatches.length;
-        if (placeholderMatches) placeholderCount += placeholderMatches.length;
-        
+
+        if (todoMatches) {todoCount += todoMatches.length;}
+        if (fixmeMatches) {fixmeCount += fixmeMatches.length;}
+        if (placeholderMatches) {placeholderCount += placeholderMatches.length;}
+
       } catch (error) {
         // Skip files that can't be read
       }
     }
-    
+
     const totalIncomplete = todoCount + fixmeCount + placeholderCount;
-    
+
     if (totalIncomplete === 0) {
       _score += 2;
       this.addScore(2, 2, 'No TODO or placeholder code found');
@@ -290,7 +290,7 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
       this.addScore(0.5, 2, `Many incomplete items (${totalIncomplete})`);
       this.addIssue('High number of incomplete items', 'Project appears unfinished - complete TODO and placeholder code');
     }
-    
+
     this.setDetail('todoCount', todoCount);
     this.setDetail('fixmeCount', fixmeCount);
     this.setDetail('placeholderCount', placeholderCount);
@@ -300,59 +300,59 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
   async analyzeProductionReadiness() {
     let _score = 0;
     const _maxScore = 2;
-    
+
     const packageJson = await this.readPackageJson();
     if (!packageJson) {
       this.addIssue('No package.json found', 'Cannot assess production configuration');
       return;
     }
-    
+
     // Check for production scripts
     const scripts = packageJson.scripts || {};
     const hasProductionScripts = ['build', 'start'].every(script => scripts[script]);
-    
+
     if (hasProductionScripts) {
       _score += 0.5;
       this.addScore(0.5, 0.5, 'Production scripts (build, start) configured');
     } else {
       this.addIssue('Missing production scripts', 'Add build and start scripts for production deployment');
     }
-    
+
     // Check for environment configuration
-    const hasEnvConfig = await this.fileExists('.env.example') || 
+    const hasEnvConfig = await this.fileExists('.env.example') ||
                         await this.fileExists('.env.template') ||
                         await this.fileExists('config/') ||
                         (packageJson.config !== undefined);
-    
+
     if (hasEnvConfig) {
       _score += 0.5;
       this.addScore(0.5, 0.5, 'Environment configuration detected');
     } else {
       this.addIssue('No environment configuration', 'Add .env.example or config documentation');
     }
-    
+
     // Check for deployment configuration
     const deploymentFiles = [
       'Dockerfile', 'docker-compose.yml', 'docker-compose.yaml',
       'vercel.json', 'netlify.toml', '.platform.yml',
       'app.json', 'Procfile', 'railway.json'
     ];
-    
+
     const hasDeploymentConfig = deploymentFiles.some(file => this.fileExists(file));
-    
+
     if (await hasDeploymentConfig) {
       _score += 0.5;
       this.addScore(0.5, 0.5, 'Deployment configuration found');
     } else {
       this.addIssue('No deployment configuration', 'Add Dockerfile or platform-specific config');
     }
-    
+
     // Check for CI/CD pipeline
     const ciFiles = [
-      '.github/workflows/', '.gitlab-ci.yml', 
+      '.github/workflows/', '.gitlab-ci.yml',
       'azure-pipelines.yml', 'Jenkinsfile', '.circleci/'
     ];
-    
+
     let hasCiCd = false;
     for (const ciFile of ciFiles) {
       if (await this.fileExists(ciFile)) {
@@ -360,14 +360,14 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
         break;
       }
     }
-    
+
     if (hasCiCd) {
       _score += 0.5;
       this.addScore(0.5, 0.5, 'CI/CD pipeline configured');
     } else {
       this.addIssue('No CI/CD pipeline', 'Set up automated testing and deployment');
     }
-    
+
     this.setDetail('hasProductionScripts', hasProductionScripts);
     this.setDetail('hasEnvConfig', hasEnvConfig);
     this.setDetail('hasDeploymentConfig', await hasDeploymentConfig);
@@ -377,30 +377,30 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
   async analyzeProjectMetadata() {
     let _score = 0;
     const _maxScore = 1;
-    
+
     const packageJson = await this.readPackageJson();
     if (!packageJson) {
       this.addIssue('No package.json found', 'Cannot assess project metadata');
       return;
     }
-    
+
     // Check for essential package.json fields
     const essentialFields = ['name', 'version', 'description'];
     const hasEssentialFields = essentialFields.every(field => packageJson[field]);
-    
+
     if (hasEssentialFields) {
       _score += 0.3;
       this.addScore(0.3, 0.3, 'Essential package.json fields present');
     } else {
       this.addIssue('Missing package.json metadata', 'Add name, version, and description');
     }
-    
+
     // Check for additional metadata
     const metadataFields = [
       'author', 'repository', 'homepage', 'bugs', 'keywords', 'license'
     ];
     const metadataCount = metadataFields.filter(field => packageJson[field]).length;
-    
+
     if (metadataCount >= 4) {
       _score += 0.4;
       this.addScore(0.4, 0.4, `Comprehensive metadata (${metadataCount}/6 fields)`);
@@ -410,25 +410,25 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
     } else {
       this.addIssue('Limited project metadata', 'Add author, repository, license info');
     }
-    
+
     // Check for license file
     const licenseFiles = ['LICENSE', 'LICENSE.md', 'LICENSE.txt', 'LICENCE'];
     let hasLicenseFile = false;
-    
+
     for (const licenseFile of licenseFiles) {
       if (await this.fileExists(licenseFile)) {
         hasLicenseFile = true;
         break;
       }
     }
-    
+
     if (hasLicenseFile || packageJson.license) {
       _score += 0.3;
       this.addScore(0.3, 0.3, 'License information provided');
     } else {
       this.addIssue('No license specified', 'Add LICENSE file and license field to package.json');
     }
-    
+
     this.setDetail('hasEssentialFields', hasEssentialFields);
     this.setDetail('metadataFieldCount', metadataCount);
     this.setDetail('hasLicense', hasLicenseFile || !!packageJson.license);

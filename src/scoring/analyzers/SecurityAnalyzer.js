@@ -1,6 +1,6 @@
 /**
  * SecurityAnalyzer - Analyzes security patterns and vulnerability handling
- * 
+ *
  * Evaluates:
  * - Dependency vulnerabilities and updates (6pts)
  * - Secret and credential management (4pts)
@@ -23,7 +23,7 @@ export class SecurityAnalyzer extends BaseAnalyzer {
     this.results.score = 0;
     this.results.issues = [];
     this.results.suggestions = [];
-    
+
     await this.analyzeDependencyVulnerabilities(); // 6pts
     await this.analyzeSecretsManagement(); // 4pts
     await this.analyzeErrorHandling(); // 3pts
@@ -33,16 +33,16 @@ export class SecurityAnalyzer extends BaseAnalyzer {
   async analyzeDependencyVulnerabilities() {
     let _score = 0;
     const _maxScore = 6;
-    
+
     const packageJson = await this.readPackageJson();
     if (!packageJson) {
       this.addIssue('No package.json found', 'Cannot analyze dependencies for vulnerabilities');
       return;
     }
-    
+
     const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };
     const depsCount = Object.keys(deps).length;
-    
+
     if (depsCount === 0) {
       _score += 3;
       this.addScore(3, 6, 'No external dependencies (no vulnerability risk)');
@@ -87,19 +87,19 @@ export class SecurityAnalyzer extends BaseAnalyzer {
       this.addIssue('npm audit not available', 'For accurate vulnerability scanning, ensure npm is installed and project has package.json');
       await this.fallbackVulnerabilityAnalysis(deps, _score);
     }
-    
+
     // Check for outdated package indicators (2pts remaining)
-    const hasPackageLock = await this.fileExists('package-lock.json') || 
+    const hasPackageLock = await this.fileExists('package-lock.json') ||
                           await this.fileExists('yarn.lock') ||
                           await this.fileExists('pnpm-lock.yaml');
-    
+
     if (hasPackageLock) {
       _score += 1;
       this.addScore(1, 1, 'Lock file present (prevents dependency confusion)');
     } else {
       this.addIssue('No lock file found', 'Add package-lock.json to prevent dependency confusion attacks');
     }
-    
+
     // Check for audit script
     if (packageJson.scripts && packageJson.scripts.audit) {
       _score += 1;
@@ -107,7 +107,7 @@ export class SecurityAnalyzer extends BaseAnalyzer {
     } else {
       this.addIssue('No audit script in package.json', 'Add "audit": "npm audit" script for vulnerability checking');
     }
-    
+
     this.setDetail('dependencyCount', depsCount);
     this.setDetail('hasLockFile', hasPackageLock);
   }
@@ -119,12 +119,12 @@ export class SecurityAnalyzer extends BaseAnalyzer {
   async runNpmAudit() {
     try {
       // Run npm audit with JSON output
-      const output = execSync('npm audit --json', { 
+      const output = execSync('npm audit --json', {
         encoding: 'utf8',
         timeout: 30000, // 30 second timeout
         cwd: this.config.projectRoot || process.cwd()
       });
-      
+
       const auditData = JSON.parse(output);
       return { success: true, data: auditData };
     } catch (error) {
@@ -137,7 +137,7 @@ export class SecurityAnalyzer extends BaseAnalyzer {
           return { success: false, error: 'Failed to parse npm audit output' };
         }
       }
-      
+
       return { success: false, error: error.message };
     }
   }
@@ -154,18 +154,18 @@ export class SecurityAnalyzer extends BaseAnalyzer {
       'jsonwebtoken', 'passport', 'express-validator', 'sanitize-html',
       'dompurify', 'xss', 'csrf'
     ];
-    
+
     const hasSecurityPackages = securityPackages.some(pkg => deps[pkg]);
     if (hasSecurityPackages) {
       this.addScore(1, 1, 'Security-focused packages detected');
     }
-    
+
     // Check for known problematic packages
     const problematicPackages = [
       'eval', 'vm2', 'serialize-javascript', 'node-serialize',
       'safer-eval'
     ];
-    
+
     const hasProblematicPackages = problematicPackages.some(pkg => deps[pkg]);
     if (hasProblematicPackages) {
       this.addIssue('Potentially unsafe packages detected', 'Review usage of eval-like packages');
@@ -177,21 +177,21 @@ export class SecurityAnalyzer extends BaseAnalyzer {
   async analyzeSecretsManagement() {
     let _score = 0;
     const _maxScore = 4;
-    
+
     const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx', '.json', '.env']);
     const _secretsFound = 0;
     let envUsage = 0;
     let hardcodedSecrets = 0;
-    
+
     // Check for .env file and .gitignore
     const hasEnvFile = await this.fileExists('.env') || await this.fileExists('.env.example');
     const hasGitignore = await this.fileExists('.gitignore');
-    
+
     if (hasEnvFile) {
       _score += 1;
       this.addScore(1, 1, 'Environment file detected');
     }
-    
+
     if (hasGitignore) {
       try {
         const gitignoreContent = await this.readFile('.gitignore');
@@ -205,17 +205,17 @@ export class SecurityAnalyzer extends BaseAnalyzer {
         // Skip if can't read .gitignore
       }
     }
-    
+
     for (const file of files.slice(0, 30)) { // Sample files
       try {
         const content = await this.readFile(file);
-        
+
         // Look for environment variable usage (good practice)
         const envMatches = content.match(/process\.env\./g);
         if (envMatches) {
           envUsage += envMatches.length;
         }
-        
+
         // Look for potential hardcoded secrets (bad practice)
         const secretPatterns = [
           /api[_-]?key['"]\s*[:=]\s*['"]\w{20,}/i,
@@ -227,19 +227,19 @@ export class SecurityAnalyzer extends BaseAnalyzer {
           /['"]\w*[Aa][Pp][Ii][Kk][Ee][Yy]\w*['"]\s*[:=]\s*['"]\w{20,}/,
           /[0-9a-f]{32,}/g // Long hex strings that might be keys
         ];
-        
+
         for (const pattern of secretPatterns) {
           const matches = content.match(pattern);
           if (matches) {
             hardcodedSecrets += matches.length;
           }
         }
-        
+
       } catch (error) {
         // Skip files that can't be read
       }
     }
-    
+
     // Score based on environment variable usage vs hardcoded secrets
     if (envUsage > 0 && hardcodedSecrets === 0) {
       _score += 2;
@@ -255,7 +255,7 @@ export class SecurityAnalyzer extends BaseAnalyzer {
       _score += 1;
       this.addScore(1, 2, 'No obvious secrets management (might be appropriate for this project)');
     }
-    
+
     this.setDetail('envUsage', envUsage);
     this.setDetail('hardcodedSecrets', hardcodedSecrets);
     this.setDetail('hasEnvFile', hasEnvFile);
@@ -267,71 +267,71 @@ export class SecurityAnalyzer extends BaseAnalyzer {
   async analyzeErrorHandling() {
     let _score = 0;
     const _maxScore = 3;
-    
+
     const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx']);
     let tryCatchBlocks = 0;
     let errorHandlers = 0;
     let errorExposureRisk = 0;
-    
+
     // PHASE 1: Enhanced error analysis metrics
     let structuredErrors = 0;
     let contextualErrors = 0;
     let gracefulDegradation = 0;
     let aiDebuggingContext = 0;
     let errorBoundariesFound = 0;
-    
+
     for (const file of files.slice(0, 25)) { // Increased sample size
       try {
         const content = await this.readFile(file);
-        
+
         // Count try-catch blocks
         const tryCatchMatches = content.match(/try\s*{[\s\S]*?catch\s*\(/g);
         if (tryCatchMatches) {
           tryCatchBlocks += tryCatchMatches.length;
         }
-        
+
         // Count error handling patterns
-        if (content.includes('error') || content.includes('Error') || 
+        if (content.includes('error') || content.includes('Error') ||
             content.includes('.catch(') || content.includes('throw ')) {
           errorHandlers++;
         }
-        
+
         // PHASE 1: Analyze structured error handling
         if (this.hasStructuredErrorHandling(content)) {
           structuredErrors++;
         }
-        
+
         // PHASE 1: Analyze contextual error information
         if (this.hasContextualErrorHandling(content)) {
           contextualErrors++;
         }
-        
+
         // PHASE 1: Check for graceful degradation patterns
         if (this.hasGracefulDegradation(content)) {
           gracefulDegradation++;
         }
-        
+
         // PHASE 1: AI debugging context patterns
         if (this.hasAIDebuggingContext(content)) {
           aiDebuggingContext++;
         }
-        
+
         // Check for React Error Boundaries
         if (content.includes('componentDidCatch') || content.includes('ErrorBoundary') ||
             content.includes('getDerivedStateFromError')) {
           errorBoundariesFound++;
         }
-        
+
         // Enhanced information exposure detection
         if (this.hasErrorInformationExposure(content)) {
           errorExposureRisk++;
         }
-        
+
       } catch (error) {
         // Skip files that can't be read
       }
     }
-    
+
     // Score for try-catch usage (1.5pts)
     if (tryCatchBlocks > 0) {
       const catchScore = Math.min(tryCatchBlocks / 5, 1.5);
@@ -340,7 +340,7 @@ export class SecurityAnalyzer extends BaseAnalyzer {
     } else if (files.length > 5) {
       this.addIssue('Limited error handling detected', 'Add try-catch blocks for error-prone operations');
     }
-    
+
     // Score for structured error handling (0.75pts)
     const structuredRatio = files.length > 0 ? structuredErrors / Math.min(files.length, 25) : 0;
     const structuredScore = Math.min(structuredRatio * 0.75, 0.75);
@@ -350,8 +350,8 @@ export class SecurityAnalyzer extends BaseAnalyzer {
     } else {
       this.addIssue('Limited structured error handling', 'Use consistent error object structures with context');
     }
-    
-    // Score for contextual error information (0.75pts) 
+
+    // Score for contextual error information (0.75pts)
     const contextualRatio = files.length > 0 ? contextualErrors / Math.min(files.length, 25) : 0;
     const contextualScore = Math.min(contextualRatio * 0.75, 0.75);
     if (contextualScore > 0.3) {
@@ -364,42 +364,42 @@ export class SecurityAnalyzer extends BaseAnalyzer {
     } else {
       this.addIssue('No contextual error handling', 'Add phase, step, and debug context to error handling');
     }
-    
+
     // Bonus points for advanced error patterns
     let bonusScore = 0;
     if (gracefulDegradation > 0) {
       bonusScore += 0.2;
       this.addScore(0.2, 0.2, `Graceful degradation patterns found (${gracefulDegradation} files)`);
     }
-    
+
     if (aiDebuggingContext > 0) {
       bonusScore += 0.3;
       this.addScore(0.3, 0.3, `AI debugging context patterns found (${aiDebuggingContext} files)`);
     }
-    
+
     if (errorBoundariesFound > 0) {
       bonusScore += 0.2;
       this.addScore(0.2, 0.2, `Error boundaries implemented (${errorBoundariesFound} components)`);
     }
-    
+
     _score += Math.min(bonusScore, 0.5); // Cap bonus at 0.5pts
-    
+
     // Deduct for potential information exposure
     if (errorExposureRisk > 3) {
       this.addIssue('High error information exposure risk', 'Avoid logging sensitive error details - implement structured logging');
     } else if (errorExposureRisk > 0) {
       this.addIssue('Some error information exposure detected', 'Review error logging for sensitive information leaks');
     }
-    
+
     // Add specific recommendations based on analysis
     if (structuredErrors === 0 && files.length > 5) {
       this.addIssue('No structured error handling found', 'Implement error classes with phase, step, and context information');
     }
-    
+
     if (aiDebuggingContext === 0 && contextualErrors < files.length * 0.3) {
       this.addIssue('Limited AI debugging context', 'Add error context with debugContext, suggestedFix, and commonIssues');
     }
-    
+
     this.setDetail('tryCatchBlocks', tryCatchBlocks);
     this.setDetail('errorHandlers', errorHandlers);
     this.setDetail('errorExposureRisk', errorExposureRisk);
@@ -409,7 +409,7 @@ export class SecurityAnalyzer extends BaseAnalyzer {
     this.setDetail('aiDebuggingContext', aiDebuggingContext);
     this.setDetail('errorBoundaries', errorBoundariesFound);
   }
-  
+
   /**
    * PHASE 1: Check for structured error handling patterns
    */
@@ -424,10 +424,10 @@ export class SecurityAnalyzer extends BaseAnalyzer {
       /createError\(/,
       /ErrorWithContext/
     ];
-    
+
     return patterns.some(pattern => pattern.test(content));
   }
-  
+
   /**
    * PHASE 1: Check for contextual error handling (phase, step, debug info)
    */
@@ -443,10 +443,10 @@ export class SecurityAnalyzer extends BaseAnalyzer {
       /errorContext/,
       /catch\s*\([^)]*\)\s*{[\s\S]*?(?:phase|step|context)/i
     ];
-    
+
     return patterns.some(pattern => pattern.test(content));
   }
-  
+
   /**
    * PHASE 1: Check for graceful degradation patterns
    */
@@ -461,12 +461,12 @@ export class SecurityAnalyzer extends BaseAnalyzer {
       /try.*catch.*continue/i,
       /backup.*strategy/i
     ];
-    
+
     return patterns.some(pattern => pattern.test(content));
   }
-  
+
   /**
-   * PHASE 1: Check for AI debugging context patterns  
+   * PHASE 1: Check for AI debugging context patterns
    */
   hasAIDebuggingContext(content) {
     const patterns = [
@@ -481,10 +481,10 @@ export class SecurityAnalyzer extends BaseAnalyzer {
       /@aiContext/,
       /AI.*can.*use.*context/i
     ];
-    
+
     return patterns.some(pattern => pattern.test(content));
   }
-  
+
   /**
    * PHASE 1: Enhanced error information exposure detection
    */
@@ -500,63 +500,63 @@ export class SecurityAnalyzer extends BaseAnalyzer {
       /res\.send\(.*error/,
       /response.*error\.message/
     ];
-    
+
     return exposurePatterns.some(pattern => pattern.test(content));
   }
 
   async analyzeInputValidation() {
     let _score = 0;
     const _maxScore = 2;
-    
+
     const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx']);
     let validationPatterns = 0;
     let sanitizationUsage = 0;
-    
+
     const validationLibraries = [
       'joi', 'yup', 'express-validator', 'ajv', 'zod',
       'class-validator', 'validator', 'sanitize-html'
     ];
-    
+
     // Check for validation libraries in package.json
     const packageJson = await this.readPackageJson();
     if (packageJson) {
       const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };
       const hasValidationLib = validationLibraries.some(lib => deps[lib]);
-      
+
       if (hasValidationLib) {
         _score += 1;
         this.addScore(1, 1, 'Input validation library detected');
       }
     }
-    
+
     for (const file of files.slice(0, 15)) { // Sample files
       try {
         const content = await this.readFile(file);
-        
+
         // Look for validation patterns
         const validationKeywords = [
           'validate', 'sanitize', 'escape', 'filter', 'trim',
           'typeof', 'instanceof', 'isArray', 'isString', 'isNumber'
         ];
-        
+
         for (const keyword of validationKeywords) {
           if (content.includes(keyword)) {
             validationPatterns++;
             break; // Count each file only once
           }
         }
-        
+
         // Look for sanitization usage
-        if (content.includes('sanitize') || content.includes('escape') || 
+        if (content.includes('sanitize') || content.includes('escape') ||
             content.includes('xss') || content.includes('DOMPurify')) {
           sanitizationUsage++;
         }
-        
+
       } catch (error) {
         // Skip files that can't be read
       }
     }
-    
+
     // Score for validation patterns
     if (validationPatterns > 0) {
       const validationScore = Math.min(validationPatterns / 5, 1); // Up to 1 point
@@ -565,7 +565,7 @@ export class SecurityAnalyzer extends BaseAnalyzer {
     } else if (files.length > 5) {
       this.addIssue('No input validation patterns detected', 'Add input validation for user data');
     }
-    
+
     this.setDetail('validationPatterns', validationPatterns);
     this.setDetail('sanitizationUsage', sanitizationUsage);
   }

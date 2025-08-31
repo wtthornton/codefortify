@@ -1,6 +1,6 @@
 /**
  * Context7 MCP Package - Main Entry Point
- * 
+ *
  * Exports all the main classes and utilities for Context7 MCP integration
  */
 

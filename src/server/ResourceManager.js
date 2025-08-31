@@ -1,6 +1,6 @@
 /**
  * ResourceManager - Handles Context7 resource operations
- * 
+ *
  * Manages access to project standards, documentation, and patterns
  * for AI assistants through the MCP protocol.
  */
@@ -21,51 +21,51 @@ export class ResourceManager {
         uri: 'context7://standards/tech-stack',
         name: 'Technology Stack Standards',
         description: 'Project technology stack and standards',
-        mimeType: 'text/markdown',
+        mimeType: 'text/markdown'
       },
       {
         uri: 'context7://standards/code-style',
         name: 'Code Style Guidelines',
         description: 'Code style and formatting standards',
-        mimeType: 'text/markdown',
+        mimeType: 'text/markdown'
       },
       {
         uri: 'context7://standards/context7-standards',
         name: 'Context7 Implementation Standards',
         description: 'Context7 specific patterns and standards',
-        mimeType: 'text/markdown',
+        mimeType: 'text/markdown'
       },
       {
         uri: 'context7://product/mission',
         name: 'Product Mission',
         description: 'Project mission and objectives',
-        mimeType: 'text/markdown',
+        mimeType: 'text/markdown'
       },
       {
         uri: 'context7://product/roadmap',
         name: 'Product Roadmap',
         description: 'Development roadmap and priorities',
-        mimeType: 'text/markdown',
+        mimeType: 'text/markdown'
       },
       {
         uri: 'context7://instructions/ai-development',
         name: 'AI Development Guide',
         description: 'Instructions for AI-assisted development',
-        mimeType: 'text/markdown',
+        mimeType: 'text/markdown'
       },
       {
         uri: 'context7://patterns/component-patterns',
         name: 'Component Patterns',
         description: 'Established component patterns for the project type',
-        mimeType: 'text/typescript',
-      },
+        mimeType: 'text/typescript'
+      }
     ];
 
     // Add project-specific resources if they exist
     try {
       const customResourcesPath = path.join(this.projectRoot, this.agentOsPath, 'resources');
       const customResources = await fs.readdir(customResourcesPath);
-      
+
       for (const resource of customResources) {
         if (resource.endsWith('.md')) {
           const resourceName = resource.replace('.md', '');
@@ -73,7 +73,7 @@ export class ResourceManager {
             uri: `context7://custom/${resourceName}`,
             name: `Custom: ${resourceName}`,
             description: `Project-specific ${resourceName} documentation`,
-            mimeType: 'text/markdown',
+            mimeType: 'text/markdown'
           });
         }
       }
@@ -88,7 +88,7 @@ export class ResourceManager {
     try {
       let filePath;
       let mimeType = 'text/markdown';
-      
+
       switch (uri) {
       case 'context7://standards/tech-stack':
         filePath = path.join(this.projectRoot, this.agentOsPath, 'standards', 'tech-stack.md');
@@ -121,24 +121,24 @@ export class ResourceManager {
           throw new Error(`Unknown resource: ${uri}`);
         }
       }
-      
+
       let content;
-      
+
       if (uri === 'context7://patterns/component-patterns') {
         // Generate patterns dynamically based on project type
         content = await this.generatePatternsContent();
       } else {
         content = await fs.readFile(filePath, 'utf-8');
       }
-      
+
       return {
         contents: [
           {
             uri,
             mimeType,
-            text: content,
-          },
-        ],
+            text: content
+          }
+        ]
       };
     } catch (error) {
       throw new Error(`Failed to read resource ${uri}: ${error.message}`);
@@ -151,9 +151,9 @@ export class ResourceManager {
       path.join(this.projectRoot, 'examples', 'component_patterns_demo.tsx'),
       path.join(this.projectRoot, 'examples', 'patterns.tsx'),
       path.join(this.projectRoot, 'patterns', 'components.tsx'),
-      path.join(this.projectRoot, this.agentOsPath, 'patterns', 'components.tsx'),
+      path.join(this.projectRoot, this.agentOsPath, 'patterns', 'components.tsx')
     ];
-    
+
     for (const filePath of possiblePaths) {
       try {
         await fs.access(filePath);
@@ -162,7 +162,7 @@ export class ResourceManager {
         // File doesn't exist, try next
       }
     }
-    
+
     // If no pattern file found, we'll generate one
     return null;
   }
@@ -170,7 +170,7 @@ export class ResourceManager {
   async generatePatternsContent() {
     // Try to read existing pattern file first
     const patternFile = await this.findPatternFile();
-    
+
     if (patternFile) {
       try {
         return await fs.readFile(patternFile, 'utf-8');
@@ -178,7 +178,7 @@ export class ResourceManager {
         // Fall back to generated patterns
       }
     }
-    
+
     // Generate patterns based on project type
     const { PatternProvider } = await import('./PatternProvider.js');
     const provider = new PatternProvider(this.config);

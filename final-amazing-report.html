@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Context7 Quality Dashboard - @wtthornton/context7-mcp</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --accent-primary: #3b82f6;
+            --accent-secondary: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --border: #475569;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+        
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #e2e8f0;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+            gap: 0;
+        }
+        
+        .sidebar {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-right: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 3rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .nav-menu {
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background: var(--glass-bg);
+            color: var(--text-primary);
+            backdrop-filter: blur(10px);
+        }
+        
+        .main-content {
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+        
+        .header-section {
+            margin-bottom: 3rem;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .project-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .theme-toggle {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.2s ease;
+        }
+        
+        .theme-toggle:hover {
+            background: var(--bg-tertiary);
+        }
+        
+        .search-box {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border-radius: 0.75rem;
+            backdrop-filter: blur(10px);
+            min-width: 300px;
+            transition: all 0.2s ease;
+        }
+        
+        .search-container {
+            position: relative;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+        
+        .hero-stats {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 2rem;
+            align-items: center;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .score-visual {
+            text-align: center;
+        }
+        
+        .score-circle {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 1rem;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--glass-bg);
+            border-radius: 1rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+        }
+        
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        
+        .categories-section {
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .category-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px var(--shadow);
+        }
+        
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+        }
+        
+        .category-card.excellent::before { background: linear-gradient(90deg, #10b981, #059669); }
+        .category-card.good::before { background: linear-gradient(90deg, #3b82f6, #2563eb); }
+        .category-card.warning::before { background: linear-gradient(90deg, #f59e0b, #d97706); }
+        .category-card.poor::before { background: linear-gradient(90deg, #ef4444, #dc2626); }
+        
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .category-info {
+            flex: 1;
+        }
+        
+        .category-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+        
+        .category-description {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+        
+        .category-score-display {
+            text-align: right;
+        }
+        
+        .score-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+        
+        .score-max {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+        
+        .progress-section {
+            margin: 1.5rem 0;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 0.75rem 0;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 6px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            transition: width 1s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .progress-excellent .progress-fill { background: linear-gradient(90deg, #10b981, #059669); }
+        .progress-good .progress-fill { background: linear-gradient(90deg, #3b82f6, #2563eb); }
+        .progress-warning .progress-fill { background: linear-gradient(90deg, #f59e0b, #d97706); }
+        .progress-poor .progress-fill { background: linear-gradient(90deg, #ef4444, #dc2626); }
+        
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .progress-percentage {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .expand-toggle {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 0.25rem;
+            transition: all 0.2s ease;
+        }
+        
+        .expand-toggle:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        
+        .category-details {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            display: none;
+        }
+        
+        .category-details.expanded {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .issues-section {
+            margin-top: 1rem;
+        }
+        
+        .issues-header {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .issues-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .issue-item {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        
+        .issue-icon {
+            color: var(--error);
+            margin-top: 0.125rem;
+        }
+        
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .recommendation-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .recommendation-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+        
+        .rec-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .rec-priority {
+            background: var(--accent-primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .rec-impact {
+            background: var(--success);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .rec-title {
+            font-weight: 600;
+            font-size: 1.125rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .rec-desc {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        
+        .rec-category {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .hero-stats {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                text-align: center;
+            }
+            
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-box {
+                min-width: 200px;
+            }
+        }
+        
+        @media print {
+            .sidebar,
+            .controls,
+            .nav-menu {
+                display: none;
+            }
+            
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            body {
+                background: white;
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <div class="dashboard">
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+                <span>Context7</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#overview" class="nav-link active" data-section="overview">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Overview</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#categories" class="nav-link" data-section="categories">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Categories</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#recommendations" class="nav-link" data-section="recommendations">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Recommendations</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <main class="main-content">
+            <div class="header-section">
+                <div class="header-top">
+                    <h1 class="project-title">@wtthornton/context7-mcp</h1>
+                    
+                    <div class="controls">
+                        <div class="search-container">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" class="search-box" placeholder="Search report content..." id="searchInput">
+                        </div>
+                        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="score-visual">
+                        <div class="score-circle">
+                            <canvas id="scoreChart" width="160" height="160"></canvas>
+                        </div>
+                        <div class="score-number">61</div>
+                        <div class="score-max">out of 100</div>
+                        <div class="grade" style="font-size: 1.5rem; font-weight: 700; margin-top: 0.5rem; color: var(--accent-primary);">D-</div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">61%</div>
+                            <div class="stat-label">Quality Score</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">7</div>
+                            <div class="stat-label">Categories</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">7</div>
+                            <div class="stat-label">Recommendations</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">mcp-server</div>
+                            <div class="stat-label">Project Type</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <section class="categories-section" id="categories">
+                <h2 class="section-title">
+                    <i class="fas fa-layer-group"></i>
+                    Category Analysis
+                </h2>
+                
+                <div class="categories-grid">
+                    
+                            <div class="category-card poor" data-category="code-structure---architecture">
+                                <div class="category-header">
+                                    <div class="category-info">
+                                        <div class="category-name">Code Structure & Architecture</div>
+                                        <div class="category-description">File organization, module design, and architectural patterns</div>
+                                    </div>
+                                    <div class="category-score-display">
+                                        <div class="score-number">6.666666666666666<span class="score-max">/20</span></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-section">
+                                    <div class="progress-labels">
+                                        <span class="progress-percentage">33%</span>
+                                        <button class="expand-toggle" onclick="toggleCategoryDetails('code-structure---architecture')">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button>
+                                    </div>
+                                    <div class="progress-bar progress-poor">
+                                        <div class="progress-fill" style="width: 33%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="category-details" id="details-code-structure---architecture">
+                                    
+                                        <div class="issues-section">
+                                            <div class="issues-header">
+                                                <i class="fas fa-exclamation-triangle issue-icon"></i>
+                                                <span>Issues Found (6)</span>
+                                            </div>
+                                            <div class="issues-list">
+                                                
+                                                    <div class="issue-item">
+                                                        <i class="fas fa-times-circle issue-icon"></i>
+                                                        <span>File organization analysis failed: score is not defined</span>
+                                                    </div>
+                                                
+                                                    <div class="issue-item">
+                                                        <i class="fas fa-times-circle issue-icon"></i>
+                                                        <span>Inconsistent module export patterns</span>
+                                                    </div>
+                                                
+                                                    <div class="issue-item">
+                                                        <i class="fas fa-times-circle issue-icon"></i>
+                                                        <span>Modules are too large</span>
+                                                    </div>
+                                                
+                                                    <div class="issue-item">
+                                                        <i class="fas fa-times-circle issue-icon"></i>
+                                                        <span>Some naming inconsistencies found</span>
+                                                    </div>
+                                                
+                                                    <div class="issue-item">
+                                                        <i class="fas fa-times-circle issue-icon"></i>
+                                                        <span>Naming convention analysis failed: score is not defined</span>
+                                                    </div>
+                                                
+                                                    <div class="issue-item">
+                                                        <i class="fas fa-times-circle issue-icon"></i>
+                                                        <span>Architecture pattern analysis failed: score is not defined</span>
+                                                    </div>
+                                                
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            </div>
+                        
+                            <div class="category-card poor" data-category="code-quality---maintainability">
+                                <div class="category-header">
+                                    <div class="category-info">
+                                        <div class="category-name">Code Quality & Maintainability</div>
+                                        <div class="category-description">Code style, complexity, and maintainability metrics</div>
+                                    </div>
+                                    <div class="category-score-display">
+                                        <div class="score-number">10.505659203980098<span class="score-max">/20</span></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-section">
+                                    <div class="progress-labels">
+                                        <span class="progress-percentage">53%</span>
+                                        <button class="expand-toggle" onclick="toggleCategoryDetails('code-quality---maintainability')">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button>
+                                    </div>
+                                    <div class="progress-bar progress-poor">
+                                        <div class="progress-fill" style="width: 53%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="category-details" id="details-code-quality---maintainability">
+                                    
+                                        <div class="issues-section">
+                                            <div class="issues-header">
+                                                <i class="fas fa-exclamation-triangle issue-icon"></i>
+                                                <span>Issues Found (6)</span>
+                                            </div>
+                                            <div class="issues-list">
+                                                
+                                                    <div class="issue-item">
+                                                        <i class="fas fa-times-circle issue-icon"></i>
+                                                        <span>High ESLint error count</span>
+                                                    </div>
+                                                
+                                                    <div class="issue-item">
+                                                        <i class="fas fa-times-circle issue-icon"></i>
+                                                        <span>Class documentation needs improvement</span>
+                                                    </div>
+                                                
+                                                    <div class="issue-item">
+                                                        <i class="fas fa-times-circle issue-icon"></i>
+                                                        <span>Method documentation needs improvement</span>
+                                                    </div>
+                                                
+                                                    <div class="issue-item">
+                                                        <i class="fas fa-times-circle issue-icon"></i>
+                                                        <span>Comment quality needs improvement</span>
+                                                    </div>
+                                                
+                                                    <div class="issue-item">
+                                                        <i class="fas fa-times-circle issue-icon"></i>
+                                                        <span>4 potentially outdated comments found</span>
+                                                    </div>
+                                                
+                                                    <div class="issue-item">
+                                                        <i class="fas fa-times-circle issue-icon"></i>
+                                                        <span>No TypeScript usage detected</span>
+                                                    </div>
+                                                
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            </div>
+                        
+                            <div class="category-card warning" data-category="performance---optimization">
+                                <div class="category-header">
+                                    <div class="category-info">
+                                        <div class="category-name">Performance & Optimization</div>
+                                        <div class="category-description">Bundle size, loading performance, and optimization techniques</div>
+                                    </div>
+                                    <div class="category-score-display">
+                                        <div class="score-number">10.166666666666666<span class="score-max">/15</span></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-section">
+                                    <div class="progress-labels">
+                                        <span class="progress-percentage">68%</span>
+                                        <button class="expand-toggle" onclick="toggleCategoryDetails('performance---optimization')">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button>
+                                    </div>
+                                    <div class="progress-bar progress-warning">
+                                        <div class="progress-fill" style="width: 68%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="category-details" id="details-performance---optimization">
+                                    <div class="issues-section"><div class="issues-header"><i class="fas fa-check-circle" style="color: var(--success);"></i><span>No issues found</span></div></div>
+                                </div>
+                            </div>
+                        
+                            <div class="category-card warning" data-category="testing---documentation">
+                                <div class="category-header">
+                                    <div class="category-info">
+                                        <div class="category-name">Testing & Documentation</div>
+                                        <div class="category-description">Test coverage, documentation quality, and development practices</div>
+                                    </div>
+                                    <div class="category-score-display">
+                                        <div class="score-number">9<span class="score-max">/15</span></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-section">
+                                    <div class="progress-labels">
+                                        <span class="progress-percentage">60%</span>
+                                        <button class="expand-toggle" onclick="toggleCategoryDetails('testing---documentation')">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button>
+                                    </div>
+                                    <div class="progress-bar progress-warning">
+                                        <div class="progress-fill" style="width: 60%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="category-details" id="details-testing---documentation">
+                                    
+                                        <div class="issues-section">
+                                            <div class="issues-header">
+                                                <i class="fas fa-exclamation-triangle issue-icon"></i>
+                                                <span>Issues Found (2)</span>
+                                            </div>
+                                            <div class="issues-list">
+                                                
+                                                    <div class="issue-item">
+                                                        <i class="fas fa-times-circle issue-icon"></i>
+                                                        <span>Low test coverage</span>
+                                                    </div>
+                                                
+                                                    <div class="issue-item">
+                                                        <i class="fas fa-times-circle issue-icon"></i>
+                                                        <span>Coverage analysis failed</span>
+                                                    </div>
+                                                
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            </div>
+                        
+                            <div class="category-card good" data-category="security---error-handling">
+                                <div class="category-header">
+                                    <div class="category-info">
+                                        <div class="category-name">Security & Error Handling</div>
+                                        <div class="category-description">Security vulnerabilities, error handling, and data protection</div>
+                                    </div>
+                                    <div class="category-score-display">
+                                        <div class="score-number">12.219999999999999<span class="score-max">/15</span></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-section">
+                                    <div class="progress-labels">
+                                        <span class="progress-percentage">81%</span>
+                                        <button class="expand-toggle" onclick="toggleCategoryDetails('security---error-handling')">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button>
+                                    </div>
+                                    <div class="progress-bar progress-good">
+                                        <div class="progress-fill" style="width: 81%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="category-details" id="details-security---error-handling">
+                                    
+                                        <div class="issues-section">
+                                            <div class="issues-header">
+                                                <i class="fas fa-exclamation-triangle issue-icon"></i>
+                                                <span>Issues Found (1)</span>
+                                            </div>
+                                            <div class="issues-list">
+                                                
+                                                    <div class="issue-item">
+                                                        <i class="fas fa-times-circle issue-icon"></i>
+                                                        <span>High error information exposure risk</span>
+                                                    </div>
+                                                
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            </div>
+                        
+                            <div class="category-card good" data-category="developer-experience">
+                                <div class="category-header">
+                                    <div class="category-info">
+                                        <div class="category-name">Developer Experience</div>
+                                        <div class="category-description">Tooling, workflow, and development environment setup</div>
+                                    </div>
+                                    <div class="category-score-display">
+                                        <div class="score-number">8.166666666666668<span class="score-max">/10</span></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-section">
+                                    <div class="progress-labels">
+                                        <span class="progress-percentage">82%</span>
+                                        <button class="expand-toggle" onclick="toggleCategoryDetails('developer-experience')">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button>
+                                    </div>
+                                    <div class="progress-bar progress-good">
+                                        <div class="progress-fill" style="width: 82%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="category-details" id="details-developer-experience">
+                                    
+                                        <div class="issues-section">
+                                            <div class="issues-header">
+                                                <i class="fas fa-exclamation-triangle issue-icon"></i>
+                                                <span>Issues Found (1)</span>
+                                            </div>
+                                            <div class="issues-list">
+                                                
+                                                    <div class="issue-item">
+                                                        <i class="fas fa-times-circle issue-icon"></i>
+                                                        <span>Limited development tooling</span>
+                                                    </div>
+                                                
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            </div>
+                        
+                            <div class="category-card excellent" data-category="completeness---production-readiness">
+                                <div class="category-header">
+                                    <div class="category-info">
+                                        <div class="category-name">Completeness & Production Readiness</div>
+                                        <div class="category-description">Project completeness and production deployment readiness</div>
+                                    </div>
+                                    <div class="category-score-display">
+                                        <div class="score-number">4.5<span class="score-max">/5</span></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-section">
+                                    <div class="progress-labels">
+                                        <span class="progress-percentage">90%</span>
+                                        <button class="expand-toggle" onclick="toggleCategoryDetails('completeness---production-readiness')">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button>
+                                    </div>
+                                    <div class="progress-bar progress-excellent">
+                                        <div class="progress-fill" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="category-details" id="details-completeness---production-readiness">
+                                    
+                                        <div class="issues-section">
+                                            <div class="issues-header">
+                                                <i class="fas fa-exclamation-triangle issue-icon"></i>
+                                                <span>Issues Found (3)</span>
+                                            </div>
+                                            <div class="issues-list">
+                                                
+                                                    <div class="issue-item">
+                                                        <i class="fas fa-times-circle issue-icon"></i>
+                                                        <span>High number of incomplete items</span>
+                                                    </div>
+                                                
+                                                    <div class="issue-item">
+                                                        <i class="fas fa-times-circle issue-icon"></i>
+                                                        <span>No environment configuration</span>
+                                                    </div>
+                                                
+                                                    <div class="issue-item">
+                                                        <i class="fas fa-times-circle issue-icon"></i>
+                                                        <span>MCP server implementation incomplete</span>
+                                                    </div>
+                                                
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            </div>
+                        
+                </div>
+            </section>
+            
+            
+                <section class="recommendations-section" id="recommendations">
+                    <h2 class="section-title">
+                        <i class="fas fa-lightbulb"></i>
+                        Priority Recommendations
+                    </h2>
+                    
+                    <div class="recommendations-grid">
+                        
+                            <div class="recommendation-card" data-impact="4">
+                                <div class="rec-header">
+                                    <div class="rec-priority">#1</div>
+                                    <div class="rec-impact">+4pts</div>
+                                </div>
+                                <div class="rec-content">
+                                    <div class="rec-title">Increase test coverage to 80%+</div>
+                                    <div class="rec-desc">Comprehensive testing prevents regressions and improves code quality.</div>
+                                    <div class="rec-category">testing</div>
+                                </div>
+                            </div>
+                        
+                            <div class="recommendation-card" data-impact="3">
+                                <div class="rec-header">
+                                    <div class="rec-priority">#2</div>
+                                    <div class="rec-impact">+3pts</div>
+                                </div>
+                                <div class="rec-content">
+                                    <div class="rec-title">Improve project organization and file structure</div>
+                                    <div class="rec-desc">Create clear module boundaries, organize files by feature, and establish consistent naming conventions.</div>
+                                    <div class="rec-category">structure</div>
+                                </div>
+                            </div>
+                        
+                            <div class="recommendation-card" data-impact="3">
+                                <div class="rec-header">
+                                    <div class="rec-priority">#3</div>
+                                    <div class="rec-impact">+3pts</div>
+                                </div>
+                                <div class="rec-content">
+                                    <div class="rec-title">Configure ESLint and Prettier for code quality</div>
+                                    <div class="rec-desc">Automated code formatting and linting prevents bugs and improves consistency.</div>
+                                    <div class="rec-category">quality</div>
+                                </div>
+                            </div>
+                        
+                            <div class="recommendation-card" data-impact="2">
+                                <div class="rec-header">
+                                    <div class="rec-priority">#4</div>
+                                    <div class="rec-impact">+2pts</div>
+                                </div>
+                                <div class="rec-content">
+                                    <div class="rec-title">Improve code documentation</div>
+                                    <div class="rec-desc">Well-documented code is easier for AI assistants and developers to understand.</div>
+                                    <div class="rec-category">quality</div>
+                                </div>
+                            </div>
+                        
+                            <div class="recommendation-card" data-impact="2">
+                                <div class="rec-header">
+                                    <div class="rec-priority">#5</div>
+                                    <div class="rec-impact">+2pts</div>
+                                </div>
+                                <div class="rec-content">
+                                    <div class="rec-title">Add bundle analysis and optimization</div>
+                                    <div class="rec-desc">Monitor bundle size and implement code splitting for better performance.</div>
+                                    <div class="rec-category">performance</div>
+                                </div>
+                            </div>
+                        
+                            <div class="recommendation-card" data-impact="3">
+                                <div class="rec-header">
+                                    <div class="rec-priority">#6</div>
+                                    <div class="rec-impact">+3pts</div>
+                                </div>
+                                <div class="rec-content">
+                                    <div class="rec-title">Work on remaining quality gaps</div>
+                                    <div class="rec-desc">You're on the right track! Focus on the areas with the lowest scores.</div>
+                                    <div class="rec-category">general</div>
+                                </div>
+                            </div>
+                        
+                            <div class="recommendation-card" data-impact="3">
+                                <div class="rec-header">
+                                    <div class="rec-priority">#7</div>
+                                    <div class="rec-impact">+3pts</div>
+                                </div>
+                                <div class="rec-content">
+                                    <div class="rec-title">Implement Context7 standards for AI integration</div>
+                                    <div class="rec-desc">Context7 patterns help AI assistants understand and work with your code better.</div>
+                                    <div class="rec-category">context7</div>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </section>
+            
+            
+            <footer style="margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--border);">
+                <div style="display: flex; justify-content: space-between; align-items: center; color: var(--text-muted);">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 500;">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Generated by Context7 MCP Quality Scorer</span>
+                    </div>
+                    <div style="font-size: 0.875rem;">
+                        8/30/2025, 7:12:28 PM
+                    </div>
+                </div>
+            </footer>
+        </main>
+    </div>
+    
+    <script>
+        // Theme Management
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.querySelector('.theme-toggle i');
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            body.setAttribute('data-theme', newTheme);
+            icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('theme', newTheme);
+        }
+        
+        // Load saved theme
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.body.setAttribute('data-theme', savedTheme);
+            document.querySelector('.theme-toggle i').className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        });
+        
+        // Category Details Toggle
+        function toggleCategoryDetails(categoryId) {
+            const details = document.getElementById(`details-${categoryId}`);
+            const toggle = details.parentElement.querySelector('.expand-toggle i');
+            
+            if (details.classList.contains('expanded')) {
+                details.classList.remove('expanded');
+                toggle.className = 'fas fa-chevron-down';
+            } else {
+                details.classList.add('expanded');
+                toggle.className = 'fas fa-chevron-up';
+            }
+        }
+        
+        // Search Functionality
+        document.getElementById('searchInput')?.addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.category-card, .recommendation-card');
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(query) || query === '') {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+        
+        // Charts Initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            // Score Circle Chart
+            const scoreCtx = document.getElementById('scoreChart');
+            if (scoreCtx) {
+                new Chart(scoreCtx, {
+                    type: 'doughnut',
+                    data: {
+                        datasets: [{
+                            data: [61, 39],
+                            backgroundColor: ['#3b82f6', 'rgba(255,255,255,0.1)'],
+                            borderWidth: 0,
+                            cutout: '75%'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        }
+                    }
+                });
+            }
+            
+            // Category Breakdown Chart
+            const categoryCtx = document.getElementById('categoryChart');
+            if (categoryCtx) {
+                const categoryData = [{"name":"Code Structure & Architecture","score":33},{"name":"Code Quality & Maintainability","score":53},{"name":"Performance & Optimization","score":68},{"name":"Testing & Documentation","score":60},{"name":"Security & Error Handling","score":81},{"name":"Developer Experience","score":82},{"name":"Completeness & Production Readiness","score":90}];
+                
+                new Chart(categoryCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: categoryData.map(c => c.name.split(' ').slice(0, 2).join(' ')),
+                        datasets: [{
+                            label: 'Score %',
+                            data: categoryData.map(c => c.score),
+                            backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                            borderColor: '#3b82f6',
+                            borderWidth: 2,
+                            pointBackgroundColor: '#3b82f6'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                max: 100,
+                                grid: { color: 'rgba(255,255,255,0.1)' },
+                                angleLines: { color: 'rgba(255,255,255,0.1)' },
+                                pointLabels: { color: '#cbd5e1', font: { size: 11 } }
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

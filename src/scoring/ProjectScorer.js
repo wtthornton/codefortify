@@ -1,9 +1,9 @@
 /**
  * ProjectScorer - Main scoring orchestrator for Context7 projects
- * 
+ *
  * Evaluates project quality across 7 categories with weighted scoring:
  * - Code Structure & Architecture (20pts)
- * - Code Quality & Maintainability (20pts) 
+ * - Code Quality & Maintainability (20pts)
  * - Performance & Optimization (15pts)
  * - Testing & Documentation (15pts)
  * - Error Handling & Security (15pts)
@@ -44,7 +44,7 @@ export class ProjectScorer {
     this.analyzers = this.initializeAnalyzers();
     this.reportGenerator = new ScoringReport(this.config);
     this.recommendationEngine = new RecommendationEngine(this.config);
-    
+
     this.results = {
       categories: {},
       overall: {
@@ -83,7 +83,7 @@ export class ProjectScorer {
   async scoreProject(options = {}) {
     const {
       categories = ['all'],
-      // _skipCache = false, // Unused parameter 
+      // _skipCache = false, // Unused parameter
       detailed = false
     } = options;
 
@@ -95,7 +95,7 @@ export class ProjectScorer {
       await this.checkToolAvailability();
 
       // Determine which categories to analyze
-      const categoriesToAnalyze = categories.includes('all') 
+      const categoriesToAnalyze = categories.includes('all')
         ? Object.keys(this.analyzers)
         : categories.filter(cat => this.analyzers[cat]);
 
@@ -106,7 +106,7 @@ export class ProjectScorer {
       // Run analysis for each category
       for (const categoryKey of categoriesToAnalyze) {
         const analyzer = this.analyzers[categoryKey];
-        
+
         if (this.config.verbose) {
           console.log(`\n🔍 Analyzing ${analyzer.categoryName}...`);
         }
@@ -124,7 +124,7 @@ export class ProjectScorer {
           }
         } catch (error) {
           console.error(`❌ Failed to analyze ${analyzer.categoryName}: ${error.message}`);
-          
+
           // Add failed category with 0 score
           this.results.categories[categoryKey] = {
             score: 0,
@@ -153,7 +153,7 @@ export class ProjectScorer {
       }
 
       console.log('\n✅ Analysis complete!');
-      
+
       return this.results;
 
     } catch (error) {
@@ -170,7 +170,7 @@ export class ProjectScorer {
     for (const [, result] of Object.entries(this.results.categories)) {
       totalScore += result.score;
       maxTotalScore += result.maxScore;
-      
+
       if (result.error) {
         hasErrors = true;
       }
@@ -187,18 +187,18 @@ export class ProjectScorer {
   }
 
   calculateGrade(percentage) {
-    if (percentage >= 0.97) return 'A+';
-    if (percentage >= 0.93) return 'A';
-    if (percentage >= 0.90) return 'A-';
-    if (percentage >= 0.87) return 'B+';
-    if (percentage >= 0.83) return 'B';
-    if (percentage >= 0.80) return 'B-';
-    if (percentage >= 0.77) return 'C+';
-    if (percentage >= 0.73) return 'C';
-    if (percentage >= 0.70) return 'C-';
-    if (percentage >= 0.67) return 'D+';
-    if (percentage >= 0.65) return 'D';
-    if (percentage >= 0.60) return 'D-';
+    if (percentage >= 0.97) {return 'A+';}
+    if (percentage >= 0.93) {return 'A';}
+    if (percentage >= 0.90) {return 'A-';}
+    if (percentage >= 0.87) {return 'B+';}
+    if (percentage >= 0.83) {return 'B';}
+    if (percentage >= 0.80) {return 'B-';}
+    if (percentage >= 0.77) {return 'C+';}
+    if (percentage >= 0.73) {return 'C';}
+    if (percentage >= 0.70) {return 'C-';}
+    if (percentage >= 0.67) {return 'D+';}
+    if (percentage >= 0.65) {return 'D';}
+    if (percentage >= 0.60) {return 'D-';}
     return 'F';
   }
 
@@ -224,10 +224,10 @@ export class ProjectScorer {
 
       const countFiles = async (dir) => {
         const files = await fs.readdir(dir, { withFileTypes: true });
-        
+
         for (const file of files) {
           const fullPath = path.join(dir, file.name);
-          
+
           if (file.isDirectory()) {
             // Skip node_modules, .git, etc.
             if (['node_modules', '.git', 'dist', 'build', 'coverage'].includes(file.name)) {
@@ -236,10 +236,10 @@ export class ProjectScorer {
             await countFiles(fullPath);
           } else {
             stats.totalFiles++;
-            
+
             const ext = path.extname(file.name);
             stats.languages[ext] = (stats.languages[ext] || 0) + 1;
-            
+
             if (['.js', '.ts', '.jsx', '.tsx', '.vue', '.svelte'].includes(ext)) {
               stats.codeFiles++;
             } else if (['.test.js', '.spec.js', '.test.ts', '.spec.ts'].includes(ext) || file.name.includes('.test.') || file.name.includes('.spec.')) {
@@ -253,7 +253,7 @@ export class ProjectScorer {
 
       await countFiles(this.config.projectRoot);
       return stats;
-      
+
     } catch (error) {
       return { error: error.message };
     }
@@ -263,11 +263,11 @@ export class ProjectScorer {
     try {
       const packageJsonPath = path.join(this.config.projectRoot, 'package.json');
       const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'));
-      
+
       const deps = packageJson.dependencies || {};
       const devDeps = packageJson.devDependencies || {};
       const totalDeps = Object.keys(deps).length + Object.keys(devDeps).length;
-      
+
       return {
         production: Object.keys(deps).length,
         development: Object.keys(devDeps).length,
@@ -277,7 +277,7 @@ export class ProjectScorer {
         testingTools: this.identifyTestingTools(deps, devDeps),
         buildTools: this.identifyBuildTools(deps, devDeps)
       };
-      
+
     } catch (error) {
       return { error: error.message };
     }
@@ -285,7 +285,7 @@ export class ProjectScorer {
 
   async checkLockfileExists() {
     const lockfiles = ['package-lock.json', 'yarn.lock', 'pnpm-lock.yaml'];
-    
+
     for (const lockfile of lockfiles) {
       try {
         await fs.access(path.join(this.config.projectRoot, lockfile));
@@ -300,44 +300,44 @@ export class ProjectScorer {
   identifyFrameworks(deps, devDeps) {
     const allDeps = { ...deps, ...devDeps };
     const frameworks = [];
-    
-    if (allDeps.react) frameworks.push('React');
-    if (allDeps.vue) frameworks.push('Vue');
-    if (allDeps.svelte) frameworks.push('Svelte');
-    if (allDeps.angular || allDeps['@angular/core']) frameworks.push('Angular');
-    if (allDeps.next) frameworks.push('Next.js');
-    if (allDeps.nuxt) frameworks.push('Nuxt.js');
-    if (allDeps.express) frameworks.push('Express');
-    if (allDeps.fastify) frameworks.push('Fastify');
-    
+
+    if (allDeps.react) {frameworks.push('React');}
+    if (allDeps.vue) {frameworks.push('Vue');}
+    if (allDeps.svelte) {frameworks.push('Svelte');}
+    if (allDeps.angular || allDeps['@angular/core']) {frameworks.push('Angular');}
+    if (allDeps.next) {frameworks.push('Next.js');}
+    if (allDeps.nuxt) {frameworks.push('Nuxt.js');}
+    if (allDeps.express) {frameworks.push('Express');}
+    if (allDeps.fastify) {frameworks.push('Fastify');}
+
     return frameworks;
   }
 
   identifyTestingTools(deps, devDeps) {
     const allDeps = { ...deps, ...devDeps };
     const tools = [];
-    
-    if (allDeps.vitest) tools.push('Vitest');
-    if (allDeps.jest) tools.push('Jest');
-    if (allDeps.mocha) tools.push('Mocha');
-    if (allDeps.cypress) tools.push('Cypress');
-    if (allDeps.playwright) tools.push('Playwright');
-    if (allDeps['@testing-library/react']) tools.push('React Testing Library');
-    
+
+    if (allDeps.vitest) {tools.push('Vitest');}
+    if (allDeps.jest) {tools.push('Jest');}
+    if (allDeps.mocha) {tools.push('Mocha');}
+    if (allDeps.cypress) {tools.push('Cypress');}
+    if (allDeps.playwright) {tools.push('Playwright');}
+    if (allDeps['@testing-library/react']) {tools.push('React Testing Library');}
+
     return tools;
   }
 
   identifyBuildTools(deps, devDeps) {
     const allDeps = { ...deps, ...devDeps };
     const tools = [];
-    
-    if (allDeps.webpack) tools.push('Webpack');
-    if (allDeps.vite) tools.push('Vite');
-    if (allDeps.rollup) tools.push('Rollup');
-    if (allDeps.parcel) tools.push('Parcel');
-    if (allDeps.esbuild) tools.push('ESBuild');
-    if (allDeps.typescript) tools.push('TypeScript');
-    
+
+    if (allDeps.webpack) {tools.push('Webpack');}
+    if (allDeps.vite) {tools.push('Vite');}
+    if (allDeps.rollup) {tools.push('Rollup');}
+    if (allDeps.parcel) {tools.push('Parcel');}
+    if (allDeps.esbuild) {tools.push('ESBuild');}
+    if (allDeps.typescript) {tools.push('TypeScript');}
+
     return tools;
   }
 
@@ -352,17 +352,17 @@ export class ProjectScorer {
   async calculateComplexity() {
     // Basic complexity metrics - could be enhanced with AST analysis
     const stats = await this.getFileStatistics();
-    
+
     return {
       file_count_complexity: this.getComplexityScore(stats.codeFiles, [
         { threshold: 10, score: 'low' },
         { threshold: 50, score: 'medium' },
         { threshold: 100, score: 'high' }
       ]),
-      dependency_complexity: this.results.categories.structure?.details?.dependencyCount ? 
+      dependency_complexity: this.results.categories.structure?.details?.dependencyCount ?
         this.getComplexityScore(this.results.categories.structure.details.dependencyCount, [
           { threshold: 20, score: 'low' },
-          { threshold: 50, score: 'medium' },  
+          { threshold: 50, score: 'medium' },
           { threshold: 100, score: 'high' }
         ]) : 'unknown'
     };
@@ -370,7 +370,7 @@ export class ProjectScorer {
 
   getComplexityScore(value, thresholds) {
     for (const { threshold, score } of thresholds) {
-      if (value <= threshold) return score;
+      if (value <= threshold) {return score;}
     }
     return 'very_high';
   }
@@ -378,13 +378,13 @@ export class ProjectScorer {
   async calculateMaintainability() {
     const categories = this.results.categories;
     const factors = [];
-    
-    if (categories.quality) factors.push(categories.quality.score / categories.quality.maxScore);
-    if (categories.structure) factors.push(categories.structure.score / categories.structure.maxScore);
-    if (categories.testing) factors.push(categories.testing.score / categories.testing.maxScore);
-    
+
+    if (categories.quality) {factors.push(categories.quality.score / categories.quality.maxScore);}
+    if (categories.structure) {factors.push(categories.structure.score / categories.structure.maxScore);}
+    if (categories.testing) {factors.push(categories.testing.score / categories.testing.maxScore);}
+
     const avgScore = factors.length > 0 ? factors.reduce((a, b) => a + b, 0) / factors.length : 0;
-    
+
     return {
       score: Math.round(avgScore * 100),
       level: avgScore > 0.8 ? 'high' : avgScore > 0.6 ? 'medium' : 'low',
@@ -399,14 +399,14 @@ export class ProjectScorer {
   async calculateTechnicalDebt() {
     const issues = [];
     let debtScore = 0;
-    
+
     for (const [categoryKey, result] of Object.entries(this.results.categories)) {
       if (result.issues && result.issues.length > 0) {
         issues.push(...result.issues.map(issue => ({ category: categoryKey, issue })));
         debtScore += result.issues.length;
       }
     }
-    
+
     return {
       total_issues: issues.length,
       debt_score: Math.min(debtScore, 100), // Cap at 100
@@ -440,14 +440,14 @@ export class ProjectScorer {
       if (existsSync(path.join(this.config.projectRoot, 'package.json'))) {
         const packageJson = JSON.parse(readFileSync(path.join(this.config.projectRoot, 'package.json'), 'utf-8'));
         const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };
-        
+
         if (deps.eslint) {
           availabilityStatus.eslint = true;
         } else {
           const hasEslintConfig = existsSync(path.join(this.config.projectRoot, '.eslintrc.js')) ||
                                 existsSync(path.join(this.config.projectRoot, '.eslintrc.json')) ||
                                 existsSync(path.join(this.config.projectRoot, 'eslint.config.js'));
-          
+
           if (hasEslintConfig) {
             availabilityStatus.suggestions.push('🔧 Install ESLint: npm install --save-dev eslint');
           }
@@ -483,7 +483,7 @@ export class ProjectScorer {
   detectProjectType() {
     try {
       const packageJsonPath = path.join(this.config.projectRoot, 'package.json');
-      
+
       // Check if package.json exists
       if (!existsSync(packageJsonPath)) {
         return 'javascript'; // Default fallback
@@ -491,67 +491,67 @@ export class ProjectScorer {
 
       const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
       const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };
-      
+
       // Enhanced detection logic with more specificity
       // Frontend frameworks (check in priority order)
       if (deps.react || deps['react-dom']) {
-        if (deps['next'] || deps['gatsby']) return 'react-webapp';
-        if (deps['react-native']) return 'react-native';
+        if (deps['next'] || deps['gatsby']) {return 'react-webapp';}
+        if (deps['react-native']) {return 'react-native';}
         return 'react-webapp';
       }
-      
+
       if (deps.vue || deps['@vue/core']) {
-        if (deps.nuxt) return 'vue-webapp';
+        if (deps.nuxt) {return 'vue-webapp';}
         return 'vue-webapp';
       }
-      
+
       if (deps.svelte || deps['svelte-check']) {
-        if (deps['@sveltejs/kit']) return 'svelte-webapp';
+        if (deps['@sveltejs/kit']) {return 'svelte-webapp';}
         return 'svelte-webapp';
       }
-      
+
       if (deps.angular || deps['@angular/core']) {
         return 'angular-webapp';
       }
-      
+
       // Backend frameworks
       if (deps.express || deps.fastify || deps.koa || deps.hapi) {
         return 'node-api';
       }
-      
+
       // Context7/MCP specific detection
-      if (deps['@modelcontextprotocol/sdk'] || 
-          packageJson.name?.includes('mcp') || 
+      if (deps['@modelcontextprotocol/sdk'] ||
+          packageJson.name?.includes('mcp') ||
           packageJson.name?.includes('context7')) {
         return 'mcp-server';
       }
-      
+
       // CLI tools
       if (deps.commander || deps.yargs || packageJson.bin) {
         return 'cli-tool';
       }
-      
+
       // Check file structure for additional clues
       const hasPublicDir = existsSync(path.join(this.config.projectRoot, 'public'));
       const hasSrcDir = existsSync(path.join(this.config.projectRoot, 'src'));
       const hasIndexHtml = existsSync(path.join(this.config.projectRoot, 'index.html')) ||
                           existsSync(path.join(this.config.projectRoot, 'public/index.html'));
-      
+
       if (hasPublicDir && hasIndexHtml) {
         return 'webapp'; // Generic web application
       }
-      
+
       if (hasSrcDir && !hasIndexHtml) {
         return 'node-api'; // Likely server-side
       }
-      
+
       // TypeScript project detection
       if (existsSync(path.join(this.config.projectRoot, 'tsconfig.json'))) {
         return deps.express ? 'node-api' : 'typescript';
       }
-      
+
       return 'javascript'; // Default fallback
-      
+
     } catch (error) {
       console.warn(`Project type detection failed: ${error.message}`);
       return 'javascript';
@@ -564,7 +564,7 @@ export class ProjectScorer {
       projectRoot,
       ...options
     });
-    
+
     return await scorer.scoreProject(options);
   }
 
@@ -572,30 +572,30 @@ export class ProjectScorer {
     // Auto-detect project configuration like Context7MCPServer does
     let projectType = 'javascript';
     let projectName = path.basename(projectRoot);
-    
+
     try {
       const packageJsonPath = path.join(projectRoot, 'package.json');
       const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'));
       const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };
-      
+
       projectName = packageJson.name || projectName;
-      
-      if (deps.react) projectType = 'react-webapp';
-      else if (deps.vue) projectType = 'vue-webapp'; 
-      else if (deps.svelte) projectType = 'svelte-webapp';
-      else if (deps.express || deps.fastify || deps.koa) projectType = 'node-api';
-      
+
+      if (deps.react) {projectType = 'react-webapp';}
+      else if (deps.vue) {projectType = 'vue-webapp';}
+      else if (deps.svelte) {projectType = 'svelte-webapp';}
+      else if (deps.express || deps.fastify || deps.koa) {projectType = 'node-api';}
+
     } catch (error) {
       // Use defaults
     }
-    
+
     const scorer = new ProjectScorer({
       projectRoot,
       projectType,
       projectName,
       ...options
     });
-    
+
     return await scorer.scoreProject(options);
   }
 }

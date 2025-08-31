@@ -1,6 +1,6 @@
 /**
  * PatternProvider - Refactored for better organization
- * 
+ *
  * Provides framework-specific code patterns using modular pattern classes.
  */
 
@@ -15,7 +15,7 @@ export class PatternProvider {
 
   async generatePatterns() {
     const framework = this.config.projectType;
-    
+
     switch (framework) {
     case 'react-webapp':
       return this.getReactPatterns();
@@ -30,7 +30,7 @@ export class PatternProvider {
 
   async getPattern(patternType, framework = this.config.projectType) {
     const frameworkKey = framework.split('-')[0]; // react-webapp -> react
-    
+
     switch (frameworkKey) {
     case 'react':
       return this.getReactPattern(patternType);

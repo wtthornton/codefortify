@@ -58,7 +58,7 @@ describe('Context7 CLI', () => {
     testProjectDir = path.join(__dirname, '..', 'fixtures', 'cli-test-project');
     await fs.ensureDir(testProjectDir);
     await fs.ensureDir(path.join(testProjectDir, 'src'));
-    
+
     // Create basic project structure for CLI tests
     await fs.writeFile(
       path.join(testProjectDir, 'package.json'),
@@ -84,7 +84,7 @@ describe('Context7 CLI', () => {
   describe('Help and Version', () => {
     it('should display help when no arguments provided', async () => {
       const result = await runCLI([]);
-      
+
       // Commander.js outputs help to stderr when no arguments are provided
       const output = result.stderr || result.stdout;
       expect(output).toContain('context7');
@@ -97,7 +97,7 @@ describe('Context7 CLI', () => {
 
     it('should display help with --help flag', async () => {
       const result = await runCLI(['--help']);
-      
+
       expect(result.success).toBe(true);
       expect(result.stdout).toContain('Usage:');
       expect(result.stdout).toContain('Options:');
@@ -107,7 +107,7 @@ describe('Context7 CLI', () => {
 
     it('should display version with --version flag', async () => {
       const result = await runCLI(['--version']);
-      
+
       expect(result.success).toBe(true);
       expect(result.stdout).toContain('1.0.0');
     });
@@ -116,7 +116,7 @@ describe('Context7 CLI', () => {
   describe('Init Command', () => {
     it('should display init help', async () => {
       const result = await runCLI(['init', '--help']);
-      
+
       expect(result.success).toBe(true);
       expect(result.stdout).toContain('Initialize Context7 MCP');
       expect(result.stdout).toContain('--type');
@@ -129,7 +129,7 @@ describe('Context7 CLI', () => {
       const result = await runCLI(['init', '--type', 'react-webapp', '--force'], {
         cwd: testProjectDir
       });
-      
+
       // Note: This test might fail if dependencies aren't installed
       // In a real test environment, we'd mock the file system operations
       expect(result.stdout).toContain('Context7 MCP');
@@ -141,7 +141,7 @@ describe('Context7 CLI', () => {
       const result = await runCLI(['init'], {
         cwd: testProjectDir
       });
-      
+
       // Command might fail due to no TTY, but should not crash
       expect(typeof result.code).toBe('number');
     });
@@ -150,7 +150,7 @@ describe('Context7 CLI', () => {
   describe('Add Command', () => {
     it('should display add help', async () => {
       const result = await runCLI(['add', '--help']);
-      
+
       expect(result.success).toBe(true);
       expect(result.stdout).toContain('Add Context7 MCP to an existing project');
       expect(result.stdout).toContain('--type');
@@ -161,7 +161,7 @@ describe('Context7 CLI', () => {
       const result = await runCLI(['add', '--type', 'react-webapp'], {
         cwd: testProjectDir
       });
-      
+
       expect(result.stdout).toContain('Context7 MCP');
     });
   });
@@ -169,7 +169,7 @@ describe('Context7 CLI', () => {
   describe('Validate Command', () => {
     it('should display validate help', async () => {
       const result = await runCLI(['validate', '--help']);
-      
+
       expect(result.success).toBe(true);
       expect(result.stdout).toContain('Validate project compliance');
       expect(result.stdout).toContain('--strict');
@@ -187,7 +187,7 @@ describe('Context7 CLI', () => {
       const result = await runCLI(['validate'], {
         cwd: testProjectDir
       });
-      
+
       expect(result.stdout).toContain('Context7 Validation');
     });
 
@@ -195,7 +195,7 @@ describe('Context7 CLI', () => {
       const result = await runCLI(['validate', '--strict'], {
         cwd: testProjectDir
       });
-      
+
       expect(result.stdout).toContain('Context7 Validation');
     });
   });
@@ -203,7 +203,7 @@ describe('Context7 CLI', () => {
   describe('Test-MCP Command', () => {
     it('should display test-mcp help', async () => {
       const result = await runCLI(['test-mcp', '--help']);
-      
+
       expect(result.success).toBe(true);
       expect(result.stdout).toContain('Test MCP server functionality');
       expect(result.stdout).toContain('--server');
@@ -214,7 +214,7 @@ describe('Context7 CLI', () => {
       const result = await runCLI(['test-mcp'], {
         cwd: testProjectDir
       });
-      
+
       // Should fail gracefully when server file doesn't exist
       expect(result.code).not.toBe(0);
       expect(result.stdout || result.stderr).toContain('MCP');
@@ -224,7 +224,7 @@ describe('Context7 CLI', () => {
   describe('Serve Command', () => {
     it('should display serve help', async () => {
       const result = await runCLI(['serve', '--help']);
-      
+
       expect(result.success).toBe(true);
       expect(result.stdout).toContain('Start the Context7 MCP server');
       expect(result.stdout).toContain('--config');
@@ -238,7 +238,7 @@ describe('Context7 CLI', () => {
   describe('Generate Command', () => {
     it('should display generate help', async () => {
       const result = await runCLI(['generate', '--help']);
-      
+
       expect(result.success).toBe(true);
       expect(result.stdout).toContain('Generate Context7-compliant code scaffolds');
       expect(result.stdout).toContain('--name');
@@ -249,7 +249,7 @@ describe('Context7 CLI', () => {
       const result = await runCLI(['generate', 'component', '--name', 'TestComponent'], {
         cwd: testProjectDir
       });
-      
+
       expect(result.stdout).toContain('component');
     });
   });
@@ -257,7 +257,7 @@ describe('Context7 CLI', () => {
   describe('Update Command', () => {
     it('should display update help', async () => {
       const result = await runCLI(['update', '--help']);
-      
+
       expect(result.success).toBe(true);
       expect(result.stdout).toContain('Update Context7 MCP configuration');
       expect(result.stdout).toContain('--templates');
@@ -268,7 +268,7 @@ describe('Context7 CLI', () => {
       const result = await runCLI(['update'], {
         cwd: testProjectDir
       });
-      
+
       expect(result.stdout).toContain('Update');
     });
   });
@@ -278,14 +278,14 @@ describe('Context7 CLI', () => {
       const result = await runCLI(['--verbose', 'validate'], {
         cwd: testProjectDir
       });
-      
+
       // Verbose mode should provide more detailed output
       expect(result.stdout || result.stderr).toContain('Context7');
     });
 
     it('should handle custom project root', async () => {
       const result = await runCLI(['--project-root', testProjectDir, 'validate']);
-      
+
       expect(result.stdout).toContain('Context7 Validation');
     });
   });
@@ -293,14 +293,14 @@ describe('Context7 CLI', () => {
   describe('Error Handling', () => {
     it('should handle unknown commands', async () => {
       const result = await runCLI(['unknown-command']);
-      
+
       expect(result.success).toBe(false);
       expect(result.stderr).toContain('unknown command');
     });
 
     it('should handle invalid options', async () => {
       const result = await runCLI(['validate', '--invalid-option']);
-      
+
       expect(result.success).toBe(false);
       expect(result.stderr).toContain('unknown option');
     });
@@ -308,11 +308,11 @@ describe('Context7 CLI', () => {
     it.skip('should handle permission errors gracefully', async () => {
       // Test with a directory we can't write to
       const readOnlyDir = path.join(__dirname, '..', 'fixtures', 'readonly');
-      
+
       const result = await runCLI(['init', '--type', 'react-webapp'], {
         cwd: readOnlyDir
       });
-      
+
       // Should handle the error gracefully
       expect(typeof result.code).toBe('number');
     });
@@ -324,7 +324,7 @@ describe('Context7 CLI', () => {
       const result = await runCLI(['add'], {
         cwd: testProjectDir
       });
-      
+
       expect(result.stdout).toContain('Context7');
     });
 
@@ -335,9 +335,9 @@ describe('Context7 CLI', () => {
       const result = await runCLI(['validate'], {
         cwd: emptyDir
       });
-      
+
       expect(result.stdout).toContain('Context7 Validation');
-      
+
       await fs.remove(emptyDir);
     });
   });
@@ -360,7 +360,7 @@ describe('Context7 CLI', () => {
       const result = await runCLI(['validate'], {
         cwd: testProjectDir
       });
-      
+
       expect(result.stdout).toContain('Context7 Validation');
     });
   });
@@ -368,12 +368,12 @@ describe('Context7 CLI', () => {
   describe('Interactive Prompts', () => {
     // Note: Interactive prompt testing is complex and would require
     // specialized testing utilities or mocking stdin/stdout
-    
+
     it('should handle non-interactive environments', async () => {
       const result = await runCLI(['init'], {
         cwd: testProjectDir
       });
-      
+
       // In non-interactive environment, should not hang
       expect(typeof result.code).toBe('number');
     });

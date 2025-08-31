@@ -1,6 +1,6 @@
 /**
  * TestingAnalyzer - Analyzes testing coverage and quality
- * 
+ *
  * Evaluates:
  * - Test coverage and presence (8pts)
  * - Test organization and structure (4pts)
@@ -22,33 +22,33 @@ export class TestingAnalyzer extends BaseAnalyzer {
     this.results.score = 0;
     this.results.issues = [];
     this.results.suggestions = [];
-    
+
     await this.analyzeTestPresence(); // 8pts
-    await this.analyzeTestOrganization(); // 4pts  
+    await this.analyzeTestOrganization(); // 4pts
     await this.analyzeTestingTools(); // 3pts
   }
 
   async analyzeTestPresence() {
     let _score = 0;
     const _maxScore = 8;
-    
+
     // Find test files
     const testFiles = await this.findTestFiles();
     const sourceFiles = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx']);
-    
+
     if (testFiles.length === 0) {
       this.addIssue('No test files found', 'Add unit tests to ensure code quality and prevent regressions');
       this.setDetail('testCoverage', 0);
       return;
     }
-    
+
     // PHASE 1 UPGRADE: Use real coverage tools (c8, nyc, jest) for actual coverage metrics
     const coverageResult = await this.runCoverageAnalysis();
-    
+
     if (coverageResult.success) {
       const { lines, functions, branches, statements } = coverageResult.data;
       const avgCoverage = (lines + functions + branches + statements) / 4;
-      
+
       // Score based on actual coverage metrics (8pts)
       if (avgCoverage >= 80) {
         _score += 8;
@@ -74,7 +74,7 @@ export class TestingAnalyzer extends BaseAnalyzer {
     } else {
       // Fallback to file count ratio if coverage tools unavailable
       const coverageRatio = sourceFiles.length > 0 ? testFiles.length / sourceFiles.length : 0;
-      
+
       if (coverageRatio >= 0.8) {
         _score += 6; // Slightly lower score for approximation
         this.addScore(6, 8, `Test file ratio suggests good coverage (~${Math.round(coverageRatio * 100)}%)`);
@@ -104,7 +104,7 @@ export class TestingAnalyzer extends BaseAnalyzer {
         this.addIssue('Coverage analysis failed', `${coverageResult.error}. Install: npm install --save-dev c8 nyc jest`);
       }
     }
-    
+
     this.setDetail('testFiles', testFiles.length);
     this.setDetail('sourceFiles', sourceFiles.length);
   }
@@ -126,7 +126,7 @@ export class TestingAnalyzer extends BaseAnalyzer {
 
       // Detect coverage tools and build appropriate command
       const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };
-      
+
       if (deps['c8']) {
         coverageCommand = `c8 --reporter=json ${testScript}`;
       } else if (deps['nyc']) {
@@ -136,9 +136,9 @@ export class TestingAnalyzer extends BaseAnalyzer {
       } else if (testScript.includes('vitest')) {
         coverageCommand = `${testScript} --coverage --reporter=json`;
       } else {
-        return { 
-          success: false, 
-          error: 'No coverage tool detected (c8, nyc, jest, vitest)' 
+        return {
+          success: false,
+          error: 'No coverage tool detected (c8, nyc, jest, vitest)'
         };
       }
 
@@ -152,7 +152,7 @@ export class TestingAnalyzer extends BaseAnalyzer {
 
       // Parse coverage results based on tool
       let coverageData;
-      
+
       if (deps['c8'] || deps['nyc']) {
         // c8/nyc JSON format
         const jsonOutput = output.split('\n').find(line => line.startsWith('{'));
@@ -198,13 +198,13 @@ export class TestingAnalyzer extends BaseAnalyzer {
   async analyzeTestOrganization() {
     let _score = 0;
     const _maxScore = 4;
-    
+
     // Check for test directory structure
-    const hasTestDir = await this.fileExists('test') || 
-                      await this.fileExists('tests') || 
+    const hasTestDir = await this.fileExists('test') ||
+                      await this.fileExists('tests') ||
                       await this.fileExists('__tests__') ||
                       await this.fileExists('src/__tests__');
-    
+
     if (hasTestDir) {
       _score += 2;
       this.addScore(2, 2, 'Dedicated test directory found');
@@ -218,24 +218,24 @@ export class TestingAnalyzer extends BaseAnalyzer {
         this.addIssue('No organized test structure', 'Create a dedicated test directory or co-locate tests');
       }
     }
-    
+
     // Check for different types of tests
     const testFiles = await this.findTestFiles();
     const hasUnitTests = testFiles.some(f => f.includes('unit') || f.includes('.test.') || f.includes('.spec.'));
     const hasIntegrationTests = testFiles.some(f => f.includes('integration') || f.includes('e2e'));
-    
+
     if (hasUnitTests) {
       _score += 1;
       this.addScore(1, 1, 'Unit tests detected');
     }
-    
+
     if (hasIntegrationTests) {
       _score += 1;
       this.addScore(1, 1, 'Integration/E2E tests detected');
     } else {
       this.addIssue('No integration tests found', 'Add integration tests for critical user flows');
     }
-    
+
     this.setDetail('hasTestDir', hasTestDir);
     this.setDetail('hasUnitTests', hasUnitTests);
     this.setDetail('hasIntegrationTests', hasIntegrationTests);
@@ -244,23 +244,23 @@ export class TestingAnalyzer extends BaseAnalyzer {
   async analyzeTestingTools() {
     let _score = 0;
     const _maxScore = 3;
-    
+
     const packageJson = await this.readPackageJson();
     if (!packageJson) {
       this.addIssue('No package.json found', 'Cannot analyze testing dependencies');
       return;
     }
-    
+
     const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };
     const testingTools = this.identifyTestingTools(deps);
-    
+
     if (testingTools.length > 0) {
       _score += 2;
       this.addScore(2, 2, `Testing framework found: ${testingTools.join(', ')}`);
     } else {
       this.addIssue('No testing framework detected', 'Install a testing framework (Jest, Vitest, Mocha, etc.)');
     }
-    
+
     // Check for test script in package.json
     if (packageJson.scripts && packageJson.scripts.test) {
       _score += 1;
@@ -268,7 +268,7 @@ export class TestingAnalyzer extends BaseAnalyzer {
     } else {
       this.addIssue('No test script in package.json', 'Add "test" script to package.json');
     }
-    
+
     this.setDetail('testingTools', testingTools);
     this.setDetail('hasTestScript', !!(packageJson.scripts && packageJson.scripts.test));
   }
@@ -278,15 +278,15 @@ export class TestingAnalyzer extends BaseAnalyzer {
       '.test.js', '.test.ts', '.test.jsx', '.test.tsx',
       '.spec.js', '.spec.ts', '.spec.jsx', '.spec.tsx'
     ];
-    
+
     const testFiles = [];
-    
+
     // Find files with test patterns
     for (const pattern of testPatterns) {
       const files = await this.getAllFiles('');
       testFiles.push(...files.filter(file => file.includes(pattern)));
     }
-    
+
     // Find files in test directories
     const testDirs = ['test', 'tests', '__tests__', 'src/__tests__'];
     for (const dir of testDirs) {
@@ -295,7 +295,7 @@ export class TestingAnalyzer extends BaseAnalyzer {
         testFiles.push(...files);
       }
     }
-    
+
     // Remove duplicates
     return [...new Set(testFiles)];
   }
@@ -304,7 +304,7 @@ export class TestingAnalyzer extends BaseAnalyzer {
     const tools = [];
     const testingPackages = {
       'jest': 'Jest',
-      'vitest': 'Vitest', 
+      'vitest': 'Vitest',
       'mocha': 'Mocha',
       'jasmine': 'Jasmine',
       'ava': 'AVA',
@@ -320,13 +320,13 @@ export class TestingAnalyzer extends BaseAnalyzer {
       'chai': 'Chai',
       'supertest': 'Supertest'
     };
-    
+
     for (const [pkg, name] of Object.entries(testingPackages)) {
       if (dependencies[pkg]) {
         tools.push(name);
       }
     }
-    
+
     return tools;
   }
 }

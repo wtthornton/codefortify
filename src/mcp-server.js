@@ -4,7 +4,7 @@ import { Context7MCPServer } from '../src/server/Context7MCPServer.js';
 
 const server = new Context7MCPServer({
   projectRoot: '.',
-  projectType: 'javascript',
+  projectType: 'javascript'
 });
 
 server.start().catch(console.error);

@@ -2,7 +2,7 @@
 
 /**
  * MCP Connection Tester - Reusable Package
- * 
+ *
  * This tests the MCP server functionality and validates
  * that all Context7 resources and tools are working properly.
  */
@@ -17,18 +17,18 @@ export class MCPConnectionTester {
       timeout: config.timeout || 30000,
       ...config
     };
-    
+
     this.serverProcess = null;
     this.testResults = [];
   }
 
   async startServer() {
     console.log('🚀 Starting Context7 MCP Server...');
-    
-    const serverPath = this.config.serverPath.startsWith('/') 
-      ? this.config.serverPath 
+
+    const serverPath = this.config.serverPath.startsWith('/')
+      ? this.config.serverPath
       : `${this.config.projectRoot}/${this.config.serverPath}`;
-    
+
     this.serverProcess = spawn('node', [serverPath], {
       stdio: ['pipe', 'pipe', 'inherit'],
       cwd: this.config.projectRoot,
@@ -42,18 +42,18 @@ export class MCPConnectionTester {
 
     // Give the server a moment to start
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
     if (this.serverProcess.killed) {
       throw new Error('MCP Server failed to start');
     }
-    
+
     console.log('✅ MCP Server started successfully');
     return this.serverProcess;
   }
 
   async testResourceListing() {
     console.log('🧪 Testing resource listing...');
-    
+
     const request = {
       jsonrpc: '2.0',
       id: 1,
@@ -63,22 +63,22 @@ export class MCPConnectionTester {
 
     try {
       const response = await this.sendRequest(request);
-      
+
       if (response.result && response.result.resources) {
         const resourceCount = response.result.resources.length;
         console.log(`✅ Found ${resourceCount} Context7 resources`);
-        
+
         // List all resources
         response.result.resources.forEach((resource, index) => {
           console.log(`   ${index + 1}. ${resource.name} (${resource.uri})`);
         });
-        
+
         this.testResults.push({
           test: 'Resource Listing',
           status: 'PASS',
           details: `${resourceCount} resources found`
         });
-        
+
         return response.result.resources;
       } else {
         throw new Error('No resources found in response');
@@ -96,9 +96,9 @@ export class MCPConnectionTester {
 
   async testResourceReading(resources, maxResourcesToTest = 3) {
     console.log('🧪 Testing resource reading...');
-    
+
     const resourcesToTest = resources.slice(0, maxResourcesToTest);
-    
+
     for (const resource of resourcesToTest) {
       try {
         const request = {
@@ -111,7 +111,7 @@ export class MCPConnectionTester {
         };
 
         const response = await this.sendRequest(request);
-        
+
         if (response.result && response.result.contents) {
           console.log(`   ✅ Successfully read: ${resource.name}`);
           const content = response.result.contents[0];
@@ -120,13 +120,13 @@ export class MCPConnectionTester {
         } else {
           throw new Error('No content found in response');
         }
-        
+
         this.testResults.push({
           test: `Resource Reading: ${resource.name}`,
           status: 'PASS',
           details: 'Content retrieved successfully'
         });
-        
+
       } catch (error) {
         console.error(`   ❌ Failed to read ${resource.name}:`, error.message);
         this.testResults.push({
@@ -140,7 +140,7 @@ export class MCPConnectionTester {
 
   async testToolListing() {
     console.log('🧪 Testing tool listing...');
-    
+
     const request = {
       jsonrpc: '2.0',
       id: 2,
@@ -150,22 +150,22 @@ export class MCPConnectionTester {
 
     try {
       const response = await this.sendRequest(request);
-      
+
       if (response.result && response.result.tools) {
         const toolCount = response.result.tools.length;
         console.log(`✅ Found ${toolCount} Context7 tools`);
-        
+
         // List all tools
         response.result.tools.forEach((tool, index) => {
           console.log(`   ${index + 1}. ${tool.name}: ${tool.description}`);
         });
-        
+
         this.testResults.push({
           test: 'Tool Listing',
           status: 'PASS',
           details: `${toolCount} tools found`
         });
-        
+
         return response.result.tools;
       } else {
         throw new Error('No tools found in response');
@@ -183,19 +183,19 @@ export class MCPConnectionTester {
 
   async testToolExecution(tools) {
     console.log('🧪 Testing tool execution...');
-    
+
     // Test validate_context7_compliance tool
     const validationTool = tools.find(tool => tool.name === 'validate_context7_compliance');
     if (validationTool) {
       await this.testValidationTool();
     }
-    
+
     // Test get_pattern_examples tool
     const patternTool = tools.find(tool => tool.name === 'get_pattern_examples');
     if (patternTool) {
       await this.testPatternTool();
     }
-    
+
     // Test check_naming_conventions tool
     const namingTool = tools.find(tool => tool.name === 'check_naming_conventions');
     if (namingTool) {
@@ -220,13 +220,13 @@ export class MCPConnectionTester {
       };
 
       const response = await this.sendRequest(request);
-      
+
       if (response.result && response.result.content) {
         console.log('   ✅ Context7 validation tool executed successfully');
         const result = JSON.parse(response.result.content[0].text);
         console.log(`      Compliance score: ${result.compliance_score}/100`);
         console.log(`      Issues found: ${result.issues.length}`);
-        
+
         this.testResults.push({
           test: 'Tool Execution: validate_context7_compliance',
           status: 'PASS',
@@ -235,7 +235,7 @@ export class MCPConnectionTester {
       } else {
         throw new Error('No result from tool execution');
       }
-      
+
     } catch (error) {
       console.error('   ❌ Validation tool execution failed:', error.message);
       this.testResults.push({
@@ -262,12 +262,12 @@ export class MCPConnectionTester {
       };
 
       const response = await this.sendRequest(request);
-      
+
       if (response.result && response.result.content) {
         console.log('   ✅ Pattern examples tool executed successfully');
         const pattern = response.result.content[0].text;
         console.log(`      Pattern length: ${pattern.length} characters`);
-        
+
         this.testResults.push({
           test: 'Tool Execution: get_pattern_examples',
           status: 'PASS',
@@ -276,7 +276,7 @@ export class MCPConnectionTester {
       } else {
         throw new Error('No pattern from tool execution');
       }
-      
+
     } catch (error) {
       console.error('   ❌ Pattern tool execution failed:', error.message);
       this.testResults.push({
@@ -303,12 +303,12 @@ export class MCPConnectionTester {
       };
 
       const response = await this.sendRequest(request);
-      
+
       if (response.result && response.result.content) {
         console.log('   ✅ Naming conventions tool executed successfully');
         const result = JSON.parse(response.result.content[0].text);
         console.log(`      Checked ${result.results.length} names`);
-        
+
         this.testResults.push({
           test: 'Tool Execution: check_naming_conventions',
           status: 'PASS',
@@ -317,7 +317,7 @@ export class MCPConnectionTester {
       } else {
         throw new Error('No result from naming tool execution');
       }
-      
+
     } catch (error) {
       console.error('   ❌ Naming tool execution failed:', error.message);
       this.testResults.push({
@@ -340,7 +340,7 @@ export class MCPConnectionTester {
       const onData = (data) => {
         clearTimeout(timeout);
         responseStr = data.toString().trim();
-        
+
         try {
           const response = JSON.parse(responseStr);
           resolve(response);
@@ -365,10 +365,10 @@ export class MCPConnectionTester {
     if (this.serverProcess && !this.serverProcess.killed) {
       console.log('🧹 Shutting down MCP Server...');
       this.serverProcess.kill('SIGTERM');
-      
+
       // Wait for graceful shutdown
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       if (!this.serverProcess.killed) {
         this.serverProcess.kill('SIGKILL');
       }
@@ -378,16 +378,16 @@ export class MCPConnectionTester {
   generateReport() {
     console.log('\\n📊 Test Results Summary:');
     console.log('=' .repeat(50));
-    
+
     const passed = this.testResults.filter(r => r.status === 'PASS').length;
     const failed = this.testResults.filter(r => r.status === 'FAIL').length;
     const total = this.testResults.length;
-    
+
     console.log(`Total Tests: ${total}`);
     console.log(`Passed: ${passed} ✅`);
     console.log(`Failed: ${failed} ❌`);
     console.log(`Success Rate: ${Math.round((passed / total) * 100)}%`);
-    
+
     console.log('\\nDetailed Results:');
     this.testResults.forEach((result, index) => {
       const status = result.status === 'PASS' ? '✅' : '❌';
@@ -400,10 +400,10 @@ export class MCPConnectionTester {
       }
     });
 
-    return { 
-      passed, 
-      failed, 
-      total, 
+    return {
+      passed,
+      failed,
+      total,
       successRate: Math.round((passed / total) * 100),
       results: this.testResults
     };
@@ -418,21 +418,21 @@ export class MCPConnectionTester {
     try {
       // Start the server
       await this.startServer();
-      
+
       // Test resource functionality
       const resources = await this.testResourceListing();
       if (resources.length > 0) {
         await this.testResourceReading(resources);
       }
-      
+
       // Test tool functionality
       const tools = await this.testToolListing();
       if (tools.length > 0) {
         await this.testToolExecution(tools);
       }
-      
+
       console.log('\\n✅ All tests completed');
-      
+
     } catch (error) {
       console.error('💥 Test suite failed:', error.message);
       this.testResults.push({
@@ -443,11 +443,11 @@ export class MCPConnectionTester {
     } finally {
       await this.cleanup();
     }
-    
+
     const report = this.generateReport();
     return {
       success: report.failed === 0,
-      report,
+      report
     };
   }
 
@@ -457,7 +457,7 @@ export class MCPConnectionTester {
       projectRoot,
       ...options
     });
-    
+
     return await tester.runTests();
   }
 
@@ -466,7 +466,7 @@ export class MCPConnectionTester {
       serverPath,
       ...options
     });
-    
+
     return await tester.runTests();
   }
 }
@@ -475,7 +475,7 @@ export class MCPConnectionTester {
 if (import.meta.url === new URL(process.argv[1], 'file:').href) {
   const projectRoot = process.argv[2] || process.cwd();
   const serverPath = process.argv[3] || 'src/mcp-server.js';
-  
+
   MCPConnectionTester.testProject(projectRoot, { serverPath })
     .then(result => {
       process.exit(result.success ? 0 : 1);

@@ -1,6 +1,6 @@
 /**
  * ToolManager - Handles Context7 tool operations
- * 
+ *
  * Provides AI assistants with tools for code validation, pattern examples,
  * naming conventions, and improvement suggestions.
  */
@@ -21,10 +21,10 @@ export class ToolManager {
             properties: {
               code: { type: 'string', description: 'Code to validate' },
               language: { type: 'string', description: 'Programming language (typescript, javascript, css)' },
-              component_type: { type: 'string', description: 'Type of component (react, hook, service, etc.)' },
+              component_type: { type: 'string', description: 'Type of component (react, hook, service, etc.)' }
             },
-            required: ['code', 'language'],
-          },
+            required: ['code', 'language']
+          }
         },
         {
           name: 'get_pattern_examples',
@@ -33,10 +33,10 @@ export class ToolManager {
             type: 'object',
             properties: {
               pattern_type: { type: 'string', description: 'Type of pattern (component, hook, service, etc.)' },
-              framework: { type: 'string', description: 'Framework context (react, vue, express, etc.)' },
+              framework: { type: 'string', description: 'Framework context (react, vue, express, etc.)' }
             },
-            required: ['pattern_type'],
-          },
+            required: ['pattern_type']
+          }
         },
         {
           name: 'check_naming_conventions',
@@ -44,15 +44,15 @@ export class ToolManager {
           inputSchema: {
             type: 'object',
             properties: {
-              names: { 
-                type: 'array', 
+              names: {
+                type: 'array',
                 items: { type: 'string' },
-                description: 'Names to check (files, functions, components, etc.)' 
+                description: 'Names to check (files, functions, components, etc.)'
               },
-              context: { type: 'string', description: 'Context (component, hook, file, etc.)' },
+              context: { type: 'string', description: 'Context (component, hook, file, etc.)' }
             },
-            required: ['names'],
-          },
+            required: ['names']
+          }
         },
         {
           name: 'suggest_improvements',
@@ -62,10 +62,10 @@ export class ToolManager {
             properties: {
               code: { type: 'string', description: 'Code to analyze' },
               file_path: { type: 'string', description: 'File path for context' },
-              focus_area: { type: 'string', description: 'Specific area to focus on (performance, accessibility, etc.)' },
+              focus_area: { type: 'string', description: 'Specific area to focus on (performance, accessibility, etc.)' }
             },
-            required: ['code'],
-          },
+            required: ['code']
+          }
         },
         {
           name: 'generate_component_scaffold',
@@ -76,12 +76,12 @@ export class ToolManager {
               component_name: { type: 'string', description: 'Name of component' },
               component_type: { type: 'string', description: 'Type (page, ui, chart, etc.)' },
               framework: { type: 'string', description: 'Framework (react, vue, svelte)' },
-              props: { type: 'array', items: { type: 'string' }, description: 'Component props' },
+              props: { type: 'array', items: { type: 'string' }, description: 'Component props' }
             },
-            required: ['component_name', 'component_type'],
-          },
-        },
-      ],
+            required: ['component_name', 'component_type']
+          }
+        }
+      ]
     };
   }
 
@@ -104,22 +104,22 @@ export class ToolManager {
 
   async validateContext7Compliance(args) {
     const { code, language, component_type } = args;
-    
+
     const issues = [];
     const suggestions = [];
-    
+
     // Get project-specific validation rules
     const validationRules = this.getValidationRules();
-    
+
     // Basic validation rules based on Context7 standards
     if (language === 'typescript' || language === 'javascript') {
       await this.validateJavaScriptCode(code, component_type, issues, suggestions, validationRules);
     }
-    
+
     if (language === 'css' || code.includes('className') || code.includes('style=')) {
       await this.validateStylingCode(code, issues, suggestions, validationRules);
     }
-    
+
     return {
       content: [
         {
@@ -129,10 +129,10 @@ export class ToolManager {
             issues,
             suggestions,
             standards_applied: this.getAppliedStandards(),
-            project_type: this.config.projectType,
-          }, null, 2),
-        },
-      ],
+            project_type: this.config.projectType
+          }, null, 2)
+        }
+      ]
     };
   }
 
@@ -143,23 +143,23 @@ export class ToolManager {
         issues.push('Components should use React.FC type annotation');
         suggestions.push('Add React.FC<PropsInterface> to component declaration');
       }
-      
+
       if (!code.includes('AI ASSISTANT CONTEXT')) {
         issues.push('Missing AI ASSISTANT CONTEXT documentation');
         suggestions.push('Add /** AI ASSISTANT CONTEXT: ... */ comments to describe component purpose');
       }
-      
+
       if (code.includes('useQuery') && !code.includes('error')) {
         issues.push('React Query usage should include error handling');
         suggestions.push('Add error state handling: if (error) return <div>Error: {error.message}</div>');
       }
-      
+
       if (code.includes('useQuery') && !code.includes('isLoading')) {
         issues.push('React Query usage should include loading state');
         suggestions.push('Add loading state handling: if (isLoading) return <div>Loading...</div>');
       }
     }
-    
+
     // Hook validation
     if (component_type === 'hook' || code.includes('export const use')) {
       if (!code.match(/export const use[A-Z]/)) {
@@ -167,7 +167,7 @@ export class ToolManager {
         suggestions.push('Rename hook to follow useFeatureName pattern');
       }
     }
-    
+
     // General code quality
     if (code.includes('any') && component_type !== 'migration') {
       issues.push('Avoid using "any" type, use specific types instead');
@@ -183,7 +183,7 @@ export class ToolManager {
         suggestions.push('Use Tailwind utility classes for consistent styling');
       }
     }
-    
+
     // Mobile-first validation
     if (code.includes('sm:') && !code.includes('md:')) {
       suggestions.push('Consider adding tablet (md:) breakpoints for better responsive design');
@@ -201,41 +201,41 @@ export class ToolManager {
 
   getAppliedStandards() {
     const standards = ['Context7 patterns', 'Code documentation'];
-    
+
     if (this.config.projectType.includes('react')) {
       standards.push('React functional components', 'React Query patterns');
     }
     if (this.config.projectType.includes('tailwind')) {
       standards.push('Tailwind CSS utility-first');
     }
-    
+
     return standards;
   }
 
   async getPatternExamples(args) {
     const { pattern_type, framework = this.config.projectType } = args;
-    
+
     const { PatternProvider } = await import('./PatternProvider.js');
     const provider = new PatternProvider(this.config);
     const pattern = await provider.getPattern(pattern_type, framework);
-    
+
     return {
       content: [
         {
           type: 'text',
-          text: pattern,
-        },
-      ],
+          text: pattern
+        }
+      ]
     };
   }
 
   async checkNamingConventions(args) {
     const { names, context } = args;
-    
+
     const results = names.map(name => {
       const issues = [];
       const suggestions = [];
-      
+
       switch (context) {
       case 'component':
         if (!name.match(/^[A-Z][a-zA-Z0-9]*$/)) {
@@ -247,7 +247,7 @@ export class ToolManager {
           suggestions.push(`Rename to: ${name.replace(/\.[^.]*$/, '.tsx')}`);
         }
         break;
-          
+
       case 'hook':
         if (!name.startsWith('use')) {
           issues.push('Custom hooks should start with "use"');
@@ -257,13 +257,13 @@ export class ToolManager {
           issues.push('Hook names should use camelCase after "use"');
         }
         break;
-          
+
       case 'file':
         if (name.includes(' ')) {
           issues.push('File names should not contain spaces');
           suggestions.push(`Rename to: ${name.replace(/\s+/g, '-').toLowerCase()}`);
         }
-          
+
         // Check for project-specific naming conventions
         {
           const conventions = this.config.validation?.namingConventions;
@@ -277,112 +277,112 @@ export class ToolManager {
         }
         break;
       }
-      
+
       return {
         name,
         isValid: issues.length === 0,
         issues,
-        suggestions,
+        suggestions
       };
     });
-    
+
     return {
       content: [
         {
           type: 'text',
-          text: JSON.stringify({ results }, null, 2),
-        },
-      ],
+          text: JSON.stringify({ results }, null, 2)
+        }
+      ]
     };
   }
 
   async suggestImprovements(args) {
     const { code, file_path, focus_area } = args;
-    
+
     const suggestions = [];
-    
+
     // Performance suggestions
     if (focus_area === 'performance' || !focus_area) {
       if (code.includes('useEffect') && code.includes('[]')) {
         suggestions.push({
           category: 'Performance',
           suggestion: 'Consider using React Query for data fetching instead of useEffect',
-          priority: 'medium',
+          priority: 'medium'
         });
       }
-      
+
       if (code.includes('map') && !code.includes('key=')) {
         suggestions.push({
           category: 'Performance',
           suggestion: 'Add unique keys to mapped elements for better React performance',
-          priority: 'high',
+          priority: 'high'
         });
       }
     }
-    
+
     // Accessibility suggestions
     if (focus_area === 'accessibility' || !focus_area) {
       if (code.includes('<button') && !code.includes('aria-label')) {
         suggestions.push({
           category: 'Accessibility',
           suggestion: 'Add aria-label attributes to buttons for screen readers',
-          priority: 'high',
+          priority: 'high'
         });
       }
-      
+
       if (code.includes('<img') && !code.includes('alt=')) {
         suggestions.push({
           category: 'Accessibility',
           suggestion: 'Add alt attributes to images for accessibility',
-          priority: 'high',
+          priority: 'high'
         });
       }
     }
-    
+
     // Context7 specific suggestions
     if (!code.includes('AI ASSISTANT CONTEXT')) {
       suggestions.push({
         category: 'Context7',
         suggestion: 'Add AI ASSISTANT CONTEXT comments to improve AI understanding',
-        priority: 'medium',
+        priority: 'medium'
       });
     }
-    
+
     // Project-specific suggestions
     if (this.config.projectType.includes('mobile')) {
       if (!code.includes('touch') && code.includes('onClick')) {
         suggestions.push({
           category: 'Mobile',
           suggestion: 'Ensure touch targets are at least 44px for mobile accessibility',
-          priority: 'medium',
+          priority: 'medium'
         });
       }
     }
-    
+
     return {
       content: [
         {
           type: 'text',
-          text: JSON.stringify({ suggestions, file_path, project_type: this.config.projectType }, null, 2),
-        },
-      ],
+          text: JSON.stringify({ suggestions, file_path, project_type: this.config.projectType }, null, 2)
+        }
+      ]
     };
   }
 
   async generateComponentScaffold(args) {
     const { component_name, component_type, framework = this.config.projectType, props = [] } = args;
-    
+
     const { PatternProvider } = await import('./PatternProvider.js');
     const provider = new PatternProvider(this.config);
     const scaffold = await provider.generateComponentScaffold(component_name, component_type, framework, props);
-    
+
     return {
       content: [
         {
           type: 'text',
-          text: scaffold,
-        },
-      ],
+          text: scaffold
+        }
+      ]
     };
   }
 }

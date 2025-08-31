@@ -2,7 +2,7 @@
 
 /**
  * Context7 MCP Server - Reusable Package
- * 
+ *
  * This server provides Model Context Protocol integration for Context7 standards,
  * enabling AI assistants to access project patterns, standards, and configurations
  * in real-time for any project.
@@ -10,12 +10,12 @@
 
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { 
-  CallToolRequestSchema, 
+import {
+  CallToolRequestSchema,
   ListToolsRequestSchema,
-  ListResourcesRequestSchema, 
+  ListResourcesRequestSchema,
   ReadResourceRequestSchema,
-  ListPromptsRequestSchema 
+  ListPromptsRequestSchema
 } from '@modelcontextprotocol/sdk/types.js';
 import fs from 'fs/promises';
 import path from 'path';
@@ -36,25 +36,25 @@ export class Context7MCPServer {
       projectType: config.projectType || 'react-webapp',
       ...config
     };
-    
+
     this.server = new Server(
       {
         name: `context7-${this.config.projectName}`,
-        version: '1.0.0',
+        version: '1.0.0'
       },
       {
         capabilities: {
           resources: {},
           tools: {},
-          prompts: {},
-        },
+          prompts: {}
+        }
       }
     );
-    
+
     this.resourceManager = new ResourceManager(this.config);
     this.toolManager = new ToolManager(this.config);
     this.patternProvider = new PatternProvider(this.config);
-    
+
     this.setupHandlers();
   }
 
@@ -99,14 +99,14 @@ export class Context7MCPServer {
               {
                 name: 'code',
                 description: 'Code to review',
-                required: true,
+                required: true
               },
               {
                 name: 'file_type',
                 description: 'Type of file being reviewed',
-                required: false,
-              },
-            ],
+                required: false
+              }
+            ]
           },
           {
             name: 'context7_component_scaffold',
@@ -115,16 +115,16 @@ export class Context7MCPServer {
               {
                 name: 'component_name',
                 description: 'Name of component to scaffold',
-                required: true,
+                required: true
               },
               {
                 name: 'component_type',
                 description: 'Type of component (page, ui, chart, etc.)',
-                required: true,
-              },
-            ],
-          },
-        ],
+                required: true
+              }
+            ]
+          }
+        ]
       };
     });
   }
@@ -156,19 +156,19 @@ export class Context7MCPServer {
   static async detectProjectConfig(projectRoot) {
     const config = {
       projectRoot,
-      agentOsPath: '.agent-os',
+      agentOsPath: '.agent-os'
     };
 
     try {
       // Try to read package.json to determine project type and name
       const packageJsonPath = path.join(projectRoot, 'package.json');
       const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'));
-      
+
       config.projectName = packageJson.name || 'project';
-      
+
       // Detect project type based on dependencies
       const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };
-      
+
       if (deps.react) {
         config.projectType = 'react-webapp';
       } else if (deps.express || deps.fastify || deps.koa) {
@@ -180,7 +180,7 @@ export class Context7MCPServer {
       } else {
         config.projectType = 'javascript';
       }
-      
+
     } catch (error) {
       // Use defaults if package.json not found
       config.projectName = path.basename(projectRoot);
@@ -191,11 +191,11 @@ export class Context7MCPServer {
       // Try to read context7 config if it exists
       const context7ConfigPath = path.join(projectRoot, 'context7.config.js');
       await fs.access(context7ConfigPath);
-      
+
       // If config exists, import it
       const configModule = await import(`file://${context7ConfigPath}`);
       Object.assign(config, configModule.default || configModule);
-      
+
     } catch (error) {
       // No context7 config found, use detected values
     }

@@ -109,6 +109,9 @@ context7 score --format json --output results.json
 # Create visual HTML report
 context7 score --format html --output report.html
 
+# Create HTML report and automatically open in browser
+context7 score --format html --output report.html --open
+
 # Score specific categories only
 context7 score --categories structure,quality,testing
 ```

@@ -1,6 +1,6 @@
 /**
  * PatternProvider - Generates Context7-compliant code patterns
- * 
+ *
  * Provides framework-specific code patterns and scaffolding
  * based on project type and configuration.
  */
@@ -12,7 +12,7 @@ export class PatternProvider {
 
   async generatePatterns() {
     const framework = this.config.projectType;
-    
+
     switch (framework) {
     case 'react-webapp':
       return this.getReactPatterns();
@@ -33,29 +33,29 @@ export class PatternProvider {
         component: this.getReactComponentPattern(),
         hook: this.getReactHookPattern(),
         service: this.getServicePattern(),
-        test: this.getReactTestPattern(),
+        test: this.getReactTestPattern()
       },
       vue: {
         component: this.getVueComponentPattern(),
         service: this.getServicePattern(),
-        test: this.getVueTestPattern(),
+        test: this.getVueTestPattern()
       },
       node: {
         service: this.getNodeServicePattern(),
         middleware: this.getMiddlewarePattern(),
         route: this.getRoutePattern(),
-        test: this.getNodeTestPattern(),
+        test: this.getNodeTestPattern()
       },
       javascript: {
         class: this.getJavaScriptClassPattern(),
         function: this.getJavaScriptFunctionPattern(),
-        test: this.getJavaScriptTestPattern(),
-      },
+        test: this.getJavaScriptTestPattern()
+      }
     };
 
     const frameworkKey = framework.split('-')[0]; // react-webapp -> react
     const frameworkPatterns = patterns[frameworkKey] || patterns.javascript;
-    
+
     return frameworkPatterns[patternType] || 'Pattern not found for this framework';
   }
 

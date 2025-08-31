@@ -1,6 +1,6 @@
 /**
  * RecommendationEngine - Generates improvement recommendations based on scoring results
- * 
+ *
  * Analyzes scoring results and provides prioritized, actionable recommendations
  */
 
@@ -12,13 +12,13 @@ export class RecommendationEngine {
   async generateRecommendations(results) {
     const recommendations = [];
     const { categories } = results;
-    
+
     // Generate recommendations for each category
     for (const [categoryKey, categoryResult] of Object.entries(categories)) {
       const categoryRecs = await this.getRecommendationsForCategory(categoryKey, categoryResult);
       recommendations.push(...categoryRecs);
     }
-    
+
     // Sort by impact (highest first) and priority
     recommendations.sort((a, b) => {
       if (a.impact !== b.impact) {
@@ -26,11 +26,11 @@ export class RecommendationEngine {
       }
       return this.getPriorityWeight(a.priority) - this.getPriorityWeight(b.priority);
     });
-    
+
     // Add general recommendations based on overall score
     const generalRecs = this.getGeneralRecommendations(results);
     recommendations.push(...generalRecs);
-    
+
     // Limit to most impactful recommendations
     return recommendations.slice(0, 20);
   }
@@ -38,7 +38,7 @@ export class RecommendationEngine {
   async getRecommendationsForCategory(categoryKey, categoryResult) {
     const recommendations = [];
     const percentage = (categoryResult.score / categoryResult.maxScore) * 100;
-    
+
     switch (categoryKey) {
     case 'structure':
       recommendations.push(...this.getStructureRecommendations(categoryResult, percentage));
@@ -62,13 +62,13 @@ export class RecommendationEngine {
       recommendations.push(...this.getCompletenessRecommendations(categoryResult, percentage));
       break;
     }
-    
+
     return recommendations;
   }
 
   getStructureRecommendations(result, percentage) {
     const recs = [];
-    
+
     if (percentage < 80) {
       recs.push({
         category: 'structure',
@@ -79,7 +79,7 @@ export class RecommendationEngine {
         action: 'Reorganize files into logical directories (components, services, utils, etc.)'
       });
     }
-    
+
     if (result.issues.some(issue => issue.includes('circular'))) {
       recs.push({
         category: 'structure',
@@ -90,7 +90,7 @@ export class RecommendationEngine {
         action: 'Use dependency analysis tools to identify and break circular references'
       });
     }
-    
+
     if (result.issues.some(issue => issue.includes('coupling'))) {
       recs.push({
         category: 'structure',
@@ -101,13 +101,13 @@ export class RecommendationEngine {
         action: 'Extract interfaces, use dependency injection, and apply SOLID principles'
       });
     }
-    
+
     return recs;
   }
 
   getQualityRecommendations(result, percentage) {
     const recs = [];
-    
+
     if (percentage < 75) {
       recs.push({
         category: 'quality',
@@ -118,7 +118,7 @@ export class RecommendationEngine {
         action: 'Run: npm install --save-dev eslint prettier && npx eslint --init'
       });
     }
-    
+
     if (result.issues.some(issue => issue.includes('documentation'))) {
       recs.push({
         category: 'quality',
@@ -129,7 +129,7 @@ export class RecommendationEngine {
         action: 'Add JSDoc comments to functions and classes, create README sections'
       });
     }
-    
+
     if (result.issues.some(issue => issue.includes('complexity'))) {
       recs.push({
         category: 'quality',
@@ -140,13 +140,13 @@ export class RecommendationEngine {
         action: 'Break down large functions, extract utilities, use early returns'
       });
     }
-    
+
     return recs;
   }
 
   getPerformanceRecommendations(result, percentage) {
     const recs = [];
-    
+
     if (percentage < 70) {
       recs.push({
         category: 'performance',
@@ -157,7 +157,7 @@ export class RecommendationEngine {
         action: 'Install webpack-bundle-analyzer or similar tool for your build system'
       });
     }
-    
+
     if (result.issues.some(issue => issue.includes('lazy loading'))) {
       recs.push({
         category: 'performance',
@@ -168,7 +168,7 @@ export class RecommendationEngine {
         action: 'Use React.lazy(), Vue async components, or dynamic imports'
       });
     }
-    
+
     if (result.issues.some(issue => issue.includes('dependencies'))) {
       recs.push({
         category: 'performance',
@@ -179,13 +179,13 @@ export class RecommendationEngine {
         action: 'Run npm audit, use depcheck, consider bundle size impact'
       });
     }
-    
+
     return recs;
   }
 
   getTestingRecommendations(result, percentage) {
     const recs = [];
-    
+
     if (percentage < 70) {
       recs.push({
         category: 'testing',
@@ -196,7 +196,7 @@ export class RecommendationEngine {
         action: 'Focus on unit tests for business logic and integration tests for user flows'
       });
     }
-    
+
     if (result.issues.some(issue => issue.includes('unit tests'))) {
       recs.push({
         category: 'testing',
@@ -207,7 +207,7 @@ export class RecommendationEngine {
         action: 'Start with testing utility functions and business logic'
       });
     }
-    
+
     if (result.issues.some(issue => issue.includes('integration'))) {
       recs.push({
         category: 'testing',
@@ -218,13 +218,13 @@ export class RecommendationEngine {
         action: 'Use tools like Cypress, Playwright, or React Testing Library'
       });
     }
-    
+
     return recs;
   }
 
   getSecurityRecommendations(result, percentage) {
     const recs = [];
-    
+
     if (result.issues.some(issue => issue.includes('vulnerabilities'))) {
       recs.push({
         category: 'security',
@@ -235,7 +235,7 @@ export class RecommendationEngine {
         action: 'Run npm audit --fix and update vulnerable packages'
       });
     }
-    
+
     if (result.issues.some(issue => issue.includes('secrets'))) {
       recs.push({
         category: 'security',
@@ -246,7 +246,7 @@ export class RecommendationEngine {
         action: 'Use environment variables and secrets management systems'
       });
     }
-    
+
     if (percentage < 80) {
       recs.push({
         category: 'security',
@@ -257,13 +257,13 @@ export class RecommendationEngine {
         action: 'Add try-catch blocks, validate inputs, handle edge cases gracefully'
       });
     }
-    
+
     return recs;
   }
 
   getDeveloperExperienceRecommendations(result, percentage) {
     const recs = [];
-    
+
     if (percentage < 70) {
       recs.push({
         category: 'developerExperience',
@@ -274,7 +274,7 @@ export class RecommendationEngine {
         action: 'Configure linting, formatting, and Git hooks for consistency'
       });
     }
-    
+
     if (result.issues.some(issue => issue.includes('documentation'))) {
       recs.push({
         category: 'developerExperience',
@@ -285,7 +285,7 @@ export class RecommendationEngine {
         action: 'Update README, add API documentation, create contribution guidelines'
       });
     }
-    
+
     if (result.issues.some(issue => issue.includes('scripts'))) {
       recs.push({
         category: 'developerExperience',
@@ -296,13 +296,13 @@ export class RecommendationEngine {
         action: 'Add scripts for testing, linting, building, and development'
       });
     }
-    
+
     return recs;
   }
 
   getCompletenessRecommendations(result, percentage) {
     const recs = [];
-    
+
     if (percentage < 80) {
       recs.push({
         category: 'completeness',
@@ -313,7 +313,7 @@ export class RecommendationEngine {
         action: 'Review and implement TODO comments, replace placeholder code'
       });
     }
-    
+
     if (result.issues.some(issue => issue.includes('production'))) {
       recs.push({
         category: 'completeness',
@@ -324,14 +324,14 @@ export class RecommendationEngine {
         action: 'Add CI/CD pipeline, environment configuration, monitoring'
       });
     }
-    
+
     return recs;
   }
 
   getGeneralRecommendations(results) {
     const recs = [];
     const { overall, categories } = results;
-    
+
     // Overall score-based recommendations
     if (overall.score < 60) {
       recs.push({
@@ -361,7 +361,7 @@ export class RecommendationEngine {
         action: 'Add comprehensive documentation, increase test coverage, optimize performance'
       });
     }
-    
+
     // Context7 specific recommendations
     if (!categories.quality || categories.quality.score < 15) {
       recs.push({
@@ -373,7 +373,7 @@ export class RecommendationEngine {
         action: 'Run: context7 init to set up Context7 integration'
       });
     }
-    
+
     return recs;
   }
 
@@ -395,13 +395,13 @@ export class RecommendationEngine {
       mediumTerm: recommendations.filter(r => r.priority === 'medium'),
       longTerm: recommendations.filter(r => r.priority === 'low')
     };
-    
+
     return {
       phases,
       estimatedImpact: recommendations.reduce((sum, rec) => sum + rec.impact, 0),
       timeline: {
         immediate: '0-1 days',
-        shortTerm: '1-7 days', 
+        shortTerm: '1-7 days',
         mediumTerm: '1-4 weeks',
         longTerm: '1-3 months'
       }

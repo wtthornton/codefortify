@@ -39,7 +39,7 @@ beforeEach(() => {
 async function setupTestFixtures() {
   const fixturesDir = path.join(__dirname, 'fixtures');
   const testProjectDir = path.join(fixturesDir, 'test-project');
-  
+
   // Create test project structure
   await fs.ensureDir(testProjectDir);
   await fs.ensureDir(path.join(testProjectDir, '.agent-os'));

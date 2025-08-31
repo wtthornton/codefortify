@@ -75,7 +75,7 @@ describe('ToolManager', () => {
       expect(result).toHaveProperty('content');
       expect(result.content).toBeInstanceOf(Array);
       expect(result.content[0]).toHaveProperty('type', 'text');
-      
+
       const response = JSON.parse(result.content[0].text);
       expect(response).toHaveProperty('compliance_score');
       expect(response).toHaveProperty('issues');
