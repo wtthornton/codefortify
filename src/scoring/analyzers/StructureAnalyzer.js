@@ -173,7 +173,7 @@ export class StructureAnalyzer extends BaseAnalyzer {
   }
 
   /**
-   * QUICK WIN: Detect advanced architecture patterns
+   * PHASE 1: Enhanced architecture pattern detection with MCP-specific patterns
    * @returns {Promise<Object>} Detected patterns
    */
   async detectArchitecturePatterns() {
@@ -193,7 +193,15 @@ export class StructureAnalyzer extends BaseAnalyzer {
       eventDriven: false,
       stateManagement: false,
       errorBoundaries: false,
-      dependencyInjection: false
+      dependencyInjection: false,
+      // PHASE 1: MCP-specific patterns
+      mcpServerPattern: false,
+      mcpResourceHandlers: false,
+      mcpToolHandlers: false,
+      mcpPromptHandlers: false,
+      agentOSIntegration: false,
+      context7Compliance: false,
+      mcpProtocolCompliance: false
     };
 
     const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx']);
@@ -284,6 +292,49 @@ export class StructureAnalyzer extends BaseAnalyzer {
           patterns.eventDriven = true;
         }
         
+        // PHASE 1: MCP-specific pattern detection
+        // MCP Server Pattern
+        if (content.includes('@modelcontextprotocol/sdk') || content.includes('Server') &&
+            (content.includes('resources') || content.includes('tools') || content.includes('prompts'))) {
+          patterns.mcpServerPattern = true;
+        }
+        
+        // MCP Resource Handlers
+        if (content.includes('list_resources') || content.includes('read_resource') ||
+            content.includes('ResourceManager') || content.includes('getResource')) {
+          patterns.mcpResourceHandlers = true;
+        }
+        
+        // MCP Tool Handlers  
+        if (content.includes('list_tools') || content.includes('call_tool') ||
+            content.includes('ToolManager') || content.includes('executeTool')) {
+          patterns.mcpToolHandlers = true;
+        }
+        
+        // MCP Prompt Handlers
+        if (content.includes('list_prompts') || content.includes('get_prompt') ||
+            content.includes('PromptManager') || content.includes('generatePrompt')) {
+          patterns.mcpPromptHandlers = true;
+        }
+        
+        // Agent OS Integration
+        if (content.includes('.agent-os') || content.includes('AgentOS') ||
+            content.includes('agent-config') || file.includes('.agent-os')) {
+          patterns.agentOSIntegration = true;
+        }
+        
+        // Context7 Compliance
+        if (content.includes('Context7') || content.includes('context7') ||
+            content.includes('CLAUDE.md') || content.includes('AGENTS.md')) {
+          patterns.context7Compliance = true;
+        }
+        
+        // MCP Protocol Compliance
+        if (content.includes('JSON-RPC') || content.includes('initialize') &&
+            content.includes('capabilities') || content.includes('notification')) {
+          patterns.mcpProtocolCompliance = true;
+        }
+        
       } catch (error) {
         // Skip files that can't be read
       }
@@ -297,16 +348,29 @@ export class StructureAnalyzer extends BaseAnalyzer {
       patterns.layeredArchitecture = true;
     }
     
+    // PHASE 1: Check for Context7/MCP-specific directory structures
+    if (directories.some(d => d.includes('.agent-os')) ||
+        await this.fileExists('.agent-os') || await this.fileExists('src/mcp-server.js')) {
+      patterns.agentOSIntegration = true;
+    }
+    
+    // Check for Context7 compliance files
+    if (await this.fileExists('AGENTS.md') && await this.fileExists('CLAUDE.md') &&
+        await this.fileExists('context7.config.js')) {
+      patterns.context7Compliance = true;
+    }
+    
     return patterns;
   }
 
   /**
-   * Score advanced architectural patterns (+0.5 bonus points each, max +2pts)
+   * PHASE 1: Score advanced architectural patterns including MCP-specific patterns (+0.5 bonus points each, max +2pts)
    */
   scoreAdvancedPatterns(patterns) {
     let bonusScore = 0;
     const detectedAdvancedPatterns = [];
     
+    // Traditional architecture patterns
     if (patterns.layeredArchitecture) {
       bonusScore += 0.5;
       detectedAdvancedPatterns.push('Layered Architecture');
@@ -337,19 +401,58 @@ export class StructureAnalyzer extends BaseAnalyzer {
       detectedAdvancedPatterns.push('Middleware Pattern');
     }
     
+    // PHASE 1: MCP-specific architecture patterns (higher bonus for specialized patterns)
+    if (patterns.mcpServerPattern) {
+      bonusScore += 0.6;
+      detectedAdvancedPatterns.push('MCP Server Architecture');
+    }
+    
+    if (patterns.mcpResourceHandlers && patterns.mcpToolHandlers) {
+      bonusScore += 0.5;
+      detectedAdvancedPatterns.push('Complete MCP Handler Implementation');
+    } else if (patterns.mcpResourceHandlers || patterns.mcpToolHandlers) {
+      bonusScore += 0.3;
+      detectedAdvancedPatterns.push('Partial MCP Handler Implementation');
+    }
+    
+    if (patterns.context7Compliance) {
+      bonusScore += 0.4;
+      detectedAdvancedPatterns.push('Context7 Standards Compliance');
+      
+      // Extra bonus for complete Context7 integration
+      if (patterns.agentOSIntegration && patterns.mcpProtocolCompliance) {
+        bonusScore += 0.3;
+        detectedAdvancedPatterns.push('Full Context7 Integration');
+      }
+    }
+    
+    if (patterns.agentOSIntegration) {
+      bonusScore += 0.3;
+      detectedAdvancedPatterns.push('Agent OS Integration');
+    }
+    
     // Cap bonus at +2 points
     bonusScore = Math.min(bonusScore, 2);
     
     if (bonusScore > 0) {
       this.addScore(bonusScore, 2, `Advanced patterns detected: ${detectedAdvancedPatterns.join(', ')}`);
+      
+      // Add specific recommendations for MCP patterns
+      if (patterns.mcpServerPattern && !patterns.context7Compliance) {
+        this.addIssue('MCP server without Context7 compliance', 'Add AGENTS.md and CLAUDE.md for full Context7 integration');
+      }
+      
+      if (patterns.context7Compliance && !patterns.mcpProtocolCompliance) {
+        this.addIssue('Context7 setup without proper MCP protocol', 'Ensure MCP JSON-RPC protocol implementation');
+      }
     }
     
     return bonusScore;
   }
 
   async analyzeDependencies() {
-    let score = 0;
-    const maxScore = 3;
+    let _score = 0;
+    const _maxScore = 3;
     
     try {
       const packageJson = await this.readPackageJson();
@@ -364,7 +467,7 @@ export class StructureAnalyzer extends BaseAnalyzer {
       
       // Score based on dependency count (1pt)
       if (totalDeps < 30) {
-        score += 1;
+        _score += 1;
         this.addScore(1, 1, `Reasonable number of dependencies (${totalDeps})`);
       } else if (totalDeps < 60) {
         score += 0.5;
@@ -376,7 +479,7 @@ export class StructureAnalyzer extends BaseAnalyzer {
       
       // Check for proper dev/prod dependency separation (1pt)
       if (Object.keys(devDeps).length > 0) {
-        score += 1;
+        _score += 1;
         this.addScore(1, 1, 'Dev dependencies are properly separated');
       } else {
         this.addIssue('No dev dependencies found', 'Separate development dependencies from production ones');
@@ -384,7 +487,7 @@ export class StructureAnalyzer extends BaseAnalyzer {
       
       // Check for circular dependencies (would require deeper analysis) (1pt)
       // For now, assume good if no obvious issues
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'No obvious circular dependency issues');
       
       this.setDetail('dependencyCount', totalDeps);
@@ -422,13 +525,13 @@ export class StructureAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeFileGrouping() {
-    let score = 0;
-    const maxScore = 2;
+    let _score = 0;
+    const _maxScore = 2;
     
     // Check if files are grouped logically
     const srcExists = await this.fileExists('src');
     if (srcExists) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Source files are organized in src directory');
       
       // Check for further organization within src
@@ -436,7 +539,7 @@ export class StructureAnalyzer extends BaseAnalyzer {
       const hasSubdirs = srcContents.some(item => item.isDirectory);
       
       if (hasSubdirs) {
-        score += 1;
+        _score += 1;
         this.addScore(1, 1, 'Source files are further organized into subdirectories');
       } else {
         this.addIssue('Flat src structure', 'Consider organizing src files into subdirectories by feature or type');
@@ -445,12 +548,12 @@ export class StructureAnalyzer extends BaseAnalyzer {
       this.addIssue('No src directory found', 'Organize source files into a src directory');
     }
     
-    return score;
+    return _score;
   }
 
   async analyzeSeparationOfConcerns() {
-    let score = 0;
-    const maxScore = 1;
+    let _score = 0;
+    const _maxScore = 1;
     
     // Look for separation indicators
     const indicators = [
@@ -464,17 +567,17 @@ export class StructureAnalyzer extends BaseAnalyzer {
     for (const indicator of indicators) {
       const exists = await this.fileExists(indicator.path) || await this.fileExists(`src/${indicator.path}`);
       if (exists) {
-        score += indicator.weight;
+        _score += indicator.weight;
       }
     }
     
     if (score > 0.5) {
-      this.addScore(score, maxScore, 'Good separation of concerns detected');
+      this.addScore(_score, _maxScore, 'Good separation of concerns detected');
     } else {
       this.addIssue('Poor separation of concerns', 'Separate code into logical modules (components, services, utils, etc.)');
     }
     
-    return Math.min(score, maxScore);
+    return Math.min(_score, _maxScore);
   }
 
   async analyzeModuleStructure() {
@@ -546,8 +649,8 @@ export class StructureAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeNamingPatterns(files) {
-    let score = 0;
-    const maxScore = 2;
+    let _score = 0;
+    const _maxScore = 2;
     
     // Check if naming matches project type conventions
     if (this.isReactProject()) {
@@ -583,12 +686,12 @@ export class StructureAnalyzer extends BaseAnalyzer {
       this.addScore(maxScore * 0.8, maxScore, 'Naming patterns appear consistent');
     }
     
-    return Math.min(score, maxScore);
+    return Math.min(_score, _maxScore);
   }
 
   async analyzeReactArchitecture() {
-    let score = 0;
-    const maxScore = 3;
+    let _score = 0;
+    const _maxScore = 3;
     
     // Check for proper React patterns
     const hasComponents = await this.fileExists('src/components') || await this.fileExists('components');
@@ -596,30 +699,30 @@ export class StructureAnalyzer extends BaseAnalyzer {
     const hasServices = await this.fileExists('src/services') || await this.fileExists('services');
     
     if (hasComponents) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Components directory structure found');
     } else {
       this.addIssue('No components directory', 'Create a components directory for React components');
     }
     
     if (hasHooks) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Custom hooks directory found');
     } else if (this.config.projectType.includes('react')) {
       this.addIssue('No hooks directory', 'Consider organizing custom hooks in a dedicated directory');
     }
     
     if (hasServices) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Services directory for business logic found');
     }
     
-    return score;
+    return _score;
   }
 
   async analyzeVueArchitecture() {
-    let score = 0;
-    const maxScore = 3;
+    let _score = 0;
+    const _maxScore = 3;
     
     // Check for Vue-specific patterns
     const hasComponents = await this.fileExists('src/components') || await this.fileExists('components');
@@ -627,26 +730,26 @@ export class StructureAnalyzer extends BaseAnalyzer {
     const hasComposables = await this.fileExists('src/composables') || await this.fileExists('composables');
     
     if (hasComponents) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Vue components directory found');
     }
     
     if (hasViews) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Views/Pages directory found');
     }
     
     if (hasComposables) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Composables directory found (Vue 3 pattern)');
     }
     
-    return score;
+    return _score;
   }
 
   async analyzeNodeArchitecture() {
-    let score = 0;
-    const maxScore = 3;
+    let _score = 0;
+    const _maxScore = 3;
     
     // Check for Node.js API patterns
     const hasRoutes = await this.fileExists('src/routes') || await this.fileExists('routes');
@@ -654,26 +757,26 @@ export class StructureAnalyzer extends BaseAnalyzer {
     const hasControllers = await this.fileExists('src/controllers') || await this.fileExists('controllers');
     
     if (hasRoutes) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Routes directory found');
     }
     
     if (hasMiddleware) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Middleware directory found');
     }
     
     if (hasControllers) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Controllers directory found');
     }
     
-    return score;
+    return _score;
   }
 
   async analyzeGeneralArchitecture() {
-    let score = 0;
-    const maxScore = 3;
+    let _score = 0;
+    const _maxScore = 3;
     
     // General architecture patterns
     const hasLib = await this.fileExists('lib') || await this.fileExists('src/lib');
@@ -681,12 +784,12 @@ export class StructureAnalyzer extends BaseAnalyzer {
     const hasConfig = await this.fileExists('config') || await this.fileExists('src/config');
     
     if (hasLib || hasUtils) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Utility/Library code organization found');
     }
     
     if (hasConfig) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Configuration organization found');
     }
     
@@ -694,7 +797,7 @@ export class StructureAnalyzer extends BaseAnalyzer {
     score += 1;
     this.addScore(1, 1, 'Basic project organization detected');
     
-    return score;
+    return _score;
   }
 
   async countFiles() {

@@ -261,6 +261,9 @@ export class SecurityAnalyzer extends BaseAnalyzer {
     this.setDetail('hasEnvFile', hasEnvFile);
   }
 
+  /**
+   * PHASE 1: Enhanced error context analysis for AI debugging and security
+   */
   async analyzeErrorHandling() {
     let _score = 0;
     const _maxScore = 3;
@@ -270,7 +273,14 @@ export class SecurityAnalyzer extends BaseAnalyzer {
     let errorHandlers = 0;
     let errorExposureRisk = 0;
     
-    for (const file of files.slice(0, 20)) { // Sample files
+    // PHASE 1: Enhanced error analysis metrics
+    let structuredErrors = 0;
+    let contextualErrors = 0;
+    let gracefulDegradation = 0;
+    let aiDebuggingContext = 0;
+    let errorBoundariesFound = 0;
+    
+    for (const file of files.slice(0, 25)) { // Increased sample size
       try {
         const content = await this.readFile(file);
         
@@ -286,9 +296,34 @@ export class SecurityAnalyzer extends BaseAnalyzer {
           errorHandlers++;
         }
         
-        // Check for potential information exposure
-        if (content.includes('console.error') || content.includes('console.log') ||
-            content.includes('alert(') || content.includes('JSON.stringify(error)')) {
+        // PHASE 1: Analyze structured error handling
+        if (this.hasStructuredErrorHandling(content)) {
+          structuredErrors++;
+        }
+        
+        // PHASE 1: Analyze contextual error information
+        if (this.hasContextualErrorHandling(content)) {
+          contextualErrors++;
+        }
+        
+        // PHASE 1: Check for graceful degradation patterns
+        if (this.hasGracefulDegradation(content)) {
+          gracefulDegradation++;
+        }
+        
+        // PHASE 1: AI debugging context patterns
+        if (this.hasAIDebuggingContext(content)) {
+          aiDebuggingContext++;
+        }
+        
+        // Check for React Error Boundaries
+        if (content.includes('componentDidCatch') || content.includes('ErrorBoundary') ||
+            content.includes('getDerivedStateFromError')) {
+          errorBoundariesFound++;
+        }
+        
+        // Enhanced information exposure detection
+        if (this.hasErrorInformationExposure(content)) {
           errorExposureRisk++;
         }
         
@@ -297,31 +332,176 @@ export class SecurityAnalyzer extends BaseAnalyzer {
       }
     }
     
-    // Score for try-catch usage
+    // Score for try-catch usage (1.5pts)
     if (tryCatchBlocks > 0) {
-      const catchScore = Math.min(tryCatchBlocks / 5, 2); // Up to 2 points
+      const catchScore = Math.min(tryCatchBlocks / 5, 1.5);
       _score += catchScore;
-      this.addScore(catchScore, 2, `Error handling blocks found (${tryCatchBlocks})`);
+      this.addScore(catchScore, 1.5, `Error handling blocks found (${tryCatchBlocks})`);
     } else if (files.length > 5) {
       this.addIssue('Limited error handling detected', 'Add try-catch blocks for error-prone operations');
     }
     
-    // Score for general error handling awareness
-    if (errorHandlers > 0) {
-      _score += 1;
-      this.addScore(1, 1, `Error handling patterns detected (${errorHandlers} files)`);
+    // Score for structured error handling (0.75pts)
+    const structuredRatio = files.length > 0 ? structuredErrors / Math.min(files.length, 25) : 0;
+    const structuredScore = Math.min(structuredRatio * 0.75, 0.75);
+    if (structuredScore > 0.3) {
+      _score += structuredScore;
+      this.addScore(structuredScore, 0.75, `Structured error handling (${Math.round(structuredRatio * 100)}% of files)`);
     } else {
-      this.addIssue('No error handling patterns found', 'Implement proper error handling and validation');
+      this.addIssue('Limited structured error handling', 'Use consistent error object structures with context');
     }
+    
+    // Score for contextual error information (0.75pts) 
+    const contextualRatio = files.length > 0 ? contextualErrors / Math.min(files.length, 25) : 0;
+    const contextualScore = Math.min(contextualRatio * 0.75, 0.75);
+    if (contextualScore > 0.3) {
+      _score += contextualScore;
+      this.addScore(contextualScore, 0.75, `Contextual error handling (${Math.round(contextualRatio * 100)}% of files)`);
+    } else if (contextualErrors > 0) {
+      _score += contextualScore;
+      this.addScore(contextualScore, 0.75, 'Some contextual error handling found');
+      this.addIssue('Limited error context', 'Add more contextual information to error handling for better debugging');
+    } else {
+      this.addIssue('No contextual error handling', 'Add phase, step, and debug context to error handling');
+    }
+    
+    // Bonus points for advanced error patterns
+    let bonusScore = 0;
+    if (gracefulDegradation > 0) {
+      bonusScore += 0.2;
+      this.addScore(0.2, 0.2, `Graceful degradation patterns found (${gracefulDegradation} files)`);
+    }
+    
+    if (aiDebuggingContext > 0) {
+      bonusScore += 0.3;
+      this.addScore(0.3, 0.3, `AI debugging context patterns found (${aiDebuggingContext} files)`);
+    }
+    
+    if (errorBoundariesFound > 0) {
+      bonusScore += 0.2;
+      this.addScore(0.2, 0.2, `Error boundaries implemented (${errorBoundariesFound} components)`);
+    }
+    
+    _score += Math.min(bonusScore, 0.5); // Cap bonus at 0.5pts
     
     // Deduct for potential information exposure
     if (errorExposureRisk > 3) {
-      this.addIssue('Potential error information exposure', 'Avoid logging sensitive error details to console');
+      this.addIssue('High error information exposure risk', 'Avoid logging sensitive error details - implement structured logging');
+    } else if (errorExposureRisk > 0) {
+      this.addIssue('Some error information exposure detected', 'Review error logging for sensitive information leaks');
+    }
+    
+    // Add specific recommendations based on analysis
+    if (structuredErrors === 0 && files.length > 5) {
+      this.addIssue('No structured error handling found', 'Implement error classes with phase, step, and context information');
+    }
+    
+    if (aiDebuggingContext === 0 && contextualErrors < files.length * 0.3) {
+      this.addIssue('Limited AI debugging context', 'Add error context with debugContext, suggestedFix, and commonIssues');
     }
     
     this.setDetail('tryCatchBlocks', tryCatchBlocks);
     this.setDetail('errorHandlers', errorHandlers);
     this.setDetail('errorExposureRisk', errorExposureRisk);
+    this.setDetail('structuredErrors', structuredErrors);
+    this.setDetail('contextualErrors', contextualErrors);
+    this.setDetail('gracefulDegradation', gracefulDegradation);
+    this.setDetail('aiDebuggingContext', aiDebuggingContext);
+    this.setDetail('errorBoundaries', errorBoundariesFound);
+  }
+  
+  /**
+   * PHASE 1: Check for structured error handling patterns
+   */
+  hasStructuredErrorHandling(content) {
+    // Look for structured error objects with consistent properties
+    const patterns = [
+      /new\s+\w*Error\(/,
+      /error\s*:\s*{[\s\S]*?message[\s\S]*?}/,
+      /throw\s+new\s+\w+Error\(/,
+      /{[\s\S]*?code[\s\S]*?message[\s\S]*?}/,
+      /Error\('[^']*',\s*{/,
+      /createError\(/,
+      /ErrorWithContext/
+    ];
+    
+    return patterns.some(pattern => pattern.test(content));
+  }
+  
+  /**
+   * PHASE 1: Check for contextual error handling (phase, step, debug info)
+   */
+  hasContextualErrorHandling(content) {
+    const patterns = [
+      /phase\s*:/,
+      /step\s*:/,
+      /context\s*:/,
+      /debugContext\s*:/,
+      /currentPhase/,
+      /lastSuccessfulStep/,
+      /operationContext/,
+      /errorContext/,
+      /catch\s*\([^)]*\)\s*{[\s\S]*?(?:phase|step|context)/i
+    ];
+    
+    return patterns.some(pattern => pattern.test(content));
+  }
+  
+  /**
+   * PHASE 1: Check for graceful degradation patterns
+   */
+  hasGracefulDegradation(content) {
+    const patterns = [
+      /fallback/i,
+      /graceful.*degradation/i,
+      /fallbackTo/,
+      /withFallback/,
+      /defaultValue/,
+      /catch.*return.*default/i,
+      /try.*catch.*continue/i,
+      /backup.*strategy/i
+    ];
+    
+    return patterns.some(pattern => pattern.test(content));
+  }
+  
+  /**
+   * PHASE 1: Check for AI debugging context patterns  
+   */
+  hasAIDebuggingContext(content) {
+    const patterns = [
+      /suggestedFix/,
+      /debugContext/,
+      /commonIssues/,
+      /aiContext/i,
+      /troubleshooting/i,
+      /errorGuidance/,
+      /debugInfo/,
+      /contextualError/,
+      /@aiContext/,
+      /AI.*can.*use.*context/i
+    ];
+    
+    return patterns.some(pattern => pattern.test(content));
+  }
+  
+  /**
+   * PHASE 1: Enhanced error information exposure detection
+   */
+  hasErrorInformationExposure(content) {
+    const exposurePatterns = [
+      /console\.error\(.*error.*\)/,
+      /console\.log\(.*error.*\)/,
+      /alert\(.*error.*\)/,
+      /JSON\.stringify\(error\)/,
+      /error\.stack/,
+      /error\.message.*response/,
+      /throw.*error\.message/,
+      /res\.send\(.*error/,
+      /response.*error\.message/
+    ];
+    
+    return exposurePatterns.some(pattern => pattern.test(content));
   }
 
   async analyzeInputValidation() {

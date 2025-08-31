@@ -685,7 +685,7 @@ async function displayScoringResults(results, options) {
   console.log(`${useColor ? chalk.bold('📈 Category Breakdown:') : '📈 Category Breakdown:'}`);
   console.log('─'.repeat(60));
   
-  for (const [_categoryKey, result] of Object.entries(categories)) {
+  for (const [, result] of Object.entries(categories)) {
     const percentage = Math.round((result.score / result.maxScore) * 100);
     const progressBar = generateProgressBar(percentage, 20, useColor);
     const categoryName = result.categoryName.padEnd(35);

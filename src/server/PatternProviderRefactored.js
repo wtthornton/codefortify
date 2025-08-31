@@ -97,39 +97,29 @@ export class PatternProvider {
 
   // Legacy methods for backward compatibility
   getReactPatterns() {
-    return `// Context7 React Patterns for ${this.config.projectName}
-
-${ReactPatterns.getComponentPattern()}
-
-${ReactPatterns.getHookPattern()}
-
-${ReactPatterns.getTestPattern()}`;
+    return '// Context7 React Patterns for ' + this.config.projectName + '\n\n' +
+           ReactPatterns.getComponentPattern() + '\n\n' +
+           ReactPatterns.getHookPattern() + '\n\n' +
+           ReactPatterns.getTestPattern();
   }
 
   getVuePatterns() {
-    return `// Context7 Vue Patterns for ${this.config.projectName}
-
-${VuePatterns.getComponentPattern()}
-
-${VuePatterns.getComposablePattern()}`;
+    return '// Context7 Vue Patterns for ' + this.config.projectName + '\n\n' +
+           VuePatterns.getComponentPattern() + '\n\n' +
+           VuePatterns.getComposablePattern();
   }
 
   getNodePatterns() {
-    return `// Context7 Node.js Patterns for ${this.config.projectName}
-
-${NodePatterns.getServicePattern()}
-
-${NodePatterns.getMiddlewarePattern()}
-
-${NodePatterns.getRoutePattern()}`;
+    return '// Context7 Node.js Patterns for ' + this.config.projectName + '\n\n' +
+           NodePatterns.getServicePattern() + '\n\n' +
+           NodePatterns.getMiddlewarePattern() + '\n\n' +
+           NodePatterns.getRoutePattern();
   }
 
   getJavaScriptPatterns() {
-    return `// Context7 JavaScript Patterns for ${this.config.projectName}
-
-${this.getJavaScriptClassPattern()}
-
-${this.getJavaScriptFunctionPattern()}`;
+    return '// Context7 JavaScript Patterns for ' + this.config.projectName + '\n\n' +
+           this.getJavaScriptClassPattern() + '\n\n' +
+           this.getJavaScriptFunctionPattern();
   }
 
   getJavaScriptClassPattern() {
@@ -151,7 +141,7 @@ export class ExampleClass {
       
       return result;
     } catch (error) {
-      throw new Error(`Processing failed: ${error.message}`);
+      throw new Error('Processing failed: ' + error.message);
     }
   }
 
@@ -165,7 +155,7 @@ export class ExampleClass {
     const required = ['apiKey', 'baseUrl'];
     for (const key of required) {
       if (!this.config[key]) {
-        throw new Error(`Missing required config: ${key}`);
+        throw new Error('Missing required config: ' + key);
       }
     }
   }
@@ -205,7 +195,7 @@ export async function processData(input, options = {}) {
     return result;
   } catch (error) {
     console.error('Processing error:', error);
-    throw new Error(`Failed to process data: ${error.message}`);
+    throw new Error('Failed to process data: ' + error.message);
   }
 }
 

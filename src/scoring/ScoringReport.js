@@ -296,7 +296,7 @@ export class ScoringReport {
     
     markdown += '## Category Breakdown\n\n';
     
-    for (const [_key, category] of Object.entries(categories)) {
+    for (const [, category] of Object.entries(categories)) {
       const percentage = Math.round((category.score / category.maxScore) * 100);
       const emoji = percentage >= 85 ? '✅' : percentage >= 70 ? '⚡' : '⚠️';
       

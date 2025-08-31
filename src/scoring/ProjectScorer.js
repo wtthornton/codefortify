@@ -167,7 +167,7 @@ export class ProjectScorer {
     let maxTotalScore = 0;
     let hasErrors = false;
 
-    for (const [_categoryKey, result] of Object.entries(this.results.categories)) {
+    for (const [, result] of Object.entries(this.results.categories)) {
       totalScore += result.score;
       maxTotalScore += result.maxScore;
       
