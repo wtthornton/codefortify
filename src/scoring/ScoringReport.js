@@ -5,7 +5,7 @@
  */
 
 import fs from 'fs/promises';
-import path from 'path';
+// import path from 'path'; // Unused import
 
 export class ScoringReport {
   constructor(config = {}) {
@@ -205,7 +205,7 @@ export class ScoringReport {
         </div>
         
         <div class="grid">
-            ${Object.entries(categories).map(([key, category]) => {
+            ${Object.entries(categories).map(([_key, category]) => {
     const percentage = Math.round((category.score / category.maxScore) * 100);
     const level = this.getPerformanceLevel(percentage);
               
@@ -296,7 +296,7 @@ export class ScoringReport {
     
     markdown += '## Category Breakdown\n\n';
     
-    for (const [key, category] of Object.entries(categories)) {
+    for (const [_key, category] of Object.entries(categories)) {
       const percentage = Math.round((category.score / category.maxScore) * 100);
       const emoji = percentage >= 85 ? '✅' : percentage >= 70 ? '⚡' : '⚠️';
       

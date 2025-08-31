@@ -31,8 +31,8 @@ export class SecurityAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeDependencyVulnerabilities() {
-    let score = 0;
-    const maxScore = 6;
+    let _score = 0;
+    const _maxScore = 6;
     
     const packageJson = await this.readPackageJson();
     if (!packageJson) {
@@ -44,7 +44,7 @@ export class SecurityAnalyzer extends BaseAnalyzer {
     const depsCount = Object.keys(deps).length;
     
     if (depsCount === 0) {
-      score += 3;
+      _score += 3;
       this.addScore(3, 6, 'No external dependencies (no vulnerability risk)');
       return;
     }
@@ -59,17 +59,17 @@ export class SecurityAnalyzer extends BaseAnalyzer {
 
       // Score based on actual vulnerability scan results
       if (totalVulns === 0) {
-        score += 4;
+        _score += 4;
         this.addScore(4, 4, 'No vulnerabilities found in dependencies (npm audit)');
       } else if (criticalVulns === 0 && highVulns === 0) {
-        score += 3;
+        _score += 3;
         this.addScore(3, 4, `Only low/moderate vulnerabilities found (${totalVulns} total)`);
       } else if (criticalVulns === 0) {
-        score += 2;
+        _score += 2;
         this.addScore(2, 4, `High vulnerabilities found (${highVulns} high, ${totalVulns} total)`);
         this.addIssue(`${highVulns} high severity vulnerabilities`, 'Run npm audit fix to resolve security issues');
       } else {
-        score += 1;
+        _score += 1;
         this.addScore(1, 4, `Critical vulnerabilities detected (${criticalVulns} critical, ${totalVulns} total)`);
         this.addIssue(`${criticalVulns} critical vulnerabilities`, 'Immediately run npm audit fix - critical security risk');
       }
@@ -85,7 +85,7 @@ export class SecurityAnalyzer extends BaseAnalyzer {
       // Graceful degradation: Fallback to pattern matching with helpful guidance
       this.addScore(2, 4, 'npm audit unavailable - using pattern analysis (install npm for better accuracy)');
       this.addIssue('npm audit not available', 'For accurate vulnerability scanning, ensure npm is installed and project has package.json');
-      await this.fallbackVulnerabilityAnalysis(deps, score);
+      await this.fallbackVulnerabilityAnalysis(deps, _score);
     }
     
     // Check for outdated package indicators (2pts remaining)
@@ -94,7 +94,7 @@ export class SecurityAnalyzer extends BaseAnalyzer {
                           await this.fileExists('pnpm-lock.yaml');
     
     if (hasPackageLock) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Lock file present (prevents dependency confusion)');
     } else {
       this.addIssue('No lock file found', 'Add package-lock.json to prevent dependency confusion attacks');
@@ -102,7 +102,7 @@ export class SecurityAnalyzer extends BaseAnalyzer {
     
     // Check for audit script
     if (packageJson.scripts && packageJson.scripts.audit) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Audit script configured');
     } else {
       this.addIssue('No audit script in package.json', 'Add "audit": "npm audit" script for vulnerability checking');
@@ -147,7 +147,7 @@ export class SecurityAnalyzer extends BaseAnalyzer {
    * @param {Object} deps - Dependencies object
    * @param {number} currentScore - Current score
    */
-  async fallbackVulnerabilityAnalysis(deps, currentScore) {
+  async fallbackVulnerabilityAnalysis(deps, _currentScore) {
     // Check for security-related packages
     const securityPackages = [
       'helmet', 'cors', 'express-rate-limit', 'bcrypt', 'bcryptjs',
@@ -175,11 +175,11 @@ export class SecurityAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeSecretsManagement() {
-    let score = 0;
-    const maxScore = 4;
+    let _score = 0;
+    const _maxScore = 4;
     
     const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx', '.json', '.env']);
-    const secretsFound = 0;
+    const _secretsFound = 0;
     let envUsage = 0;
     let hardcodedSecrets = 0;
     
@@ -188,7 +188,7 @@ export class SecurityAnalyzer extends BaseAnalyzer {
     const hasGitignore = await this.fileExists('.gitignore');
     
     if (hasEnvFile) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Environment file detected');
     }
     
@@ -196,7 +196,7 @@ export class SecurityAnalyzer extends BaseAnalyzer {
       try {
         const gitignoreContent = await this.readFile('.gitignore');
         if (gitignoreContent.includes('.env') || gitignoreContent.includes('*.env')) {
-          score += 1;
+          _score += 1;
           this.addScore(1, 1, 'Environment files ignored in git');
         } else if (hasEnvFile) {
           this.addIssue('.env file not in .gitignore', 'Add .env to .gitignore to prevent secret exposure');
@@ -242,17 +242,17 @@ export class SecurityAnalyzer extends BaseAnalyzer {
     
     // Score based on environment variable usage vs hardcoded secrets
     if (envUsage > 0 && hardcodedSecrets === 0) {
-      score += 2;
+      _score += 2;
       this.addScore(2, 2, `Good secrets management (${envUsage} env vars, no hardcoded secrets)`);
     } else if (envUsage > 0 && hardcodedSecrets > 0) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 2, 'Mixed secrets management approach');
       this.addIssue('Potential hardcoded secrets detected', 'Move secrets to environment variables');
     } else if (hardcodedSecrets > 0) {
       this.addIssue('Hardcoded secrets detected', 'Never commit secrets to code - use environment variables');
     } else if (envUsage === 0) {
       // No environment usage might be fine for simple projects
-      score += 1;
+      _score += 1;
       this.addScore(1, 2, 'No obvious secrets management (might be appropriate for this project)');
     }
     
@@ -262,8 +262,8 @@ export class SecurityAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeErrorHandling() {
-    let score = 0;
-    const maxScore = 3;
+    let _score = 0;
+    const _maxScore = 3;
     
     const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx']);
     let tryCatchBlocks = 0;
@@ -300,7 +300,7 @@ export class SecurityAnalyzer extends BaseAnalyzer {
     // Score for try-catch usage
     if (tryCatchBlocks > 0) {
       const catchScore = Math.min(tryCatchBlocks / 5, 2); // Up to 2 points
-      score += catchScore;
+      _score += catchScore;
       this.addScore(catchScore, 2, `Error handling blocks found (${tryCatchBlocks})`);
     } else if (files.length > 5) {
       this.addIssue('Limited error handling detected', 'Add try-catch blocks for error-prone operations');
@@ -308,7 +308,7 @@ export class SecurityAnalyzer extends BaseAnalyzer {
     
     // Score for general error handling awareness
     if (errorHandlers > 0) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, `Error handling patterns detected (${errorHandlers} files)`);
     } else {
       this.addIssue('No error handling patterns found', 'Implement proper error handling and validation');
@@ -325,8 +325,8 @@ export class SecurityAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeInputValidation() {
-    let score = 0;
-    const maxScore = 2;
+    let _score = 0;
+    const _maxScore = 2;
     
     const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx']);
     let validationPatterns = 0;
@@ -344,7 +344,7 @@ export class SecurityAnalyzer extends BaseAnalyzer {
       const hasValidationLib = validationLibraries.some(lib => deps[lib]);
       
       if (hasValidationLib) {
-        score += 1;
+        _score += 1;
         this.addScore(1, 1, 'Input validation library detected');
       }
     }
@@ -380,7 +380,7 @@ export class SecurityAnalyzer extends BaseAnalyzer {
     // Score for validation patterns
     if (validationPatterns > 0) {
       const validationScore = Math.min(validationPatterns / 5, 1); // Up to 1 point
-      score += validationScore;
+      _score += validationScore;
       this.addScore(validationScore, 1, `Input validation patterns found (${validationPatterns} files)`);
     } else if (files.length > 5) {
       this.addIssue('No input validation patterns detected', 'Add input validation for user data');

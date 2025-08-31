@@ -30,8 +30,8 @@ export class DeveloperExperienceAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeDevelopmentTooling() {
-    let score = 0;
-    const maxScore = 4;
+    let _score = 0;
+    const _maxScore = 4;
     
     const packageJson = await this.readPackageJson();
     if (!packageJson) {
@@ -50,14 +50,14 @@ export class DeveloperExperienceAnalyzer extends BaseAnalyzer {
     const hasFormatting = formattingTools.some(tool => allDeps[tool]);
     
     if (hasLinting) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Code linting tools configured');
     } else {
       this.addIssue('No linting tools found', 'Add ESLint or similar for code quality');
     }
     
     if (hasFormatting) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Code formatting tools configured');
     } else {
       this.addIssue('No formatting tools found', 'Add Prettier for consistent code formatting');
@@ -71,7 +71,7 @@ export class DeveloperExperienceAnalyzer extends BaseAnalyzer {
     const hasBuildTools = buildTools.some(tool => allDeps[tool]);
     
     if (hasBuildTools) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Build tooling detected');
     }
     
@@ -83,7 +83,7 @@ export class DeveloperExperienceAnalyzer extends BaseAnalyzer {
     const hasDevTools = devTools.some(tool => allDeps[tool]);
     
     if (hasDevTools) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Development convenience tools found');
     } else {
       this.addIssue('Limited development tooling', 'Consider adding nodemon, husky, or other dev tools');
@@ -96,8 +96,8 @@ export class DeveloperExperienceAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeDocumentationQuality() {
-    let score = 0;
-    const maxScore = 3;
+    let _score = 0;
+    const _maxScore = 3;
     
     // Check for README
     let readmeScore = 0;
@@ -141,7 +141,7 @@ export class DeveloperExperienceAnalyzer extends BaseAnalyzer {
       this.addIssue('No README.md found', 'Create comprehensive project documentation');
     }
     
-    score += Math.min(readmeScore, 2);
+    _score += Math.min(readmeScore, 2);
     
     // Check for additional documentation
     const docFiles = [
@@ -158,7 +158,7 @@ export class DeveloperExperienceAnalyzer extends BaseAnalyzer {
     
     if (additionalDocs > 0) {
       const docScore = Math.min(additionalDocs / 3, 1);
-      score += docScore;
+      _score += docScore;
       this.addScore(docScore, 1, `Additional documentation found (${additionalDocs} items)`);
     } else {
       this.addIssue('No additional documentation', 'Consider adding CONTRIBUTING.md or API docs');
@@ -169,8 +169,8 @@ export class DeveloperExperienceAnalyzer extends BaseAnalyzer {
   }
 
   async analyzePackageScripts() {
-    let score = 0;
-    const maxScore = 2;
+    let _score = 0;
+    const _maxScore = 2;
     
     const packageJson = await this.readPackageJson();
     if (!packageJson || !packageJson.scripts) {
@@ -186,10 +186,10 @@ export class DeveloperExperienceAnalyzer extends BaseAnalyzer {
     const hasEssentialScripts = essentialScripts.filter(script => scripts[script]);
     
     if (hasEssentialScripts.length >= 3) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Essential scripts present (test, start, build)');
     } else if (hasEssentialScripts.length >= 2) {
-      score += 0.5;
+      _score += 0.5;
       this.addScore(0.5, 1, `Some essential scripts present (${hasEssentialScripts.join(', ')})`);
     } else {
       this.addIssue('Missing essential scripts', 'Add test, start, and build scripts');
@@ -204,10 +204,10 @@ export class DeveloperExperienceAnalyzer extends BaseAnalyzer {
     const hasDevScripts = devScripts.filter(script => scripts[script]);
     
     if (hasDevScripts.length >= 3) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, `Good development script coverage (${hasDevScripts.length} scripts)`);
     } else if (hasDevScripts.length >= 1) {
-      score += 0.5;
+      _score += 0.5;
       this.addScore(0.5, 1, `Some development scripts present (${hasDevScripts.join(', ')})`);
     } else {
       this.addIssue('Limited development scripts', 'Add dev, lint, format scripts for better workflow');
@@ -219,8 +219,8 @@ export class DeveloperExperienceAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeVersionControlSetup() {
-    let score = 0;
-    const maxScore = 1;
+    let _score = 0;
+    const _maxScore = 1;
     
     // Check for .gitignore
     const hasGitignore = await this.fileExists('.gitignore');
@@ -237,10 +237,10 @@ export class DeveloperExperienceAnalyzer extends BaseAnalyzer {
         ).length;
         
         if (entryCount >= 4) {
-          score += 0.5;
+          _score += 0.5;
           this.addScore(0.5, 0.5, 'Comprehensive .gitignore configuration');
         } else if (entryCount >= 2) {
-          score += 0.25;
+          _score += 0.25;
           this.addScore(0.25, 0.5, 'Basic .gitignore configuration');
         } else {
           this.addIssue('Incomplete .gitignore', 'Add common ignore patterns (node_modules, .env, etc.)');
@@ -267,7 +267,7 @@ export class DeveloperExperienceAnalyzer extends BaseAnalyzer {
     }
     
     if (workflowSetup > 0) {
-      score += 0.5;
+      _score += 0.5;
       this.addScore(0.5, 0.5, `CI/CD or Git workflow setup detected (${workflowSetup} items)`);
     } else {
       this.addIssue('No workflow automation detected', 'Consider adding GitHub Actions or Git hooks');

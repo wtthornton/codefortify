@@ -183,13 +183,13 @@ describe('ResourceManager', () => {
     it('should handle unknown resource URIs', async () => {
       await expect(
         resourceManager.readResource('context7://unknown/resource')
-      ).rejects.toThrow('Unknown resource URI: context7://unknown/resource');
+      ).rejects.toThrow('Failed to read resource context7://unknown/resource');
     });
   });
 
   describe('generatePatternContent', () => {
-    it('should generate React patterns for react-webapp project', () => {
-      const patterns = resourceManager.generatePatternContent();
+    it('should generate React patterns for react-webapp project', async () => {
+      const patterns = await resourceManager.generatePatternsContent();
 
       expect(patterns).toContain('React.FC');
       expect(patterns).toContain('useQuery');
@@ -197,26 +197,38 @@ describe('ResourceManager', () => {
       expect(patterns).toContain('Context7 React Patterns');
     });
 
-    it('should generate Vue patterns for vue-webapp project', () => {
-      resourceManager.config.projectType = 'vue-webapp';
-      const patterns = resourceManager.generatePatternContent();
+    it('should generate Vue patterns for vue-webapp project', async () => {
+      const vueResourceManager = new ResourceManager({
+        projectRoot: '/test/project',
+        projectType: 'vue-webapp',
+        agentOsPath: '.agent-os'
+      });
+      const patterns = await vueResourceManager.generatePatternsContent();
 
       expect(patterns).toContain('Vue');
       expect(patterns).toContain('<template>');
       expect(patterns).toContain('Context7 Vue Patterns');
     });
 
-    it('should generate Node patterns for node-api project', () => {
-      resourceManager.config.projectType = 'node-api';
-      const patterns = resourceManager.generatePatternContent();
+    it('should generate Node patterns for node-api project', async () => {
+      const nodeResourceManager = new ResourceManager({
+        projectRoot: '/test/project',
+        projectType: 'node-api',
+        agentOsPath: '.agent-os'
+      });
+      const patterns = await nodeResourceManager.generatePatternsContent();
 
       expect(patterns).toContain('Express');
       expect(patterns).toContain('Context7 Node.js Patterns');
     });
 
-    it('should generate JavaScript patterns for unknown project type', () => {
-      resourceManager.config.projectType = 'unknown';
-      const patterns = resourceManager.generatePatternContent();
+    it('should generate JavaScript patterns for unknown project type', async () => {
+      const unknownResourceManager = new ResourceManager({
+        projectRoot: '/test/project',
+        projectType: 'unknown',
+        agentOsPath: '.agent-os'
+      });
+      const patterns = await unknownResourceManager.generatePatternsContent();
 
       expect(patterns).toContain('Context7 JavaScript Patterns');
     });

@@ -17,7 +17,16 @@
       "Bash(npm install:*)",
       "Bash(find:*)",
       "Bash(npm run analyze:*)",
-      "Bash(npm run size-check:*)"
+      "Bash(npm run size-check:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npm run test:integration:*)",
+      "Bash(npx context7 test-mcp:*)",
+      "Bash(npx context7:*)",
+      "Bash(dos2unix:*)",
+      "Bash(npm run test:*)",
+      "Bash(echo $NODE_PATH)",
+      "Bash(npm run validate:*)",
+      "Bash(npx eslint:*)"
     ],
     "deny": [],
     "ask": []

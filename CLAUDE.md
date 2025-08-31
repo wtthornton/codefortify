@@ -53,7 +53,7 @@ This is a Context7 MCP (Model Context Protocol) integration package that provide
 
 **Validation (`src/validation/Context7Validator.js`)**:
 - Validates Context7 compliance and project structure
-- Checks required files: AGENTS.md, CLAUDE.md, .agent-os/ directory
+- Checks required files: AGENTS.md, CLAUDE.md
 
 **Scoring System (`src/scoring/`)**:
 - `ProjectScorer.js` - Main scoring orchestrator with 7-category evaluation and smart project detection
@@ -80,7 +80,6 @@ This is a Context7 MCP (Model Context Protocol) integration package that provide
 - `javascript` - General JavaScript/TypeScript projects
 
 ### Configuration Files
-- `templates/configs/agent-os-config.yml` - Agent OS configuration template
 - Generated files: `context7.config.js`, `src/mcp-server.js`, `AGENTS.md`
 
 ## Project Quality Scoring

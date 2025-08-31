@@ -28,8 +28,8 @@ export class PerformanceAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeBundleOptimization() {
-    let score = 0;
-    const maxScore = 6;
+    let _score = 0;
+    const _maxScore = 6;
     
     const packageJson = await this.readPackageJson();
     if (!packageJson) {
@@ -43,13 +43,13 @@ export class PerformanceAnalyzer extends BaseAnalyzer {
     
     // Score based on dependency count (lighter is better)
     if (totalDeps < 10) {
-      score += 3;
+      _score += 3;
       this.addScore(3, 3, `Lean dependency count (${totalDeps})`);
     } else if (totalDeps < 25) {
-      score += 2;
+      _score += 2;
       this.addScore(2, 3, `Moderate dependency count (${totalDeps})`);
     } else if (totalDeps < 50) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 3, `High dependency count (${totalDeps})`);
       this.addIssue('Many dependencies detected', 'Audit dependencies for bundle size impact');
     } else {
@@ -61,7 +61,7 @@ export class PerformanceAnalyzer extends BaseAnalyzer {
     const hasBundleAnalysis = bundleTools.some(tool => devDeps[tool]);
     
     if (hasBundleAnalysis) {
-      score += 2;
+      _score += 2;
       this.addScore(2, 2, 'Bundle analysis tool detected');
     } else {
       this.addIssue('No bundle analysis tool found', 'Add webpack-bundle-analyzer or similar for bundle optimization');
@@ -72,7 +72,7 @@ export class PerformanceAnalyzer extends BaseAnalyzer {
     const hasModernPackages = modernPackages.some(pkg => deps[pkg]);
     
     if (hasModernPackages) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Tree-shaking friendly packages detected');
     }
     
@@ -81,8 +81,8 @@ export class PerformanceAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeCodeSplitting() {
-    let score = 0;
-    const maxScore = 5;
+    let _score = 0;
+    const _maxScore = 5;
     
     const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx']);
     let dynamicImports = 0;
@@ -118,7 +118,7 @@ export class PerformanceAnalyzer extends BaseAnalyzer {
     // Score for dynamic imports
     if (dynamicImports > 0) {
       const importScore = Math.min(dynamicImports / 3, 3); // Up to 3 points
-      score += importScore;
+      _score += importScore;
       this.addScore(importScore, 3, `Dynamic imports found (${dynamicImports})`);
     } else if (this.isReactProject() || this.isVueProject()) {
       this.addIssue('No dynamic imports found', 'Implement code splitting with dynamic imports');
@@ -126,7 +126,7 @@ export class PerformanceAnalyzer extends BaseAnalyzer {
     
     // Score for lazy loading
     if (lazyComponents > 0) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, `Lazy components detected (${lazyComponents})`);
     } else if (this.isReactProject()) {
       this.addIssue('No lazy components found', 'Use React.lazy() for component-level code splitting');
@@ -134,7 +134,7 @@ export class PerformanceAnalyzer extends BaseAnalyzer {
     
     // Score for route-based splitting
     if (routeBasedSplitting > 0) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, `Route-based splitting detected (${routeBasedSplitting})`);
     } else if (this.isReactProject() || this.isVueProject()) {
       this.addIssue('No route-based code splitting', 'Split routes for better initial load performance');
@@ -146,8 +146,8 @@ export class PerformanceAnalyzer extends BaseAnalyzer {
   }
 
   async analyzePerformanceBestPractices() {
-    let score = 0;
-    const maxScore = 4;
+    let _score = 0;
+    const _maxScore = 4;
     
     const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx']);
     let memoizationCount = 0;
@@ -189,7 +189,7 @@ export class PerformanceAnalyzer extends BaseAnalyzer {
     // Score for memoization
     if (memoizationCount > 0) {
       const memoScore = Math.min(memoizationCount / 3, 2); // Up to 2 points
-      score += memoScore;
+      _score += memoScore;
       this.addScore(memoScore, 2, `Performance optimization patterns (${memoizationCount})`);
     } else if (this.isReactProject()) {
       this.addIssue('No memoization detected', 'Use React.memo, useMemo, useCallback for optimization');
@@ -197,7 +197,7 @@ export class PerformanceAnalyzer extends BaseAnalyzer {
     
     // Score for general optimization patterns
     if (optimizationPatterns > 0) {
-      score += Math.min(optimizationPatterns / 2, 2); // Up to 2 points
+      _score += Math.min(optimizationPatterns / 2, 2); // Up to 2 points
       this.addScore(Math.min(optimizationPatterns / 2, 2), 2, `Optimization patterns found (${optimizationPatterns})`);
     }
     

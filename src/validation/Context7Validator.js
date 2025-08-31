@@ -14,9 +14,9 @@ export class Context7Validator {
   constructor(config = {}) {
     this.config = {
       projectRoot: config.projectRoot || process.cwd(),
-      agentOsPath: config.agentOsPath || '.agent-os',
       projectType: config.projectType || 'javascript',
       strictMode: config.strictMode ?? true,
+      agentOsEnabled: false, // Disabled for this project
       ...config
     };
     
@@ -27,14 +27,14 @@ export class Context7Validator {
   setupValidationRules() {
     // Base required files for all projects
     this.requiredFiles = [
-      '.agent-os/config.yml',
       'AGENTS.md',
       'CLAUDE.md',
     ];
 
-    // Add Agent OS files if they should exist
-    if (this.config.agentOsEnabled !== false) {
+    // Add Agent OS files if they should exist (disabled by default)
+    if (this.config.agentOsEnabled === true) {
       this.requiredFiles.push(
+        '.agent-os/config.yml',
         '.agent-os/instructions/ai-development.md',
         '.agent-os/standards/context7-standards.md',
         '.agent-os/standards/tech-stack.md',

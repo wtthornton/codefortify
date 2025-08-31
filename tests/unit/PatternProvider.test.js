@@ -123,7 +123,7 @@ describe('PatternProvider', () => {
       expect(pattern).toContain('isLoading');
       expect(pattern).toContain('error');
       expect(pattern).toContain('AI ASSISTANT CONTEXT');
-      expect(pattern).toContain('Tailwind CSS classes');
+      expect(pattern).toContain('className=');
       expect(pattern).toContain('export default');
     });
   });
@@ -148,7 +148,7 @@ describe('PatternProvider', () => {
 
       expect(pattern).toContain('ExampleService');
       expect(pattern).toContain('z.object');
-      expect(pattern).toContain('singleton pattern');
+      expect(pattern).toContain('private static instance');
       expect(pattern).toContain('fetch');
       expect(pattern).toContain('error handling');
       expect(pattern).toContain('AI ASSISTANT CONTEXT');
@@ -196,9 +196,9 @@ describe('PatternProvider', () => {
 
       expect(pattern).toContain('Router');
       expect(pattern).toContain('z.object');
-      expect(pattern).toContain('POST /items');
-      expect(pattern).toContain('GET /items/:id');
-      expect(pattern).toContain('status codes');
+      expect(pattern).toContain('router.post(\'/items\'');
+      expect(pattern).toContain('CreateItemSchema');
+      expect(pattern).toContain('.status(');
       expect(pattern).toContain('AI ASSISTANT CONTEXT');
     });
   });

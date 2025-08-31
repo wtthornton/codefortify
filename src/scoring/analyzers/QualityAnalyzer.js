@@ -33,8 +33,8 @@ export class QualityAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeLinting() {
-    let score = 0;
-    const maxScore = 6;
+    let _score = 0;
+    const _maxScore = 6;
     
     // PHASE 1 UPGRADE: Use ESLint API for real code quality analysis
     const eslintResult = await this.runESLintAnalysis();
@@ -44,18 +44,18 @@ export class QualityAnalyzer extends BaseAnalyzer {
       
       // Score based on actual ESLint results (4pts)
       if (errorCount === 0 && warningCount === 0) {
-        score += 4;
+        _score += 4;
         this.addScore(4, 4, 'No ESLint errors or warnings found');
       } else if (errorCount === 0) {
-        score += 3;
+        _score += 3;
         this.addScore(3, 4, `Only ${warningCount} ESLint warnings found`);
         this.addIssue(`${warningCount} ESLint warnings`, 'Fix ESLint warnings to improve code quality');
       } else if (errorCount < 10) {
-        score += 2;
+        _score += 2;
         this.addScore(2, 4, `${errorCount} ESLint errors, ${warningCount} warnings`);
         this.addIssue(`${errorCount} ESLint errors`, 'Fix ESLint errors for better code quality');
       } else {
-        score += 1;
+        _score += 1;
         this.addScore(1, 4, `Many ESLint issues (${errorCount} errors, ${warningCount} warnings)`);
         this.addIssue('High ESLint error count', 'Significant code quality issues detected');
       }
@@ -67,7 +67,7 @@ export class QualityAnalyzer extends BaseAnalyzer {
       });
     } else if (eslintResult.hasConfig) {
       // ESLint config exists but API failed - graceful degradation with helpful guidance
-      score += 2;
+      _score += 2;
       this.addScore(2, 4, 'ESLint configured but analysis failed - using config detection');
       this.addIssue('ESLint analysis failed', `${eslintResult.error || 'Unable to run ESLint analysis'}. Try running: npx eslint --fix src/`);
     } else {
@@ -82,7 +82,7 @@ export class QualityAnalyzer extends BaseAnalyzer {
                        await this.fileExists('.prettierrc.js');
     
     if (hasPrettier) {
-      score += 2;
+      _score += 2;
       this.addScore(2, 2, 'Prettier configuration found');
     } else {
       this.addIssue('No Prettier configuration found', 'Add Prettier for consistent code formatting');
@@ -184,18 +184,18 @@ export class QualityAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeDocumentation() {
-    let score = 0;
-    const maxScore = 5;
+    let _score = 0;
+    const _maxScore = 5;
     
     // Check for README
     const hasReadme = await this.fileExists('README.md');
     if (hasReadme) {
       const readmeContent = await this.readFile('README.md');
       if (readmeContent.length > 500) {
-        score += 2;
+        _score += 2;
         this.addScore(2, 2, 'Comprehensive README found');
       } else {
-        score += 1;
+        _score += 1;
         this.addScore(1, 2, 'Basic README found');
         this.addIssue('README is quite short', 'Expand README with setup instructions and project details');
       }
@@ -220,7 +220,7 @@ export class QualityAnalyzer extends BaseAnalyzer {
     
     const docRatio = files.length > 0 ? documentedFiles / Math.min(files.length, 10) : 0;
     const docScore = docRatio * 3;
-    score += docScore;
+    _score += docScore;
     this.addScore(docScore, 3, `${Math.round(docRatio * 100)}% of sampled files have documentation`);
     
     if (docRatio < 0.5) {
@@ -231,8 +231,8 @@ export class QualityAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeComplexity() {
-    let score = 0;
-    const maxScore = 4;
+    let _score = 0;
+    const _maxScore = 4;
     
     const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx']);
     let totalComplexity = 0;
@@ -252,17 +252,17 @@ export class QualityAnalyzer extends BaseAnalyzer {
     const avgComplexity = analyzedFiles > 0 ? totalComplexity / analyzedFiles : 0;
     
     if (avgComplexity < 5) {
-      score += 4;
+      _score += 4;
       this.addScore(4, 4, `Low complexity (avg: ${avgComplexity.toFixed(1)})`);
     } else if (avgComplexity < 10) {
-      score += 3;
+      _score += 3;
       this.addScore(3, 4, `Moderate complexity (avg: ${avgComplexity.toFixed(1)})`);
     } else if (avgComplexity < 15) {
-      score += 2;
+      _score += 2;
       this.addScore(2, 4, `High complexity (avg: ${avgComplexity.toFixed(1)})`);
       this.addIssue('High code complexity detected', 'Consider breaking down complex functions');
     } else {
-      score += 1;
+      _score += 1;
       this.addScore(1, 4, `Very high complexity (avg: ${avgComplexity.toFixed(1)})`);
       this.addIssue('Very high code complexity', 'Refactor complex functions into smaller, focused units');
     }
@@ -271,15 +271,15 @@ export class QualityAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeTypeScript() {
-    let score = 0;
-    const maxScore = 3;
+    let _score = 0;
+    const _maxScore = 3;
     
     const hasTypeScript = await this.fileExists('tsconfig.json');
     const tsFiles = await this.getAllFiles('', ['.ts', '.tsx']);
     const jsFiles = await this.getAllFiles('', ['.js', '.jsx']);
     
     if (hasTypeScript) {
-      score += 2;
+      _score += 2;
       this.addScore(2, 2, 'TypeScript configuration found');
       
       // Check TypeScript adoption
@@ -287,17 +287,17 @@ export class QualityAnalyzer extends BaseAnalyzer {
       if (totalFiles > 0) {
         const tsRatio = tsFiles.length / totalFiles;
         if (tsRatio > 0.8) {
-          score += 1;
+          _score += 1;
           this.addScore(1, 1, `High TypeScript adoption (${Math.round(tsRatio * 100)}%)`);
         } else if (tsRatio > 0.5) {
-          score += 0.5;
+          _score += 0.5;
           this.addScore(0.5, 1, `Moderate TypeScript adoption (${Math.round(tsRatio * 100)}%)`);
         } else {
           this.addIssue('Low TypeScript adoption', 'Consider migrating more files to TypeScript');
         }
       }
     } else if (tsFiles.length > 0) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 3, 'TypeScript files found but no tsconfig.json');
       this.addIssue('TypeScript files without configuration', 'Add tsconfig.json for proper TypeScript support');
     } else {
@@ -310,8 +310,8 @@ export class QualityAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeConsistency() {
-    let score = 0;
-    const maxScore = 2;
+    let _score = 0;
+    const _maxScore = 2;
     
     // Check for consistent import patterns
     const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx']);
@@ -336,16 +336,16 @@ export class QualityAnalyzer extends BaseAnalyzer {
     if (totalModules > 0) {
       const consistency = Math.max(esModuleCount, commonjsCount) / totalModules;
       if (consistency > 0.9) {
-        score += 2;
+        _score += 2;
         this.addScore(2, 2, `Consistent module patterns (${Math.round(consistency * 100)}%)`);
       } else if (consistency > 0.7) {
-        score += 1;
+        _score += 1;
         this.addScore(1, 2, `Mostly consistent module patterns (${Math.round(consistency * 100)}%)`);
       } else {
         this.addIssue('Mixed module patterns', 'Use consistent import/export patterns (ES modules vs CommonJS)');
       }
     } else {
-      score += 1; // Default if no modules detected
+      _score += 1; // Default if no modules detected
       this.addScore(1, 2, 'Module consistency analysis inconclusive');
     }
     

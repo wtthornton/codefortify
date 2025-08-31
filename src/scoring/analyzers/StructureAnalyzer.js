@@ -41,8 +41,8 @@ export class StructureAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeFileOrganization() {
-    let score = 0;
-    const maxScore = 5;
+    let _score = 0;
+    const _maxScore = 5;
     
     try {
       // Check for proper directory structure
@@ -51,19 +51,19 @@ export class StructureAnalyzer extends BaseAnalyzer {
       
       // Score based on directory structure (2pts)
       const dirScore = (existingDirs / requiredDirs.length) * 2;
-      score += dirScore;
+      _score += dirScore;
       this.addScore(dirScore, 2, `Directory structure (${existingDirs}/${requiredDirs.length} required dirs)`);
       
       // Check for logical file grouping (2pts)
       const groupingScore = await this.analyzeFileGrouping();
-      score += groupingScore;
+      _score += groupingScore;
       
       // Check for proper separation of concerns (1pt)
       const separationScore = await this.analyzeSeparationOfConcerns();
-      score += separationScore;
+      _score += separationScore;
       
       // Add recommendations based on issues found
-      if (score < maxScore * 0.7) {
+      if (_score < _maxScore * 0.7) {
         this.addIssue(
           'File organization could be improved',
           'Consider organizing files into feature-based or layer-based directories'
@@ -76,8 +76,8 @@ export class StructureAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeModuleBoundaries() {
-    let score = 0;
-    const maxScore = 5;
+    let _score = 0;
+    const _maxScore = 5;
     
     try {
       // Analyze import/export patterns
@@ -85,7 +85,7 @@ export class StructureAnalyzer extends BaseAnalyzer {
       
       // Score based on clear module boundaries (3pts)
       if (moduleAnalysis.hasConsistentExports) {
-        score += 3;
+        _score += 3;
         this.addScore(3, 3, 'Consistent export patterns found');
       } else {
         this.addIssue('Inconsistent module export patterns', 'Use consistent import/export patterns throughout the project');
@@ -94,10 +94,10 @@ export class StructureAnalyzer extends BaseAnalyzer {
       // Score based on appropriate module size (2pts)
       const avgModuleSize = moduleAnalysis.averageModuleSize;
       if (avgModuleSize < 200) {
-        score += 2;
+        _score += 2;
         this.addScore(2, 2, 'Modules are appropriately sized');
       } else if (avgModuleSize < 400) {
-        score += 1;
+        _score += 1;
         this.addScore(1, 2, 'Some modules are large but manageable');
         this.addIssue('Some modules are quite large', 'Consider breaking down large modules into smaller, focused units');
       } else {
@@ -113,8 +113,8 @@ export class StructureAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeNamingConventions() {
-    let score = 0;
-    const maxScore = 4;
+    let _score = 0;
+    const _maxScore = 4;
     
     try {
       const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx', '.vue', '.svelte']);
@@ -122,10 +122,10 @@ export class StructureAnalyzer extends BaseAnalyzer {
       
       // Score based on naming consistency (2pts)
       if (namingResults.consistency > 0.8) {
-        score += 2;
+        _score += 2;
         this.addScore(2, 2, `Naming conventions are consistent (${Math.round(namingResults.consistency * 100)}%)`);
       } else if (namingResults.consistency > 0.6) {
-        score += 1;
+        _score += 1;
         this.addScore(1, 2, `Naming conventions are mostly consistent (${Math.round(namingResults.consistency * 100)}%)`);
         this.addIssue('Some naming inconsistencies found', 'Standardize naming conventions across the project');
       } else {
@@ -134,7 +134,7 @@ export class StructureAnalyzer extends BaseAnalyzer {
       
       // Score based on appropriate naming patterns for project type (2pts)
       const patternScore = await this.analyzeNamingPatterns(files);
-      score += patternScore;
+      _score += patternScore;
       
       this.setDetail('namingConsistency', namingResults.consistency);
       this.setDetail('fileNamingPatterns', namingResults.patterns);
@@ -145,25 +145,25 @@ export class StructureAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeArchitecturePatterns() {
-    let score = 0;
-    const maxScore = 3;
+    let _score = 0;
+    const _maxScore = 3;
     
     try {
       // QUICK WIN: Enhanced pattern recognition for architecture
       const architecturePatterns = await this.detectArchitecturePatterns();
       
       if (this.isReactProject()) {
-        score += await this.analyzeReactArchitecture(architecturePatterns);
+        _score += await this.analyzeReactArchitecture(architecturePatterns);
       } else if (this.isVueProject()) {
-        score += await this.analyzeVueArchitecture(architecturePatterns);
+        _score += await this.analyzeVueArchitecture(architecturePatterns);
       } else if (this.isNodeProject()) {
-        score += await this.analyzeNodeArchitecture(architecturePatterns);
+        _score += await this.analyzeNodeArchitecture(architecturePatterns);
       } else {
-        score += await this.analyzeGeneralArchitecture(architecturePatterns);
+        _score += await this.analyzeGeneralArchitecture(architecturePatterns);
       }
 
       // Bonus points for advanced patterns
-      score += this.scoreAdvancedPatterns(architecturePatterns);
+      _score += this.scoreAdvancedPatterns(architecturePatterns);
       
       this.setDetail('detectedPatterns', architecturePatterns);
       

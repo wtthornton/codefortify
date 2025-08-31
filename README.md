@@ -20,7 +20,7 @@ This package provides everything you need to add Context7 MCP integration to any
 
 ### Install Globally
 ```bash
-npm install -g @yourname/context7-mcp
+npm install -g @wtthornton/context7-mcp
 ```
 
 ### Initialize New Project
@@ -249,7 +249,7 @@ MCP_TIMEOUT=30000
 
 ### MCP Server
 ```javascript
-import { Context7MCPServer } from '@yourname/context7-mcp';
+import { Context7MCPServer } from '@wtthornton/context7-mcp';
 
 const server = new Context7MCPServer({
   projectRoot: '.',
@@ -261,7 +261,7 @@ await server.start();
 
 ### Validation
 ```javascript
-import { Context7Validator } from '@yourname/context7-mcp';
+import { Context7Validator } from '@wtthornton/context7-mcp';
 
 const validator = new Context7Validator({
   projectRoot: './my-project',
@@ -274,7 +274,7 @@ console.log(\`Compliance: \${result.report.successRate}%\`);
 
 ### Testing
 ```javascript
-import { MCPConnectionTester } from '@yourname/context7-mcp';
+import { MCPConnectionTester } from '@wtthornton/context7-mcp';
 
 const tester = new MCPConnectionTester({
   projectRoot: './my-project',
@@ -287,7 +287,7 @@ console.log(\`Tests passed: \${result.report.passed}/\${result.report.total}\`);
 
 ### Project Scoring
 ```javascript
-import { ProjectScorer } from '@yourname/context7-mcp';
+import { ProjectScorer } from '@wtthornton/context7-mcp';
 
 const scorer = new ProjectScorer({
   projectRoot: './my-project',
@@ -442,8 +442,8 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/context7-mcp/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/context7-mcp/discussions)
+- **Issues**: [GitHub Issues](https://github.com/wtthornton/context7-mcp/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/wtthornton/context7-mcp/discussions)
 - **Documentation**: [Full Documentation](https://context7-mcp.dev)
 
 ---

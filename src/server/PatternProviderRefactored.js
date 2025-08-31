@@ -113,7 +113,6 @@ ${VuePatterns.getComponentPattern()}
 
 ${VuePatterns.getComposablePattern()}`;
   }
-  }
 
   getNodePatterns() {
     return `// Context7 Node.js Patterns for ${this.config.projectName}
@@ -124,7 +123,6 @@ ${NodePatterns.getMiddlewarePattern()}
 
 ${NodePatterns.getRoutePattern()}`;
   }
-  }
 
   getJavaScriptPatterns() {
     return `// Context7 JavaScript Patterns for ${this.config.projectName}
@@ -132,7 +130,6 @@ ${NodePatterns.getRoutePattern()}`;
 ${this.getJavaScriptClassPattern()}
 
 ${this.getJavaScriptFunctionPattern()}`;
-  }
   }
 
   getJavaScriptClassPattern() {
@@ -154,7 +151,7 @@ export class ExampleClass {
       
       return result;
     } catch (error) {
-      throw new Error(\`Processing failed: ${error.message}\`);
+      throw new Error(`Processing failed: ${error.message}`);
     }
   }
 
@@ -168,7 +165,7 @@ export class ExampleClass {
     const required = ['apiKey', 'baseUrl'];
     for (const key of required) {
       if (!this.config[key]) {
-        throw new Error(\`Missing required config: ${key}\`);
+        throw new Error(`Missing required config: ${key}`);
       }
     }
   }
@@ -185,7 +182,6 @@ export class ExampleClass {
     return data;
   }
 }`;
-  }
   }
 
   getJavaScriptFunctionPattern() {
@@ -209,7 +205,7 @@ export async function processData(input, options = {}) {
     return result;
   } catch (error) {
     console.error('Processing error:', error);
-    throw new Error(\`Failed to process data: ${error.message}\`);
+    throw new Error(`Failed to process data: ${error.message}`);
   }
 }
 
@@ -218,5 +214,4 @@ async function performOperation(data, config) {
   return data;
 }`;
   }
-  }
-}`;
+}

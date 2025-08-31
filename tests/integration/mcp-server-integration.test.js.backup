@@ -304,7 +304,7 @@ describe('Context7 MCP Server Integration', () => {
       const requests = Array(10).fill(null).map(async (_, index) => {
         try {
           return await server.toolManager.executeTool('validate_context7_compliance', {
-            code: \`const test\${index} = "concurrent";\`,
+            code: `const test${index} = "concurrent";`,
             language: 'javascript'
           });
         } catch (error) {

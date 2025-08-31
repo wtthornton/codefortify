@@ -136,7 +136,7 @@ export class ToolManager {
     };
   }
 
-  async validateJavaScriptCode(code, component_type, issues, suggestions, rules) {
+  async validateJavaScriptCode(code, component_type, issues, suggestions, _rules) {
     // React/Component validation
     if (component_type === 'react' || this.config.projectType.includes('react')) {
       if (!code.includes('React.FC') && code.includes('export const') && code.includes('(')) {
@@ -175,7 +175,7 @@ export class ToolManager {
     }
   }
 
-  async validateStylingCode(code, issues, suggestions, rules) {
+  async validateStylingCode(code, issues, suggestions, _rules) {
     // Tailwind CSS validation
     if (this.config.projectType.includes('tailwind') || code.includes('className')) {
       if (code.includes('style=') && !code.includes('--')) {
@@ -195,7 +195,7 @@ export class ToolManager {
       strictTypes: this.config.validation?.strictTypes ?? true,
       requireDocumentation: this.config.validation?.requireDocumentation ?? true,
       mobileFirst: this.config.validation?.mobileFirst ?? true,
-      ...this.config.validation?.rules
+      ...this.config.validation
     };
   }
 
@@ -265,10 +265,15 @@ export class ToolManager {
         }
           
         // Check for project-specific naming conventions
-        const conventions = this.config.validation?.namingConventions;
-        if (conventions?.files === 'kebab-case' && !name.match(/^[a-z][a-z0-9-]*$/)) {
-          issues.push('Files should use kebab-case naming');
-          suggestions.push(`Rename to: ${name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`);
+        {
+          const conventions = this.config.validation?.namingConventions;
+          if (conventions?.files === 'kebab-case') {
+            const basename = name.split('.')[0]; // Remove extension for validation
+            if (!basename.match(/^[a-z][a-z0-9-]*$/)) {
+              issues.push('Files should use kebab-case naming');
+              suggestions.push(`Rename to: ${basename.toLowerCase().replace(/[^a-z0-9]/g, '-')}.${name.split('.').slice(1).join('.')}`);
+            }
+          }
         }
         break;
       }

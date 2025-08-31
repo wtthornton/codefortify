@@ -2,7 +2,7 @@
  * Unit tests for ToolManager
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { ToolManager } from '../../src/server/ToolManager.js';
 
 describe('ToolManager', () => {
@@ -133,7 +133,7 @@ describe('ToolManager', () => {
 
     it('should find issues in non-compliant React code', async () => {
       const args = {
-        code: 'const MyComponent = () => <div>Hello</div>;', // Missing React.FC
+        code: 'export const MyComponent = () => <div>Hello</div>;', // Missing React.FC
         language: 'typescript',
         component_type: 'react'
       };

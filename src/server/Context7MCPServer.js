@@ -25,7 +25,7 @@ import { ToolManager } from './ToolManager.js';
 import { PatternProvider } from './PatternProvider.js';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const _dirname = path.dirname(__filename); // Unused variable
 
 export class Context7MCPServer {
   constructor(config = {}) {

@@ -442,13 +442,13 @@ export class MCPConnectionTester {
       });
     } finally {
       await this.cleanup();
-      const report = this.generateReport();
-      
-      return {
-        success: report.failed === 0,
-        report,
-      };
     }
+    
+    const report = this.generateReport();
+    return {
+      success: report.failed === 0,
+      report,
+    };
   }
 
   // Static factory methods

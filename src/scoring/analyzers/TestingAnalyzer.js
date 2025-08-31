@@ -29,8 +29,8 @@ export class TestingAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeTestPresence() {
-    let score = 0;
-    const maxScore = 8;
+    let _score = 0;
+    const _maxScore = 8;
     
     // Find test files
     const testFiles = await this.findTestFiles();
@@ -51,21 +51,21 @@ export class TestingAnalyzer extends BaseAnalyzer {
       
       // Score based on actual coverage metrics (8pts)
       if (avgCoverage >= 80) {
-        score += 8;
+        _score += 8;
         this.addScore(8, 8, `Excellent test coverage (${avgCoverage.toFixed(1)}% avg)`);
       } else if (avgCoverage >= 70) {
-        score += 6;
+        _score += 6;
         this.addScore(6, 8, `Good test coverage (${avgCoverage.toFixed(1)}% avg)`);
       } else if (avgCoverage >= 50) {
-        score += 4;
+        _score += 4;
         this.addScore(4, 8, `Moderate test coverage (${avgCoverage.toFixed(1)}% avg)`);
         this.addIssue('Test coverage could be improved', 'Aim for 80%+ test coverage');
       } else if (avgCoverage >= 30) {
-        score += 2;
+        _score += 2;
         this.addScore(2, 8, `Low test coverage (${avgCoverage.toFixed(1)}% avg)`);
         this.addIssue('Low test coverage', 'Significantly increase test coverage');
       } else {
-        score += 1;
+        _score += 1;
         this.addScore(1, 8, `Very low test coverage (${avgCoverage.toFixed(1)}% avg)`);
         this.addIssue('Very low test coverage', 'Add comprehensive test suite');
       }
@@ -76,21 +76,21 @@ export class TestingAnalyzer extends BaseAnalyzer {
       const coverageRatio = sourceFiles.length > 0 ? testFiles.length / sourceFiles.length : 0;
       
       if (coverageRatio >= 0.8) {
-        score += 6; // Slightly lower score for approximation
+        _score += 6; // Slightly lower score for approximation
         this.addScore(6, 8, `Test file ratio suggests good coverage (~${Math.round(coverageRatio * 100)}%)`);
       } else if (coverageRatio >= 0.6) {
-        score += 4;
+        _score += 4;
         this.addScore(4, 8, `Test file ratio suggests moderate coverage (~${Math.round(coverageRatio * 100)}%)`);
       } else if (coverageRatio >= 0.4) {
-        score += 3;
+        _score += 3;
         this.addScore(3, 8, `Test file ratio suggests fair coverage (~${Math.round(coverageRatio * 100)}%)`);
         this.addIssue('Test coverage could be improved', 'Add coverage tool (c8, nyc, jest --coverage)');
       } else if (coverageRatio >= 0.2) {
-        score += 2;
+        _score += 2;
         this.addScore(2, 8, `Test file ratio suggests low coverage (~${Math.round(coverageRatio * 100)}%)`);
         this.addIssue('Low test coverage', 'Add coverage tool and more tests');
       } else {
-        score += 1;
+        _score += 1;
         this.addScore(1, 8, `Very few test files found (~${Math.round(coverageRatio * 100)}%)`);
         this.addIssue('Very low test coverage', 'Add comprehensive test suite with coverage');
       }
@@ -196,8 +196,8 @@ export class TestingAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeTestOrganization() {
-    let score = 0;
-    const maxScore = 4;
+    let _score = 0;
+    const _maxScore = 4;
     
     // Check for test directory structure
     const hasTestDir = await this.fileExists('test') || 
@@ -206,13 +206,13 @@ export class TestingAnalyzer extends BaseAnalyzer {
                       await this.fileExists('src/__tests__');
     
     if (hasTestDir) {
-      score += 2;
+      _score += 2;
       this.addScore(2, 2, 'Dedicated test directory found');
     } else {
       // Check for co-located tests
       const testFiles = await this.findTestFiles();
       if (testFiles.length > 0) {
-        score += 1;
+        _score += 1;
         this.addScore(1, 2, 'Co-located test files found');
       } else {
         this.addIssue('No organized test structure', 'Create a dedicated test directory or co-locate tests');
@@ -225,12 +225,12 @@ export class TestingAnalyzer extends BaseAnalyzer {
     const hasIntegrationTests = testFiles.some(f => f.includes('integration') || f.includes('e2e'));
     
     if (hasUnitTests) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Unit tests detected');
     }
     
     if (hasIntegrationTests) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Integration/E2E tests detected');
     } else {
       this.addIssue('No integration tests found', 'Add integration tests for critical user flows');
@@ -242,8 +242,8 @@ export class TestingAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeTestingTools() {
-    let score = 0;
-    const maxScore = 3;
+    let _score = 0;
+    const _maxScore = 3;
     
     const packageJson = await this.readPackageJson();
     if (!packageJson) {
@@ -255,7 +255,7 @@ export class TestingAnalyzer extends BaseAnalyzer {
     const testingTools = this.identifyTestingTools(deps);
     
     if (testingTools.length > 0) {
-      score += 2;
+      _score += 2;
       this.addScore(2, 2, `Testing framework found: ${testingTools.join(', ')}`);
     } else {
       this.addIssue('No testing framework detected', 'Install a testing framework (Jest, Vitest, Mocha, etc.)');
@@ -263,7 +263,7 @@ export class TestingAnalyzer extends BaseAnalyzer {
     
     // Check for test script in package.json
     if (packageJson.scripts && packageJson.scripts.test) {
-      score += 1;
+      _score += 1;
       this.addScore(1, 1, 'Test script configured in package.json');
     } else {
       this.addIssue('No test script in package.json', 'Add "test" script to package.json');

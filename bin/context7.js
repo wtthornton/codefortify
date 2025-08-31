@@ -177,7 +177,7 @@ async function initializeProject(options) {
       projectType,
       projectRoot: globalConfig.projectRoot,
       mcpEnabled: options.mcp !== false,
-      agentOsEnabled: options.agentOs !== false,
+      agentOsEnabled: false, // Disabled for this project
       force: options.force,
     };
     
@@ -335,7 +335,7 @@ async function startMCPServer(options) {
   }
 }
 
-async function generateCode(type, options) {
+async function generateCode(type, _options) {
   console.log(chalk.blue(`🏗️  Generating ${type} scaffold`));
   
   const spinner = ora(`Generating ${type}...`).start();
@@ -358,7 +358,7 @@ async function generateCode(type, options) {
   }
 }
 
-async function updateConfiguration(options) {
+async function updateConfiguration(_options) {
   console.log(chalk.blue('🔄 Updating Context7 configuration'));
   
   const spinner = ora('Updating configuration...').start();
@@ -400,10 +400,11 @@ async function detectProjectType(projectRoot) {
 }
 
 async function setupDirectoryStructure(config) {
-  const dirs = ['.agent-os', 'src'];
+  const dirs = ['src'];
   
   if (config.agentOsEnabled) {
     dirs.push(
+      '.agent-os',
       '.agent-os/instructions',
       '.agent-os/standards', 
       '.agent-os/product'
@@ -552,12 +553,15 @@ This project includes full Context7 MCP integration for AI assistant support.
 
 async function checkExistingFiles(config) {
   const files = [
-    '.agent-os/config.yml',
     'src/mcp-server.js',
     'AGENTS.md',
     'CLAUDE.md',
     'package.json',
   ];
+  
+  if (config.agentOsEnabled) {
+    files.unshift('.agent-os/config.yml');
+  }
   
   const existing = {};
   
@@ -569,7 +573,7 @@ async function checkExistingFiles(config) {
   return existing;
 }
 
-async function addMissingComponents(config, existingFiles) {
+async function addMissingComponents(_config, _existingFiles) {
   // Add only missing components
   // This would be similar to setupConfigurationFiles but more selective
   console.log(chalk.gray('Adding missing Context7 components...'));
@@ -681,7 +685,7 @@ async function displayScoringResults(results, options) {
   console.log(`${useColor ? chalk.bold('📈 Category Breakdown:') : '📈 Category Breakdown:'}`);
   console.log('─'.repeat(60));
   
-  for (const [categoryKey, result] of Object.entries(categories)) {
+  for (const [_categoryKey, result] of Object.entries(categories)) {
     const percentage = Math.round((result.score / result.maxScore) * 100);
     const progressBar = generateProgressBar(percentage, 20, useColor);
     const categoryName = result.categoryName.padEnd(35);

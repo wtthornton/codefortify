@@ -380,7 +380,12 @@ describe('ExampleComponent', () => {
   // Placeholder methods for other frameworks
   getVuePatterns() {
     return `// Context7 Vue Patterns for ${this.config.projectName}
-// Vue patterns would go here`;
+
+${this.getVueComponentPattern()}
+
+${this.getServicePattern()}
+
+${this.getRoutePattern()}`;
   }
 
   getVueComponentPattern() {
