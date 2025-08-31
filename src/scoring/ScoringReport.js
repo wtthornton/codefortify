@@ -715,7 +715,7 @@ export class ScoringReport {
                                         <div class="category-description">${this.getCategoryDescription(category.categoryName)}</div>
                                     </div>
                                     <div class="category-score-display">
-                                        <div class="score-number">${Math.round(category.score * 10) / 10}<span class="score-max">/${category.maxScore}</span></div>
+                                        <div class="score-number">${category.score.toFixed(1)}<span class="score-max">/${category.maxScore}</span></div>
                                     </div>
                                 </div>
                                 
