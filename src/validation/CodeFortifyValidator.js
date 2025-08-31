@@ -503,7 +503,7 @@ export class CodeFortifyValidator {
 
   // Static factory methods
   static async validateProject(projectRoot, options = {}) {
-    const validator = new Context7Validator({
+    const validator = new CodeFortifyValidator({
       projectRoot,
       ...options
     });
@@ -528,14 +528,14 @@ export class CodeFortifyValidator {
       // Use default
     }
 
-    return await Context7Validator.validateProject(projectRoot, { projectType });
+    return await CodeFortifyValidator.validateProject(projectRoot, { projectType });
   }
 }
 
 // Run validation if this file is executed directly
 if (import.meta.url === new URL(process.argv[1], 'file:').href) {
   const projectRoot = process.argv[2] || process.cwd();
-  Context7Validator.autoDetectAndValidate(projectRoot)
+  CodeFortifyValidator.autoDetectAndValidate(projectRoot)
     .then(result => {
       process.exit(result.success ? 0 : 1);
     })
