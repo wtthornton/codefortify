@@ -3,7 +3,7 @@
  *
  * Supports multiple output formats: console, JSON, HTML with interactive features
  * including charts, theme switching, and detailed category analysis.
- * 
+ *
  * @class ScoringReport
  * @example
  * const report = new ScoringReport({ projectType: 'react-webapp' });
@@ -21,7 +21,7 @@ const execAsync = promisify(exec);
 export class ScoringReport {
   /**
    * Create a new ScoringReport instance
-   * 
+   *
    * @param {Object} [config={}] - Report configuration
    * @param {string} [config.projectType] - Project type for customized reporting
    * @param {boolean} [config.verbose] - Enable verbose output
@@ -32,7 +32,7 @@ export class ScoringReport {
 
   /**
    * Generate an interactive HTML report from scoring results
-   * 
+   *
    * Creates a comprehensive dashboard with:
    * - Overall score visualization with doughnut chart
    * - Category breakdown with radar chart
@@ -41,14 +41,14 @@ export class ScoringReport {
    * - Priority recommendations with impact scoring
    * - Search functionality for filtering content
    * - Responsive design for various screen sizes
-   * 
+   *
    * @param {Object} results - Complete scoring results object
    * @param {Object} results.overall - Overall score information
    * @param {Object} results.categories - Category-specific results
    * @param {Array} [results.recommendations] - Improvement recommendations
    * @param {Object} results.metadata - Project metadata
    * @returns {Promise<string>} Complete HTML document as string
-   * 
+   *
    * @example
    * const html = await report.generateHTML(results);
    * await fs.writeFile('quality-report.html', html);
@@ -915,10 +915,10 @@ export class ScoringReport {
 
   /**
    * Get performance level classification based on percentage score
-   * 
+   *
    * @param {number} percentage - Score percentage (0-100)
    * @returns {string} Performance level: 'excellent', 'good', 'warning', or 'poor'
-   * 
+   *
    * @example
    * const level = report.getPerformanceLevel(85); // Returns 'excellent'
    */
@@ -931,10 +931,10 @@ export class ScoringReport {
 
   /**
    * Get descriptive text for a score percentage
-   * 
+   *
    * @param {number} percentage - Score percentage (0-100)
    * @returns {string} Human-readable description of the score level
-   * 
+   *
    * @example
    * const desc = report.getScoreDescription(92); // Returns 'Excellent project quality'
    */
@@ -950,10 +950,10 @@ export class ScoringReport {
 
   /**
    * Get detailed description for a scoring category
-   * 
+   *
    * @param {string} categoryName - Name of the scoring category
    * @returns {string} Detailed description of what the category evaluates
-   * 
+   *
    * @example
    * const desc = report.getCategoryDescription('Code Quality & Maintainability');
    */
@@ -972,10 +972,10 @@ export class ScoringReport {
 
   /**
    * Generate a JSON report from scoring results
-   * 
+   *
    * @param {Object} results - Complete scoring results object
    * @returns {Promise<string>} JSON string with formatted results
-   * 
+   *
    * @example
    * const json = await report.generateJSON(results);
    * console.log(JSON.parse(json).overall.score);
@@ -986,10 +986,10 @@ export class ScoringReport {
 
   /**
    * Generate a Markdown report from scoring results
-   * 
+   *
    * @param {Object} results - Complete scoring results object
    * @returns {Promise<string>} Markdown formatted report
-   * 
+   *
    * @example
    * const markdown = await report.generateMarkdown(results);
    * await fs.writeFile('README.md', markdown);
@@ -1055,14 +1055,14 @@ export class ScoringReport {
 
   /**
    * Save a report to disk in specified format
-   * 
+   *
    * @param {Object} results - Complete scoring results object
    * @param {string} [format='html'] - Output format: 'html', 'json', or 'markdown'
    * @param {string} [filename=null] - Output filename (auto-generated if null)
    * @param {Object} [options={}] - Additional options
    * @param {boolean} [options.open=false] - Open file in browser/editor after saving
    * @returns {Promise<string>} Path to saved file
-   * 
+   *
    * @example
    * const filePath = await report.saveReport(results, 'html', 'quality-report.html', { open: true });
    * console.log(`Report saved to: ${filePath}`);
@@ -1101,11 +1101,11 @@ export class ScoringReport {
 
   /**
    * Open a file in the default browser (cross-platform)
-   * 
+   *
    * @param {string} filePath - Path to the file to open
-   * @returns {Promise<void>} 
+   * @returns {Promise<void>}
    * @throws {Error} If browser opening fails
-   * 
+   *
    * @example
    * await report.openInBrowser('/path/to/report.html');
    */

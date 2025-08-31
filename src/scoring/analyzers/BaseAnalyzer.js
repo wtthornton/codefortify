@@ -65,7 +65,7 @@ export class BaseAnalyzer {
       // Include error information in results
       const errorSummary = this.errorHandler.generateErrorSummary();
       const allIssues = this.errorHandler.getAllIssues();
-      
+
       this.results.errors = allIssues.errors;
       this.results.warnings = allIssues.warnings;
       this.results.errorSummary = errorSummary;
@@ -81,7 +81,7 @@ export class BaseAnalyzer {
     } catch (error) {
       // Handle critical analysis failure
       const handlingResult = await this.errorHandler.handleError(
-        error, 
+        error,
         { analyzer: this.categoryName, projectRoot: this.config.projectRoot },
         this.categoryName
       );
@@ -113,11 +113,11 @@ export class BaseAnalyzer {
     } catch (error) {
       // Handle non-critical errors that don't prevent analysis completion
       const handlingResult = await this.errorHandler.handleError(
-        error, 
-        { 
-          analyzer: this.categoryName, 
+        error,
+        {
+          analyzer: this.categoryName,
           projectRoot: this.config.projectRoot,
-          method: 'runAnalysis' 
+          method: 'runAnalysis'
         },
         this.categoryName
       );
@@ -172,7 +172,7 @@ export class BaseAnalyzer {
    */
   addIssue(issue, suggestion = null, errorContext = {}) {
     this.results.issues.push(issue);
-    
+
     if (suggestion) {
       this.results.suggestions.push(suggestion);
     }
@@ -186,7 +186,7 @@ export class BaseAnalyzer {
         errorContext,
         errorContext.error
       );
-      
+
       this.errorHandler.handleError(analyzerError, errorContext, this.categoryName);
     }
   }
@@ -208,7 +208,7 @@ export class BaseAnalyzer {
    */
   async safeFileRead(filePath, options = {}) {
     const context = { file: filePath, operation: 'readFile' };
-    
+
     return await this.errorHandler.executeWithRetry(async () => {
       const fullPath = path.resolve(this.config.projectRoot, filePath);
       return await fs.readFile(fullPath, options.encoding || 'utf8');
@@ -235,18 +235,18 @@ export class BaseAnalyzer {
    */
   async safeCommandExecution(command, options = {}) {
     const context = { command, operation: 'shellCommand' };
-    
+
     return await this.errorHandler.executeWithRetry(async () => {
       const { exec } = await import('child_process');
       const { promisify } = await import('util');
       const execAsync = promisify(exec);
-      
+
       const { stdout, stderr } = await execAsync(command, {
         cwd: this.config.projectRoot,
         timeout: options.timeout || 10000,
         maxBuffer: options.maxBuffer || 1024 * 1024
       });
-      
+
       return { stdout: stdout.trim(), stderr: stderr.trim(), success: true };
     }, context).catch(async (error) => {
       const handlingResult = await this.errorHandler.handleError(
@@ -254,11 +254,11 @@ export class BaseAnalyzer {
         { ...context, tool: options.tool },
         this.categoryName
       );
-      
-      return { 
-        stdout: '', 
-        stderr: error.message, 
-        success: false, 
+
+      return {
+        stdout: '',
+        stderr: error.message,
+        success: false,
         error: error.message,
         recovery: handlingResult.recovery
       };
@@ -283,7 +283,7 @@ export class BaseAnalyzer {
         context,
         this.categoryName
       );
-      
+
       return context.defaultValue || {};
     }
   }

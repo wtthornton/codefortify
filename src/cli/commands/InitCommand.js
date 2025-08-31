@@ -1,6 +1,6 @@
 /**
  * Init Command Handler
- * 
+ *
  * Handles project initialization with Context7 MCP setup
  */
 
@@ -23,13 +23,13 @@ export class InitCommand {
     try {
       // Detect or prompt for project type
       const projectType = await this.determineProjectType(options.type);
-      
+
       // Get project metadata
       const metadata = await this.gatherProjectMetadata();
-      
+
       // Create configuration and files
       await this.createProjectFiles(projectType, metadata, options);
-      
+
       console.log(chalk.green.bold('\n✅ Context7 MCP initialization complete!'));
       this.displayNextSteps(projectType);
 
@@ -49,7 +49,7 @@ export class InitCommand {
 
     // Auto-detect based on existing files
     const detected = await this.detectProjectType();
-    
+
     if (detected) {
       const { confirmType } = await inquirer.prompt([{
         type: 'confirm',
@@ -57,7 +57,7 @@ export class InitCommand {
         message: `Detected ${chalk.cyan(detected)} project. Is this correct?`,
         default: true
       }]);
-      
+
       if (confirmType) {
         return detected;
       }
@@ -91,21 +91,21 @@ export class InitCommand {
 
   async detectProjectType() {
     const packageJsonPath = path.join(this.globalConfig.projectRoot, 'package.json');
-    
+
     if (await fs.pathExists(packageJsonPath)) {
       const packageJson = await fs.readJSON(packageJsonPath);
       const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };
 
-      if (deps.react || deps['react-dom']) return 'react-webapp';
-      if (deps.vue || deps['@vue/cli-service']) return 'vue-webapp';
-      if (deps.express || deps.fastify || deps.koa) return 'node-api';
-      if (deps['@modelcontextprotocol/sdk']) return 'mcp-server';
-      if (packageJson.bin) return 'cli-tool';
+      if (deps.react || deps['react-dom']) {return 'react-webapp';}
+      if (deps.vue || deps['@vue/cli-service']) {return 'vue-webapp';}
+      if (deps.express || deps.fastify || deps.koa) {return 'node-api';}
+      if (deps['@modelcontextprotocol/sdk']) {return 'mcp-server';}
+      if (packageJson.bin) {return 'cli-tool';}
     }
 
     // Check for other indicators
-    if (await fs.pathExists(path.join(this.globalConfig.projectRoot, 'src', 'App.jsx'))) return 'react-webapp';
-    if (await fs.pathExists(path.join(this.globalConfig.projectRoot, 'src', 'App.vue'))) return 'vue-webapp';
+    if (await fs.pathExists(path.join(this.globalConfig.projectRoot, 'src', 'App.jsx'))) {return 'react-webapp';}
+    if (await fs.pathExists(path.join(this.globalConfig.projectRoot, 'src', 'App.vue'))) {return 'vue-webapp';}
 
     return null;
   }
@@ -154,20 +154,20 @@ export class InitCommand {
     try {
       // Create context7.config.js
       await this.createConfig(projectType, metadata);
-      
+
       if (!options.noMcp) {
         // Create MCP server
         await this.createMCPServer(projectType);
       }
-      
+
       if (!options.noAgentOs) {
         // Create AGENTS.md
         await this.createAgentsFile(projectType, metadata);
       }
-      
+
       // Create/update CLAUDE.md
       await this.createClaudeFile(projectType, metadata, options.force);
-      
+
       // Update package.json with Context7 scripts
       await this.updatePackageJson(metadata);
 
@@ -181,7 +181,7 @@ export class InitCommand {
 
   async createConfig(projectType, metadata) {
     const configPath = path.join(this.globalConfig.projectRoot, 'context7.config.js');
-    
+
     if (await fs.pathExists(configPath)) {
       const { overwrite } = await inquirer.prompt([{
         type: 'confirm',
@@ -189,8 +189,8 @@ export class InitCommand {
         message: 'context7.config.js already exists. Overwrite?',
         default: false
       }]);
-      
-      if (!overwrite) return;
+
+      if (!overwrite) {return;}
     }
 
     const config = this.generateConfig(projectType, metadata);
@@ -264,11 +264,11 @@ export default {
 
   async createMCPServer(projectType) {
     const serverPath = path.join(this.globalConfig.projectRoot, 'src', 'mcp-server.js');
-    
+
     // Ensure src directory exists
     await fs.ensureDir(path.dirname(serverPath));
-    
-    if (await fs.pathExists(serverPath)) return;
+
+    if (await fs.pathExists(serverPath)) {return;}
 
     const serverCode = this.generateMCPServer(projectType);
     await fs.writeFile(serverPath, serverCode);
@@ -298,8 +298,8 @@ export default server;
 
   async createAgentsFile(projectType, metadata) {
     const agentsPath = path.join(this.globalConfig.projectRoot, 'AGENTS.md');
-    
-    if (await fs.pathExists(agentsPath)) return;
+
+    if (await fs.pathExists(agentsPath)) {return;}
 
     const agentsContent = this.generateAgentsFile(projectType, metadata);
     await fs.writeFile(agentsPath, agentsContent);
@@ -356,7 +356,7 @@ Agents should leverage MCP resources for consistent, high-quality development.
 
   async createClaudeFile(projectType, metadata, force) {
     const claudePath = path.join(this.globalConfig.projectRoot, 'CLAUDE.md');
-    
+
     if (await fs.pathExists(claudePath) && !force) {
       console.log(chalk.yellow('⚠ CLAUDE.md already exists, skipping...'));
       return;
@@ -467,21 +467,21 @@ context7 test-mcp    # Test MCP server functionality
   displayNextSteps(projectType) {
     console.log(chalk.bold('\n🎯 Next Steps:'));
     console.log(chalk.gray('─'.repeat(40)));
-    
+
     console.log(`\n1. ${chalk.cyan('Review generated files:')}`);
-    console.log(`   • context7.config.js - Project configuration`);
-    console.log(`   • src/mcp-server.js - MCP server setup`);
-    console.log(`   • AGENTS.md - AI agent configuration`);
-    console.log(`   • CLAUDE.md - Development guidelines`);
-    
+    console.log('   • context7.config.js - Project configuration');
+    console.log('   • src/mcp-server.js - MCP server setup');
+    console.log('   • AGENTS.md - AI agent configuration');
+    console.log('   • CLAUDE.md - Development guidelines');
+
     console.log(`\n2. ${chalk.cyan('Test your setup:')}`);
     console.log(`   ${chalk.gray('$')} context7 validate`);
     console.log(`   ${chalk.gray('$')} context7 test-mcp`);
-    
+
     console.log(`\n3. ${chalk.cyan('Analyze project quality:')}`);
     console.log(`   ${chalk.gray('$')} context7 score --detailed`);
     console.log(`   ${chalk.gray('$')} context7 score --format html --open`);
-    
+
     console.log(`\n4. ${chalk.cyan('Start developing:')}`);
     if (projectType === 'react-webapp') {
       console.log(`   ${chalk.gray('$')} npm start`);
@@ -490,10 +490,10 @@ context7 test-mcp    # Test MCP server functionality
     } else if (projectType === 'node-api') {
       console.log(`   ${chalk.gray('$')} npm run dev`);
     }
-    
+
     console.log(`\n5. ${chalk.cyan('Connect with AI assistants:')}`);
-    console.log(`   • Configure Claude Desktop or your preferred AI client`);
-    console.log(`   • Point to your MCP server: src/mcp-server.js`);
-    console.log(`   • Start building with AI assistance!`);
+    console.log('   • Configure Claude Desktop or your preferred AI client');
+    console.log('   • Point to your MCP server: src/mcp-server.js');
+    console.log('   • Start building with AI assistance!');
   }
 }

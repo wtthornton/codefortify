@@ -31,7 +31,10 @@
       "Bash(sed:*)",
       "Bash(xxd:*)",
       "Bash(grep:*)",
-      "Bash(npm run coverage:*)"
+      "Bash(npm run coverage:*)",
+      "Bash(dir:*)",
+      "Bash(context7 score:*)",
+      "Bash(context7 test-mcp:*)"
     ],
     "deny": [],
     "ask": []

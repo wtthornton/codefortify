@@ -1,9 +1,9 @@
 /**
  * Analyzer Error Handler
- * 
+ *
  * Provides comprehensive error handling for scoring analyzers with:
  * - Structured error classification
- * - Graceful degradation strategies  
+ * - Graceful degradation strategies
  * - Detailed error reporting
  * - Recovery mechanisms
  * - Performance impact tracking
@@ -40,7 +40,7 @@ export const ErrorSeverity = {
 export class AnalyzerError extends Error {
   /**
    * Create a structured analyzer error
-   * 
+   *
    * @param {string} message - Error message
    * @param {string} type - Error type from ErrorTypes
    * @param {string} severity - Error severity from ErrorSeverity
@@ -55,7 +55,7 @@ export class AnalyzerError extends Error {
     this.context = context;
     this.originalError = originalError;
     this.timestamp = new Date().toISOString();
-    
+
     // Maintain proper stack trace
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, AnalyzerError);
@@ -92,12 +92,12 @@ export class AnalyzerErrorHandler {
       retryDelay: config.retryDelay || 1000,
       ...config
     };
-    
+
     this.errors = [];
     this.warnings = [];
     this.recoveryStrategies = new Map();
     this.errorCounts = new Map();
-    
+
     this.initializeRecoveryStrategies();
   }
 
@@ -122,8 +122,8 @@ export class AnalyzerErrorHandler {
     // Tool unavailable errors
     this.recoveryStrategies.set(ErrorTypes.TOOL_UNAVAILABLE, async (error, context) => {
       // Fall back to pattern-based analysis
-      return { 
-        recovered: true, 
+      return {
+        recovered: true,
         fallback: 'pattern-analysis',
         message: `Falling back to pattern-based analysis for ${context.tool}`
       };
@@ -152,15 +152,15 @@ export class AnalyzerErrorHandler {
 
   /**
    * Handle an error with automatic recovery attempts
-   * 
+   *
    * @param {Error|AnalyzerError} error - The error to handle
    * @param {Object} context - Context information for recovery
    * @param {string} analyzerName - Name of the analyzer that threw the error
    * @returns {Promise<Object>} Recovery result
    */
   async handleError(error, context = {}, analyzerName = 'unknown') {
-    const analyzerError = error instanceof AnalyzerError 
-      ? error 
+    const analyzerError = error instanceof AnalyzerError
+      ? error
       : this.classifyError(error, context);
 
     // Track error statistics
@@ -173,7 +173,7 @@ export class AnalyzerErrorHandler {
     }
 
     // Store error for reporting
-    if (analyzerError.severity === ErrorSeverity.CRITICAL || 
+    if (analyzerError.severity === ErrorSeverity.CRITICAL ||
         analyzerError.severity === ErrorSeverity.HIGH) {
       this.errors.push(analyzerError);
     } else {
@@ -204,7 +204,7 @@ export class AnalyzerErrorHandler {
 
     // Classify by error message patterns
     const message = error.message?.toLowerCase() || '';
-    
+
     if (message.includes('enoent') || message.includes('no such file')) {
       type = ErrorTypes.FILE_ACCESS;
       severity = ErrorSeverity.MEDIUM;
@@ -239,30 +239,30 @@ export class AnalyzerErrorHandler {
    */
   async attemptRecovery(error, context, analyzerName) {
     const strategy = this.recoveryStrategies.get(error.type);
-    
+
     if (!strategy) {
-      return { 
-        recovered: false, 
-        message: `No recovery strategy for error type: ${error.type}` 
+      return {
+        recovered: false,
+        message: `No recovery strategy for error type: ${error.type}`
       };
     }
 
     try {
       const result = await strategy(error, context);
-      
+
       if (result.recovered && this.config.verbose) {
         console.log(chalk.green(`✓ Recovered from ${error.type} error in ${analyzerName}`));
       }
-      
+
       return result;
     } catch (recoveryError) {
       if (this.config.verbose) {
         console.log(chalk.red(`✗ Recovery failed for ${error.type} in ${analyzerName}: ${recoveryError.message}`));
       }
-      
-      return { 
-        recovered: false, 
-        message: `Recovery attempt failed: ${recoveryError.message}` 
+
+      return {
+        recovered: false,
+        message: `Recovery attempt failed: ${recoveryError.message}`
       };
     }
   }
@@ -279,13 +279,13 @@ export class AnalyzerErrorHandler {
         return await analysisFunction();
       } catch (error) {
         lastError = error;
-        
+
         if (attempt === retries) {
           break; // Final attempt failed
         }
 
-        const analyzerError = error instanceof AnalyzerError 
-          ? error 
+        const analyzerError = error instanceof AnalyzerError
+          ? error
           : this.classifyError(error, context);
 
         // Don't retry certain error types
@@ -317,26 +317,26 @@ export class AnalyzerErrorHandler {
     let color = chalk.yellow;
 
     switch (severity) {
-      case ErrorSeverity.CRITICAL:
-        color = chalk.red.bold;
-        break;
-      case ErrorSeverity.HIGH:
-        color = chalk.red;
-        break;
-      case ErrorSeverity.MEDIUM:
-        color = chalk.yellow;
-        break;
-      case ErrorSeverity.LOW:
-        color = chalk.blue;
-        break;
-      case ErrorSeverity.INFO:
-        color = chalk.gray;
-        break;
+    case ErrorSeverity.CRITICAL:
+      color = chalk.red.bold;
+      break;
+    case ErrorSeverity.HIGH:
+      color = chalk.red;
+      break;
+    case ErrorSeverity.MEDIUM:
+      color = chalk.yellow;
+      break;
+    case ErrorSeverity.LOW:
+      color = chalk.blue;
+      break;
+    case ErrorSeverity.INFO:
+      color = chalk.gray;
+      break;
     }
 
     if (this.config.verbose || severity === ErrorSeverity.CRITICAL) {
       console.log(color(`[${severity.toUpperCase()}] ${analyzerName}: ${error.message}`));
-      
+
       if (error.context && Object.keys(error.context).length > 0) {
         console.log(chalk.gray(`  Context: ${JSON.stringify(error.context)}`));
       }

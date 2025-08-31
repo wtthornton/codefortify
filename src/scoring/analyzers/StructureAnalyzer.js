@@ -470,7 +470,7 @@ export class StructureAnalyzer extends BaseAnalyzer {
         _score += 1;
         this.addScore(1, 1, `Reasonable number of dependencies (${totalDeps})`);
       } else if (totalDeps < 60) {
-        score += 0.5;
+        _score += 0.5;
         this.addScore(0.5, 1, `Moderate number of dependencies (${totalDeps})`);
         this.addIssue('High number of dependencies', 'Consider if all dependencies are necessary');
       } else {
@@ -571,7 +571,7 @@ export class StructureAnalyzer extends BaseAnalyzer {
       }
     }
 
-    if (score > 0.5) {
+    if (_score > 0.5) {
       this.addScore(_score, _maxScore, 'Good separation of concerns detected');
     } else {
       this.addIssue('Poor separation of concerns', 'Separate code into logical modules (components, services, utils, etc.)');
@@ -649,7 +649,7 @@ export class StructureAnalyzer extends BaseAnalyzer {
   }
 
   async analyzeNamingPatterns(files) {
-    const _score = 0;
+    let _score = 0;
     const _maxScore = 2;
 
     // Check if naming matches project type conventions
@@ -668,22 +668,22 @@ export class StructureAnalyzer extends BaseAnalyzer {
 
       if (componentFiles.length > 0) {
         const ratio = properlyNamed.length / componentFiles.length;
-        score += ratio * maxScore;
+        _score += ratio * _maxScore;
 
         if (ratio > 0.8) {
-          this.addScore(maxScore, maxScore, 'React components follow PascalCase naming');
+          this.addScore(_maxScore, _maxScore, 'React components follow PascalCase naming');
         } else {
-          this.addScore(ratio * maxScore, maxScore, `${Math.round(ratio * 100)}% of components follow PascalCase`);
+          this.addScore(ratio * _maxScore, _maxScore, `${Math.round(ratio * 100)}% of components follow PascalCase`);
           this.addIssue('Some React components don\'t follow PascalCase', 'Use PascalCase for React component names');
         }
       } else {
-        score += maxScore; // No components to check
-        this.addScore(maxScore, maxScore, 'No naming issues detected');
+        _score += _maxScore; // No components to check
+        this.addScore(_maxScore, _maxScore, 'No naming issues detected');
       }
     } else {
       // For other projects, prefer kebab-case or camelCase
-      score += maxScore * 0.8; // Assume good for now
-      this.addScore(maxScore * 0.8, maxScore, 'Naming patterns appear consistent');
+      _score += _maxScore * 0.8; // Assume good for now
+      this.addScore(_maxScore * 0.8, _maxScore, 'Naming patterns appear consistent');
     }
 
     return Math.min(_score, _maxScore);
@@ -794,7 +794,7 @@ export class StructureAnalyzer extends BaseAnalyzer {
     }
 
     // Default some points for basic organization
-    score += 1;
+    _score += 1;
     this.addScore(1, 1, 'Basic project organization detected');
 
     return _score;

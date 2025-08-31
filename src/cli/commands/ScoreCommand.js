@@ -1,10 +1,10 @@
 /**
  * Score Command Handler
- * 
+ *
  * Handles project quality scoring and report generation across 7 categories.
  * Supports multiple output formats (console, JSON, HTML) with detailed analysis
  * and improvement recommendations.
- * 
+ *
  * @class ScoreCommand
  * @example
  * const scoreCmd = new ScoreCommand(globalConfig);
@@ -23,7 +23,7 @@ import { ProjectScorer } from '../../scoring/ProjectScorer.js';
 export class ScoreCommand {
   /**
    * Create a new ScoreCommand instance
-   * 
+   *
    * @param {Object} globalConfig - Global CLI configuration
    * @param {string} globalConfig.projectRoot - Project root directory
    * @param {boolean} globalConfig.verbose - Verbose logging flag
@@ -34,7 +34,7 @@ export class ScoreCommand {
 
   /**
    * Execute the score command with provided options
-   * 
+   *
    * @param {Object} options - Command options
    * @param {string} [options.categories='all'] - Comma-separated categories to analyze
    * @param {string} [options.format='console'] - Output format: 'console', 'json', 'html'
@@ -43,7 +43,7 @@ export class ScoreCommand {
    * @param {boolean} [options.recommendations=false] - Include recommendations
    * @param {boolean} [options.open=false] - Open HTML report in browser
    * @returns {Promise<void>}
-   * 
+   *
    * @example
    * await scoreCmd.execute({
    *   categories: 'structure,quality,testing',
@@ -56,11 +56,11 @@ export class ScoreCommand {
    */
   async execute(options) {
     const spinner = ora('Analyzing project quality...').start();
-    
+
     try {
       // Parse categories
       const categories = this.parseCategories(options.categories);
-      
+
       // Set up scoring configuration
       const scoringConfig = {
         categories: categories,
@@ -71,7 +71,7 @@ export class ScoreCommand {
 
       // Run the scoring analysis
       const results = await ProjectScorer.scoreProject(this.globalConfig.projectRoot, scoringConfig);
-      
+
       spinner.stop();
 
       // Output results based on format
@@ -91,15 +91,15 @@ export class ScoreCommand {
     if (!categoriesString || categoriesString === 'all') {
       return ['structure', 'quality', 'performance', 'testing', 'security', 'developerExperience', 'completeness'];
     }
-    
+
     const validCategories = ['structure', 'quality', 'performance', 'testing', 'security', 'developerExperience', 'completeness'];
     const requested = categoriesString.split(',').map(cat => cat.trim());
-    
+
     const invalid = requested.filter(cat => !validCategories.includes(cat));
     if (invalid.length > 0) {
       throw new Error(`Invalid categories: ${invalid.join(', ')}. Valid options: ${validCategories.join(', ')}`);
     }
-    
+
     return requested;
   }
 
@@ -108,34 +108,34 @@ export class ScoreCommand {
     const outputFile = options.output;
 
     switch (format) {
-      case 'console':
-        this.outputConsole(results, options);
-        break;
-        
-      case 'json':
-        await this.outputJSON(results, outputFile);
-        break;
-        
-      case 'html':
-        await this.outputHTML(results, outputFile, options.open);
-        break;
-        
-      default:
-        throw new Error(`Unsupported format: ${format}. Use console, json, or html.`);
+    case 'console':
+      this.outputConsole(results, options);
+      break;
+
+    case 'json':
+      await this.outputJSON(results, outputFile);
+      break;
+
+    case 'html':
+      await this.outputHTML(results, outputFile, options.open);
+      break;
+
+    default:
+      throw new Error(`Unsupported format: ${format}. Use console, json, or html.`);
     }
   }
 
   outputConsole(results, options) {
     const { overall, categories, recommendations } = results;
-    
+
     // Header
     console.log('\n' + chalk.bold.blue('🎯 Context7 Project Quality Score'));
     console.log(chalk.gray('═'.repeat(50)));
-    
+
     // Overall score
     const gradeColor = this.getGradeColor(overall.grade);
     console.log(`\n${chalk.bold('Overall Score:')} ${chalk.bold.white(overall.score)}/${overall.maxScore} (${overall.percentage}%) ${gradeColor(overall.grade)}`);
-    
+
     if (overall.timestamp) {
       console.log(`${chalk.gray('Generated:')} ${new Date(overall.timestamp).toLocaleString()}`);
     }
@@ -146,10 +146,10 @@ export class ScoreCommand {
       const percentage = Math.round((category.score / category.maxScore) * 100);
       const gradeColor = this.getGradeColor(category.grade);
       const progressBar = this.createProgressBar(percentage);
-      
+
       console.log(`\n  ${chalk.bold(category.categoryName)}`);
       console.log(`  ${progressBar} ${percentage}% ${gradeColor(category.grade)} (${category.score}/${category.maxScore})`);
-      
+
       if (options.detailed && category.issues?.length > 0) {
         category.issues.forEach(issue => {
           console.log(`    ${chalk.yellow('⚠')} ${issue}`);
@@ -171,10 +171,10 @@ export class ScoreCommand {
   }
 
   async outputJSON(results, outputFile) {
-    const { ScoringReport } = await import('../../scoring/ScoringReport.js');
+    const { ScoringReport } = await import('../../scoring/ScoringReportRefactored.js');
     const report = new ScoringReport();
     const json = await report.generateJSON(results);
-    
+
     if (outputFile) {
       const fs = await import('fs-extra');
       await fs.writeFile(outputFile, json);
@@ -185,16 +185,16 @@ export class ScoreCommand {
   }
 
   async outputHTML(results, outputFile, openInBrowser = false) {
-    const { ScoringReport } = await import('../../scoring/ScoringReport.js');
+    const { ScoringReport } = await import('../../scoring/ScoringReportRefactored.js');
     const report = new ScoringReport();
-    
+
     const filename = outputFile || `context7-quality-report-${Date.now()}.html`;
     const html = await report.generateHTML(results);
-    
-    const fs = await import('fs-extra');
-    await fs.writeFile(filename, html);
+
+    const { writeFile } = await import('fs/promises');
+    await writeFile(filename, html);
     console.log(chalk.green(`✓ HTML report generated: ${filename}`));
-    
+
     if (openInBrowser) {
       try {
         await report.openInBrowser(filename);
@@ -219,11 +219,11 @@ export class ScoreCommand {
   createProgressBar(percentage, width = 20) {
     const filled = Math.round((percentage / 100) * width);
     const empty = width - filled;
-    
+
     let color = chalk.red;
-    if (percentage >= 80) color = chalk.green;
-    else if (percentage >= 60) color = chalk.yellow;
-    
+    if (percentage >= 80) {color = chalk.green;}
+    else if (percentage >= 60) {color = chalk.yellow;}
+
     return color('█'.repeat(filled)) + chalk.gray('░'.repeat(empty));
   }
 }

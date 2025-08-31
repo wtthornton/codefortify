@@ -1,6 +1,6 @@
 /**
  * Command Coordinator
- * 
+ *
  * Orchestrates CLI command execution with modular command handlers
  */
 
@@ -11,7 +11,7 @@ export class CommandCoordinator {
   constructor(globalConfig, packageRoot) {
     this.globalConfig = globalConfig;
     this.packageRoot = packageRoot;
-    
+
     // Initialize command handlers
     this.commands = {
       init: new InitCommand(globalConfig, packageRoot),
@@ -126,9 +126,9 @@ export class CommandCoordinator {
       spinner.succeed('Context7 MCP integration added successfully!');
 
       console.log(chalk.green('\n✅ Integration complete! Run the following to get started:'));
-      console.log(chalk.gray(`  context7 validate    # Validate project setup`));
-      console.log(chalk.gray(`  context7 test-mcp    # Test MCP server`));
-      console.log(chalk.gray(`  context7 score       # Analyze project quality`));
+      console.log(chalk.gray('  context7 validate    # Validate project setup'));
+      console.log(chalk.gray('  context7 test-mcp    # Test MCP server'));
+      console.log(chalk.gray('  context7 score       # Analyze project quality'));
 
     } catch (error) {
       spinner.fail('Failed to add Context7 MCP integration');
@@ -160,7 +160,7 @@ export class CommandCoordinator {
 
       // Display results
       console.log(`\n${chalk.bold('Validation Results:')}`);
-      
+
       if (results.isValid) {
         console.log(chalk.green('✅ Project is Context7 compliant!'));
       } else {
@@ -217,7 +217,7 @@ export class CommandCoordinator {
 
       // Display test results
       console.log(`\n${chalk.bold('MCP Server Test Results:')}`);
-      
+
       if (results.success) {
         console.log(chalk.green('✅ All tests passed!'));
       } else {
@@ -228,7 +228,7 @@ export class CommandCoordinator {
       results.tests.forEach(test => {
         const status = test.passed ? chalk.green('✓') : chalk.red('✗');
         console.log(`  ${status} ${test.name}`);
-        
+
         if (!test.passed && test.error) {
           console.log(`    ${chalk.red('Error:')} ${test.error}`);
         }

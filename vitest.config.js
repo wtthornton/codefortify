@@ -150,7 +150,6 @@ export default defineConfig({
     reporter: [
       'verbose',              // Detailed console output
       'json',                 // Machine-readable results
-      'html',                 // Visual HTML report
       'junit'                 // CI/CD compatible format
     ],
     

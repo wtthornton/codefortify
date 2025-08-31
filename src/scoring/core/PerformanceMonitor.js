@@ -1,6 +1,6 @@
 /**
  * Performance Monitor
- * 
+ *
  * Comprehensive performance monitoring for the Context7 scoring system
  * including bundle analysis, memory usage, timing metrics, and bottleneck detection.
  */
@@ -45,7 +45,7 @@ export class PerformanceMonitor {
    * Start tracking memory usage
    */
   startMemoryTracking() {
-    if (!this.config.enableMemoryTracking) return;
+    if (!this.config.enableMemoryTracking) {return;}
 
     const initialMemory = process.memoryUsage();
     this.metrics.memory.push({
@@ -64,7 +64,7 @@ export class PerformanceMonitor {
    * Record current memory usage
    */
   recordMemoryUsage(type = 'checkpoint') {
-    if (!this.config.enableMemoryTracking) return;
+    if (!this.config.enableMemoryTracking) {return;}
 
     const memory = process.memoryUsage();
     this.metrics.memory.push({
@@ -164,7 +164,7 @@ export class PerformanceMonitor {
    */
   async analyzePackageJson() {
     const packagePath = path.join(this.config.projectRoot, 'package.json');
-    
+
     if (!existsSync(packagePath)) {
       return { exists: false };
     }
@@ -207,7 +207,7 @@ export class PerformanceMonitor {
    */
   async analyzeNodeModules() {
     const nodeModulesPath = path.join(this.config.projectRoot, 'node_modules');
-    
+
     if (!existsSync(nodeModulesPath)) {
       return { exists: false, size: 0 };
     }
@@ -254,7 +254,7 @@ export class PerformanceMonitor {
         try {
           const stats = await fs.stat(file);
           const ext = path.extname(file);
-          
+
           analysis.totalSize += stats.size;
           analysis.breakdown[ext] = analysis.breakdown[ext] || { count: 0, size: 0 };
           analysis.breakdown[ext].count++;
@@ -299,19 +299,19 @@ export class PerformanceMonitor {
 
     for (const dir of buildDirs) {
       const buildPath = path.join(this.config.projectRoot, dir);
-      
+
       if (existsSync(buildPath)) {
         try {
           const size = await this.getDirectorySize(buildPath);
           const files = await this.findFiles(buildPath, ['.js', '.css', '.html', '.map']);
-          
+
           analysis.directories.push({
             name: dir,
             size,
             fileCount: files.length,
             types: await this.analyzeFileTypes(files)
           });
-          
+
           analysis.available = true;
 
         } catch (error) {
@@ -335,7 +335,7 @@ export class PerformanceMonitor {
       'react', 'vue', 'angular', '@angular/core', 'rxjs',
       // Build tools
       'webpack', 'rollup', 'parcel', 'vite',
-      // UI libraries  
+      // UI libraries
       '@mui/material', 'antd', 'bootstrap', 'semantic-ui-react',
       // Utility libraries
       'lodash', 'moment', 'date-fns', 'axios', 'request',
@@ -402,10 +402,10 @@ export class PerformanceMonitor {
    */
   async findHeaviestPackages(nodeModulesPath, limit = 5) {
     const packages = [];
-    
+
     try {
       const items = await fs.readdir(nodeModulesPath, { withFileTypes: true });
-      
+
       for (const item of items.slice(0, 20)) { // Limit for performance
         if (item.isDirectory() && !item.name.startsWith('.')) {
           const packagePath = path.join(nodeModulesPath, item.name);
@@ -416,7 +416,7 @@ export class PerformanceMonitor {
     } catch (error) {
       // Return empty array on error
     }
-    
+
     return packages
       .sort((a, b) => b.size - a.size)
       .slice(0, limit);
@@ -427,12 +427,12 @@ export class PerformanceMonitor {
    */
   async analyzeFileTypes(files) {
     const types = {};
-    
+
     for (const file of files) {
       const ext = path.extname(file);
       types[ext] = types[ext] || { count: 0, totalSize: 0 };
       types[ext].count++;
-      
+
       try {
         const stats = await fs.stat(file);
         types[ext].totalSize += stats.size;
@@ -440,7 +440,7 @@ export class PerformanceMonitor {
         // Skip files that can't be accessed
       }
     }
-    
+
     return types;
   }
 
@@ -449,15 +449,15 @@ export class PerformanceMonitor {
    */
   calculateTotalSize(bundleInfo) {
     let total = 0;
-    
+
     if (bundleInfo.sourceFiles?.totalSize) {
       total += bundleInfo.sourceFiles.totalSize;
     }
-    
+
     if (bundleInfo.nodeModules?.size) {
       total += bundleInfo.nodeModules.size;
     }
-    
+
     return total;
   }
 
@@ -499,7 +499,7 @@ export class PerformanceMonitor {
     try {
       // Try different approaches based on platform
       let command;
-      
+
       if (process.platform === 'win32') {
         command = `powershell -command "Get-ChildItem -Recurse '${dirPath}' | Measure-Object -Property Length -Sum | Select-Object -ExpandProperty Sum"`;
       } else {
@@ -520,13 +520,13 @@ export class PerformanceMonitor {
    */
   async calculateDirectorySizeManually(dirPath) {
     let totalSize = 0;
-    
+
     try {
       const items = await fs.readdir(dirPath, { withFileTypes: true });
-      
+
       for (const item of items) {
         const fullPath = path.join(dirPath, item.name);
-        
+
         if (item.isDirectory()) {
           totalSize += await this.calculateDirectorySizeManually(fullPath);
         } else if (item.isFile()) {
@@ -537,7 +537,7 @@ export class PerformanceMonitor {
     } catch (error) {
       // Skip inaccessible directories
     }
-    
+
     return totalSize;
   }
 
@@ -546,13 +546,13 @@ export class PerformanceMonitor {
    */
   async findFiles(dirPath, extensions, excludeDirs = []) {
     const files = [];
-    
+
     try {
       const items = await fs.readdir(dirPath, { withFileTypes: true });
-      
+
       for (const item of items) {
         const fullPath = path.join(dirPath, item.name);
-        
+
         if (item.isDirectory() && !excludeDirs.includes(item.name)) {
           const subFiles = await this.findFiles(fullPath, extensions, excludeDirs);
           files.push(...subFiles);
@@ -566,7 +566,7 @@ export class PerformanceMonitor {
     } catch (error) {
       // Skip inaccessible directories
     }
-    
+
     return files;
   }
 
@@ -576,7 +576,7 @@ export class PerformanceMonitor {
   generatePerformanceSummary() {
     const now = performance.now();
     const totalDuration = now - this.metrics.performance.startTime;
-    
+
     // Stop memory tracking
     if (this.memoryInterval) {
       clearInterval(this.memoryInterval);
@@ -618,12 +618,12 @@ export class PerformanceMonitor {
    * Format bytes to human readable
    */
   formatBytes(bytes) {
-    if (bytes === 0) return '0 B';
-    
+    if (bytes === 0) {return '0 B';}
+
     const k = 1024;
     const sizes = ['B', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    
+
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
 

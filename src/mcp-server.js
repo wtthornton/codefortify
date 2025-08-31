@@ -3,8 +3,12 @@
 import { Context7MCPServer } from '../src/server/Context7MCPServer.js';
 
 const server = new Context7MCPServer({
-  projectRoot: '.',
-  projectType: 'javascript'
+  projectRoot: process.cwd(),
+  projectType: 'javascript',
+  projectName: 'context7-mcp'
 });
 
-server.start().catch(console.error);
+server.start().catch(error => {
+  console.error('Failed to start MCP server:', error);
+  process.exit(1);
+});

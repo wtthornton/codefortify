@@ -1,6 +1,6 @@
 /**
  * Tool Checker
- * 
+ *
  * Checks for availability of external tools and provides installation guidance
  */
 
@@ -34,27 +34,27 @@ export class ToolChecker {
           await execAsync(tool.command, { timeout: 5000 });
           this.toolStatus[tool.type] = this.toolStatus[tool.type] || [];
           this.toolStatus[tool.type].push({ name: tool.name, available: true });
-          
+
           if (this.verbose) {
             console.log(chalk.green(`  ✓ ${tool.name} available`));
           }
-          
+
           return { tool: tool.name, available: true };
         } catch (error) {
           this.toolStatus[tool.type] = this.toolStatus[tool.type] || [];
           this.toolStatus[tool.type].push({ name: tool.name, available: false });
-          
+
           if (this.verbose) {
             console.log(chalk.yellow(`  ⚠ ${tool.name} not available`));
           }
-          
+
           return { tool: tool.name, available: false };
         }
       })
     );
 
     const unavailable = results.filter(r => !r.available);
-    
+
     if (unavailable.length > 0 && this.verbose) {
       console.log(chalk.yellow('\n📋 Tool Installation Recommendations:'));
       unavailable.forEach(tool => {
@@ -78,7 +78,7 @@ export class ToolChecker {
   }
 
   isToolAvailable(category, toolName) {
-    return this.toolStatus[category]?.find(tool => 
+    return this.toolStatus[category]?.find(tool =>
       tool.name === toolName && tool.available
     ) || false;
   }
@@ -111,7 +111,7 @@ export class ToolChecker {
 
   async checkCoverageToolAvailability() {
     const tools = ['c8', 'nyc', 'jest'];
-    
+
     for (const tool of tools) {
       try {
         await execAsync(`npx ${tool} --version`, { timeout: 3000 });
@@ -120,7 +120,7 @@ export class ToolChecker {
         continue;
       }
     }
-    
+
     return null;
   }
 
@@ -135,11 +135,11 @@ export class ToolChecker {
 
   async runToolCommand(command, timeout = 10000) {
     try {
-      const { stdout, stderr } = await execAsync(command, { 
+      const { stdout, stderr } = await execAsync(command, {
         timeout,
         maxBuffer: 1024 * 1024 // 1MB buffer
       });
-      
+
       return {
         success: true,
         stdout: stdout.trim(),
@@ -156,14 +156,14 @@ export class ToolChecker {
   }
 
   formatToolOutput(output, maxLines = 20) {
-    if (!output) return '';
-    
+    if (!output) {return '';}
+
     const lines = output.split('\n');
     if (lines.length <= maxLines) {
       return output;
     }
-    
-    return lines.slice(0, maxLines).join('\n') + 
+
+    return lines.slice(0, maxLines).join('\n') +
            `\n... (${lines.length - maxLines} more lines)`;
   }
 

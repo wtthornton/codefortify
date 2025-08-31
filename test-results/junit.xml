@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="127" failures="7" errors="0" time="2.108">
+    <testsuite name="tests/cli/context7-cli.test.js" timestamp="2025-08-31T17:16:54.337Z" hostname="Mini_IT13" tests="27" failures="0" errors="0" skipped="1" time="1.0013205">
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Help and Version &gt; should display help when no arguments provided" time="0.981161">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Help and Version &gt; should display help with --help flag" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Help and Version &gt; should display version with --version flag" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Init Command &gt; should display init help" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Init Command &gt; should initialize a React project" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Init Command &gt; should handle missing project type with prompt" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Add Command &gt; should display add help" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Add Command &gt; should add Context7 to existing project" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Validate Command &gt; should display validate help" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Validate Command &gt; should validate project structure" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Validate Command &gt; should handle validation in strict mode" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Test-MCP Command &gt; should display test-mcp help" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Test-MCP Command &gt; should handle missing MCP server file" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Serve Command &gt; should display serve help" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Generate Command &gt; should display generate help" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Generate Command &gt; should handle generate component" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Update Command &gt; should display update help" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Update Command &gt; should handle update command" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Global Options &gt; should handle verbose flag" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Global Options &gt; should handle custom project root" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Error Handling &gt; should handle unknown commands" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Error Handling &gt; should handle invalid options" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Error Handling &gt; should handle permission errors gracefully" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Project Type Detection &gt; should detect React projects" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Project Type Detection &gt; should handle projects without package.json" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Configuration Loading &gt; should load custom configuration when available" time="0">
+        </testcase>
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Interactive Prompts &gt; should handle non-interactive environments" time="0">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/PatternProvider.test.js" timestamp="2025-08-31T17:16:54.345Z" hostname="Mini_IT13" tests="24" failures="0" errors="0" skipped="0" time="0.030134">
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; constructor &gt; should initialize with correct config" time="0.0026457">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; generatePatterns &gt; should generate React patterns for react-webapp" time="0.0007924">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; generatePatterns &gt; should generate Vue patterns for vue-webapp" time="0.0003361">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; generatePatterns &gt; should generate Node patterns for node-api" time="0.0002722">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; generatePatterns &gt; should generate JavaScript patterns for unknown type" time="0.0002329">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getPattern &gt; should return React component pattern" time="0.0004279">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getPattern &gt; should return React hook pattern" time="0.0002328">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getPattern &gt; should return service pattern" time="0.0002727">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getPattern &gt; should return Vue component pattern" time="0.0002507">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getPattern &gt; should return Node service pattern" time="0.0002514">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getPattern &gt; should return &quot;Pattern not found&quot; for unknown pattern" time="0.0001316">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getPattern &gt; should fallback to JavaScript patterns for unknown framework" time="0.0001398">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getReactComponentPattern &gt; should include all required React patterns" time="0.0002851">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getReactHookPattern &gt; should include all required hook patterns" time="0.0002761">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getServicePattern &gt; should include all required service patterns" time="0.0003893">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getNodePatterns &gt; should include Node.js patterns" time="0.0003528">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getNodeServicePattern &gt; should include Node service patterns" time="0.0006385">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getMiddlewarePattern &gt; should include Express middleware patterns" time="0.0005893">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getRoutePattern &gt; should include Express route patterns" time="0.0007132">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; generateComponentScaffold &gt; should generate React component scaffold" time="0.0012271">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; generateComponentScaffold &gt; should handle empty props array" time="0.0010027">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; Vue patterns &gt; should generate Vue component pattern" time="0.0003798">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; JavaScript patterns &gt; should generate JavaScript class pattern" time="0.0004591">
+        </testcase>
+        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; JavaScript patterns &gt; should generate JavaScript function pattern" time="0.0004404">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/ProjectScorer.test.js" timestamp="2025-08-31T17:16:54.352Z" hostname="Mini_IT13" tests="18" failures="1" errors="0" skipped="0" time="0.0395014">
+        <testcase classname="tests/unit/ProjectScorer.test.js" name="ProjectScorer &gt; Constructor and Configuration &gt; should initialize with default configuration" time="0.0060131">
+        </testcase>
+        <testcase classname="tests/unit/ProjectScorer.test.js" name="ProjectScorer &gt; Constructor and Configuration &gt; should initialize analyzers correctly" time="0.0015975">
+        </testcase>
+        <testcase classname="tests/unit/ProjectScorer.test.js" name="ProjectScorer &gt; Constructor and Configuration &gt; should set correct max scores for analyzers" time="0.0193327">
+            <failure message="expected undefined to be 20 // Object.is equality" type="AssertionError">
+AssertionError: expected undefined to be 20 // Object.is equality
+
+- Expected: 
+20
+
++ Received: 
+undefined
+
+ ❯ tests/unit/ProjectScorer.test.js:46:51
+            </failure>
+            <failure message="expected undefined to be 20 // Object.is equality" type="AssertionError">
+AssertionError: expected undefined to be 20 // Object.is equality
+
+- Expected: 
+20
+
++ Received: 
+undefined
+
+ ❯ tests/unit/ProjectScorer.test.js:46:51
+            </failure>
+            <failure message="expected undefined to be 20 // Object.is equality" type="AssertionError">
+AssertionError: expected undefined to be 20 // Object.is equality
+
+- Expected: 
+20
+
++ Received: 
+undefined
+
+ ❯ tests/unit/ProjectScorer.test.js:46:51
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/ProjectScorer.test.js" name="ProjectScorer &gt; Grade Calculation &gt; should calculate grades correctly" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ProjectScorer.test.js" name="ProjectScorer &gt; Project Type Detection &gt; should detect React projects" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ProjectScorer.test.js" name="ProjectScorer &gt; Project Type Detection &gt; should detect Node.js API projects" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ProjectScorer.test.js" name="ProjectScorer &gt; Project Type Detection &gt; should default to javascript when detection fails" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ProjectScorer.test.js" name="ProjectScorer &gt; Overall Score Calculation &gt; should calculate overall score correctly" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ProjectScorer.test.js" name="ProjectScorer &gt; Overall Score Calculation &gt; should handle errors in categories" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ProjectScorer.test.js" name="ProjectScorer &gt; Overall Score Calculation &gt; should set timestamp" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ProjectScorer.test.js" name="ProjectScorer &gt; Complexity Calculation &gt; should calculate complexity scores correctly" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ProjectScorer.test.js" name="ProjectScorer &gt; Static Factory Methods &gt; should create scorer via static scoreProject method" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ProjectScorer.test.js" name="ProjectScorer &gt; Static Factory Methods &gt; should create scorer via static autoDetectAndScore method" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ProjectScorer.test.js" name="ProjectScorer &gt; Dependency Analysis &gt; should identify frameworks correctly" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ProjectScorer.test.js" name="ProjectScorer &gt; Dependency Analysis &gt; should identify testing tools correctly" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ProjectScorer.test.js" name="ProjectScorer &gt; Dependency Analysis &gt; should identify build tools correctly" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ProjectScorer.test.js" name="ProjectScorer &gt; Error Handling &gt; should handle analyzer failures gracefully" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ProjectScorer.test.js" name="ProjectScorer &gt; Error Handling &gt; should validate category names" time="0">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/ResourceManager.test.js" timestamp="2025-08-31T17:16:54.361Z" hostname="Mini_IT13" tests="14" failures="5" errors="0" skipped="0" time="0.1122581">
+        <testcase classname="tests/unit/ResourceManager.test.js" name="ResourceManager &gt; constructor &gt; should initialize with correct config" time="0.0024745">
+        </testcase>
+        <testcase classname="tests/unit/ResourceManager.test.js" name="ResourceManager &gt; listResources &gt; should return default resources" time="0.0039006">
+        </testcase>
+        <testcase classname="tests/unit/ResourceManager.test.js" name="ResourceManager &gt; listResources &gt; should include custom resources when they exist" time="0.0035385">
+        </testcase>
+        <testcase classname="tests/unit/ResourceManager.test.js" name="ResourceManager &gt; readResource &gt; should read tech-stack resource" time="0.0025716">
+        </testcase>
+        <testcase classname="tests/unit/ResourceManager.test.js" name="ResourceManager &gt; readResource &gt; should read code-style resource" time="0.0009128">
+        </testcase>
+        <testcase classname="tests/unit/ResourceManager.test.js" name="ResourceManager &gt; readResource &gt; should read context7-standards resource" time="0.0004603">
+        </testcase>
+        <testcase classname="tests/unit/ResourceManager.test.js" name="ResourceManager &gt; readResource &gt; should generate component patterns for project type" time="0.0274235">
+            <failure message="expected { contents: [ { …(3) } ] } to deeply equal { contents: [ { …(3) } ] }" type="AssertionError">
+AssertionError: expected { contents: [ { …(3) } ] } to deeply equal { contents: [ { …(3) } ] }
+
+- Expected
++ Received
+
+  Object {
+    &quot;contents&quot;: Array [
+      Object {
+        &quot;mimeType&quot;: &quot;text/typescript&quot;,
+-       &quot;text&quot;: StringContaining &quot;React.FC&quot;,
++       &quot;text&quot;: undefined,
+        &quot;uri&quot;: &quot;context7://patterns/component-patterns&quot;,
+      },
+    ],
+  }
+
+ ❯ tests/unit/ResourceManager.test.js:143:22
+            </failure>
+            <failure message="expected { contents: [ { …(3) } ] } to deeply equal { contents: [ { …(3) } ] }" type="AssertionError">
+AssertionError: expected { contents: [ { …(3) } ] } to deeply equal { contents: [ { …(3) } ] }
+
+- Expected
++ Received
+
+  Object {
+    &quot;contents&quot;: Array [
+      Object {
+        &quot;mimeType&quot;: &quot;text/typescript&quot;,
+-       &quot;text&quot;: StringContaining &quot;React.FC&quot;,
++       &quot;text&quot;: undefined,
+        &quot;uri&quot;: &quot;context7://patterns/component-patterns&quot;,
+      },
+    ],
+  }
+
+ ❯ tests/unit/ResourceManager.test.js:143:22
+            </failure>
+            <failure message="expected { contents: [ { …(3) } ] } to deeply equal { contents: [ { …(3) } ] }" type="AssertionError">
+AssertionError: expected { contents: [ { …(3) } ] } to deeply equal { contents: [ { …(3) } ] }
+
+- Expected
++ Received
+
+  Object {
+    &quot;contents&quot;: Array [
+      Object {
+        &quot;mimeType&quot;: &quot;text/typescript&quot;,
+-       &quot;text&quot;: StringContaining &quot;React.FC&quot;,
++       &quot;text&quot;: undefined,
+        &quot;uri&quot;: &quot;context7://patterns/component-patterns&quot;,
+      },
+    ],
+  }
+
+ ❯ tests/unit/ResourceManager.test.js:143:22
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/ResourceManager.test.js" name="ResourceManager &gt; readResource &gt; should read custom resources" time="0.0010076">
+        </testcase>
+        <testcase classname="tests/unit/ResourceManager.test.js" name="ResourceManager &gt; readResource &gt; should handle file read errors" time="0.0019735">
+        </testcase>
+        <testcase classname="tests/unit/ResourceManager.test.js" name="ResourceManager &gt; readResource &gt; should handle unknown resource URIs" time="0.0006854">
+        </testcase>
+        <testcase classname="tests/unit/ResourceManager.test.js" name="ResourceManager &gt; generatePatternContent &gt; should generate React patterns for react-webapp project" time="0.0053485">
+            <failure message="the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string" type="AssertionError">
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ tests/unit/ResourceManager.test.js:194:24
+            </failure>
+            <failure message="the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string" type="AssertionError">
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ tests/unit/ResourceManager.test.js:194:24
+            </failure>
+            <failure message="the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string" type="AssertionError">
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ tests/unit/ResourceManager.test.js:194:24
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/ResourceManager.test.js" name="ResourceManager &gt; generatePatternContent &gt; should generate Vue patterns for vue-webapp project" time="0.0027568">
+            <failure message="the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string" type="AssertionError">
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ tests/unit/ResourceManager.test.js:208:24
+            </failure>
+            <failure message="the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string" type="AssertionError">
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ tests/unit/ResourceManager.test.js:208:24
+            </failure>
+            <failure message="the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string" type="AssertionError">
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ tests/unit/ResourceManager.test.js:208:24
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/ResourceManager.test.js" name="ResourceManager &gt; generatePatternContent &gt; should generate Node patterns for node-api project" time="0.0024371">
+            <failure message="the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string" type="AssertionError">
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ tests/unit/ResourceManager.test.js:221:24
+            </failure>
+            <failure message="the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string" type="AssertionError">
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ tests/unit/ResourceManager.test.js:221:24
+            </failure>
+            <failure message="the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string" type="AssertionError">
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ tests/unit/ResourceManager.test.js:221:24
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/ResourceManager.test.js" name="ResourceManager &gt; generatePatternContent &gt; should generate JavaScript patterns for unknown project type" time="0.0032383">
+            <failure message="the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string" type="AssertionError">
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ tests/unit/ResourceManager.test.js:233:24
+            </failure>
+            <failure message="the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string" type="AssertionError">
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ tests/unit/ResourceManager.test.js:233:24
+            </failure>
+            <failure message="the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string" type="AssertionError">
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ tests/unit/ResourceManager.test.js:233:24
+            </failure>
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/ScoringReport.test.js" timestamp="2025-08-31T17:16:54.379Z" hostname="Mini_IT13" tests="23" failures="1" errors="0" skipped="0" time="0.1022873">
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; Performance Level Classification &gt; should classify performance levels correctly" time="0.0063112">
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; Score Descriptions &gt; should provide appropriate score descriptions" time="0.0210916">
+            <failure message="expected &apos;Acceptable quality, focus on key impr…&apos; to contain &apos;Good quality&apos;" type="AssertionError">
+AssertionError: expected &apos;Acceptable quality, focus on key impr…&apos; to contain &apos;Good quality&apos;
+
+Expected: &quot;Good quality&quot;
+Received: &quot;Acceptable quality, focus on key improvements&quot;
+
+ ❯ tests/unit/ScoringReport.test.js:76:46
+            </failure>
+            <failure message="expected &apos;Acceptable quality, focus on key impr…&apos; to contain &apos;Good quality&apos;" type="AssertionError">
+AssertionError: expected &apos;Acceptable quality, focus on key impr…&apos; to contain &apos;Good quality&apos;
+
+Expected: &quot;Good quality&quot;
+Received: &quot;Acceptable quality, focus on key improvements&quot;
+
+ ❯ tests/unit/ScoringReport.test.js:76:46
+            </failure>
+            <failure message="expected &apos;Acceptable quality, focus on key impr…&apos; to contain &apos;Good quality&apos;" type="AssertionError">
+AssertionError: expected &apos;Acceptable quality, focus on key impr…&apos; to contain &apos;Good quality&apos;
+
+Expected: &quot;Good quality&quot;
+Received: &quot;Acceptable quality, focus on key improvements&quot;
+
+ ❯ tests/unit/ScoringReport.test.js:76:46
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; Category Descriptions &gt; should provide descriptions for all categories" time="0.0020608">
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; Category Descriptions &gt; should provide default description for unknown categories" time="0.0006968">
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should generate valid HTML structure" time="0.0413026">
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should include project information" time="0.0013282">
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should include Chart.js integration" time="0.0006356">
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should include FontAwesome icons" time="0.0004014">
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should include all categories" time="0.0004765">
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should display issues correctly" time="0.0002994">
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should display recommendations" time="0.0015915">
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should include theme toggle functionality" time="0.0005601">
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should include search functionality" time="0.0004748">
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should handle missing recommendations" time="0.0003167">
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should format scores with proper precision" time="0.0003706">
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; JSON Report Generation &gt; should generate valid JSON" time="0.0027657">
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; JSON Report Generation &gt; should format JSON with proper indentation" time="0.0004496">
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; Markdown Report Generation &gt; should generate valid markdown" time="0.0013699">
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; Markdown Report Generation &gt; should include project metadata" time="0.0004586">
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; Markdown Report Generation &gt; should include category information" time="0.0003346">
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; Markdown Report Generation &gt; should include recommendations when present" time="0.0002918">
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; Markdown Report Generation &gt; should use appropriate emojis based on scores" time="0.0002841">
+        </testcase>
+        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; Browser Opening &gt; should handle browser opening on different platforms" time="0.0002751">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/ToolManager.test.js" timestamp="2025-08-31T17:16:54.388Z" hostname="Mini_IT13" tests="21" failures="0" errors="0" skipped="0" time="0.1374844">
+        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; constructor &gt; should initialize with correct config" time="0.001872">
+        </testcase>
+        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; listTools &gt; should return all available tools" time="0.0023196">
+        </testcase>
+        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; listTools &gt; should include proper tool schemas" time="0.0011349">
+        </testcase>
+        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; executeTool &gt; should execute validate_context7_compliance tool" time="0.001468">
+        </testcase>
+        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; executeTool &gt; should execute get_pattern_examples tool" time="0.102291">
+        </testcase>
+        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; executeTool &gt; should execute check_naming_conventions tool" time="0.002312">
+        </testcase>
+        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; executeTool &gt; should throw error for unknown tool" time="0.0024035">
+        </testcase>
+        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; validateContext7Compliance &gt; should validate React component code" time="0.0009749">
+        </testcase>
+        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; validateContext7Compliance &gt; should find issues in non-compliant React code" time="0.0006335">
+        </testcase>
+        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; validateContext7Compliance &gt; should validate custom hooks" time="0.0007145">
+        </testcase>
+        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; validateContext7Compliance &gt; should find issues with bad hook naming" time="0.0005025">
+        </testcase>
+        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; checkNamingConventions &gt; should validate component names" time="0.0005877">
+        </testcase>
+        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; checkNamingConventions &gt; should validate hook names" time="0.0004816">
+        </testcase>
+        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; checkNamingConventions &gt; should validate file names" time="0.0004588">
+        </testcase>
+        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; suggestImprovements &gt; should suggest performance improvements" time="0.0008213">
+        </testcase>
+        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; suggestImprovements &gt; should suggest accessibility improvements" time="0.0002584">
+        </testcase>
+        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; suggestImprovements &gt; should suggest Context7 improvements" time="0.0002329">
+        </testcase>
+        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; getValidationRules &gt; should return default validation rules" time="0.0001635">
+        </testcase>
+        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; getValidationRules &gt; should override with config rules" time="0.0002043">
+        </testcase>
+        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; getAppliedStandards &gt; should return React standards for React project" time="0.0002664">
+        </testcase>
+        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; getAppliedStandards &gt; should return base standards for non-React project" time="0.0002673">
+        </testcase>
+    </testsuite>
+</testsuites>

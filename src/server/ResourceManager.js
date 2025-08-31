@@ -16,13 +16,15 @@ export class ResourceManager {
   }
 
   async listResources() {
-    const resources = [
-      {
-        uri: 'context7://standards/tech-stack',
-        name: 'Technology Stack Standards',
-        description: 'Project technology stack and standards',
-        mimeType: 'text/markdown'
-      },
+    try {
+      console.error('ResourceManager: Listing resources...');
+      const resources = [
+        {
+          uri: 'context7://standards/tech-stack',
+          name: 'Technology Stack Standards',
+          description: 'Project technology stack and standards',
+          mimeType: 'text/markdown'
+        },
       {
         uri: 'context7://standards/code-style',
         name: 'Code Style Guidelines',
@@ -81,11 +83,17 @@ export class ResourceManager {
       // No custom resources directory
     }
 
+    console.error('ResourceManager: Resources listed successfully');
     return { resources };
+  } catch (error) {
+    console.error('ResourceManager: Resource listing failed:', error.message);
+    throw new Error(`Resource listing failed: ${error.message}`);
+  }
   }
 
   async readResource(uri) {
     try {
+      console.error(`ResourceManager: Reading resource ${uri}`);
       let filePath;
       let mimeType = 'text/markdown';
 
@@ -131,6 +139,7 @@ export class ResourceManager {
         content = await fs.readFile(filePath, 'utf-8');
       }
 
+      console.error('ResourceManager: Resource read successfully');
       return {
         contents: [
           {
@@ -141,6 +150,7 @@ export class ResourceManager {
         ]
       };
     } catch (error) {
+      console.error(`ResourceManager: Resource read failed for ${uri}:`, error.message);
       throw new Error(`Failed to read resource ${uri}: ${error.message}`);
     }
   }
@@ -168,20 +178,31 @@ export class ResourceManager {
   }
 
   async generatePatternsContent() {
-    // Try to read existing pattern file first
-    const patternFile = await this.findPatternFile();
+    try {
+      console.error('ResourceManager: Generating patterns content...');
+      
+      // Try to read existing pattern file first
+      const patternFile = await this.findPatternFile();
 
-    if (patternFile) {
-      try {
-        return await fs.readFile(patternFile, 'utf-8');
-      } catch (error) {
-        // Fall back to generated patterns
+      if (patternFile) {
+        try {
+          const content = await fs.readFile(patternFile, 'utf-8');
+          console.error('ResourceManager: Using existing pattern file');
+          return content;
+        } catch (error) {
+          console.error('ResourceManager: Failed to read existing pattern file, generating new patterns');
+        }
       }
-    }
 
-    // Generate patterns based on project type
-    const { PatternProvider } = await import('./PatternProvider.js');
-    const provider = new PatternProvider(this.config);
-    return provider.generatePatterns();
+      // Generate patterns based on project type
+      const { PatternProvider } = await import('./PatternProvider.js');
+      const provider = new PatternProvider(this.config);
+      const patterns = await provider.generatePatterns();
+      console.error('ResourceManager: Patterns generated successfully');
+      return patterns;
+    } catch (error) {
+      console.error('ResourceManager: Pattern content generation failed:', error.message);
+      throw new Error(`Pattern content generation failed: ${error.message}`);
+    }
   }
 }

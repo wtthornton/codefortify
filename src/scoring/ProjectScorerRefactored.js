@@ -28,21 +28,21 @@ import { DeveloperExperienceAnalyzer } from './analyzers/DeveloperExperienceAnal
 import { CompletenessAnalyzer } from './analyzers/CompletenessAnalyzer.js';
 
 // Report generation
-import { ScoringReport } from './ScoringReport.js';
+import { ScoringReport } from './ScoringReportRefactored.js';
 import { RecommendationEngine } from './RecommendationEngine.js';
 
 /**
  * ProjectScorer - Main orchestrator for project quality scoring
- * 
+ *
  * Analyzes project quality across 7 categories with modular architecture:
  * - Code Structure & Architecture (20pts)
- * - Code Quality & Maintainability (20pts)  
+ * - Code Quality & Maintainability (20pts)
  * - Performance & Optimization (15pts)
  * - Testing & Documentation (15pts)
  * - Security & Error Handling (15pts)
  * - Developer Experience (10pts)
  * - Completeness & Production Readiness (5pts)
- * 
+ *
  * @class ProjectScorer
  * @example
  * // Basic usage
@@ -51,7 +51,7 @@ import { RecommendationEngine } from './RecommendationEngine.js';
  *   projectType: 'react-webapp'
  * });
  * const results = await scorer.scoreProject();
- * 
+ *
  * // With options
  * const results = await scorer.scoreProject({
  *   categories: ['structure', 'quality'],
@@ -61,7 +61,7 @@ import { RecommendationEngine } from './RecommendationEngine.js';
 export class ProjectScorer {
   /**
    * Create a new ProjectScorer instance
-   * 
+   *
    * @param {Object} config - Configuration options
    * @param {string} [config.projectRoot] - Project root directory path
    * @param {string} [config.projectType] - Project type (auto-detected if not specified)
@@ -71,7 +71,7 @@ export class ProjectScorer {
    */
   constructor(config = {}) {
     this.config = this.initializeConfig(config);
-    
+
     // Initialize core modules
     this.typeDetector = new ProjectTypeDetector(this.config.projectRoot);
     this.toolChecker = new ToolChecker(this.config.verbose);
@@ -81,12 +81,12 @@ export class ProjectScorer {
       verbose: this.config.verbose,
       enableBundleAnalysis: this.config.enableBundleAnalysis !== false
     });
-    
+
     // Detect project type if not specified
     if (!config.projectType || config.projectType === 'javascript') {
       this.config.projectType = this.typeDetector.detectProjectType();
     }
-    
+
     // Initialize analyzers and utilities
     this.analyzers = this.initializeAnalyzers();
     this.reportGenerator = new ScoringReport(this.config);
@@ -124,22 +124,22 @@ export class ProjectScorer {
 
   /**
    * Analyze and score the project across specified categories
-   * 
+   *
    * @param {Object} [options={}] - Scoring options
    * @param {string[]} [options.categories=['all']] - Categories to analyze
    * @param {boolean} [options.detailed=false] - Include detailed analysis information
    * @returns {Promise<Object>} Complete scoring results with categories, overall score, and recommendations
-   * 
+   *
    * @example
    * // Score all categories
    * const results = await scorer.scoreProject();
-   * 
+   *
    * // Score specific categories with details
    * const results = await scorer.scoreProject({
    *   categories: ['structure', 'quality'],
    *   detailed: true
    * });
-   * 
+   *
    * console.log(`Overall score: ${results.overall.score}/${results.overall.maxScore}`);
    */
   async scoreProject(options = {}) {
@@ -160,7 +160,7 @@ export class ProjectScorer {
 
       // Determine categories to analyze
       const categoriesToAnalyze = this.determineCategoriesToAnalyze(categories);
-      
+
       if (categoriesToAnalyze.length === 0) {
         throw new Error('No valid categories specified for analysis');
       }
@@ -178,12 +178,12 @@ export class ProjectScorer {
       const analyzerResults = await this.runAnalyzers(categoriesToAnalyze, detailed);
       this.performanceMonitor.endTiming('category_analysis');
       this.performanceMonitor.recordMemoryUsage('after_analysis');
-      
+
       // Process results with timing
       const processingTiming = this.performanceMonitor.startTiming('results_processing');
       this.resultsProcessor.processAnalyzerResults(analyzerResults, results);
       this.performanceMonitor.endTiming('results_processing');
-      
+
       // Bundle analysis (if enabled)
       if (this.config.enableBundleAnalysis || options.bundleAnalysis) {
         const bundleTiming = this.performanceMonitor.startTiming('bundle_analysis');
@@ -191,19 +191,19 @@ export class ProjectScorer {
         this.performanceMonitor.endTiming('bundle_analysis');
         results.bundleAnalysis = bundleInfo;
       }
-      
+
       // Add system information
       const systemInfo = await this.toolChecker.getSystemInfo();
       this.resultsProcessor.addSystemInfo(results, systemInfo);
-      
+
       // Generate recommendations
       this.resultsProcessor.aggregateRecommendations(results);
-      
+
       // Add performance metrics
       this.performanceMonitor.endTiming('overall_analysis');
       const performanceSummary = this.performanceMonitor.generatePerformanceSummary();
       results.performance = performanceSummary;
-      
+
       // Validate results
       const validation = this.resultsProcessor.validateResults(results);
       if (!validation.isValid) {
@@ -230,23 +230,23 @@ export class ProjectScorer {
     if (categories.includes('all')) {
       return Object.keys(this.analyzers);
     }
-    
+
     const validCategories = categories.filter(cat => this.analyzers[cat]);
     const invalid = categories.filter(cat => !this.analyzers[cat] && cat !== 'all');
-    
+
     if (invalid.length > 0) {
       console.warn(`Warning: Invalid categories ignored: ${invalid.join(', ')}`);
     }
-    
+
     return validCategories;
   }
 
   async runAnalyzers(categories, detailed) {
     const results = {};
-    
+
     for (const category of categories) {
       const analyzer = this.analyzers[category];
-      
+
       if (!analyzer) {
         console.warn(`Warning: No analyzer found for category: ${category}`);
         continue;
@@ -254,7 +254,7 @@ export class ProjectScorer {
 
       try {
         console.log(`📊 Analyzing ${analyzer.categoryName || category}...`);
-        
+
         // Performance monitoring for individual analyzer
         const analyzerTiming = this.performanceMonitor.startTiming(`analyzer_${category}`);
         const result = await analyzer.analyze();
@@ -263,19 +263,19 @@ export class ProjectScorer {
           score: result.score,
           maxScore: result.maxScore
         });
-        
+
         results[category] = {
           ...result,
           timestamp: new Date().toISOString()
         };
-        
+
         if (detailed) {
           console.log(`✓ ${analyzer.categoryName || category} completed in ${analysisTime}ms`);
         }
-        
+
       } catch (error) {
         console.error(`❌ Analysis failed for ${category}: ${error.message}`);
-        
+
         results[category] = {
           categoryName: analyzer.categoryName || category,
           score: 0,
@@ -286,7 +286,7 @@ export class ProjectScorer {
         };
       }
     }
-    
+
     return results;
   }
 
@@ -300,13 +300,13 @@ export class ProjectScorer {
     } catch (error) {
       // Ignore error and use default
     }
-    
+
     return '1.0.0';
   }
 
   /**
    * Static factory method to score a project without creating an instance
-   * 
+   *
    * @static
    * @param {string} projectRoot - Path to the project root directory
    * @param {Object} [options={}] - Scoring configuration and options
@@ -314,7 +314,7 @@ export class ProjectScorer {
    * @param {string[]} [options.categories] - Categories to analyze
    * @param {boolean} [options.detailed] - Include detailed analysis
    * @returns {Promise<Object>} Complete scoring results
-   * 
+   *
    * @example
    * const results = await ProjectScorer.scoreProject('/path/to/project', {
    *   categories: ['structure', 'quality'],
@@ -327,20 +327,20 @@ export class ProjectScorer {
       verbose: options.verbose || false,
       ...options
     };
-    
+
     const scorer = new ProjectScorer(config);
     return await scorer.scoreProject(options);
   }
 
   /**
    * Static method to automatically detect project type and score
-   * 
+   *
    * @static
    * @param {string} projectRoot - Path to the project root directory
    * @param {Object} [options={}] - Scoring options
    * @param {boolean} [options.verbose=false] - Enable verbose logging
    * @returns {Promise<Object>} Complete scoring results with auto-detected project metadata
-   * 
+   *
    * @example
    * // Automatically detect and score any project
    * const results = await ProjectScorer.autoDetectAndScore('/path/to/project');
@@ -349,10 +349,10 @@ export class ProjectScorer {
   static async autoDetectAndScore(projectRoot, options = {}) {
     const detector = new ProjectTypeDetector(projectRoot);
     const projectType = detector.detectProjectType();
-    
+
     const packageJsonPath = path.join(projectRoot, 'package.json');
     let projectName = path.basename(projectRoot);
-    
+
     if (existsSync(packageJsonPath)) {
       try {
         const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
@@ -361,7 +361,7 @@ export class ProjectScorer {
         // Use default name
       }
     }
-    
+
     const config = {
       projectRoot,
       projectType,
@@ -369,17 +369,17 @@ export class ProjectScorer {
       verbose: options.verbose || false,
       ...options
     };
-    
+
     const scorer = new ProjectScorer(config);
     return await scorer.scoreProject(options);
   }
 
   /**
    * Calculate letter grade from percentage score
-   * 
+   *
    * @param {number} percentage - Percentage score (0.0 to 1.0)
    * @returns {string} Letter grade (A+ to F)
-   * 
+   *
    * @example
    * const grade = scorer.calculateGrade(0.85); // Returns 'B+'
    */
@@ -389,11 +389,11 @@ export class ProjectScorer {
 
   /**
    * Get complexity score based on value and thresholds
-   * 
+   *
    * @param {number} value - Value to evaluate
    * @param {Array<{threshold: number, score: string}>} thresholds - Threshold definitions
    * @returns {string} Complexity level ('low', 'medium', 'high', 'very_high')
-   * 
+   *
    * @example
    * const complexity = scorer.getComplexityScore(25, [
    *   { threshold: 10, score: 'low' },
@@ -406,11 +406,11 @@ export class ProjectScorer {
 
   /**
    * Identify frameworks used in the project from dependencies
-   * 
+   *
    * @param {Object} [dependencies={}] - Production dependencies
    * @param {Object} [devDependencies={}] - Development dependencies
    * @returns {string[]} Array of identified framework names
-   * 
+   *
    * @example
    * const frameworks = scorer.identifyFrameworks(
    *   { react: '^18.0.0', express: '^4.18.0' },
@@ -424,11 +424,11 @@ export class ProjectScorer {
 
   /**
    * Identify testing tools from project dependencies
-   * 
+   *
    * @param {Object} [dependencies={}] - Production dependencies
-   * @param {Object} [devDependencies={}] - Development dependencies  
+   * @param {Object} [devDependencies={}] - Development dependencies
    * @returns {string[]} Array of identified testing tool names
-   * 
+   *
    * @example
    * const tools = scorer.identifyTestingTools({}, {
    *   jest: '^29.0.0',
@@ -440,25 +440,25 @@ export class ProjectScorer {
     const allDeps = { ...dependencies, ...devDependencies };
     const tools = [];
 
-    if (allDeps.jest) tools.push('Jest');
-    if (allDeps.vitest) tools.push('Vitest');
-    if (allDeps.mocha) tools.push('Mocha');
-    if (allDeps.jasmine) tools.push('Jasmine');
-    if (allDeps.cypress) tools.push('Cypress');
-    if (allDeps.playwright) tools.push('Playwright');
-    if (allDeps['@testing-library/react']) tools.push('React Testing Library');
-    if (allDeps['@testing-library/vue']) tools.push('Vue Testing Library');
+    if (allDeps.jest) {tools.push('Jest');}
+    if (allDeps.vitest) {tools.push('Vitest');}
+    if (allDeps.mocha) {tools.push('Mocha');}
+    if (allDeps.jasmine) {tools.push('Jasmine');}
+    if (allDeps.cypress) {tools.push('Cypress');}
+    if (allDeps.playwright) {tools.push('Playwright');}
+    if (allDeps['@testing-library/react']) {tools.push('React Testing Library');}
+    if (allDeps['@testing-library/vue']) {tools.push('Vue Testing Library');}
 
     return tools;
   }
 
   /**
    * Identify build tools from project dependencies
-   * 
+   *
    * @param {Object} [dependencies={}] - Production dependencies
    * @param {Object} [devDependencies={}] - Development dependencies
    * @returns {string[]} Array of identified build tool names
-   * 
+   *
    * @example
    * const tools = scorer.identifyBuildTools({}, {
    *   webpack: '^5.0.0',
@@ -470,14 +470,14 @@ export class ProjectScorer {
     const allDeps = { ...dependencies, ...devDependencies };
     const tools = [];
 
-    if (allDeps.webpack) tools.push('Webpack');
-    if (allDeps.vite) tools.push('Vite');
-    if (allDeps.rollup) tools.push('Rollup');
-    if (allDeps.parcel) tools.push('Parcel');
-    if (allDeps.typescript) tools.push('TypeScript');
-    if (allDeps.babel || allDeps['@babel/core']) tools.push('Babel');
-    if (allDeps.esbuild) tools.push('ESBuild');
-    if (allDeps.swc) tools.push('SWC');
+    if (allDeps.webpack) {tools.push('Webpack');}
+    if (allDeps.vite) {tools.push('Vite');}
+    if (allDeps.rollup) {tools.push('Rollup');}
+    if (allDeps.parcel) {tools.push('Parcel');}
+    if (allDeps.typescript) {tools.push('TypeScript');}
+    if (allDeps.babel || allDeps['@babel/core']) {tools.push('Babel');}
+    if (allDeps.esbuild) {tools.push('ESBuild');}
+    if (allDeps.swc) {tools.push('SWC');}
 
     return tools;
   }
@@ -490,7 +490,7 @@ export class ProjectScorer {
     console.log(`⏱️  Total duration: ${summary.totalDuration}ms`);
     console.log(`💾 Peak memory usage: ${summary.memory.peak}MB`);
     console.log(`🔧 Operations completed: ${summary.operationCount}`);
-    
+
     if (summary.slowestOperations.length > 0) {
       console.log('\n⚡ Slowest operations:');
       summary.slowestOperations.forEach((op, i) => {

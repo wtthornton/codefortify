@@ -330,7 +330,7 @@ export class MCPConnectionTester {
 
   async sendRequest(request, timeoutMs = 5000) {
     return new Promise((resolve, reject) => {
-      const requestStr = JSON.stringify(request) + '\\n';
+      const requestStr = JSON.stringify(request) + '\n';
       let responseStr = '';
 
       const timeout = setTimeout(() => {

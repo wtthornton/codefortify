@@ -1,6 +1,6 @@
 /**
  * ScoringReport Unit Tests
- * 
+ *
  * Tests the report generation functionality
  */
 
@@ -13,7 +13,7 @@ describe('ScoringReport', () => {
 
   beforeEach(() => {
     report = new ScoringReport();
-    
+
     mockResults = {
       overall: {
         score: 75,
@@ -31,7 +31,7 @@ describe('ScoringReport', () => {
           issues: ['Large modules detected', 'Inconsistent naming']
         },
         quality: {
-          categoryName: 'Code Quality & Maintainability', 
+          categoryName: 'Code Quality & Maintainability',
           score: 18,
           maxScore: 20,
           grade: 'A-',
@@ -109,7 +109,7 @@ describe('ScoringReport', () => {
   describe('HTML Report Generation', () => {
     it('should generate valid HTML structure', async () => {
       const html = await report.generateHTML(mockResults);
-      
+
       expect(html).toContain('<!DOCTYPE html>');
       expect(html).toContain('<html lang="en">');
       expect(html).toContain('<head>');
@@ -119,7 +119,7 @@ describe('ScoringReport', () => {
 
     it('should include project information', async () => {
       const html = await report.generateHTML(mockResults);
-      
+
       expect(html).toContain('test-project');
       expect(html).toContain('75'); // score
       expect(html).toContain('C+'); // grade
@@ -127,7 +127,7 @@ describe('ScoringReport', () => {
 
     it('should include Chart.js integration', async () => {
       const html = await report.generateHTML(mockResults);
-      
+
       expect(html).toContain('chart.js');
       expect(html).toContain('Chart(');
       expect(html).toContain('doughnut');
@@ -136,21 +136,21 @@ describe('ScoringReport', () => {
 
     it('should include FontAwesome icons', async () => {
       const html = await report.generateHTML(mockResults);
-      
+
       expect(html).toContain('font-awesome');
       expect(html).toContain('fas fa-');
     });
 
     it('should include all categories', async () => {
       const html = await report.generateHTML(mockResults);
-      
+
       expect(html).toContain('Code Structure & Architecture');
       expect(html).toContain('Code Quality & Maintainability');
     });
 
     it('should display issues correctly', async () => {
       const html = await report.generateHTML(mockResults);
-      
+
       expect(html).toContain('Large modules detected');
       expect(html).toContain('Inconsistent naming');
       expect(html).toContain('Issues Found (2)');
@@ -158,7 +158,7 @@ describe('ScoringReport', () => {
 
     it('should display recommendations', async () => {
       const html = await report.generateHTML(mockResults);
-      
+
       expect(html).toContain('Priority Recommendations');
       expect(html).toContain('Improve test coverage');
       expect(html).toContain('+5pts');
@@ -167,7 +167,7 @@ describe('ScoringReport', () => {
 
     it('should include theme toggle functionality', async () => {
       const html = await report.generateHTML(mockResults);
-      
+
       expect(html).toContain('toggleTheme');
       expect(html).toContain('data-theme="dark"');
       expect(html).toContain('theme-toggle');
@@ -175,7 +175,7 @@ describe('ScoringReport', () => {
 
     it('should include search functionality', async () => {
       const html = await report.generateHTML(mockResults);
-      
+
       expect(html).toContain('searchInput');
       expect(html).toContain('Search report content');
     });
@@ -183,7 +183,7 @@ describe('ScoringReport', () => {
     it('should handle missing recommendations', async () => {
       const resultsWithoutRecs = { ...mockResults };
       delete resultsWithoutRecs.recommendations;
-      
+
       const html = await report.generateHTML(resultsWithoutRecs);
       expect(html).toBeDefined();
       expect(html).toContain('<!DOCTYPE html>');
@@ -200,7 +200,7 @@ describe('ScoringReport', () => {
           }
         }
       };
-      
+
       const html = await report.generateHTML(resultsWithDecimals);
       expect(html).toContain('76'); // Rounded overall score
       expect(html).toContain('15.3'); // Category score with 1 decimal
@@ -210,9 +210,9 @@ describe('ScoringReport', () => {
   describe('JSON Report Generation', () => {
     it('should generate valid JSON', async () => {
       const json = await report.generateJSON(mockResults);
-      
+
       expect(() => JSON.parse(json)).not.toThrow();
-      
+
       const parsed = JSON.parse(json);
       expect(parsed.overall).toEqual(mockResults.overall);
       expect(parsed.categories).toEqual(mockResults.categories);
@@ -220,7 +220,7 @@ describe('ScoringReport', () => {
 
     it('should format JSON with proper indentation', async () => {
       const json = await report.generateJSON(mockResults);
-      
+
       expect(json).toContain('  '); // Should have 2-space indentation
       expect(json.split('\n').length).toBeGreaterThan(10); // Should be multi-line
     });
@@ -229,7 +229,7 @@ describe('ScoringReport', () => {
   describe('Markdown Report Generation', () => {
     it('should generate valid markdown', async () => {
       const markdown = await report.generateMarkdown(mockResults);
-      
+
       expect(markdown).toContain('# Context7 Quality Score Report');
       expect(markdown).toContain('## Overall Results');
       expect(markdown).toContain('## Category Breakdown');
@@ -237,7 +237,7 @@ describe('ScoringReport', () => {
 
     it('should include project metadata', async () => {
       const markdown = await report.generateMarkdown(mockResults);
-      
+
       expect(markdown).toContain('**Project:** test-project');
       expect(markdown).toContain('**Type:** javascript');
       expect(markdown).toContain('**Score:** 75/100 (C+)');
@@ -245,7 +245,7 @@ describe('ScoringReport', () => {
 
     it('should include category information', async () => {
       const markdown = await report.generateMarkdown(mockResults);
-      
+
       expect(markdown).toContain('### ⚡ Code Structure & Architecture');
       expect(markdown).toContain('- **Score:** 15/20 (75%)');
       expect(markdown).toContain('- Large modules detected');
@@ -253,7 +253,7 @@ describe('ScoringReport', () => {
 
     it('should include recommendations when present', async () => {
       const markdown = await report.generateMarkdown(mockResults);
-      
+
       expect(markdown).toContain('## 🎯 Priority Recommendations');
       expect(markdown).toContain('1. **[+5pts]** Improve test coverage');
       expect(markdown).toContain('2. **[+3pts]** Refactor large modules');
@@ -266,7 +266,7 @@ describe('ScoringReport', () => {
           structure: { ...mockResults.categories.structure, score: 18 }
         }
       };
-      
+
       const markdown = await report.generateMarkdown(highScoreResults);
       expect(markdown).toContain('### ✅'); // Should use checkmark for high scores
     });
@@ -276,7 +276,7 @@ describe('ScoringReport', () => {
     it('should handle browser opening on different platforms', () => {
       // Test the platform detection logic
       const originalPlatform = process.platform;
-      
+
       // We can't easily test actual browser opening without mocking exec
       // But we can test that the method exists and handles errors gracefully
       expect(typeof report.openInBrowser).toBe('function');

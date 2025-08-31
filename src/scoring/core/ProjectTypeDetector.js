@@ -1,6 +1,6 @@
 /**
  * Project Type Detector
- * 
+ *
  * Smart project type detection based on file structure and dependencies
  */
 
@@ -16,7 +16,7 @@ export class ProjectTypeDetector {
     try {
       // Check for package.json and analyze dependencies
       const packageJsonPath = path.join(this.projectRoot, 'package.json');
-      
+
       if (existsSync(packageJsonPath)) {
         const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
         const allDeps = {
@@ -41,7 +41,7 @@ export class ProjectTypeDetector {
         }
 
         // Node.js API detection
-        if (allDeps.express || allDeps.fastify || allDeps.koa || 
+        if (allDeps.express || allDeps.fastify || allDeps.koa ||
             allDeps['@nestjs/core'] || this.hasAPIFiles()) {
           return 'node-api';
         }
@@ -58,11 +58,11 @@ export class ProjectTypeDetector {
       }
 
       // File-based detection fallbacks
-      if (this.hasReactFiles()) return 'react-webapp';
-      if (this.hasVueFiles()) return 'vue-webapp';
-      if (this.hasAPIFiles()) return 'node-api';
-      if (this.hasMCPServerFiles()) return 'mcp-server';
-      if (this.hasCLIFiles()) return 'cli-tool';
+      if (this.hasReactFiles()) {return 'react-webapp';}
+      if (this.hasVueFiles()) {return 'vue-webapp';}
+      if (this.hasAPIFiles()) {return 'node-api';}
+      if (this.hasMCPServerFiles()) {return 'mcp-server';}
+      if (this.hasCLIFiles()) {return 'cli-tool';}
 
       return 'javascript';
 
@@ -79,8 +79,8 @@ export class ProjectTypeDetector {
       'src/server/Context7MCPServer.js',
       'AGENTS.md'
     ];
-    
-    return mcpIndicators.some(file => 
+
+    return mcpIndicators.some(file =>
       existsSync(path.join(this.projectRoot, file))
     );
   }
@@ -88,12 +88,12 @@ export class ProjectTypeDetector {
   hasReactFiles() {
     const reactIndicators = [
       'src/App.jsx',
-      'src/App.tsx', 
+      'src/App.tsx',
       'src/components',
       'public/index.html'
     ];
-    
-    return reactIndicators.some(file => 
+
+    return reactIndicators.some(file =>
       existsSync(path.join(this.projectRoot, file))
     );
   }
@@ -105,8 +105,8 @@ export class ProjectTypeDetector {
       'vue.config.js',
       'src/components'
     ];
-    
-    return vueIndicators.some(file => 
+
+    return vueIndicators.some(file =>
       existsSync(path.join(this.projectRoot, file))
     );
   }
@@ -122,8 +122,8 @@ export class ProjectTypeDetector {
       'src/api',
       'api'
     ];
-    
-    return apiIndicators.some(file => 
+
+    return apiIndicators.some(file =>
       existsSync(path.join(this.projectRoot, file))
     );
   }
@@ -135,8 +135,8 @@ export class ProjectTypeDetector {
       'src/cli',
       'cli'
     ];
-    
-    return cliIndicators.some(file => 
+
+    return cliIndicators.some(file =>
       existsSync(path.join(this.projectRoot, file))
     );
   }
@@ -146,29 +146,29 @@ export class ProjectTypeDetector {
     const frameworks = [];
 
     // Frontend frameworks
-    if (allDeps.react) frameworks.push('React');
-    if (allDeps.vue) frameworks.push('Vue');
-    if (allDeps.svelte) frameworks.push('Svelte');
-    if (allDeps.angular || allDeps['@angular/core']) frameworks.push('Angular');
+    if (allDeps.react) {frameworks.push('React');}
+    if (allDeps.vue) {frameworks.push('Vue');}
+    if (allDeps.svelte) {frameworks.push('Svelte');}
+    if (allDeps.angular || allDeps['@angular/core']) {frameworks.push('Angular');}
 
     // Backend frameworks
-    if (allDeps.express) frameworks.push('Express');
-    if (allDeps.fastify) frameworks.push('Fastify');
-    if (allDeps.koa) frameworks.push('Koa');
-    if (allDeps['@nestjs/core']) frameworks.push('NestJS');
+    if (allDeps.express) {frameworks.push('Express');}
+    if (allDeps.fastify) {frameworks.push('Fastify');}
+    if (allDeps.koa) {frameworks.push('Koa');}
+    if (allDeps['@nestjs/core']) {frameworks.push('NestJS');}
 
     // Build tools and meta-frameworks
-    if (allDeps.next) frameworks.push('Next.js');
-    if (allDeps.nuxt) frameworks.push('Nuxt.js');
-    if (allDeps.gatsby) frameworks.push('Gatsby');
-    if (allDeps.vite) frameworks.push('Vite');
-    if (allDeps.webpack) frameworks.push('Webpack');
+    if (allDeps.next) {frameworks.push('Next.js');}
+    if (allDeps.nuxt) {frameworks.push('Nuxt.js');}
+    if (allDeps.gatsby) {frameworks.push('Gatsby');}
+    if (allDeps.vite) {frameworks.push('Vite');}
+    if (allDeps.webpack) {frameworks.push('Webpack');}
 
     // Testing frameworks
-    if (allDeps.jest) frameworks.push('Jest');
-    if (allDeps.vitest) frameworks.push('Vitest');
-    if (allDeps.mocha) frameworks.push('Mocha');
-    if (allDeps.cypress) frameworks.push('Cypress');
+    if (allDeps.jest) {frameworks.push('Jest');}
+    if (allDeps.vitest) {frameworks.push('Vitest');}
+    if (allDeps.mocha) {frameworks.push('Mocha');}
+    if (allDeps.cypress) {frameworks.push('Cypress');}
 
     return frameworks;
   }
@@ -176,7 +176,7 @@ export class ProjectTypeDetector {
   getProjectComplexityIndicators() {
     const indicators = {
       hasTypeScript: existsSync(path.join(this.projectRoot, 'tsconfig.json')),
-      hasMonorepo: existsSync(path.join(this.projectRoot, 'lerna.json')) || 
+      hasMonorepo: existsSync(path.join(this.projectRoot, 'lerna.json')) ||
                   existsSync(path.join(this.projectRoot, 'nx.json')),
       hasDocker: existsSync(path.join(this.projectRoot, 'Dockerfile')),
       hasCI: existsSync(path.join(this.projectRoot, '.github/workflows')) ||
@@ -200,8 +200,8 @@ export class ProjectTypeDetector {
       'src/database',
       'database'
     ];
-    
-    return dbIndicators.some(file => 
+
+    return dbIndicators.some(file =>
       existsSync(path.join(this.projectRoot, file))
     );
   }

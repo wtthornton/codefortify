@@ -11,52 +11,80 @@ export class PatternProvider {
   }
 
   async generatePatterns() {
-    const framework = this.config.projectType;
+    try {
+      console.error(`PatternProvider: Generating patterns for ${this.config.projectType}`);
+      const framework = this.config.projectType;
 
-    switch (framework) {
-    case 'react-webapp':
-      return this.getReactPatterns();
-    case 'vue-webapp':
-      return this.getVuePatterns();
-    case 'svelte-webapp':
-      return this.getSveltePatterns();
-    case 'node-api':
-      return this.getNodePatterns();
-    default:
-      return this.getJavaScriptPatterns();
+      let patterns;
+      switch (framework) {
+      case 'react-webapp':
+        patterns = this.getReactPatterns();
+        break;
+      case 'vue-webapp':
+        patterns = this.getVuePatterns();
+        break;
+      case 'svelte-webapp':
+        patterns = this.getSveltePatterns();
+        break;
+      case 'node-api':
+        patterns = this.getNodePatterns();
+        break;
+      default:
+        patterns = this.getJavaScriptPatterns();
+      }
+      
+      console.error('PatternProvider: Patterns generated successfully');
+      return patterns;
+    } catch (error) {
+      console.error('PatternProvider: Pattern generation failed:', error.message);
+      throw new Error(`Pattern generation failed: ${error.message}`);
     }
   }
 
   async getPattern(patternType, framework = this.config.projectType) {
-    const patterns = {
-      react: {
-        component: this.getReactComponentPattern(),
-        hook: this.getReactHookPattern(),
-        service: this.getServicePattern(),
-        test: this.getReactTestPattern()
-      },
-      vue: {
-        component: this.getVueComponentPattern(),
-        service: this.getServicePattern(),
-        test: this.getVueTestPattern()
-      },
-      node: {
-        service: this.getNodeServicePattern(),
-        middleware: this.getMiddlewarePattern(),
-        route: this.getRoutePattern(),
-        test: this.getNodeTestPattern()
-      },
-      javascript: {
-        class: this.getJavaScriptClassPattern(),
-        function: this.getJavaScriptFunctionPattern(),
-        test: this.getJavaScriptTestPattern()
+    try {
+      console.error(`PatternProvider: Getting pattern ${patternType} for ${framework}`);
+      
+      const patterns = {
+        react: {
+          component: () => this.getReactComponentPattern(),
+          hook: () => this.getReactHookPattern(),
+          service: () => this.getServicePattern(),
+          test: () => this.getReactTestPattern()
+        },
+        vue: {
+          component: () => this.getVueComponentPattern(),
+          service: () => this.getServicePattern(),
+          test: () => this.getVueTestPattern()
+        },
+        node: {
+          service: () => this.getNodeServicePattern(),
+          middleware: () => this.getMiddlewarePattern(),
+          route: () => this.getRoutePattern(),
+          test: () => this.getNodeTestPattern()
+        },
+        javascript: {
+          class: () => this.getJavaScriptClassPattern(),
+          function: () => this.getJavaScriptFunctionPattern(),
+          test: () => this.getJavaScriptTestPattern()
+        }
+      };
+
+      const frameworkKey = framework.split('-')[0]; // react-webapp -> react
+      const frameworkPatterns = patterns[frameworkKey] || patterns.javascript;
+      const patternGenerator = frameworkPatterns[patternType];
+      
+      if (!patternGenerator) {
+        return `Pattern '${patternType}' not found for framework '${framework}'. Available patterns: ${Object.keys(frameworkPatterns).join(', ')}`;
       }
-    };
-
-    const frameworkKey = framework.split('-')[0]; // react-webapp -> react
-    const frameworkPatterns = patterns[frameworkKey] || patterns.javascript;
-
-    return frameworkPatterns[patternType] || 'Pattern not found for this framework';
+      
+      const result = patternGenerator();
+      console.error('PatternProvider: Pattern retrieved successfully');
+      return result;
+    } catch (error) {
+      console.error('PatternProvider: Pattern retrieval failed:', error.message);
+      throw new Error(`Pattern retrieval failed: ${error.message}`);
+    }
   }
 
   getReactPatterns() {
@@ -377,7 +405,14 @@ describe('ExampleComponent', () => {
 });`;
   }
 
-  // Placeholder methods for other frameworks
+  getSveltePatterns() {
+    return `// Context7 Svelte Patterns for ${this.config.projectName}
+// Svelte patterns would be implemented here
+export default 'Svelte patterns placeholder';
+`;
+  }
+
+  // Vue patterns
   getVuePatterns() {
     return `// Context7 Vue Patterns for ${this.config.projectName}
 
@@ -699,9 +734,41 @@ function validateResult(result) {
   }
 
   async generateComponentScaffold(componentName, componentType, framework, props) {
-    // This would generate a complete component scaffold
-    // For now, return a basic example
-    return `// Generated ${componentName} scaffold for ${framework}
+    try {
+      console.error(`PatternProvider: Generating scaffold for ${componentName} (${componentType})`);
+      
+      if (!componentName || !componentType) {
+        throw new Error('Component name and type are required');
+      }
+      
+      const propsArray = Array.isArray(props) ? props : [];
+      const frameworkKey = framework ? framework.split('-')[0] : 'javascript';
+      
+      let scaffold;
+      switch (frameworkKey) {
+      case 'react':
+        scaffold = this.generateReactScaffold(componentName, componentType, propsArray);
+        break;
+      case 'vue':
+        scaffold = this.generateVueScaffold(componentName, componentType, propsArray);
+        break;
+      case 'svelte':
+        scaffold = this.generateSvelteScaffold(componentName, componentType, propsArray);
+        break;
+      default:
+        scaffold = this.generateJavaScriptScaffold(componentName, componentType, propsArray);
+      }
+      
+      console.error('PatternProvider: Component scaffold generated successfully');
+      return scaffold;
+    } catch (error) {
+      console.error('PatternProvider: Component scaffold generation failed:', error.message);
+      throw new Error(`Component scaffold generation failed: ${error.message}`);
+    }
+  }
+  
+  generateReactScaffold(componentName, componentType, props) {
+    return `// Generated ${componentName} scaffold for React
 // Component type: ${componentType}
 // Props: ${props.join(', ')}
 
@@ -722,6 +789,67 @@ export const ${componentName}: React.FC<${componentName}Props> = ({
     </div>
   );
 };
+
+export default ${componentName};`;
+  }
+  
+  generateVueScaffold(componentName, componentType, props) {
+    return `<!-- Generated ${componentName} scaffold for Vue -->
+<!-- Component type: ${componentType} -->
+<!-- Props: ${props.join(', ')} -->
+
+<template>
+  <div class="p-4">
+    <h2 class="text-xl font-semibold">${componentName}</h2>
+    <!-- Component implementation -->
+  </div>
+</template>
+
+<script setup lang="ts">
+interface Props {
+  ${props.map(prop => `${prop}: any;`).join('\n  ')}
+}
+
+defineProps<Props>();
+
+// AI ASSISTANT CONTEXT: ${componentName} - ${componentType} component
+</script>`;
+  }
+  
+  generateSvelteScaffold(componentName, componentType, props) {
+    return `<!-- Generated ${componentName} scaffold for Svelte -->
+<!-- Component type: ${componentType} -->
+<!-- Props: ${props.join(', ')} -->
+
+<script lang="ts">
+  // AI ASSISTANT CONTEXT: ${componentName} - ${componentType} component
+  ${props.map(prop => `export let ${prop}: any;`).join('\n  ')}
+</script>
+
+<div class="p-4">
+  <h2 class="text-xl font-semibold">${componentName}</h2>
+  <!-- Component implementation -->
+</div>`;
+  }
+  
+  generateJavaScriptScaffold(componentName, componentType, props) {
+    return `// Generated ${componentName} scaffold for JavaScript
+// Component type: ${componentType}
+// Props: ${props.join(', ')}
+
+/** AI ASSISTANT CONTEXT: ${componentName} - ${componentType} component */
+export class ${componentName} {
+  constructor(${props.map(prop => `${prop}`).join(', ')}) {
+    ${props.map(prop => `this.${prop} = ${prop};`).join('\n    ')}
+  }
+  
+  render() {
+    return \`<div class="p-4">
+      <h2 class="text-xl font-semibold">${componentName}</h2>
+      <!-- Component implementation -->
+    </div>\`;
+  }
+}
 
 export default ${componentName};`;
   }

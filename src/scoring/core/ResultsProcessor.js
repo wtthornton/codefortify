@@ -1,6 +1,6 @@
 /**
  * Results Processor
- * 
+ *
  * Handles processing and aggregation of scoring results from multiple analyzers
  */
 
@@ -40,7 +40,7 @@ export class ResultsProcessor {
 
     // Calculate overall score
     this.calculateOverallScore(results);
-    
+
     return results;
   }
 
@@ -85,7 +85,7 @@ export class ResultsProcessor {
     for (const category of Object.values(results.categories)) {
       totalScore += category.score;
       totalMaxScore += category.maxScore;
-      
+
       if (category.error) {
         hasErrors = true;
       }
@@ -94,8 +94,8 @@ export class ResultsProcessor {
     // Update overall results
     results.overall.score = totalScore;
     results.overall.maxScore = totalMaxScore;
-    results.overall.percentage = totalMaxScore > 0 
-      ? Math.round((totalScore / totalMaxScore) * 100) 
+    results.overall.percentage = totalMaxScore > 0
+      ? Math.round((totalScore / totalMaxScore) * 100)
       : 0;
     results.overall.grade = this.calculateGrade(totalScore / totalMaxScore);
     results.overall.hasErrors = hasErrors;
@@ -105,25 +105,25 @@ export class ResultsProcessor {
   }
 
   calculateGrade(percentage) {
-    if (percentage >= 0.98) return 'A+';
-    if (percentage >= 0.93) return 'A';
-    if (percentage >= 0.90) return 'A-';
-    if (percentage >= 0.87) return 'B+';
-    if (percentage >= 0.83) return 'B';
-    if (percentage >= 0.80) return 'B-';
-    if (percentage >= 0.77) return 'C+';
-    if (percentage >= 0.73) return 'C';
-    if (percentage >= 0.70) return 'C-';
-    if (percentage >= 0.67) return 'D+';
-    if (percentage >= 0.65) return 'D';
-    if (percentage >= 0.60) return 'D-';
+    if (percentage >= 0.98) {return 'A+';}
+    if (percentage >= 0.93) {return 'A';}
+    if (percentage >= 0.90) {return 'A-';}
+    if (percentage >= 0.87) {return 'B+';}
+    if (percentage >= 0.83) {return 'B';}
+    if (percentage >= 0.80) {return 'B-';}
+    if (percentage >= 0.77) {return 'C+';}
+    if (percentage >= 0.73) {return 'C';}
+    if (percentage >= 0.70) {return 'C-';}
+    if (percentage >= 0.67) {return 'D+';}
+    if (percentage >= 0.65) {return 'D';}
+    if (percentage >= 0.60) {return 'D-';}
     return 'F';
   }
 
   getPerformanceLevel(score) {
-    if (score >= 90) return 'excellent';
-    if (score >= 75) return 'good';
-    if (score >= 60) return 'warning';
+    if (score >= 90) {return 'excellent';}
+    if (score >= 75) {return 'good';}
+    if (score >= 60) {return 'warning';}
     return 'poor';
   }
 
@@ -133,13 +133,13 @@ export class ResultsProcessor {
         return thresholds[i].score;
       }
     }
-    
+
     return 'very_high'; // If above all thresholds
   }
 
   aggregateRecommendations(results) {
     const allRecommendations = [];
-    
+
     // Collect recommendations from all categories
     for (const category of Object.values(results.categories)) {
       if (category.recommendations) {
@@ -149,9 +149,9 @@ export class ResultsProcessor {
 
     // Sort by impact (highest first)
     allRecommendations.sort((a, b) => (b.impact || 0) - (a.impact || 0));
-    
+
     // Remove duplicates based on suggestion text
-    const unique = allRecommendations.filter((rec, index, arr) => 
+    const unique = allRecommendations.filter((rec, index, arr) =>
       arr.findIndex(r => r.suggestion === rec.suggestion) === index
     );
 
@@ -164,7 +164,7 @@ export class ResultsProcessor {
       ...systemInfo,
       analyzedAt: new Date().toISOString()
     };
-    
+
     return results;
   }
 
@@ -175,7 +175,7 @@ export class ResultsProcessor {
     if (!results.overall) {
       errors.push('Missing overall results');
     }
-    
+
     if (!results.categories || Object.keys(results.categories).length === 0) {
       errors.push('Missing category results');
     }
@@ -188,7 +188,7 @@ export class ResultsProcessor {
     if (results.overall) {
       const categorySum = Object.values(results.categories)
         .reduce((sum, cat) => sum + (cat.score || 0), 0);
-      
+
       if (Math.abs(categorySum - results.overall.score) > 0.1) {
         errors.push('Score inconsistency between overall and categories');
       }
@@ -202,33 +202,33 @@ export class ResultsProcessor {
 
   formatResultsForOutput(results, format = 'console') {
     switch (format) {
-      case 'console':
-        return this.formatConsoleOutput(results);
-      case 'json':
-        return JSON.stringify(results, null, 2);
-      case 'summary':
-        return this.formatSummaryOutput(results);
-      default:
-        return results;
+    case 'console':
+      return this.formatConsoleOutput(results);
+    case 'json':
+      return JSON.stringify(results, null, 2);
+    case 'summary':
+      return this.formatSummaryOutput(results);
+    default:
+      return results;
     }
   }
 
   formatConsoleOutput(results) {
     const output = [];
-    
+
     output.push(`\n📊 Overall Score: ${results.overall.score}/${results.overall.maxScore} (${results.overall.percentage}%) ${results.overall.grade}`);
     output.push('─'.repeat(50));
-    
+
     for (const [key, category] of Object.entries(results.categories)) {
       output.push(`${category.categoryName}: ${category.score}/${category.maxScore} (${category.grade})`);
-      
+
       if (category.issues?.length > 0) {
         category.issues.forEach(issue => {
           output.push(`  ⚠ ${issue}`);
         });
       }
     }
-    
+
     return output.join('\n');
   }
 
