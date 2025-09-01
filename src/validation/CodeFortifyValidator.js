@@ -16,7 +16,7 @@ export class CodeFortifyValidator {
       projectRoot: config.projectRoot || process.cwd(),
       projectType: config.projectType || 'javascript',
       strictMode: config.strictMode ?? true,
-      agentOsEnabled: false, // Disabled for this project
+      codefortifyEnabled: false, // Disabled for this project
       ...config
     };
 
@@ -31,15 +31,15 @@ export class CodeFortifyValidator {
       'CLAUDE.md'
     ];
 
-    // Add Agent OS files if they should exist (disabled by default)
-    if (this.config.agentOsEnabled === true) {
+    // Add CodeFortify files if they should exist (disabled by default)
+    if (this.config.codefortifyEnabled === true) {
       this.requiredFiles.push(
-        '.agent-os/config.yml',
-        '.agent-os/instructions/ai-development.md',
-        '.agent-os/standards/context7-standards.md',
-        '.agent-os/standards/tech-stack.md',
-        '.agent-os/product/mission.md',
-        '.agent-os/product/roadmap.md'
+        '.codefortify/config.yml',
+        '.codefortify/instructions/ai-development.md',
+        '.codefortify/standards/context7-standards.md',
+        '.codefortify/standards/tech-stack.md',
+        '.codefortify/product/mission.md',
+        '.codefortify/product/roadmap.md'
       );
     }
 
@@ -50,7 +50,7 @@ export class CodeFortifyValidator {
 
     // Base required directories
     this.requiredDirectories = [
-      '.agent-os',
+      '.codefortify',
       'src'
     ];
 
@@ -64,11 +64,11 @@ export class CodeFortifyValidator {
     case 'vue-webapp':
     case 'svelte-webapp':
       this.requiredDirectories.push('examples');
-      if (this.config.agentOsEnabled !== false) {
+      if (this.config.codefortifyEnabled !== false) {
         this.requiredDirectories.push(
-          '.agent-os/instructions',
-          '.agent-os/standards',
-          '.agent-os/product'
+          '.codefortify/instructions',
+          '.codefortify/standards',
+          '.codefortify/product'
         );
       }
       break;
@@ -153,7 +153,7 @@ export class CodeFortifyValidator {
     console.log('🔍 Validating Agent OS configuration...');
 
     try {
-      const configPath = path.join(this.config.projectRoot, '.agent-os/config.yml');
+      const configPath = path.join(this.config.projectRoot, '.codefortify/config.yml');
       const configContent = await fs.readFile(configPath, 'utf-8');
 
       // Check for required configuration sections
@@ -328,16 +328,16 @@ export class CodeFortifyValidator {
       }
     ];
 
-    // Add optional Agent OS docs if they should exist
-    if (this.config.agentOsEnabled !== false) {
+    // Add optional CodeFortify docs if they should exist
+    if (this.config.codefortifyEnabled !== false) {
       docFiles.push(
         {
-          file: '.agent-os/instructions/ai-development.md',
+          file: '.codefortify/instructions/ai-development.md',
           content: ['Context7', 'AI ASSISTANT CONTEXT'],
           required: true
         },
         {
-          file: '.agent-os/standards/context7-standards.md',
+          file: '.codefortify/standards/context7-standards.md',
           content: ['Context7', 'React.FC', 'AI ASSISTANT CONTEXT'],
           required: true
         }

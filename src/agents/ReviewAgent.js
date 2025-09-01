@@ -1,12 +1,5 @@
 /**
  * Review Agent - Validates and scores code improvements
- *
- * Provides comprehensive code review functionality including:
- * - Quality scoring using existing ProjectScorer
- * - Issue identification and categorization
- * - Improvement validation
- * - Progress tracking across iterations
- * - Automated review criteria enforcement
  */
 
 import { ProjectScorer } from '../scoring/ProjectScorer.js';
@@ -30,28 +23,16 @@ export class ReviewAgent {
     this.reviewCriteria = this.initializeReviewCriteria();
   }
 
-  /**
-   * Main review method - comprehensive code evaluation
-   */
   async review(code, previousIteration = null) {
     const startTime = Date.now();
 
     try {
-      // Score current code state
       const currentScore = await this.scoreCode(code);
-
-      // Identify issues and opportunities
       const issues = await this.identifyIssues(code, currentScore);
-
-      // Validate improvements if this is a follow-up iteration
       const progressValidation = previousIteration
         ? await this.validateProgress(code, previousIteration)
         : null;
-
-      // Check compliance with project standards
       const compliance = await this.checkCompliance(code);
-
-      // Generate review summary
       const summary = await this.generateReviewSummary(currentScore, issues, compliance, progressValidation);
 
       const result = {
@@ -81,27 +62,18 @@ export class ReviewAgent {
     }
   }
 
-  /**
-   * Score code using the existing ProjectScorer
-   */
   async scoreCode(code) {
     try {
-      // For string code, we'll write it to a temporary structure and score
       if (typeof code === 'string') {
         return await this.scoreCodeString(code);
       } else {
-        // Assume it's a project structure
         return await this.scorer.score();
       }
     } catch (error) {
-      // Fallback to basic scoring if full scoring fails
       return await this.basicScore(code);
     }
   }
 
-  /**
-   * Score a code string by analyzing patterns
-   */
   async scoreCodeString(codeString) {
     const analysis = {
       structure: this.analyzeCodeStructure(codeString),
@@ -112,7 +84,6 @@ export class ReviewAgent {
       documentation: this.analyzeDocumentation(codeString)
     };
 
-    // Convert analysis to scoring format
     const categories = {
       structure: { score: analysis.structure.score, maxScore: 20, details: analysis.structure },
       quality: { score: analysis.quality.score, maxScore: 20, details: analysis.quality },
@@ -136,37 +107,23 @@ export class ReviewAgent {
     };
   }
 
-  /**
-   * Identify issues in the code
-   */
   async identifyIssues(code, scoreResult) {
     const issues = [];
-
-    // Critical issues (blockers)
     issues.push(...await this.identifyCriticalIssues(code, scoreResult));
-
-    // Major issues (significant impact)
     issues.push(...await this.identifyMajorIssues(code, scoreResult));
-
-    // Minor issues (improvements)
     issues.push(...await this.identifyMinorIssues(code, scoreResult));
 
-    // Sort by severity and impact
     return issues.sort((a, b) => {
       const severityOrder = { critical: 3, major: 2, minor: 1 };
       const severityDiff = severityOrder[b.severity] - severityOrder[a.severity];
-      if (severityDiff !== 0) {return severityDiff;}
+      if (severityDiff !== 0) { return severityDiff; }
       return (b.impact || 0) - (a.impact || 0);
     });
   }
 
-  /**
-   * Identify critical issues that block progress
-   */
   async identifyCriticalIssues(code, scoreResult) {
     const issues = [];
 
-    // Security vulnerabilities
     if (typeof code === 'string') {
       if (/eval\s*\(/.test(code)) {
         issues.push({
@@ -192,7 +149,6 @@ export class ReviewAgent {
         });
       }
 
-      // Syntax errors (simplified detection)
       if (this.hasSyntaxErrors(code)) {
         issues.push({
           type: 'syntax',
@@ -205,7 +161,6 @@ export class ReviewAgent {
       }
     }
 
-    // Low overall score is critical
     if (scoreResult.overall.score < 50) {
       issues.push({
         type: 'quality',
@@ -220,16 +175,12 @@ export class ReviewAgent {
     return issues;
   }
 
-  /**
-   * Identify major issues that significantly impact quality
-   */
   async identifyMajorIssues(code, scoreResult) {
     const issues = [];
 
-    // Category-specific issues
     Object.entries(scoreResult.categories).forEach(([category, result]) => {
       const percentage = (result.score / result.maxScore) * 100;
-      if (percentage < 60) { // Below 60% is major
+      if (percentage < 60) {
         issues.push({
           type: 'category',
           severity: 'major',
@@ -242,7 +193,6 @@ export class ReviewAgent {
     });
 
     if (typeof code === 'string') {
-      // Performance issues
       if (/(document\.getElementById|querySelector).*\)/g.test(code)) {
         issues.push({
           type: 'performance',
@@ -255,7 +205,6 @@ export class ReviewAgent {
         });
       }
 
-      // Missing error handling
       if (/(async|await|fetch|\.then)/.test(code) && !/try\s*\{|catch\s*\(/.test(code)) {
         issues.push({
           type: 'error-handling',
@@ -271,14 +220,10 @@ export class ReviewAgent {
     return issues;
   }
 
-  /**
-   * Identify minor issues that could be improved
-   */
   async identifyMinorIssues(code, _scoreResult) {
     const issues = [];
 
     if (typeof code === 'string') {
-      // Code style issues
       if (/var\s+\w+/.test(code)) {
         issues.push({
           type: 'style',
@@ -291,7 +236,6 @@ export class ReviewAgent {
         });
       }
 
-      // Console statements
       if (/console\.(log|error|warn|info)/.test(code)) {
         issues.push({
           type: 'style',
@@ -304,7 +248,6 @@ export class ReviewAgent {
         });
       }
 
-      // Missing comments for complex functions
       const complexFunctions = code.match(/function\s+\w+[^{]*\{[^}]{200,}\}/g);
       if (complexFunctions && complexFunctions.length > 0) {
         issues.push({
@@ -321,9 +264,6 @@ export class ReviewAgent {
     return issues;
   }
 
-  /**
-   * Check compliance with project standards
-   */
   async checkCompliance(code) {
     const compliance = {
       codefortify: true,
@@ -333,9 +273,7 @@ export class ReviewAgent {
     };
 
     try {
-      // Use existing validator
       const validationResult = await this.validator.validateProject(this.config.projectRoot);
-
       compliance.codefortify = validationResult.valid;
       if (!validationResult.valid) {
         compliance.issues.push(...validationResult.errors.map(error => ({
@@ -344,7 +282,6 @@ export class ReviewAgent {
           severity: 'major'
         })));
       }
-
     } catch (error) {
       compliance.issues.push({
         type: 'compliance',
@@ -353,9 +290,7 @@ export class ReviewAgent {
       });
     }
 
-    // Check code-level compliance
     if (typeof code === 'string') {
-      // Check for required patterns based on project type
       if (this.config.projectType === 'react-webapp') {
         if (!code.includes('import React')) {
           compliance.bestPractices = false;
@@ -371,11 +306,8 @@ export class ReviewAgent {
     return compliance;
   }
 
-  /**
-   * Validate progress from previous iteration
-   */
   async validateProgress(code, previousIteration) {
-    if (!previousIteration) {return null;}
+    if (!previousIteration) { return null; }
 
     const currentScore = await this.scoreCode(code);
     const previousScore = previousIteration.score || 0;
@@ -387,14 +319,11 @@ export class ReviewAgent {
       improvement: improvement,
       improvementPercentage: previousScore > 0 ? ((improvement / previousScore) * 100) : 0,
       isImprovement: improvement > 0,
-      significantImprovement: improvement >= 5, // 5+ points is significant
+      significantImprovement: improvement >= 5,
       categories: this.analyzeCategorialProgress(currentScore.categories, previousIteration.categories)
     };
   }
 
-  /**
-   * Generate comprehensive review summary
-   */
   async generateReviewSummary(scoreResult, issues, compliance, progress) {
     const criticalIssues = issues.filter(i => i.severity === 'critical').length;
     const majorIssues = issues.filter(i => i.severity === 'major').length;
@@ -423,13 +352,9 @@ export class ReviewAgent {
     return summary;
   }
 
-  /**
-   * Generate specific recommendations for improvement
-   */
   async generateRecommendations(issues, scoreResult) {
     const recommendations = [];
 
-    // High priority recommendations from critical issues
     const criticalIssues = issues.filter(i => i.severity === 'critical');
     criticalIssues.forEach(issue => {
       recommendations.push({
@@ -442,7 +367,6 @@ export class ReviewAgent {
       });
     });
 
-    // Category-specific recommendations
     Object.entries(scoreResult.categories).forEach(([category, result]) => {
       const percentage = (result.score / result.maxScore) * 100;
       if (percentage < 70) {
@@ -457,7 +381,6 @@ export class ReviewAgent {
       }
     });
 
-    // General improvement recommendations
     if (scoreResult.overall.score < this.config.targetScore) {
       const gap = this.config.targetScore - scoreResult.overall.score;
       recommendations.push({
@@ -473,14 +396,11 @@ export class ReviewAgent {
     return recommendations.sort((a, b) => {
       const priorityOrder = { high: 3, medium: 2, low: 1 };
       const priorityDiff = priorityOrder[b.priority] - priorityOrder[a.priority];
-      if (priorityDiff !== 0) {return priorityDiff;}
+      if (priorityDiff !== 0) { return priorityDiff; }
       return (b.impact || 0) - (a.impact || 0);
     });
   }
 
-  /**
-   * Initialize review criteria based on project type and config
-   */
   initializeReviewCriteria() {
     return {
       minimumScore: this.config.strictMode ? 80 : 60,
@@ -497,19 +417,16 @@ export class ReviewAgent {
     };
   }
 
-  /**
-   * Helper methods for code analysis
-   */
   analyzeCodeStructure(codeString) {
     const lines = codeString.split('\n').length;
     const functions = (codeString.match(/function\s+\w+|=>\s*{|\w+\s*=\s*\([^)]*\)\s*=>/g) || []).length;
     const classes = (codeString.match(/class\s+\w+/g) || []).length;
     const complexity = this.calculateComplexity(codeString);
 
-    let score = 20; // Start with max score
-    if (lines > 500) {score -= 3;} // Penalize very long files
-    if (complexity > 20) {score -= 5;} // Penalize high complexity
-    if (functions === 0 && classes === 0) {score -= 5;} // No structure
+    let score = 20;
+    if (lines > 500) { score -= 3; }
+    if (complexity > 20) { score -= 5; }
+    if (functions === 0 && classes === 0) { score -= 5; }
 
     return {
       score: Math.max(0, score),
@@ -609,7 +526,7 @@ export class ReviewAgent {
   }
 
   analyzeTestCoverage(codeString) {
-    let score = 10; // Lower default since we can't run actual tests
+    let score = 10;
     const indicators = [];
 
     if (/describe\s*\(|it\s*\(|test\s*\(/g.test(codeString)) {
@@ -652,7 +569,6 @@ export class ReviewAgent {
     };
   }
 
-  // Additional helper methods
   calculateComplexity(code) {
     const complexityKeywords = ['if', 'else', 'while', 'for', 'switch', 'case', 'catch', '&&', '||'];
     return complexityKeywords.reduce((count, keyword) => {
@@ -673,7 +589,6 @@ export class ReviewAgent {
 
   hasSyntaxErrors(code) {
     try {
-      // Basic syntax error detection - in real implementation would use a proper parser
       const braceCount = (code.match(/\{/g) || []).length - (code.match(/\}/g) || []).length;
       const parenCount = (code.match(/\(/g) || []).length - (code.match(/\)/g) || []).length;
       return braceCount !== 0 || parenCount !== 0;
@@ -683,10 +598,10 @@ export class ReviewAgent {
   }
 
   calculateGrade(score) {
-    if (score >= 90) {return 'A';}
-    if (score >= 80) {return 'B';}
-    if (score >= 70) {return 'C';}
-    if (score >= 60) {return 'D';}
+    if (score >= 90) { return 'A'; }
+    if (score >= 80) { return 'B'; }
+    if (score >= 70) { return 'C'; }
+    if (score >= 60) { return 'D'; }
     return 'F';
   }
 
@@ -694,18 +609,18 @@ export class ReviewAgent {
     const criticalIssues = issues.filter(i => i.severity === 'critical').length;
     const majorIssues = issues.filter(i => i.severity === 'major').length;
 
-    if (criticalIssues > this.reviewCriteria.criticalIssueLimit) {return false;}
-    if (majorIssues > this.reviewCriteria.majorIssueLimit) {return false;}
-    if (score < this.reviewCriteria.minimumScore) {return false;}
+    if (criticalIssues > this.reviewCriteria.criticalIssueLimit) { return false; }
+    if (majorIssues > this.reviewCriteria.majorIssueLimit) { return false; }
+    if (score < this.reviewCriteria.minimumScore) { return false; }
 
     return true;
   }
 
   determineOverallStatus(score, criticalIssues, majorIssues) {
-    if (criticalIssues > 0) {return 'critical';}
-    if (majorIssues > 3) {return 'needs-work';}
-    if (score < 70) {return 'needs-improvement';}
-    if (score < 85) {return 'good';}
+    if (criticalIssues > 0) { return 'critical'; }
+    if (majorIssues > 3) { return 'needs-work'; }
+    if (score < 70) { return 'needs-improvement'; }
+    if (score < 85) { return 'good'; }
     return 'excellent';
   }
 
@@ -724,7 +639,7 @@ export class ReviewAgent {
   }
 
   analyzeCategorialProgress(current, previous) {
-    if (!previous) {return null;}
+    if (!previous) { return null; }
 
     const progress = {};
     Object.entries(current).forEach(([category, data]) => {
@@ -757,7 +672,6 @@ export class ReviewAgent {
   }
 
   async basicScore(code) {
-    // Fallback scoring if full ProjectScorer fails
     return {
       overall: { score: 75, maxScore: 100, percentage: 75 },
       categories: {

@@ -128,9 +128,12 @@ export class ResultsProcessor {
   }
 
   getComplexityScore(value, thresholds) {
-    for (let i = thresholds.length - 1; i >= 0; i--) {
-      if (value >= thresholds[i].threshold) {
-        return thresholds[i].score;
+    // Sort thresholds by threshold value (ascending)
+    const sortedThresholds = [...thresholds].sort((a, b) => a.threshold - b.threshold);
+    
+    for (let i = 0; i < sortedThresholds.length; i++) {
+      if (value <= sortedThresholds[i].threshold) {
+        return sortedThresholds[i].score;
       }
     }
 
@@ -185,7 +188,7 @@ export class ResultsProcessor {
     }
 
     // Validate score consistency
-    if (results.overall) {
+    if (results.overall && results.categories) {
       const categorySum = Object.values(results.categories)
         .reduce((sum, cat) => sum + (cat.score || 0), 0);
 

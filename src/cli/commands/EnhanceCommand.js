@@ -10,7 +10,7 @@ import ora from 'ora';
 import { ContinuousLoopController } from '../../core/ContinuousLoopController.js';
 import { PatternLearningSystem } from '../../learning/PatternLearningSystem.js';
 import { PromptEnhancer } from '../../enhancement/PromptEnhancer.js';
-import { existsSync, readFileSync, writeFileSync } from 'fs';
+import { existsSync, readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
 import path from 'path';
 
 export class EnhanceCommand {
@@ -124,9 +124,13 @@ export class EnhanceCommand {
           content: readFileSync(input, 'utf-8')
         };
       } else if (stat.isDirectory()) {
+        // For directory input, convert to files format expected by ContinuousLoopController
+        const jsFiles = this.findJavaScriptFiles(input);
         return {
-          type: 'directory',
-          directoryPath: input
+          files: jsFiles.map(file => ({
+            path: file,
+            content: readFileSync(file, 'utf-8')
+          }))
         };
       }
     }
@@ -495,5 +499,34 @@ export class EnhanceCommand {
 `;
 
     return markdown;
+  }
+
+  /**
+   * Recursively find all JavaScript files in a directory
+   */
+  findJavaScriptFiles(dir) {
+    const files = [];
+
+    try {
+      const items = readdirSync(dir);
+
+      for (const item of items) {
+        const fullPath = path.join(dir, item);
+        const stat = statSync(fullPath);
+
+        if (stat.isDirectory()) {
+          // Skip node_modules and other common ignore patterns
+          if (!['node_modules', '.git', '.vscode', 'dist', 'build'].includes(item)) {
+            files.push(...this.findJavaScriptFiles(fullPath));
+          }
+        } else if (stat.isFile() && (item.endsWith('.js') || item.endsWith('.mjs'))) {
+          files.push(fullPath);
+        }
+      }
+    } catch (error) {
+      console.warn(chalk.yellow(`⚠️  Could not read directory ${dir}: ${error.message}`));
+    }
+
+    return files;
   }
 }

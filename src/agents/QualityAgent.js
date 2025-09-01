@@ -443,6 +443,7 @@ export class QualityAgent extends IAnalysisAgent {
   }
 
   async analyzeJSDocQualityParallel() {
+    const maxScore = 5; // Define maxScore for this function
     const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx']);
 
     // Process files in chunks for parallel analysis

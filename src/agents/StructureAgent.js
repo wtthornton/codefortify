@@ -154,6 +154,7 @@ export class StructureAgent extends IAnalysisAgent {
   }
 
   async analyzeFileOrganizationParallel() {
+    const maxScore = 5; // Define maxScore for file organization analysis
     this.analysisProgress.fileOrganization.status = 'running';
     let score = 0;
 

@@ -32,7 +32,7 @@ export class CodeFortifyMCPServer {
   constructor(config = {}) {
     this.config = {
       projectRoot: config.projectRoot || process.env.PROJECT_ROOT || process.cwd(),
-      agentOsPath: config.agentOsPath || process.env.AGENT_OS_PATH || '.agent-os',
+      codefortifyPath: config.codefortifyPath || process.env.CODEFORTIFY_PATH || '.codefortify',
       projectName: config.projectName || 'project',
       projectType: config.projectType || 'react-webapp',
       ...config
@@ -330,7 +330,7 @@ ${scaffold.content[0].text}
   static async detectProjectConfig(projectRoot) {
     const config = {
       projectRoot,
-      agentOsPath: '.agent-os'
+      codefortifyPath: '.codefortify'
     };
 
     try {

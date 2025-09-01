@@ -12,7 +12,7 @@ export class ResourceManager {
   constructor(config) {
     this.config = config;
     this.projectRoot = config.projectRoot;
-    this.agentOsPath = config.agentOsPath;
+    this.codefortifyPath = config.codefortifyPath || '.codefortify';
   }
 
   async listResources() {
@@ -65,7 +65,7 @@ export class ResourceManager {
 
       // Add project-specific resources if they exist
       try {
-        const customResourcesPath = path.join(this.projectRoot, this.agentOsPath, 'resources');
+        const customResourcesPath = path.join(this.projectRoot, this.codefortifyPath, 'resources');
         const customResources = await fs.readdir(customResourcesPath);
 
         for (const resource of customResources) {
@@ -99,22 +99,22 @@ export class ResourceManager {
 
       switch (uri) {
       case 'context7://standards/tech-stack':
-        filePath = path.join(this.projectRoot, this.agentOsPath, 'standards', 'tech-stack.md');
+        filePath = path.join(this.projectRoot, this.codefortifyPath, 'standards', 'tech-stack.md');
         break;
       case 'context7://standards/code-style':
-        filePath = path.join(this.projectRoot, this.agentOsPath, 'standards', 'code-style.md');
+        filePath = path.join(this.projectRoot, this.codefortifyPath, 'standards', 'code-style.md');
         break;
       case 'context7://standards/context7-standards':
-        filePath = path.join(this.projectRoot, this.agentOsPath, 'standards', 'context7-standards.md');
+        filePath = path.join(this.projectRoot, this.codefortifyPath, 'standards', 'context7-standards.md');
         break;
       case 'context7://product/mission':
-        filePath = path.join(this.projectRoot, this.agentOsPath, 'product', 'mission.md');
+        filePath = path.join(this.projectRoot, this.codefortifyPath, 'product', 'mission.md');
         break;
       case 'context7://product/roadmap':
-        filePath = path.join(this.projectRoot, this.agentOsPath, 'product', 'roadmap.md');
+        filePath = path.join(this.projectRoot, this.codefortifyPath, 'product', 'roadmap.md');
         break;
       case 'context7://instructions/ai-development':
-        filePath = path.join(this.projectRoot, this.agentOsPath, 'instructions', 'ai-development.md');
+        filePath = path.join(this.projectRoot, this.codefortifyPath, 'instructions', 'ai-development.md');
         break;
       case 'context7://patterns/component-patterns':
         filePath = await this.findPatternFile();
@@ -124,7 +124,7 @@ export class ResourceManager {
         // Handle custom resources
         if (uri.startsWith('context7://custom/')) {
           const resourceName = uri.replace('context7://custom/', '');
-          filePath = path.join(this.projectRoot, this.agentOsPath, 'resources', `${resourceName}.md`);
+          filePath = path.join(this.projectRoot, this.codefortifyPath, 'resources', `${resourceName}.md`);
         } else {
           throw new Error(`Unknown resource: ${uri}`);
         }
@@ -161,7 +161,7 @@ export class ResourceManager {
       path.join(this.projectRoot, 'examples', 'component_patterns_demo.tsx'),
       path.join(this.projectRoot, 'examples', 'patterns.tsx'),
       path.join(this.projectRoot, 'patterns', 'components.tsx'),
-      path.join(this.projectRoot, this.agentOsPath, 'patterns', 'components.tsx')
+      path.join(this.projectRoot, this.codefortifyPath, 'patterns', 'components.tsx')
     ];
 
     for (const filePath of possiblePaths) {

@@ -101,9 +101,13 @@ program
   .option('-t, --target <score>', 'Target quality score (default: 95)', '95')
   .option('-f, --format <format>', 'Output format (console, json, html, markdown)', 'console')
   .option('-o, --output <file>', 'Save results to file')
+  .option('--categories <categories>', 'Focus on specific categories (security,quality,performance,testing)', 'all')
   .option('--aggressive', 'Use aggressive enhancement mode')
   .option('--learn', 'Enable pattern learning from improvements')
   .option('--context7', 'Enable Context7 prompt enhancement')
+  .option('--fix-lint', 'Automatically fix ESLint issues')
+  .option('--test-coverage', 'Focus on improving test coverage')
+  .option('--save-metrics', 'Save enhancement metrics for analysis')
   .option('--no-self-measure', 'Disable self-measurement tracking')
   .option('--no-visual-testing', 'Disable visual testing and accessibility checks')
   .option('--browsers <browsers>', 'Comma-separated list of browsers (chromium,firefox,webkit)', 'chromium')
@@ -113,7 +117,7 @@ program
     await coordinator.executeEnhance(input, options);
   });
 
-// Status command  
+// Status command
 program
   .command('status')
   .description('Show current CodeFortify background activity status')
@@ -124,6 +128,20 @@ program
   .action(async (options) => {
     const coordinator = new CommandCoordinator(globalConfig, packageRoot);
     await coordinator.executeStatus(options);
+  });
+
+// Dashboard command
+program
+  .command('dashboard')
+  .description('🎨 Display real-time unified CodeFortify dashboard')
+  .option('--refresh <ms>', 'Refresh interval in milliseconds', '2000')
+  .option('--compact', 'Show compact dashboard view')
+  .option('--no-activity', 'Hide activity feed')
+  .option('--agents-only', 'Show only agent status')
+  .option('--categories-only', 'Show only category scores')
+  .action(async (options) => {
+    const coordinator = new CommandCoordinator(globalConfig, packageRoot);
+    await coordinator.executeDashboard(options);
   });
 
 // Stop command

@@ -318,8 +318,8 @@ export class StructureAnalyzer extends BaseAnalyzer {
         }
 
         // Agent OS Integration
-        if (content.includes('.agent-os') || content.includes('AgentOS') ||
-            content.includes('agent-config') || file.includes('.agent-os')) {
+        if (content.includes('.codefortify') || content.includes('CodeFortify') ||
+            content.includes('codefortify-config') || file.includes('.codefortify')) {
           patterns.agentOSIntegration = true;
         }
 
@@ -349,8 +349,8 @@ export class StructureAnalyzer extends BaseAnalyzer {
     }
 
     // PHASE 1: Check for Context7/MCP-specific directory structures
-    if (directories.some(d => d.includes('.agent-os')) ||
-        await this.fileExists('.agent-os') || await this.fileExists('src/mcp-server.js')) {
+    if (directories.some(d => d.includes('.codefortify')) ||
+        await this.fileExists('.codefortify') || await this.fileExists('src/mcp-server.js')) {
       patterns.agentOSIntegration = true;
     }
 
