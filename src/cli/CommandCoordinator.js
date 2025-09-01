@@ -106,7 +106,7 @@ export class CommandCoordinator {
       let metadata = {};
 
       if (await fs.pathExists(packageJsonPath)) {
-        const packageJson = await fs.readJSON(packageJsonPath);
+        const packageJson = await fs.readJson(packageJsonPath);
         metadata = {
           name: packageJson.name || path.basename(this.globalConfig.projectRoot),
           description: packageJson.description || 'Enhanced with Context7 MCP integration',

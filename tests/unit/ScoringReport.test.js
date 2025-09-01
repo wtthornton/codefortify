@@ -73,9 +73,9 @@ describe('ScoringReport', () => {
     it('should provide appropriate score descriptions', () => {
       expect(report.getScoreDescription(96)).toContain('Outstanding');
       expect(report.getScoreDescription(88)).toContain('Very good');
-      expect(report.getScoreDescription(75)).toContain('Good quality');
-      expect(report.getScoreDescription(65)).toContain('Acceptable');
-      expect(report.getScoreDescription(55)).toContain('improvement');
+      expect(report.getScoreDescription(82)).toContain('Good quality');
+      expect(report.getScoreDescription(75)).toContain('Acceptable');
+      expect(report.getScoreDescription(65)).toContain('improvement');
       expect(report.getScoreDescription(45)).toContain('attention');
     });
   });

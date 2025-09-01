@@ -171,7 +171,7 @@ export class InitCommand {
 
     try {
       if (await fs.pathExists(packageJsonPath)) {
-        const packageJson = await fs.readJSON(packageJsonPath);
+        const packageJson = await fs.readJson(packageJsonPath);
         const allDeps = {
           ...packageJson.dependencies,
           ...packageJson.devDependencies,
@@ -278,7 +278,7 @@ export class InitCommand {
     let existingPackage = {};
 
     if (await fs.pathExists(packageJsonPath)) {
-      existingPackage = await fs.readJSON(packageJsonPath);
+      existingPackage = await fs.readJson(packageJsonPath);
     }
 
     // In auto mode, use sensible defaults without prompting
@@ -618,7 +618,7 @@ context7 test-mcp    # Test MCP server functionality
     let packageJson = {};
 
     if (await fs.pathExists(packageJsonPath)) {
-      packageJson = await fs.readJSON(packageJsonPath);
+      packageJson = await fs.readJson(packageJsonPath);
     }
 
     // Add Context7 scripts
