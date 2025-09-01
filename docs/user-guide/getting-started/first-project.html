@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your First Project - CodeFortify User Guide</title>
+    <meta name="description" content="Create your first CodeFortify project and experience AI-powered code enhancement in action.">
+    <link rel="stylesheet" href="../assets/css/user-guide.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>🚀 Your First CodeFortify Project</h1>
+            <p>Experience the power of AI-driven code enhancement</p>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="index.html">Getting Started</a></li>
+                <li><a href="../tutorials/index.html">Tutorials</a></li>
+                <li><a href="../features/index.html">Features</a></li>
+                <li><a href="../api/index.html">API Reference</a></li>
+                <li><a href="../examples/index.html">Examples</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main">
+        <div class="container">
+            <div class="content">
+                <div class="fade-in">
+                    <h2>Creating Your First Project</h2>
+                    <p>Welcome to your first CodeFortify project! This guide will walk you through creating a project and experiencing the revolutionary AI-powered code enhancement in action.</p>
+
+                    <div class="alert alert-info">
+                        <strong>🎯 Goal:</strong> By the end of this guide, you'll have a working project with AI agents continuously improving your code quality.
+                    </div>
+
+                    <h3>What You'll Build</h3>
+                    <p>We'll create a simple React todo application that demonstrates CodeFortify's capabilities:</p>
+                    <ul>
+                        <li>Modern React components with hooks</li>
+                        <li>TypeScript for type safety</li>
+                        <li>Tailwind CSS for styling</li>
+                        <li>Comprehensive testing setup</li>
+                        <li>AI-enhanced code patterns</li>
+                    </ul>
+
+                    <h3>Project Setup Options</h3>
+                    <p>Choose how you want to create your first project:</p>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                        <div class="card">
+                            <h4>🎯 From Template (Recommended)</h4>
+                            <p>Use a pre-built template with best practices</p>
+                            <pre><code>codefortify template init my-todo-app --template react-typescript</code></pre>
+                            <a href="#template-setup" class="btn">Use Template</a>
+                        </div>
+                        <div class="card">
+                            <h4>🆕 From Scratch</h4>
+                            <p>Start with an empty project and let AI guide you</p>
+                            <pre><code>mkdir my-todo-app
+cd my-todo-app
+codefortify init</code></pre>
+                            <a href="#scratch-setup" class="btn">Start Fresh</a>
+                        </div>
+                        <div class="card">
+                            <h4>📁 Existing Project</h4>
+                            <p>Add CodeFortify to an existing project</p>
+                            <pre><code>cd existing-project
+codefortify init</code></pre>
+                            <a href="#existing-setup" class="btn">Enhance Existing</a>
+                        </div>
+                    </div>
+
+                    <h3 id="template-setup">Option 1: Template Setup (Recommended)</h3>
+                    <p>Using a template gives you a solid foundation with best practices already implemented:</p>
+
+                    <div class="interactive-tutorial">
+                        <div class="tutorial-step active">
+                            <h4>Step 1: Initialize from Template</h4>
+                            <p>Create a new project using the React TypeScript template:</p>
+                            <pre><code>codefortify template init my-todo-app --template react-typescript</code></pre>
+                            <p>This creates a project with modern React, TypeScript, and Tailwind CSS already configured.</p>
+                        </div>
+                        <div class="tutorial-step">
+                            <h4>Step 2: Navigate to Project</h4>
+                            <p>Move into your new project directory:</p>
+                            <pre><code>cd my-todo-app</code></pre>
+                            <p>You'll see the project structure with all the necessary files and configurations.</p>
+                        </div>
+                        <div class="tutorial-step">
+                            <h4>Step 3: Install Dependencies</h4>
+                            <p>Install all the required dependencies:</p>
+                            <pre><code>npm install</code></pre>
+                            <p>This installs React, TypeScript, Tailwind CSS, and all other dependencies.</p>
+                        </div>
+                        <div class="tutorial-step">
+                            <h4>Step 4: Get Baseline Score</h4>
+                            <p>Analyze the initial code quality:</p>
+                            <pre><code>codefortify score --detailed</code></pre>
+                            <p>This shows you the starting quality score and what can be improved.</p>
+                        </div>
+                        <div class="tutorial-step">
+                            <h4>Step 5: Start Enhancement</h4>
+                            <p>Begin the AI enhancement process:</p>
+                            <pre><code>codefortify enhance --watch</code></pre>
+                            <p>Watch as AI agents analyze and improve your code automatically!</p>
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin: 1rem 0;">
+                            <button class="btn prev-step">Previous</button>
+                            <button class="btn next-step">Next</button>
+                        </div>
+                    </div>
+
+                    <h3 id="scratch-setup">Option 2: From Scratch Setup</h3>
+                    <p>Starting from scratch lets you see how CodeFortify guides you through the entire process:</p>
+
+                    <div class="interactive-tutorial">
+                        <div class="tutorial-step active">
+                            <h4>Step 1: Create Project Directory</h4>
+                            <p>Create a new directory for your project:</p>
+                            <pre><code>mkdir my-todo-app
+cd my-todo-app</code></pre>
+                            <p>This creates a clean slate for your project.</p>
+                        </div>
+                        <div class="tutorial-step">
+                            <h4>Step 2: Initialize CodeFortify</h4>
+                            <p>Initialize CodeFortify in your project:</p>
+                            <pre><code>codefortify init</code></pre>
+                            <p>This creates the CodeFortify configuration and analyzes your project structure.</p>
+                        </div>
+                        <div class="tutorial-step">
+                            <h4>Step 3: Let AI Guide You</h4>
+                            <p>CodeFortify will analyze your project and provide recommendations:</p>
+                            <pre><code>codefortify analyze --suggest</code></pre>
+                            <p>The AI will suggest the best technology stack and project structure for your needs.</p>
+                        </div>
+                        <div class="tutorial-step">
+                            <h4>Step 4: Apply Recommendations</h4>
+                            <p>Review and apply the AI suggestions:</p>
+                            <pre><code>codefortify enhance --apply-suggestions</code></pre>
+                            <p>CodeFortify will automatically set up the recommended structure and dependencies.</p>
+                        </div>
+                        <div class="tutorial-step">
+                            <h4>Step 5: Start Development</h4>
+                            <p>Begin coding with AI assistance:</p>
+                            <pre><code>codefortify enhance --watch</code></pre>
+                            <p>As you code, AI agents will continuously suggest improvements and optimizations.</p>
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin: 1rem 0;">
+                            <button class="btn prev-step">Previous</button>
+                            <button class="btn next-step">Next</button>
+                        </div>
+                    </div>
+
+                    <h3 id="existing-setup">Option 3: Existing Project Setup</h3>
+                    <p>Add CodeFortify to an existing project to enhance what you already have:</p>
+
+                    <div class="interactive-tutorial">
+                        <div class="tutorial-step active">
+                            <h4>Step 1: Navigate to Project</h4>
+                            <p>Move to your existing project directory:</p>
+                            <pre><code>cd my-existing-project</code></pre>
+                            <p>Make sure you're in the root directory of your project.</p>
+                        </div>
+                        <div class="tutorial-step">
+                            <h4>Step 2: Initialize CodeFortify</h4>
+                            <p>Add CodeFortify to your existing project:</p>
+                            <pre><code>codefortify init</code></pre>
+                            <p>This analyzes your existing code and creates a configuration file.</p>
+                        </div>
+                        <div class="tutorial-step">
+                            <h4>Step 3: Analyze Current State</h4>
+                            <p>Get a detailed analysis of your current code quality:</p>
+                            <pre><code>codefortify score --detailed --baseline</code></pre>
+                            <p>This establishes your baseline quality score and identifies improvement areas.</p>
+                        </div>
+                        <div class="tutorial-step">
+                            <h4>Step 4: Review Suggestions</h4>
+                            <p>See what improvements CodeFortify recommends:</p>
+                            <pre><code>codefortify analyze --recommendations</code></pre>
+                            <p>Review the suggestions and decide which ones to apply.</p>
+                        </div>
+                        <div class="tutorial-step">
+                            <h4>Step 5: Start Enhancement</h4>
+                            <p>Begin the enhancement process:</p>
+                            <pre><code>codefortify enhance --incremental</code></pre>
+                            <p>CodeFortify will make incremental improvements to your existing code.</p>
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin: 1rem 0;">
+                            <button class="btn prev-step">Previous</button>
+                            <button class="btn next-step">Next</button>
+                        </div>
+                    </div>
+
+                    <h3>Understanding Your Project Structure</h3>
+                    <p>After initialization, your project will have the following structure:</p>
+
+                    <pre><code>my-todo-app/
+├── src/                    # Source code
+│   ├── components/         # React components
+│   ├── hooks/             # Custom hooks
+│   ├── utils/             # Utility functions
+│   └── types/             # TypeScript types
+├── tests/                 # Test files
+├── docs/                  # Documentation
+├── .codefortify/          # CodeFortify configuration
+│   ├── config.json        # Main configuration
+│   ├── patterns/          # Learned patterns
+│   └── history/           # Enhancement history
+├── package.json           # Dependencies
+├── tsconfig.json          # TypeScript config
+├── tailwind.config.js     # Tailwind CSS config
+└── README.md              # Project documentation</code></pre>
+
+                    <h3>Your First Enhancement Cycle</h3>
+                    <p>Once your project is set up, let's see CodeFortify in action:</p>
+
+                    <div class="card">
+                        <h4>1. Initial Analysis</h4>
+                        <p>CodeFortify analyzes your code and identifies improvement opportunities:</p>
+                        <pre><code>codefortify score --detailed</code></pre>
+                        <p>You'll see scores for code quality, test coverage, security, performance, and documentation.</p>
+                    </div>
+
+                    <div class="card">
+                        <h4>2. AI Enhancement</h4>
+                        <p>The AI agents work together to improve your code:</p>
+                        <pre><code>codefortify enhance --watch</code></pre>
+                        <p>Watch as the system automatically applies improvements, adds tests, and optimizes patterns.</p>
+                    </div>
+
+                    <div class="card">
+                        <h4>3. Pattern Learning</h4>
+                        <p>CodeFortify learns from successful improvements:</p>
+                        <pre><code>codefortify analyze --patterns</code></pre>
+                        <p>The system builds a knowledge base of effective patterns for your specific codebase.</p>
+                    </div>
+
+                    <div class="card">
+                        <h4>4. Continuous Monitoring</h4>
+                        <p>Quality monitoring runs in the background:</p>
+                        <pre><code>codefortify monitor --real-time</code></pre>
+                        <p>Get real-time feedback on code quality as you develop.</p>
+                    </div>
+
+                    <h3>Example: Building a Todo Component</h3>
+                    <p>Let's create a simple todo component to see CodeFortify in action:</p>
+
+                    <div class="interactive-demo">
+                        <h3>Interactive Code Example</h3>
+                        <p>Here's a basic todo component that CodeFortify will enhance:</p>
+                        <pre><code>// Before: Basic component
+import React, { useState } from 'react';
+
+function TodoApp() {
+  const [todos, setTodos] = useState([]);
+  const [input, setInput] = useState('');
+
+  const addTodo = () => {
+    if (input.trim()) {
+      setTodos([...todos, { id: Date.now(), text: input, done: false }]);
+      setInput('');
+    }
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;input value={input} onChange={(e) =&gt; setInput(e.target.value)} /&gt;
+      &lt;button onClick={addTodo}&gt;Add Todo&lt;/button&gt;
+      &lt;ul&gt;
+        {todos.map(todo =&gt; (
+          &lt;li key={todo.id}&gt;{todo.text}&lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+                        <p>After running <code>codefortify enhance</code>, this becomes:</p>
+                        <pre><code>// After: AI-enhanced component
+import React, { useState, useCallback, useMemo } from 'react';
+import type { Todo } from '../types/todo';
+
+interface TodoAppProps {
+  initialTodos?: Todo[];
+  onTodoChange?: (todos: Todo[]) => void;
+}
+
+export const TodoApp: React.FC&lt;TodoAppProps&gt; = ({ 
+  initialTodos = [], 
+  onTodoChange 
+}) => {
+  const [todos, setTodos] = useState&lt;Todo[]&gt;(initialTodos);
+  const [input, setInput] = useState&lt;string&gt;('');
+
+  const addTodo = useCallback(() => {
+    if (input.trim()) {
+      const newTodo: Todo = {
+        id: Date.now(),
+        text: input.trim(),
+        completed: false,
+        createdAt: new Date()
+      };
+      
+      const updatedTodos = [...todos, newTodo];
+      setTodos(updatedTodos);
+      setInput('');
+      onTodoChange?.(updatedTodos);
+    }
+  }, [input, todos, onTodoChange]);
+
+  const completedCount = useMemo(() => 
+    todos.filter(todo =&gt; todo.completed).length, 
+    [todos]
+  );
+
+  return (
+    &lt;div className="todo-app"&gt;
+      &lt;h1&gt;Todo App ({completedCount}/{todos.length})&lt;/h1&gt;
+      &lt;div className="input-group"&gt;
+        &lt;input 
+          value={input} 
+          onChange={(e) =&gt; setInput(e.target.value)}
+          placeholder="Add a new todo..."
+          className="todo-input"
+        /&gt;
+        &lt;button onClick={addTodo} className="add-button"&gt;
+          Add Todo
+        &lt;/button&gt;
+      &lt;/div&gt;
+      &lt;ul className="todo-list"&gt;
+        {todos.map(todo =&gt; (
+          &lt;TodoItem key={todo.id} todo={todo} /&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+};</code></pre>
+                    </div>
+
+                    <h3>Monitoring Your Progress</h3>
+                    <p>Track how your code quality improves over time:</p>
+
+                    <div class="card">
+                        <h4>Quality Dashboard</h4>
+                        <p>View your progress in real-time:</p>
+                        <pre><code>codefortify dashboard</code></pre>
+                        <p>Opens a web dashboard showing quality trends, improvements, and recommendations.</p>
+                    </div>
+
+                    <div class="card">
+                        <h4>Score Comparison</h4>
+                        <p>Compare your current score with previous versions:</p>
+                        <pre><code>codefortify score --compare --history</code></pre>
+                        <p>See how much your code quality has improved since starting.</p>
+                    </div>
+
+                    <div class="card">
+                        <h4>Enhancement History</h4>
+                        <p>Review all the improvements made:</p>
+                        <pre><code>codefortify history --detailed</code></pre>
+                        <p>See a detailed log of all enhancements and their impact.</p>
+                    </div>
+
+                    <h3>Next Steps</h3>
+                    <p>Congratulations! You've created your first CodeFortify project. Here's what to do next:</p>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                        <div class="card">
+                            <h4>📚 Learn More Commands</h4>
+                            <p>Master all the CodeFortify commands</p>
+                            <a href="basic-commands.html" class="btn">Learn Commands</a>
+                        </div>
+                        <div class="card">
+                            <h4>🎯 Follow Tutorials</h4>
+                            <p>Build more complex applications</p>
+                            <a href="../tutorials/index.html" class="btn">View Tutorials</a>
+                        </div>
+                        <div class="card">
+                            <h4>🔧 Explore Features</h4>
+                            <p>Discover advanced capabilities</p>
+                            <a href="../features/index.html" class="btn">Explore Features</a>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-success">
+                        <h4>🎉 Project Created Successfully!</h4>
+                        <p>Your first CodeFortify project is ready! The AI agents are now working to continuously improve your code quality. Keep coding and watch the magic happen!</p>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="sidebar">
+                <h3>First Project</h3>
+                <ul>
+                    <li><a href="#template-setup">Template Setup</a></li>
+                    <li><a href="#scratch-setup">From Scratch</a></li>
+                    <li><a href="#existing-setup">Existing Project</a></li>
+                    <li><a href="#structure">Project Structure</a></li>
+                    <li><a href="#enhancement">Enhancement Cycle</a></li>
+                    <li><a href="#monitoring">Progress Monitoring</a></li>
+                </ul>
+
+                <h3>Quick Commands</h3>
+                <ul>
+                    <li><code>codefortify init</code></li>
+                    <li><code>codefortify score</code></li>
+                    <li><code>codefortify enhance</code></li>
+                    <li><code>codefortify dashboard</code></li>
+                </ul>
+
+                <h3>Next Steps</h3>
+                <ul>
+                    <li><a href="basic-commands.html">Basic Commands</a></li>
+                    <li><a href="../tutorials/react-setup.html">React Tutorial</a></li>
+                    <li><a href="../features/continuous-enhancement.html">Enhancement System</a></li>
+                    <li><a href="../api/cli-commands.html">CLI Reference</a></li>
+                </ul>
+            </aside>
+        </div>
+    </main>
+
+    <footer style="background: var(--surface-color); padding: 2rem 0; text-align: center; border-top: 1px solid var(--border-color);">
+        <div class="container">
+            <p>&copy; 2025 CodeFortify. Revolutionary AI-powered code enhancement.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/user-guide.js"></script>
+</body>
+</html>

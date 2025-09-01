@@ -60,7 +60,9 @@
       "Bash(curl:*)",
       "Bash(tasklist:*)",
       "Bash(npx @wtthornton/codefortify:*)",
-      "Bash(echo:*)"
+      "Bash(echo:*)",
+      "Bash(netstat:*)",
+      "Bash(taskkill:*)"
     ],
     "deny": [],
     "ask": []

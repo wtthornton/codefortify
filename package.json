@@ -64,7 +64,10 @@
     "codefortify:test-mcp": "codefortify test-mcp",
     "context7:validate": "context7 validate",
     "context7:score": "context7 score",
-    "context7:test-mcp": "context7 test-mcp"
+    "context7:test-mcp": "context7 test-mcp",
+    "realtime:start": "node bin/codefortify-realtime.js start",
+    "realtime:status": "node bin/codefortify-realtime.js status",
+    "realtime:test": "node bin/codefortify-realtime.js test-connection"
   },
   "keywords": [
     "codefortify",

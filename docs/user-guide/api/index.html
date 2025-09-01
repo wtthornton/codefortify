@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Reference - CodeFortify User Guide</title>
+    <meta name="description" content="Complete API reference for CodeFortify - CLI commands, programmatic access, and integration examples.">
+    <link rel="stylesheet" href="../assets/css/user-guide.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>📚 CodeFortify API Reference</h1>
+            <p>Complete reference for CLI commands and programmatic access</p>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../getting-started/index.html">Getting Started</a></li>
+                <li><a href="../tutorials/index.html">Tutorials</a></li>
+                <li><a href="../features/index.html">Features</a></li>
+                <li><a href="index.html">API Reference</a></li>
+                <li><a href="../examples/index.html">Examples</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main">
+        <div class="container">
+            <div class="content">
+                <div class="fade-in">
+                    <h2>API Reference Overview</h2>
+                    <p>CodeFortify provides both command-line interface (CLI) and programmatic API access for integrating code enhancement into your development workflow.</p>
+
+                    <div class="alert alert-info">
+                        <strong>💡 Quick Start:</strong> Use <code>codefortify --help</code> for command overview, or <code>codefortify &lt;command&gt; --help</code> for specific command details.
+                    </div>
+
+                    <h3>API Categories</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                        <div class="card">
+                            <h4>🔧 CLI Commands</h4>
+                            <p>Command-line interface for all CodeFortify operations</p>
+                            <a href="#cli-commands" class="btn">View CLI Reference</a>
+                        </div>
+                        <div class="card">
+                            <h4>📦 Programmatic API</h4>
+                            <p>JavaScript/Node.js API for integration</p>
+                            <a href="#programmatic-api" class="btn">View API Reference</a>
+                        </div>
+                        <div class="card">
+                            <h4>⚙️ Configuration</h4>
+                            <p>Configuration options and settings</p>
+                            <a href="#configuration" class="btn">View Config Reference</a>
+                        </div>
+                        <div class="card">
+                            <h4>🔌 Integration</h4>
+                            <p>Integration examples and patterns</p>
+                            <a href="#integration" class="btn">View Integration Guide</a>
+                        </div>
+                    </div>
+
+                    <h3 id="cli-commands">CLI Commands Reference</h3>
+
+                    <h4>Core Commands</h4>
+                    
+                    <div class="card">
+                        <h4><code>codefortify validate [options]</code></h4>
+                        <p>Validates project structure and configuration</p>
+                        <h5>Options:</h5>
+                        <table>
+                            <thead>
+                                <tr><th>Option</th><th>Description</th><th>Default</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>--detailed</code></td><td>Show detailed validation results</td><td>false</td></tr>
+                                <tr><td><code>--config &lt;file&gt;</code></td><td>Use custom config file</td><td>.codefortify.json</td></tr>
+                                <tr><td><code>--fix</code></td><td>Auto-fix common issues</td><td>false</td></tr>
+                                <tr><td><code>--json</code></td><td>Output in JSON format</td><td>false</td></tr>
+                            </tbody>
+                        </table>
+                        <h5>Examples:</h5>
+                        <pre><code># Basic validation
+codefortify validate
+
+# Detailed validation with fixes
+codefortify validate --detailed --fix
+
+# Validate with custom config
+codefortify validate --config production.json</code></pre>
+                    </div>
+
+                    <div class="card">
+                        <h4><code>codefortify score [options]</code></h4>
+                        <p>Analyzes code quality and provides scoring</p>
+                        <h5>Options:</h5>
+                        <table>
+                            <thead>
+                                <tr><th>Option</th><th>Description</th><th>Default</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>--detailed</code></td><td>Show detailed score breakdown</td><td>false</td></tr>
+                                <tr><td><code>--files &lt;pattern&gt;</code></td><td>Score specific files</td><td>all</td></tr>
+                                <tr><td><code>--threshold &lt;score&gt;</code></td><td>Set quality threshold</td><td>80</td></tr>
+                                <tr><td><code>--report &lt;file&gt;</code></td><td>Generate report file</td><td>none</td></tr>
+                            </tbody>
+                        </table>
+                        <h5>Examples:</h5>
+                        <pre><code># Basic scoring
+codefortify score
+
+# Score specific files with detailed output
+codefortify score --files "src/**/*.tsx" --detailed
+
+# Generate HTML report
+codefortify score --report quality-report.html</code></pre>
+                    </div>
+
+                    <div class="card">
+                        <h4><code>codefortify enhance [options]</code></h4>
+                        <p>Applies AI-powered code improvements</p>
+                        <h5>Options:</h5>
+                        <table>
+                            <thead>
+                                <tr><th>Option</th><th>Description</th><th>Default</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>--files &lt;pattern&gt;</code></td><td>Enhance specific files</td><td>all</td></tr>
+                                <tr><td><code>--focus &lt;area&gt;</code></td><td>Focus on specific area</td><td>all</td></tr>
+                                <tr><td><code>--dry-run</code></td><td>Preview changes without applying</td><td>false</td></tr>
+                                <tr><td><code>--interactive</code></td><td>Interactive enhancement mode</td><td>false</td></tr>
+                                <tr><td><code>--continuous</code></td><td>Enable continuous enhancement</td><td>false</td></tr>
+                            </tbody>
+                        </table>
+                        <h5>Focus Areas:</h5>
+                        <ul>
+                            <li><code>performance</code> - Optimize for performance</li>
+                            <li><code>security</code> - Apply security improvements</li>
+                            <li><code>readability</code> - Improve code readability</li>
+                            <li><code>maintainability</code> - Enhance maintainability</li>
+                            <li><code>testing</code> - Add or improve tests</li>
+                        </ul>
+                        <h5>Examples:</h5>
+                        <pre><code># Basic enhancement
+codefortify enhance
+
+# Performance-focused enhancement
+codefortify enhance --focus performance
+
+# Interactive mode with dry run
+codefortify enhance --interactive --dry-run</code></pre>
+                    </div>
+
+                    <div class="card">
+                        <h4><code>codefortify monitor [options]</code></h4>
+                        <p>Starts real-time monitoring of codebase</p>
+                        <h5>Options:</h5>
+                        <table>
+                            <thead>
+                                <tr><th>Option</th><th>Description</th><th>Default</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>--interval &lt;time&gt;</code></td><td>Check interval</td><td>30s</td></tr>
+                                <tr><td><code>--watch &lt;paths&gt;</code></td><td>Directories to watch</td><td>src,lib</td></tr>
+                                <tr><td><code>--daemon</code></td><td>Run in background</td><td>false</td></tr>
+                                <tr><td><code>--dashboard</code></td><td>Enable web dashboard</td><td>false</td></tr>
+                                <tr><td><code>--notify</code></td><td>Enable notifications</td><td>false</td></tr>
+                            </tbody>
+                        </table>
+                        <h5>Examples:</h5>
+                        <pre><code># Basic monitoring
+codefortify monitor
+
+# Monitor with dashboard
+codefortify monitor --dashboard --interval 60s
+
+# Background monitoring
+codefortify monitor --daemon --notify</code></pre>
+                    </div>
+
+                    <h4>Utility Commands</h4>
+
+                    <div class="card">
+                        <h4><code>codefortify status [options]</code></h4>
+                        <p>Shows system and project status</p>
+                        <h5>Options:</h5>
+                        <ul>
+                            <li><code>--detailed</code> - Show detailed status information</li>
+                            <li><code>--health</code> - Include health check results</li>
+                            <li><code>--components &lt;list&gt;</code> - Check specific components</li>
+                            <li><code>--export &lt;file&gt;</code> - Export status to file</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h4><code>codefortify logs [options]</code></h4>
+                        <p>View and manage system logs</p>
+                        <h5>Options:</h5>
+                        <ul>
+                            <li><code>--level &lt;level&gt;</code> - Filter by log level (debug, info, warn, error)</li>
+                            <li><code>--follow</code> - Follow logs in real-time</li>
+                            <li><code>--component &lt;name&gt;</code> - Filter by component</li>
+                            <li><code>--export &lt;file&gt;</code> - Export logs to file</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h4><code>codefortify health [options]</code></h4>
+                        <p>Performs comprehensive health checks</p>
+                        <h5>Options:</h5>
+                        <ul>
+                            <li><code>--detailed</code> - Show detailed health information</li>
+                            <li><code>--fix</code> - Attempt to fix issues automatically</li>
+                            <li><code>--components &lt;list&gt;</code> - Check specific components</li>
+                            <li><code>--export &lt;file&gt;</code> - Export health report</li>
+                        </ul>
+                    </div>
+
+                    <h3 id="programmatic-api">Programmatic API</h3>
+
+                    <h4>Basic Usage</h4>
+                    <div class="card">
+                        <h4>Installation</h4>
+                        <pre><code>npm install codefortify</code></pre>
+                    </div>
+
+                    <div class="card">
+                        <h4>Basic API Usage</h4>
+                        <pre><code>const CodeFortify = require('codefortify');
+
+// Initialize CodeFortify
+const cf = new CodeFortify({
+  config: './codefortify.json'
+});
+
+// Validate project
+const validation = await cf.validate();
+console.log('Validation result:', validation);
+
+// Score code quality
+const score = await cf.score();
+console.log('Quality score:', score.overall);
+
+// Enhance code
+const enhancement = await cf.enhance({
+  focus: 'performance',
+  files: ['src/**/*.tsx']
+});
+console.log('Enhancement result:', enhancement);</code></pre>
+                    </div>
+
+                    <h4>API Classes</h4>
+
+                    <div class="card">
+                        <h4>CodeFortify Class</h4>
+                        <p>Main class for CodeFortify operations</p>
+                        <h5>Constructor Options:</h5>
+                        <ul>
+                            <li><code>config</code> - Path to configuration file</li>
+                            <li><code>cwd</code> - Working directory</li>
+                            <li><code>verbose</code> - Enable verbose logging</li>
+                        </ul>
+                        <h5>Methods:</h5>
+                        <ul>
+                            <li><code>validate(options)</code> - Validate project</li>
+                            <li><code>score(options)</code> - Score code quality</li>
+                            <li><code>enhance(options)</code> - Enhance code</li>
+                            <li><code>monitor(options)</code> - Start monitoring</li>
+                            <li><code>status()</code> - Get system status</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h4>EnhancementAgent Class</h4>
+                        <p>Direct access to enhancement agent</p>
+                        <pre><code>const { EnhancementAgent } = require('codefortify');
+
+const agent = new EnhancementAgent({
+  focus: 'performance',
+  approvalRequired: true
+});
+
+const result = await agent.enhance('src/components/Button.tsx');
+console.log('Enhancement applied:', result.success);</code></pre>
+                    </div>
+
+                    <h3 id="configuration">Configuration Reference</h3>
+
+                    <div class="card">
+                        <h4>Configuration File (.codefortify.json)</h4>
+                        <pre><code>{
+  "version": "1.0.0",
+  "monitoring": {
+    "enabled": true,
+    "interval": "30s",
+    "watchPaths": ["src", "lib"],
+    "ignorePaths": ["node_modules", "dist"]
+  },
+  "enhancement": {
+    "autoApply": false,
+    "approvalRequired": true,
+    "maxChanges": 10,
+    "focus": "all"
+  },
+  "scoring": {
+    "thresholds": {
+      "quality": 80,
+      "performance": 85,
+      "security": 90
+    }
+  },
+  "agents": {
+    "reviewAgent": { "enabled": true },
+    "enhancementAgent": { "enabled": true },
+    "learningAgent": { "enabled": true },
+    "qualityMonitor": { "enabled": true }
+  }
+}</code></pre>
+                    </div>
+
+                    <h3 id="integration">Integration Examples</h3>
+
+                    <div class="card">
+                        <h4>CI/CD Integration</h4>
+                        <pre><code># GitHub Actions example
+name: CodeFortify Quality Check
+on: [push, pull_request]
+
+jobs:
+  quality-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      - name: Install CodeFortify
+        run: npm install -g codefortify
+      - name: Validate Project
+        run: codefortify validate
+      - name: Score Quality
+        run: codefortify score --threshold 80
+      - name: Generate Report
+        run: codefortify score --report quality-report.html</code></pre>
+                    </div>
+
+                    <div class="card">
+                        <h4>VS Code Extension Integration</h4>
+                        <pre><code>// VS Code extension example
+const vscode = require('vscode');
+const { CodeFortify } = require('codefortify');
+
+class CodeFortifyProvider {
+  constructor() {
+    this.cf = new CodeFortify();
+  }
+
+  async provideCodeActions(document, range) {
+    const score = await this.cf.score({
+      files: [document.fileName]
+    });
+
+    if (score.overall < 80) {
+      return [{
+        title: 'Enhance with CodeFortify',
+        command: 'codefortify.enhance',
+        arguments: [document.fileName]
+      }];
+    }
+  }
+}</code></pre>
+                    </div>
+
+                    <h3>Error Handling</h3>
+
+                    <div class="card">
+                        <h4>Common Error Codes</h4>
+                        <table>
+                            <thead>
+                                <tr><th>Code</th><th>Description</th><th>Solution</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>CF001</td><td>Configuration file not found</td><td>Create .codefortify.json</td></tr>
+                                <tr><td>CF002</td><td>Invalid configuration</td><td>Check JSON syntax</td></tr>
+                                <tr><td>CF003</td><td>Project validation failed</td><td>Run codefortify validate --fix</td></tr>
+                                <tr><td>CF004</td><td>Enhancement failed</td><td>Check file permissions</td></tr>
+                                <tr><td>CF005</td><td>Monitoring error</td><td>Restart monitoring</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>Next Steps</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                        <div class="card">
+                            <h4>📖 View Examples</h4>
+                            <p>See real-world usage examples</p>
+                            <a href="../examples/index.html" class="btn">Browse Examples</a>
+                        </div>
+                        <div class="card">
+                            <h4>🎯 Follow Tutorials</h4>
+                            <p>Step-by-step integration guides</p>
+                            <a href="../tutorials/index.html" class="btn">View Tutorials</a>
+                        </div>
+                        <div class="card">
+                            <h4>🔧 Get Started</h4>
+                            <p>Start using CodeFortify today</p>
+                            <a href="../getting-started/index.html" class="btn">Getting Started</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="sidebar">
+                <h3>API Categories</h3>
+                <ul>
+                    <li><a href="#cli-commands">CLI Commands</a></li>
+                    <li><a href="#programmatic-api">Programmatic API</a></li>
+                    <li><a href="#configuration">Configuration</a></li>
+                    <li><a href="#integration">Integration</a></li>
+                </ul>
+
+                <h3>Core Commands</h3>
+                <ul>
+                    <li><a href="#validate">codefortify validate</a></li>
+                    <li><a href="#score">codefortify score</a></li>
+                    <li><a href="#enhance">codefortify enhance</a></li>
+                    <li><a href="#monitor">codefortify monitor</a></li>
+                </ul>
+
+                <h3>Utility Commands</h3>
+                <ul>
+                    <li><a href="#status">codefortify status</a></li>
+                    <li><a href="#logs">codefortify logs</a></li>
+                    <li><a href="#health">codefortify health</a></li>
+                </ul>
+
+                <h3>Quick Reference</h3>
+                <ul>
+                    <li><code>codefortify --help</code></li>
+                    <li><code>codefortify validate</code></li>
+                    <li><code>codefortify score --detailed</code></li>
+                    <li><code>codefortify enhance --dry-run</code></li>
+                </ul>
+
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="../getting-started/basic-commands.html">Basic Commands</a></li>
+                    <li><a href="../examples/index.html">Examples</a></li>
+                    <li><a href="https://github.com/codefortify" target="_blank">GitHub</a></li>
+                    <li><a href="mailto:support@codefortify.com">Support</a></li>
+                </ul>
+            </aside>
+        </div>
+    </main>
+
+    <footer style="background: var(--surface-color); padding: 2rem 0; text-align: center; border-top: 1px solid var(--border-color);">
+        <div class="container">
+            <p>&copy; 2025 CodeFortify. Revolutionary AI-powered code enhancement.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/user-guide.js"></script>
+</body>
+</html>

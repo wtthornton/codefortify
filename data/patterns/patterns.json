@@ -1,7 +1,135 @@
 {
   "patterns": [
     {
-      "id": "pattern_1756765863753_6abwewoq0",
+      "id": "pattern_1756768069202_ihuzij2yi",
+      "type": "general",
+      "category": "function",
+      "context": {
+        "project": {
+          "type": "javascript",
+          "framework": "vanilla"
+        }
+      },
+      "effectiveness": 0.9,
+      "usageCount": 1,
+      "lastUsed": "2025-09-01T23:07:49.202Z",
+      "successRate": 1,
+      "codeExample": {
+        "before": "function calculateTotal(items) {\n  return items.reduce((sum, item) => sum + item.price, 0);\n}",
+        "after": "function calculateTotal(items) {\n  return items.reduce((sum, item) => sum + item.price, 0);\n}"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "vanilla",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-01T23:07:49.202Z",
+      "updatedAt": "2025-09-01T23:07:49.202Z"
+    },
+    {
+      "id": "pattern_1756768069217_0ey1z76i3",
+      "type": "general",
+      "category": "function",
+      "context": {
+        "language": "javascript",
+        "pattern": "simple-function"
+      },
+      "effectiveness": 0.8,
+      "usageCount": 1,
+      "lastUsed": "2025-09-01T23:07:49.217Z",
+      "successRate": 0.5,
+      "codeExample": {
+        "before": "function add(a, b) {\n  return a + b;\n}",
+        "after": "function add(a, b) {\n  return a + b;\n}"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "vanilla",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-01T23:07:49.217Z",
+      "updatedAt": "2025-09-01T23:07:49.217Z"
+    },
+    {
+      "id": "pattern_1756768069219_z4fbjh8bc",
+      "type": "general",
+      "category": "function",
+      "context": {
+        "language": "javascript",
+        "pattern": "simple-function"
+      },
+      "effectiveness": 0.8,
+      "usageCount": 1,
+      "lastUsed": "2025-09-01T23:07:49.219Z",
+      "successRate": 0.5,
+      "codeExample": {
+        "before": "function multiply(a, b) {\n  return a * b;\n}",
+        "after": "function multiply(a, b) {\n  return a * b;\n}"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "vanilla",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-01T23:07:49.219Z",
+      "updatedAt": "2025-09-01T23:07:49.219Z"
+    },
+    {
+      "id": "pattern_1756768069232_cj1x8slma",
+      "type": "general",
+      "category": "function",
+      "context": {
+        "language": "javascript",
+        "pattern": "anti-pattern"
+      },
+      "effectiveness": 0.3,
+      "usageCount": 1,
+      "lastUsed": "2025-09-01T23:07:49.232Z",
+      "successRate": 0.5,
+      "codeExample": {
+        "before": "function badFunction() {\n  var unused = 'this is bad';\n  console.log('debugging');\n  return null;\n}",
+        "after": "function badFunction() {\n  var unused = 'this is bad';\n  console.log('debugging');\n  return null;\n}"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "vanilla",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-01T23:07:49.232Z",
+      "updatedAt": "2025-09-01T23:07:49.232Z"
+    },
+    {
+      "id": "pattern_1756768069241_il8wvxmgj",
+      "type": "refactoring",
+      "category": "function",
+      "context": {
+        "language": "jsx",
+        "framework": "react",
+        "pattern": "component-with-state"
+      },
+      "effectiveness": 0.3,
+      "usageCount": 1,
+      "lastUsed": "2025-09-01T23:07:49.241Z",
+      "successRate": 0.5,
+      "codeExample": {
+        "before": "import React, { useState, useEffect } from 'react';\n\nexport function Counter() {\n  const [count, setCount] = useState(0);\n  \n  useEffect(() => {\n    document.title = `Count: ${count}`;\n  }, [count]);\n  \n  return (\n    <div>\n      <h1>Count: {count}</h1>\n      <button onClick={() => setCount(count + 1)}>\n        Increment\n      </button>\n    </div>\n  );\n}",
+        "after": "import React, { useState, useEffect } from 'react';\n\nexport function Counter() {\n  const [count, setCount] = useState(0);\n  \n  useEffect(() => {\n    document.title = `Count: ${count}`;\n  }, [count]);\n  \n  return (\n    <div>\n      <h1>Count: {count}</h1>\n      <button onClick={() => setCount(count + 1)}>\n        Increment\n      </button>\n    </div>\n  );\n}"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "react",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-01T23:07:49.241Z",
+      "updatedAt": "2025-09-01T23:07:49.241Z"
+    },
+    {
+      "id": "pattern_1756768069246_ggch6iupa",
       "type": "general",
       "category": "function",
       "context": {
@@ -10,7 +138,7 @@
       },
       "effectiveness": 0.8,
       "usageCount": 1,
-      "lastUsed": "2025-09-01T22:31:03.753Z",
+      "lastUsed": "2025-09-01T23:07:49.246Z",
       "successRate": 0.5,
       "codeExample": {
         "before": "function calculateTotal(items) {\n  return items.reduce((sum, item) => sum + item.price, 0);\n}",
@@ -22,12 +150,218 @@
         "complexity": "similar",
         "linesChanged": 0
       },
-      "createdAt": "2025-09-01T22:31:03.753Z",
-      "updatedAt": "2025-09-01T22:31:03.753Z"
+      "createdAt": "2025-09-01T23:07:49.246Z",
+      "updatedAt": "2025-09-01T23:07:49.246Z"
+    },
+    {
+      "id": "pattern_1756768069270_qraqxy1wo",
+      "type": "general",
+      "category": "function",
+      "context": {
+        "language": "javascript",
+        "pattern": "array-reduce"
+      },
+      "effectiveness": 0.8,
+      "usageCount": 1,
+      "lastUsed": "2025-09-01T23:07:49.270Z",
+      "successRate": 0.5,
+      "codeExample": {
+        "before": "function calculateTotal(items) {\n  return items.reduce((sum, item) => sum + item.price, 0);\n}",
+        "after": "function calculateTotal(items) {\n  return items.reduce((sum, item) => sum + item.price, 0);\n}"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "vanilla",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-01T23:07:49.270Z",
+      "updatedAt": "2025-09-01T23:07:49.270Z"
+    },
+    {
+      "id": "pattern_1756768069281_kg49h4ecg",
+      "type": "general",
+      "category": "function",
+      "context": {
+        "language": "javascript",
+        "pattern": "array-reduce"
+      },
+      "effectiveness": 0.8,
+      "usageCount": 1,
+      "lastUsed": "2025-09-01T23:07:49.281Z",
+      "successRate": 0.5,
+      "codeExample": {
+        "before": "function calculateTotal(items) {\n  return items.reduce((sum, item) => sum + item.price, 0);\n}",
+        "after": "function calculateTotal(items) {\n  return items.reduce((sum, item) => sum + item.price, 0);\n}"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "vanilla",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-01T23:07:49.281Z",
+      "updatedAt": "2025-09-01T23:07:49.281Z"
+    },
+    {
+      "id": "pattern_1756768069526_olu36spzd",
+      "type": "general",
+      "category": "function",
+      "context": {
+        "project": {
+          "type": "javascript"
+        }
+      },
+      "effectiveness": 0.8,
+      "usageCount": 1,
+      "lastUsed": "2025-09-01T23:07:49.526Z",
+      "successRate": 0.5,
+      "codeExample": {
+        "before": "function highQuality() { return 'excellent'; }",
+        "after": "function highQuality() { return 'excellent'; }"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "vanilla",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-01T23:07:49.526Z",
+      "updatedAt": "2025-09-01T23:07:49.526Z"
+    },
+    {
+      "id": "pattern_1756768069529_ypk2hb03m",
+      "type": "general",
+      "category": "function",
+      "context": {
+        "project": {
+          "type": "javascript"
+        }
+      },
+      "effectiveness": 0.8,
+      "usageCount": 1,
+      "lastUsed": "2025-09-01T23:07:49.529Z",
+      "successRate": 0.5,
+      "codeExample": {
+        "before": "function mediumQuality() { return 'good'; }",
+        "after": "function mediumQuality() { return 'good'; }"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "vanilla",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-01T23:07:49.529Z",
+      "updatedAt": "2025-09-01T23:07:49.529Z"
+    },
+    {
+      "id": "pattern_1756768069540_hidc9bxy2",
+      "type": "general",
+      "category": "function",
+      "context": {
+        "project": {
+          "type": "javascript"
+        }
+      },
+      "effectiveness": 0.8,
+      "usageCount": 1,
+      "lastUsed": "2025-09-01T23:07:49.540Z",
+      "successRate": 0.5,
+      "codeExample": {
+        "before": "function highQuality() { return 'excellent'; }",
+        "after": "function highQuality() { return 'excellent'; }"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "vanilla",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-01T23:07:49.540Z",
+      "updatedAt": "2025-09-01T23:07:49.540Z"
+    },
+    {
+      "id": "pattern_1756768069542_phxelzaup",
+      "type": "general",
+      "category": "function",
+      "context": {
+        "project": {
+          "type": "javascript"
+        }
+      },
+      "effectiveness": 0.8,
+      "usageCount": 1,
+      "lastUsed": "2025-09-01T23:07:49.542Z",
+      "successRate": 0.5,
+      "codeExample": {
+        "before": "function mediumQuality() { return 'good'; }",
+        "after": "function mediumQuality() { return 'good'; }"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "vanilla",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-01T23:07:49.542Z",
+      "updatedAt": "2025-09-01T23:07:49.542Z"
+    },
+    {
+      "id": "pattern_1756768069550_qlebjomsz",
+      "type": "general",
+      "category": "function",
+      "context": {
+        "project": {
+          "type": "javascript"
+        }
+      },
+      "effectiveness": 0.8,
+      "usageCount": 1,
+      "lastUsed": "2025-09-01T23:07:49.550Z",
+      "successRate": 0.5,
+      "codeExample": {
+        "before": "function highQuality() { return 'excellent'; }",
+        "after": "function highQuality() { return 'excellent'; }"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "vanilla",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-01T23:07:49.550Z",
+      "updatedAt": "2025-09-01T23:07:49.550Z"
+    },
+    {
+      "id": "pattern_1756768069553_a83kb7qt3",
+      "type": "general",
+      "category": "function",
+      "context": {
+        "project": {
+          "type": "javascript"
+        }
+      },
+      "effectiveness": 0.8,
+      "usageCount": 1,
+      "lastUsed": "2025-09-01T23:07:49.553Z",
+      "successRate": 0.5,
+      "codeExample": {
+        "before": "function mediumQuality() { return 'good'; }",
+        "after": "function mediumQuality() { return 'good'; }"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "vanilla",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-01T23:07:49.553Z",
+      "updatedAt": "2025-09-01T23:07:49.553Z"
     }
   ],
   "metadata": {
-    "exportedAt": "2025-09-01T22:31:03.753Z",
+    "exportedAt": "2025-09-01T23:07:49.553Z",
     "version": "1.0.0"
   }
 }

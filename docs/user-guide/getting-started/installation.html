@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation Guide - CodeFortify User Guide</title>
+    <meta name="description" content="Complete installation guide for CodeFortify - multiple installation methods and setup instructions.">
+    <link rel="stylesheet" href="../assets/css/user-guide.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>📦 CodeFortify Installation Guide</h1>
+            <p>Get CodeFortify up and running on your system</p>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="index.html">Getting Started</a></li>
+                <li><a href="../tutorials/index.html">Tutorials</a></li>
+                <li><a href="../features/index.html">Features</a></li>
+                <li><a href="../api/index.html">API Reference</a></li>
+                <li><a href="../examples/index.html">Examples</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main">
+        <div class="container">
+            <div class="content">
+                <div class="fade-in">
+                    <h2>Installation Guide</h2>
+                    <p>This guide covers all the different ways to install CodeFortify on your system. Choose the method that best fits your development workflow.</p>
+
+                    <div class="alert alert-info">
+                        <strong>💡 Pro Tip:</strong> We recommend the global npm installation for the best experience, but local installation works great for team projects.
+                    </div>
+
+                    <h3>Prerequisites</h3>
+                    <p>Before installing CodeFortify, make sure you have the following installed:</p>
+
+                    <div class="card">
+                        <h4>Required Software</h4>
+                        <ul>
+                            <li><strong>Node.js:</strong> Version 18.0.0 or higher</li>
+                            <li><strong>npm:</strong> Version 8.0.0 or higher (comes with Node.js)</li>
+                            <li><strong>Git:</strong> For version control integration</li>
+                        </ul>
+                    </div>
+
+                    <h3>Method 1: Global Installation (Recommended)</h3>
+                    <p>Install CodeFortify globally to use it from anywhere on your system:</p>
+
+                    <pre><code># Install globally
+npm install -g codefortify
+
+# Verify installation
+codefortify --version</code></pre>
+
+                    <div class="alert alert-success">
+                        <strong>✅ Benefits:</strong> Use CodeFortify in any project directory, consistent version across projects, easy updates.
+                    </div>
+
+                    <h4>Global Installation Steps</h4>
+                    <div class="interactive-tutorial">
+                        <div class="tutorial-step active">
+                            <h4>Step 1: Check Node.js Version</h4>
+                            <p>Ensure you have Node.js 18.0.0 or higher:</p>
+                            <pre><code>node --version
+npm --version</code></pre>
+                            <p>If you need to update Node.js, visit <a href="https://nodejs.org" target="_blank">nodejs.org</a></p>
+                        </div>
+                        <div class="tutorial-step">
+                            <h4>Step 2: Install CodeFortify</h4>
+                            <p>Run the global installation command:</p>
+                            <pre><code>npm install -g codefortify</code></pre>
+                            <p>This may take a few minutes as it downloads and installs all dependencies.</p>
+                        </div>
+                        <div class="tutorial-step">
+                            <h4>Step 3: Verify Installation</h4>
+                            <p>Check that CodeFortify is properly installed:</p>
+                            <pre><code>codefortify --version
+codefortify --help</code></pre>
+                            <p>You should see the version number and help information.</p>
+                        </div>
+                        <div class="tutorial-step">
+                            <h4>Step 4: Test in a Project</h4>
+                            <p>Navigate to any project directory and test:</p>
+                            <pre><code>cd my-project
+codefortify validate</code></pre>
+                            <p>This will analyze your project and show the current state.</p>
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin: 1rem 0;">
+                            <button class="btn prev-step">Previous</button>
+                            <button class="btn next-step">Next</button>
+                        </div>
+                    </div>
+
+                    <h3>Method 2: Local Installation</h3>
+                    <p>Install CodeFortify as a development dependency in your project:</p>
+
+                    <pre><code># Navigate to your project
+cd my-project
+
+# Install as dev dependency
+npm install codefortify --save-dev
+
+# Use via npx
+npx codefortify --version</code></pre>
+
+                    <div class="alert alert-warning">
+                        <strong>⚠️ Note:</strong> With local installation, you'll need to use <code>npx codefortify</code> instead of just <code>codefortify</code>.
+                    </div>
+
+                    <h4>Local Installation Benefits</h4>
+                    <ul>
+                        <li><strong>Version Control:</strong> Each project can use a specific version</li>
+                        <li><strong>Team Consistency:</strong> All team members use the same version</li>
+                        <li><strong>CI/CD Integration:</strong> Easy to include in build pipelines</li>
+                        <li><strong>No Global Dependencies:</strong> Keeps your system clean</li>
+                    </ul>
+
+                    <h3>Method 3: Docker Installation</h3>
+                    <p>Run CodeFortify in a containerized environment:</p>
+
+                    <pre><code># Pull the Docker image
+docker pull codefortify/cli:latest
+
+# Run CodeFortify
+docker run -v $(pwd):/workspace codefortify/cli score</code></pre>
+
+                    <h4>Docker Benefits</h4>
+                    <ul>
+                        <li><strong>Isolation:</strong> No system dependencies</li>
+                        <li><strong>Consistency:</strong> Same environment everywhere</li>
+                        <li><strong>CI/CD Ready:</strong> Easy integration with pipelines</li>
+                        <li><strong>Version Control:</strong> Pin specific versions</li>
+                    </ul>
+
+                    <h3>Method 4: Development Installation</h3>
+                    <p>For contributors and advanced users who want to build from source:</p>
+
+                    <pre><code># Clone the repository
+git clone https://github.com/codefortify/context7-mcp.git
+cd context7-mcp
+
+# Install dependencies
+npm install
+
+# Build the project
+npm run build
+
+# Link globally for development
+npm link</code></pre>
+
+                    <div class="alert alert-info">
+                        <strong>🔧 Development Mode:</strong> This gives you access to the latest features and allows you to contribute to the project.
+                    </div>
+
+                    <h3>Platform-Specific Instructions</h3>
+
+                    <h4>Windows</h4>
+                    <div class="card">
+                        <h4>Windows Installation</h4>
+                        <ol>
+                            <li>Download and install Node.js from <a href="https://nodejs.org" target="_blank">nodejs.org</a></li>
+                            <li>Open PowerShell or Command Prompt as Administrator</li>
+                            <li>Run: <code>npm install -g codefortify</code></li>
+                            <li>Verify: <code>codefortify --version</code></li>
+                        </ol>
+                    </div>
+
+                    <h4>macOS</h4>
+                    <div class="card">
+                        <h4>macOS Installation</h4>
+                        <ol>
+                            <li>Install Node.js using Homebrew: <code>brew install node</code></li>
+                            <li>Or download from <a href="https://nodejs.org" target="_blank">nodejs.org</a></li>
+                            <li>Run: <code>npm install -g codefortify</code></li>
+                            <li>Verify: <code>codefortify --version</code></li>
+                        </ol>
+                    </div>
+
+                    <h4>Linux</h4>
+                    <div class="card">
+                        <h4>Linux Installation</h4>
+                        <ol>
+                            <li>Install Node.js using your package manager:
+                                <ul>
+                                    <li>Ubuntu/Debian: <code>sudo apt install nodejs npm</code></li>
+                                    <li>CentOS/RHEL: <code>sudo yum install nodejs npm</code></li>
+                                    <li>Arch: <code>sudo pacman -S nodejs npm</code></li>
+                                </ul>
+                            </li>
+                            <li>Run: <code>npm install -g codefortify</code></li>
+                            <li>Verify: <code>codefortify --version</code></li>
+                        </ol>
+                    </div>
+
+                    <h3>Verification and Testing</h3>
+                    <p>After installation, verify everything is working correctly:</p>
+
+                    <pre><code># Check version
+codefortify --version
+
+# View help
+codefortify --help
+
+# Test with a sample project
+mkdir test-project
+cd test-project
+echo "console.log('Hello World');" > index.js
+codefortify validate</code></pre>
+
+                    <h3>Troubleshooting</h3>
+                    <p>Common installation issues and solutions:</p>
+
+                    <div class="card">
+                        <h4>Permission Errors (macOS/Linux)</h4>
+                        <p>If you get permission errors, try using sudo or fix npm permissions:</p>
+                        <pre><code># Option 1: Use sudo (not recommended)
+sudo npm install -g codefortify
+
+# Option 2: Fix npm permissions (recommended)
+npm config set prefix ~/.npm-global
+export PATH=~/.npm-global/bin:$PATH
+npm install -g codefortify</code></pre>
+                    </div>
+
+                    <div class="card">
+                        <h4>Command Not Found</h4>
+                        <p>If the <code>codefortify</code> command is not found:</p>
+                        <ul>
+                            <li>Check your PATH environment variable</li>
+                            <li>Restart your terminal/command prompt</li>
+                            <li>Try using the full path: <code>/usr/local/bin/codefortify</code></li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h4>Node.js Version Issues</h4>
+                        <p>If you have Node.js version conflicts:</p>
+                        <ul>
+                            <li>Use <a href="https://github.com/nvm-sh/nvm" target="_blank">nvm</a> to manage Node.js versions</li>
+                            <li>Update to Node.js 18.0.0 or higher</li>
+                            <li>Clear npm cache: <code>npm cache clean --force</code></li>
+                        </ul>
+                    </div>
+
+                    <h3>Updating CodeFortify</h3>
+                    <p>Keep CodeFortify up to date with the latest features and improvements:</p>
+
+                    <pre><code># Update global installation
+npm update -g codefortify
+
+# Check for updates
+npm outdated -g codefortify
+
+# Update local installation
+npm update codefortify</code></pre>
+
+                    <h3>Uninstalling CodeFortify</h3>
+                    <p>If you need to remove CodeFortify:</p>
+
+                    <pre><code># Uninstall global installation
+npm uninstall -g codefortify
+
+# Uninstall local installation
+npm uninstall codefortify</code></pre>
+
+                    <h3>Next Steps</h3>
+                    <p>Now that CodeFortify is installed, you're ready to:</p>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                        <div class="card">
+                            <h4>🚀 Create Your First Project</h4>
+                            <p>Set up your first CodeFortify project</p>
+                            <a href="first-project.html" class="btn">Get Started</a>
+                        </div>
+                        <div class="card">
+                            <h4>📚 Learn Basic Commands</h4>
+                            <p>Master the essential CodeFortify commands</p>
+                            <a href="basic-commands.html" class="btn">Learn Commands</a>
+                        </div>
+                        <div class="card">
+                            <h4>🎯 Follow a Tutorial</h4>
+                            <p>Step-by-step guides for different technologies</p>
+                            <a href="../tutorials/index.html" class="btn">View Tutorials</a>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-success">
+                        <h4>🎉 Installation Complete!</h4>
+                        <p>CodeFortify is now installed and ready to revolutionize your development workflow. The AI agents are waiting to help you create better code!</p>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="sidebar">
+                <h3>Installation</h3>
+                <ul>
+                    <li><a href="#prerequisites">Prerequisites</a></li>
+                    <li><a href="#global">Global Installation</a></li>
+                    <li><a href="#local">Local Installation</a></li>
+                    <li><a href="#docker">Docker Installation</a></li>
+                    <li><a href="#development">Development Setup</a></li>
+                    <li><a href="#platform">Platform Specific</a></li>
+                    <li><a href="#troubleshooting">Troubleshooting</a></li>
+                </ul>
+
+                <h3>Quick Commands</h3>
+                <ul>
+                    <li><code>npm install -g codefortify</code></li>
+                    <li><code>codefortify --version</code></li>
+                    <li><code>codefortify --help</code></li>
+                    <li><code>npm update -g codefortify</code></li>
+                </ul>
+
+                <h3>Need Help?</h3>
+                <ul>
+                    <li><a href="../api/troubleshooting.html">Troubleshooting Guide</a></li>
+                    <li><a href="https://github.com/codefortify/issues" target="_blank">Report Issues</a></li>
+                    <li><a href="https://discord.gg/codefortify" target="_blank">Community Support</a></li>
+                </ul>
+            </aside>
+        </div>
+    </main>
+
+    <footer style="background: var(--surface-color); padding: 2rem 0; text-align: center; border-top: 1px solid var(--border-color);">
+        <div class="container">
+            <p>&copy; 2025 CodeFortify. Revolutionary AI-powered code enhancement.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/user-guide.js"></script>
+</body>
+</html>

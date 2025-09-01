@@ -15,6 +15,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import { SmartReportRouter } from '../routing/SmartReportRouter.js';
 
 const execAsync = promisify(exec);
 
@@ -27,7 +28,23 @@ export class ScoringReport {
    * @param {boolean} [config.verbose] - Enable verbose output
    */
   constructor(config = {}) {
-    this.config = config;
+    this.config = {
+      projectRoot: config.projectRoot || process.cwd(),
+      projectType: config.projectType,
+      verbose: config.verbose || false,
+      routing: config.routing || {},
+      ...config
+    };
+    
+    // Initialize smart router if routing is enabled
+    if (this.config.routing.enabled !== false) {
+      this.router = new SmartReportRouter({
+        projectRoot: this.config.projectRoot,
+        strategy: this.config.routing.strategy || 'auto',
+        routing: this.config.routing,
+        verbose: this.config.verbose
+      });
+    }
   }
 
   /**
@@ -38,7 +55,7 @@ export class ScoringReport {
    * - Category breakdown with radar chart
    * - Interactive theme switching (dark/light)
    * - Expandable category details with issues and metrics
-   * - Priority recommendations with impact scoring
+   * - Priority recommendations with impact scoring and enhanced prompts
    * - Search functionality for filtering content
    * - Responsive design for various screen sizes
    *
@@ -46,6 +63,7 @@ export class ScoringReport {
    * @param {Object} results.overall - Overall score information
    * @param {Object} results.categories - Category-specific results
    * @param {Array} [results.recommendations] - Improvement recommendations
+   * @param {Array} [results.enhancedPrompts] - Enhanced prompts for auto-execution
    * @param {Object} results.metadata - Project metadata
    * @returns {Promise<string>} Complete HTML document as string
    *
@@ -54,7 +72,7 @@ export class ScoringReport {
    * await fs.writeFile('quality-report.html', html);
    */
   async generateHTML(results) {
-    const { overall, categories, recommendations, metadata } = results;
+    const { overall, categories, recommendations, enhancedPrompts, metadata } = results;
 
     return `<!DOCTYPE html>
 <html lang="en">
@@ -572,6 +590,97 @@ export class ScoringReport {
             font-weight: 500;
         }
         
+        .enhanced-prompt {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1rem;
+            position: relative;
+        }
+        
+        .prompt-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        
+        .prompt-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .prompt-stats {
+            display: flex;
+            gap: 0.75rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        
+        .prompt-text {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 0.375rem;
+            padding: 0.75rem;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            line-height: 1.4;
+            word-break: break-word;
+            position: relative;
+        }
+        
+        .prompt-copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .prompt-copy-btn:hover {
+            background: var(--accent-primary);
+            color: white;
+        }
+        
+        .prompt-metrics {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.75rem;
+            font-size: 0.75rem;
+        }
+        
+        .metric-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: var(--text-muted);
+        }
+        
+        .metric-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .success-rate {
+            color: var(--success);
+        }
+        
+        .token-count {
+            color: var(--accent-primary);
+        }
+        
         @media (max-width: 768px) {
             .dashboard {
                 grid-template-columns: 1fr;
@@ -763,7 +872,14 @@ export class ScoringReport {
                     </h2>
                     
                     <div class="recommendations-grid">
-                        ${recommendations.slice(0, 12).map((rec, index) => `
+                        ${recommendations.slice(0, 12).map((rec, index) => {
+                          // Find enhanced prompt for this recommendation
+                          const enhancedPrompt = enhancedPrompts?.find(ep => 
+                            ep.recommendation.suggestion === rec.suggestion ||
+                            ep.recommendation.category === rec.category
+                          );
+                          
+                          return `
                             <div class="recommendation-card" data-impact="${rec.impact}">
                                 <div class="rec-header">
                                     <div class="rec-priority">#${index + 1}</div>
@@ -773,9 +889,45 @@ export class ScoringReport {
                                     <div class="rec-title">${rec.suggestion}</div>
                                     ${rec.description ? `<div class="rec-desc">${rec.description}</div>` : ''}
                                     <div class="rec-category">${rec.category || 'General'}</div>
+                                    
+                                    ${enhancedPrompt ? `
+                                        <div class="enhanced-prompt">
+                                            <div class="prompt-header">
+                                                <div class="prompt-label">
+                                                    <i class="fas fa-robot"></i>
+                                                    Auto-Execute Prompt
+                                                </div>
+                                                <div class="prompt-stats">
+                                                    <span class="token-count">${enhancedPrompt.enhancedPrompt.estimatedTokens} tokens</span>
+                                                    <span class="success-rate">${Math.round(enhancedPrompt.enhancedPrompt.successRate * 100)}% success</span>
+                                                </div>
+                                            </div>
+                                            <div class="prompt-text">
+                                                <button class="prompt-copy-btn" onclick="copyPrompt('${index}')" title="Copy prompt">
+                                                    <i class="fas fa-copy"></i>
+                                                </button>
+                                                <div id="prompt-${index}">${enhancedPrompt.enhancedPrompt.prompt}</div>
+                                            </div>
+                                            <div class="prompt-metrics">
+                                                <div class="metric-item">
+                                                    <i class="fas fa-bolt"></i>
+                                                    <span>Confidence: <span class="metric-value">${Math.round(enhancedPrompt.enhancedPrompt.confidence * 100)}%</span></span>
+                                                </div>
+                                                <div class="metric-item">
+                                                    <i class="fas fa-chart-line"></i>
+                                                    <span>Token Reduction: <span class="metric-value">${Math.round(enhancedPrompt.enhancedPrompt.tokenReduction || 0)}%</span></span>
+                                                </div>
+                                                <div class="metric-item">
+                                                    <i class="fas fa-check-circle"></i>
+                                                    <span>Auto-Executable: <span class="metric-value">Yes</span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ` : ''}
                                 </div>
                             </div>
-                        `).join('')}
+                          `;
+                        }).join('')}
                     </div>
                 </section>
             ` : ''}
@@ -842,6 +994,30 @@ export class ScoringReport {
                 }
             });
         });
+        
+        // Copy Prompt Functionality
+        function copyPrompt(index) {
+            const promptElement = document.getElementById(\`prompt-\${index}\`);
+            if (promptElement) {
+                const promptText = promptElement.textContent;
+                navigator.clipboard.writeText(promptText).then(() => {
+                    // Show feedback
+                    const button = promptElement.parentElement.querySelector('.prompt-copy-btn');
+                    const originalHTML = button.innerHTML;
+                    button.innerHTML = '<i class="fas fa-check"></i>';
+                    button.style.background = 'var(--success)';
+                    button.style.color = 'white';
+                    
+                    setTimeout(() => {
+                        button.innerHTML = originalHTML;
+                        button.style.background = '';
+                        button.style.color = '';
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy prompt:', err);
+                });
+            }
+        }
         
         // Charts Initialization
         document.addEventListener('DOMContentLoaded', function() {
@@ -995,7 +1171,7 @@ export class ScoringReport {
    * await fs.writeFile('README.md', markdown);
    */
   async generateMarkdown(results) {
-    const { overall, categories, recommendations, metadata } = results;
+    const { overall, categories, recommendations, enhancedPrompts, metadata } = results;
 
     let markdown = '# Context7 Quality Score Report\n\n';
     markdown += `**Project:** ${metadata.projectName}  \n`;
@@ -1043,6 +1219,21 @@ export class ScoringReport {
         if (rec.description) {
           markdown += `   ${rec.description}\n`;
         }
+        
+        // Add enhanced prompt if available
+        const enhancedPrompt = enhancedPrompts?.find(ep => 
+          ep.recommendation.suggestion === rec.suggestion ||
+          ep.recommendation.category === rec.category
+        );
+        
+        if (enhancedPrompt) {
+          markdown += `   \n   **🤖 Auto-Execute Prompt:**\n`;
+          markdown += `   \`\`\`\n`;
+          markdown += `   ${enhancedPrompt.enhancedPrompt.prompt}\n`;
+          markdown += `   \`\`\`\n`;
+          markdown += `   *Tokens: ${enhancedPrompt.enhancedPrompt.estimatedTokens} | Success Rate: ${Math.round(enhancedPrompt.enhancedPrompt.successRate * 100)}%*\n`;
+        }
+        
         markdown += '\n';
       });
     }
@@ -1068,9 +1259,26 @@ export class ScoringReport {
    * console.log(`Report saved to: ${filePath}`);
    */
   async saveReport(results, format = 'html', filename = null, options = {}) {
-    const timestamp = new Date().toISOString().slice(0, 16).replace(/[:.]/g, '-');
-    const defaultFilename = `context7-score-${timestamp}.${format}`;
-    const outputFile = filename || defaultFilename;
+    let outputFile;
+
+    // Use smart routing if available and enabled
+    if (this.router && this.config.routing.enabled !== false) {
+      try {
+        outputFile = await this.router.getReportPath(format, filename, {
+          includeTimestamp: options.includeTimestamp !== false,
+          timestamp: options.timestamp
+        });
+      } catch (error) {
+        if (this.config.verbose) {
+          console.warn(`⚠️  Smart routing failed, using fallback: ${error.message}`);
+        }
+        // Fall back to original behavior
+        outputFile = this.getFallbackPath(format, filename, options);
+      }
+    } else {
+      // Use original behavior
+      outputFile = this.getFallbackPath(format, filename, options);
+    }
 
     let content;
 
@@ -1089,6 +1297,8 @@ export class ScoringReport {
       throw new Error(`Unsupported format: ${format}`);
     }
 
+    // Ensure directory exists
+    await fs.mkdir(path.dirname(outputFile), { recursive: true });
     await fs.writeFile(outputFile, content);
 
     // Auto-open browser for HTML reports if requested
@@ -1096,7 +1306,27 @@ export class ScoringReport {
       await this.openInBrowser(outputFile);
     }
 
+    if (this.config.verbose) {
+      console.log(`📄 Report saved to: ${outputFile}`);
+    }
+
     return outputFile;
+  }
+
+  /**
+   * Get fallback path when smart routing is not available
+   *
+   * @param {string} format - Report format
+   * @param {string} [filename=null] - Custom filename
+   * @param {Object} [options={}] - Options
+   * @returns {string} Fallback path
+   */
+  getFallbackPath(format, filename = null, options = {}) {
+    const timestamp = new Date().toISOString().slice(0, 16).replace(/[:.]/g, '-');
+    const defaultFilename = `context7-score-${timestamp}.${format}`;
+    const finalFilename = filename || defaultFilename;
+    
+    return path.join(this.config.projectRoot, finalFilename);
   }
 
   /**

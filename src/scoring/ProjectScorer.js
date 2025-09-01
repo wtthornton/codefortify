@@ -24,6 +24,8 @@ import { DeveloperExperienceAnalyzer } from './analyzers/DeveloperExperienceAnal
 import { CompletenessAnalyzer } from './analyzers/CompletenessAnalyzer.js';
 import { ScoringReport } from './ScoringReport.js';
 import { RecommendationEngine } from './RecommendationEngine.js';
+import { QualityHistory } from './QualityHistory.js';
+import { QualityGates } from '../gates/QualityGates.js';
 
 export class ProjectScorer {
   constructor(config = {}) {
@@ -44,6 +46,8 @@ export class ProjectScorer {
     this.analyzers = this.initializeAnalyzers();
     this.reportGenerator = new ScoringReport(this.config);
     this.recommendationEngine = new RecommendationEngine(this.config);
+    this.qualityHistory = new QualityHistory(this.config);
+    this.qualityGates = new QualityGates(this.config.gates || {});
 
     this.results = {
       categories: {},
@@ -143,13 +147,63 @@ export class ProjectScorer {
       // Calculate overall score
       this.calculateOverallScore();
 
-      // Generate recommendations
-      const recommendations = await this.recommendationEngine.generateRecommendations(this.results);
-      this.results.recommendations = recommendations;
+          // Generate recommendations
+    const recommendations = await this.recommendationEngine.generateRecommendations(this.results);
+    this.results.recommendations = recommendations;
+    
+    // Generate enhanced prompts for recommendations
+    try {
+      const enhancedPrompts = await this.recommendationEngine.generateEnhancedPrompts(recommendations, {
+        projectType: this.results.metadata.projectType,
+        currentFile: null,
+        recentFiles: []
+      });
+      this.results.enhancedPrompts = enhancedPrompts;
+    } catch (error) {
+      if (this.config.verbose) {
+        console.warn(`⚠️  Enhanced prompt generation failed: ${error.message}`);
+      }
+      this.results.enhancedPrompts = [];
+    }
+
+      // Evaluate quality gates if enabled
+      if (this.config.gates?.enabled !== false) {
+        const gatesResult = await this.qualityGates.evaluateResults(this.results);
+        this.results.qualityGates = gatesResult;
+        
+        if (this.config.verbose) {
+          console.log(`🎯 Quality Gates: ${gatesResult.passed ? '✅ PASSED' : '❌ FAILED'}`);
+        }
+      }
 
       // Add detailed analysis if requested
       if (detailed) {
         this.results.detailed = await this.generateDetailedAnalysis();
+      }
+
+      // PHASE 2: Record quality history for trending
+      const historyEntry = await this.qualityHistory.recordQualityScore(this.results, {
+        analyzer: 'ProjectScorer',
+        version: '1.1.1'
+      });
+      
+      if (historyEntry) {
+        this.results.history = {
+          recorded: true,
+          improvements: historyEntry.improvements,
+          trends: historyEntry.trends
+        };
+        
+        // Add historical context to recommendations
+        if (historyEntry.improvements && !historyEntry.improvements.isFirstRun) {
+          const { scoreChange, isImprovement, significantChange } = historyEntry.improvements;
+          
+          if (significantChange && isImprovement) {
+            console.log(`🎉 Quality improved by ${scoreChange.toFixed(1)} points since last run!`);
+          } else if (significantChange && !isImprovement) {
+            console.log(`⚠️  Quality decreased by ${Math.abs(scoreChange).toFixed(1)} points since last run`);
+          }
+        }
       }
 
       console.log('\n✅ Analysis complete!');

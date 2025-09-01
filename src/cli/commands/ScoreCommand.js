@@ -61,12 +61,15 @@ export class ScoreCommand {
       // Parse categories
       const categories = this.parseCategories(options.categories);
 
-      // Set up scoring configuration
+      // Set up scoring configuration with routing and gates
       const scoringConfig = {
+        projectRoot: this.globalConfig.projectRoot,
         categories: categories,
         verbose: this.globalConfig.verbose,
         detailed: options.detailed,
-        includeRecommendations: options.recommendations
+        includeRecommendations: options.recommendations,
+        routing: options.routing || {},
+        gates: options.gates || {}
       };
 
       // Run the scoring analysis
@@ -185,23 +188,21 @@ export class ScoreCommand {
   }
 
   async outputHTML(results, outputFile, openInBrowser = false) {
-    const { ScoringReport } = await import('../../scoring/ScoringReportRefactored.js');
-    const report = new ScoringReport();
+    const { ScoringReport } = await import('../../scoring/ScoringReport.js');
+    const report = new ScoringReport({
+      projectRoot: this.globalConfig.projectRoot,
+      verbose: this.globalConfig.verbose
+    });
 
     const filename = outputFile || `context7-quality-report-${Date.now()}.html`;
-    const html = await report.generateHTML(results);
-
-    const { writeFile } = await import('fs/promises');
-    await writeFile(filename, html);
-    console.log(chalk.green(`✓ HTML report generated: ${filename}`));
+    const savedPath = await report.saveReport(results, 'html', filename, {
+      openBrowser: openInBrowser
+    });
+    
+    console.log(chalk.green(`✓ HTML report generated: ${savedPath}`));
 
     if (openInBrowser) {
-      try {
-        await report.openInBrowser(filename);
-        console.log(chalk.blue('🌐 Opening report in browser...'));
-      } catch (error) {
-        console.warn(chalk.yellow('⚠ Could not open browser automatically:', error.message));
-      }
+      console.log(chalk.blue('🌐 Opening report in browser...'));
     }
   }
 

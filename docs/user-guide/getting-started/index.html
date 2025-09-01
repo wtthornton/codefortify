@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started - CodeFortify User Guide</title>
+    <meta name="description" content="Get started with CodeFortify - installation, setup, and your first project with AI-powered code enhancement.">
+    <link rel="stylesheet" href="../assets/css/user-guide.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>🚀 Getting Started with CodeFortify</h1>
+            <p>Your journey to revolutionary AI-powered code enhancement begins here</p>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="index.html">Getting Started</a></li>
+                <li><a href="../tutorials/index.html">Tutorials</a></li>
+                <li><a href="../features/index.html">Features</a></li>
+                <li><a href="../api/index.html">API Reference</a></li>
+                <li><a href="../examples/index.html">Examples</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main">
+        <div class="container">
+            <div class="content">
+                <div class="fade-in">
+                    <h2>Getting Started Overview</h2>
+                    <p>Welcome to CodeFortify! This guide will help you get up and running with the revolutionary AI-powered code enhancement tool in just a few minutes.</p>
+
+                    <div class="alert alert-info">
+                        <strong>⏱️ Quick Setup:</strong> You can have CodeFortify running and enhancing your code in under 5 minutes.
+                    </div>
+
+                    <h3>What You'll Learn</h3>
+                    <ul>
+                        <li>How to install CodeFortify on your system</li>
+                        <li>Setting up your first project</li>
+                        <li>Understanding the basic commands</li>
+                        <li>Reading and interpreting quality scores</li>
+                        <li>Starting your first enhancement cycle</li>
+                    </ul>
+
+                    <h3>Prerequisites</h3>
+                    <div class="card">
+                        <h4>System Requirements</h4>
+                        <ul>
+                            <li><strong>Node.js:</strong> Version 18.0.0 or higher</li>
+                            <li><strong>npm:</strong> Version 8.0.0 or higher (or yarn)</li>
+                            <li><strong>Git:</strong> For version control integration</li>
+                            <li><strong>Operating System:</strong> Windows, macOS, or Linux</li>
+                            <li><strong>Memory:</strong> At least 4GB RAM recommended</li>
+                            <li><strong>Storage:</strong> 500MB free space for installation</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h4>Development Environment</h4>
+                        <ul>
+                            <li><strong>Code Editor:</strong> VS Code, WebStorm, or any modern editor</li>
+                            <li><strong>Terminal:</strong> Command line access</li>
+                            <li><strong>Browser:</strong> Modern browser for documentation and demos</li>
+                        </ul>
+                    </div>
+
+                    <h3>Installation Methods</h3>
+                    <p>Choose the installation method that works best for your setup:</p>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                        <div class="card">
+                            <h4>📦 npm (Recommended)</h4>
+                            <p>Install globally for system-wide access</p>
+                            <pre><code>npm install -g codefortify</code></pre>
+                            <a href="installation.html" class="btn">Detailed Installation Guide</a>
+                        </div>
+                        <div class="card">
+                            <h4>🔧 Local Installation</h4>
+                            <p>Install in your project directory</p>
+                            <pre><code>npm install codefortify --save-dev</code></pre>
+                            <a href="installation.html#local" class="btn">Local Setup Guide</a>
+                        </div>
+                        <div class="card">
+                            <h4>🐳 Docker</h4>
+                            <p>Run in a containerized environment</p>
+                            <pre><code>docker run codefortify/cli</code></pre>
+                            <a href="installation.html#docker" class="btn">Docker Setup</a>
+                        </div>
+                    </div>
+
+                    <h3>Quick Verification</h3>
+                    <p>After installation, verify everything is working:</p>
+                    <pre><code># Check version
+codefortify --version
+
+# View help
+codefortify --help
+
+# Run a quick validation
+codefortify validate</code></pre>
+
+                    <h3>Your First Project</h3>
+                    <p>Ready to create your first CodeFortify project? Follow these steps:</p>
+
+                    <div class="interactive-tutorial">
+                        <div class="tutorial-step active">
+                            <h4>Step 1: Initialize Project</h4>
+                            <p>Create a new project or use an existing one:</p>
+                            <pre><code># For new projects
+codefortify init my-awesome-project
+
+# For existing projects
+cd my-existing-project
+codefortify init</code></pre>
+                        </div>
+                        <div class="tutorial-step">
+                            <h4>Step 2: Analyze Current State</h4>
+                            <p>Get your baseline quality score:</p>
+                            <pre><code>codefortify score --detailed</code></pre>
+                            <p>This will show you where your code stands and what can be improved.</p>
+                        </div>
+                        <div class="tutorial-step">
+                            <h4>Step 3: Start Enhancement</h4>
+                            <p>Begin the continuous enhancement process:</p>
+                            <pre><code>codefortify enhance --watch</code></pre>
+                            <p>Watch as AI agents analyze and improve your code automatically!</p>
+                        </div>
+                        <div class="tutorial-step">
+                            <h4>Step 4: Monitor Progress</h4>
+                            <p>Track improvements over time:</p>
+                            <pre><code>codefortify score --compare</code></pre>
+                            <p>See how your code quality improves with each enhancement cycle.</p>
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin: 1rem 0;">
+                            <button class="btn prev-step">Previous</button>
+                            <button class="btn next-step">Next</button>
+                        </div>
+                    </div>
+
+                    <h3>Understanding Quality Scores</h3>
+                    <p>CodeFortify provides detailed quality scores across multiple dimensions:</p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Description</th>
+                                <th>Target Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Code Quality</td>
+                                <td>Overall code structure, patterns, and best practices</td>
+                                <td>90+ (A)</td>
+                            </tr>
+                            <tr>
+                                <td>Test Coverage</td>
+                                <td>Percentage of code covered by tests</td>
+                                <td>85+ (A)</td>
+                            </tr>
+                            <tr>
+                                <td>Security</td>
+                                <td>Security vulnerabilities and best practices</td>
+                                <td>95+ (A+)</td>
+                            </tr>
+                            <tr>
+                                <td>Performance</td>
+                                <td>Code efficiency and optimization</td>
+                                <td>85+ (A)</td>
+                            </tr>
+                            <tr>
+                                <td>Documentation</td>
+                                <td>Code comments and documentation quality</td>
+                                <td>80+ (A)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Common Commands</h3>
+                    <p>Here are the essential commands you'll use most often:</p>
+
+                    <div class="card">
+                        <h4>Basic Commands</h4>
+                        <ul>
+                            <li><code>codefortify score</code> - Analyze code quality</li>
+                            <li><code>codefortify enhance</code> - Start enhancement process</li>
+                            <li><code>codefortify validate</code> - Check project compliance</li>
+                            <li><code>codefortify template</code> - Manage templates</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h4>Advanced Commands</h4>
+                        <ul>
+                            <li><code>codefortify enhance --watch</code> - Continuous mode</li>
+                            <li><code>codefortify score --detailed</code> - Detailed analysis</li>
+                            <li><code>codefortify analyze --deep</code> - Deep code analysis</li>
+                            <li><code>codefortify template init</code> - Initialize from template</li>
+                        </ul>
+                    </div>
+
+                    <h3>Next Steps</h3>
+                    <p>Now that you understand the basics, here's what to do next:</p>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                        <div class="card">
+                            <h4>📖 Learn More</h4>
+                            <p>Dive deeper into specific features and capabilities</p>
+                            <a href="../features/index.html" class="btn">Explore Features</a>
+                        </div>
+                        <div class="card">
+                            <h4>🎯 Follow Tutorials</h4>
+                            <p>Step-by-step guides for different project types</p>
+                            <a href="../tutorials/index.html" class="btn">View Tutorials</a>
+                        </div>
+                        <div class="card">
+                            <h4>💡 See Examples</h4>
+                            <p>Real-world examples and code snippets</p>
+                            <a href="../examples/index.html" class="btn">Browse Examples</a>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-success">
+                        <h4>🎉 Congratulations!</h4>
+                        <p>You're now ready to start using CodeFortify! The AI agents are ready to help you create better, more maintainable code. Start with a simple project and watch the magic happen.</p>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="sidebar">
+                <h3>Getting Started</h3>
+                <ul>
+                    <li><a href="index.html">Overview</a></li>
+                    <li><a href="installation.html">Installation</a></li>
+                    <li><a href="first-project.html">First Project</a></li>
+                    <li><a href="basic-commands.html">Basic Commands</a></li>
+                    <li><a href="understanding-scores.html">Quality Scores</a></li>
+                </ul>
+
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="../tutorials/react-setup.html">React Setup</a></li>
+                    <li><a href="../tutorials/vue-setup.html">Vue.js Setup</a></li>
+                    <li><a href="../features/continuous-enhancement.html">Enhancement System</a></li>
+                    <li><a href="../api/cli-commands.html">CLI Reference</a></li>
+                </ul>
+
+                <h3>Need Help?</h3>
+                <ul>
+                    <li><a href="../api/troubleshooting.html">Troubleshooting</a></li>
+                    <li><a href="https://discord.gg/codefortify" target="_blank">Community</a></li>
+                    <li><a href="mailto:support@codefortify.com">Support</a></li>
+                </ul>
+            </aside>
+        </div>
+    </main>
+
+    <footer style="background: var(--surface-color); padding: 2rem 0; text-align: center; border-top: 1px solid var(--border-color);">
+        <div class="container">
+            <p>&copy; 2025 CodeFortify. Revolutionary AI-powered code enhancement.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/user-guide.js"></script>
+</body>
+</html>

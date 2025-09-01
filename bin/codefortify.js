@@ -215,6 +215,21 @@ program
     await coordinator.executeTemplate(action, options);
   });
 
+// Prompt command - Enhanced prompt generation
+program
+  .command('prompt')
+  .description('🤖 Generate enhanced prompts for code quality recommendations')
+  .option('-p, --project <path>', 'Project path to analyze', process.cwd())
+  .option('-c, --config <file>', 'Configuration file path')
+  .option('-o, --output <format>', 'Output format: json, text, or html', 'text')
+  .option('-f, --file <path>', 'Save output to file')
+  .option('-t, --test', 'Test prompt generation with sample data')
+  .option('-v, --verbose', 'Enable verbose output')
+  .action(async (options) => {
+    const coordinator = new CommandCoordinator(globalConfig, packageRoot);
+    await coordinator.executePrompt(options);
+  });
+
 // Update command
 program
   .command('update')

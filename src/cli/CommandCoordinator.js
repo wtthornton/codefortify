@@ -8,6 +8,7 @@ import { InitCommand } from './commands/InitCommand.js';
 import { ScoreCommand } from './commands/ScoreCommand.js';
 import { EnhanceCommand } from './commands/EnhanceCommand.js';
 import { TemplateCommand } from './commands/TemplateCommand.js';
+import { PromptCommand } from './commands/PromptCommand.js';
 import { ProjectTypeDetector } from '../scoring/core/ProjectTypeDetector.js';
 
 export class CommandCoordinator {
@@ -20,7 +21,8 @@ export class CommandCoordinator {
       init: new InitCommand(globalConfig, packageRoot),
       score: new ScoreCommand(globalConfig),
       enhance: new EnhanceCommand(globalConfig),
-      template: new TemplateCommand(globalConfig, packageRoot)
+      template: new TemplateCommand(globalConfig, packageRoot),
+      prompt: new PromptCommand()
     };
   }
 
@@ -38,6 +40,10 @@ export class CommandCoordinator {
 
   async executeTemplate(action, options) {
     return await this.commands.template.execute({ action, ...options });
+  }
+
+  async executePrompt(options) {
+    return await this.commands.prompt.execute(options);
   }
 
   async detectProjectType() {
