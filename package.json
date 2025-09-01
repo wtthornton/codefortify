@@ -1,6 +1,6 @@
 {
   "name": "@wtthornton/codefortify",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "CodeFortify - AI-powered code strengthening and security enhancement for modern development",
   "type": "module",
   "main": "src/index.js",
@@ -134,6 +134,6 @@
     "CHANGELOG.md"
   ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "access": "public"
   }
 }

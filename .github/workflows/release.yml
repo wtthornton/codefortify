@@ -1,0 +1,57 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'package.json'
+
+jobs:
+  check-version:
+    name: Check Version Change
+    runs-on: ubuntu-latest
+    outputs:
+      version-changed: ${{ steps.check.outputs.changed }}
+      new-version: ${{ steps.check.outputs.version }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 2
+        
+    - name: Check version change
+      id: check
+      run: |
+        CURRENT_VERSION=$(node -p "require('./package.json').version")
+        git checkout HEAD~1
+        PREVIOUS_VERSION=$(node -p "require('./package.json').version")
+        git checkout -
+        
+        if [ "$CURRENT_VERSION" != "$PREVIOUS_VERSION" ]; then
+          echo "changed=true" >> $GITHUB_OUTPUT
+          echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+          echo "Version changed from $PREVIOUS_VERSION to $CURRENT_VERSION"
+        else
+          echo "changed=false" >> $GITHUB_OUTPUT
+          echo "No version change detected"
+        fi
+
+  auto-release:
+    name: Create Auto Release
+    needs: check-version
+    runs-on: ubuntu-latest
+    if: needs.check-version.outputs.version-changed == 'true'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Create and push tag
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git tag -a "v${{ needs.check-version.outputs.new-version }}" -m "Release v${{ needs.check-version.outputs.new-version }}"
+        git push origin "v${{ needs.check-version.outputs.new-version }}"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
