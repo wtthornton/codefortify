@@ -6,6 +6,7 @@
 
 import { InitCommand } from './commands/InitCommand.js';
 import { ScoreCommand } from './commands/ScoreCommand.js';
+import { EnhanceCommand } from './commands/EnhanceCommand.js';
 import { ProjectTypeDetector } from '../scoring/core/ProjectTypeDetector.js';
 
 export class CommandCoordinator {
@@ -16,7 +17,8 @@ export class CommandCoordinator {
     // Initialize command handlers
     this.commands = {
       init: new InitCommand(globalConfig, packageRoot),
-      score: new ScoreCommand(globalConfig)
+      score: new ScoreCommand(globalConfig),
+      enhance: new EnhanceCommand(globalConfig)
     };
   }
 
@@ -26,6 +28,10 @@ export class CommandCoordinator {
 
   async executeScore(options) {
     return await this.commands.score.execute(options);
+  }
+
+  async executeEnhance(input, options) {
+    return await this.commands.enhance.execute(input, options);
   }
 
   async detectProjectType() {
@@ -262,15 +268,15 @@ export class CommandCoordinator {
   }
 
   // Additional legacy methods would be implemented here...
-  async serveMCPServer(options) {
+  async serveMCPServer(_options) {
     throw new Error('Serve command not yet implemented');
   }
 
-  async generatePattern(options) {
+  async generatePattern(_options) {
     throw new Error('Generate command not yet implemented');
   }
 
-  async updateProject(options) {
+  async updateProject(_options) {
     throw new Error('Update command not yet implemented');
   }
 }

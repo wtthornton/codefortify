@@ -6,7 +6,6 @@
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ProjectScorer } from '../../src/scoring/ProjectScorerRefactored.js';
-import path from 'path';
 
 describe('ProjectScorer', () => {
   let scorer;
@@ -73,10 +72,6 @@ describe('ProjectScorer', () => {
 
   describe('Project Type Detection', () => {
     it('should detect React projects', () => {
-      const mockPackageJson = {
-        dependencies: { react: '^18.0.0', 'react-dom': '^18.0.0' }
-      };
-
       // We can't easily mock fs operations, so we'll test the logic indirectly
       // by using the detectProjectType method if it's accessible
       expect(scorer.config.projectType).toBeDefined();

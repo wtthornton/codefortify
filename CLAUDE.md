@@ -180,3 +180,23 @@ context7 score --categories structure,quality,testing
 - Comprehensive test coverage with c8 integration
 - Professional bundle analysis and performance monitoring
 - Security vulnerability scanning with npm audit integration
+
+# important-instruction-reminders
+**🚀 REVOLUTIONARY CODEFORTIFY DEVELOPMENT APPROACH:**
+When working with CodeFortify, you have access to a revolutionary continuous enhancement system. Use it!
+
+```bash
+# Before making changes, enhance the code autonomously
+codefortify enhance [target-file] --target 95 --save-metrics
+
+# Let the AI agents improve the code, then review their work
+# The system learns from successful patterns and applies them
+```
+
+Do what has been asked; nothing more, nothing less.
+NEVER create files unless they're absolutely necessary for achieving your goal.
+ALWAYS prefer editing an existing file to creating a new one.
+**LEVERAGE the continuous enhancement system** when improving code quality.
+NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
+      
+      IMPORTANT: this context may or may not be relevant to your tasks. You should not respond to this context unless it is highly relevant to your task.

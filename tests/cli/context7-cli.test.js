@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
 // Helper to run CLI commands
 function runCLI(args, options = {}) {
   return new Promise((resolve, reject) => {
-    const cliPath = path.join(__dirname, '..', '..', 'bin', 'context7.js');
+    const cliPath = path.join(__dirname, '..', '..', 'bin', 'codefortify.js');
     const child = spawn('node', [cliPath, ...args], {
       stdio: ['pipe', 'pipe', 'pipe'],
       cwd: options.cwd || global.testConfig.projectRoot,
@@ -87,8 +87,8 @@ describe('Context7 CLI', () => {
 
       // Commander.js outputs help to stderr when no arguments are provided
       const output = result.stderr || result.stdout;
-      expect(output).toContain('context7');
-      expect(output).toContain('Context7 MCP integration CLI');
+      expect(output).toContain('codefortify');
+      expect(output).toContain('CodeFortify - AI-powered code strengthening');
       expect(output).toContain('Commands:');
       expect(output).toContain('init');
       expect(output).toContain('validate');
@@ -118,7 +118,7 @@ describe('Context7 CLI', () => {
       const result = await runCLI(['init', '--help']);
 
       expect(result.success).toBe(true);
-      expect(result.stdout).toContain('Initialize Context7 MCP');
+      expect(result.stdout).toContain('Initialize CodeFortify');
       expect(result.stdout).toContain('--type');
       expect(result.stdout).toContain('--force');
       expect(result.stdout).toContain('--no-mcp');
@@ -152,12 +152,12 @@ describe('Context7 CLI', () => {
       const result = await runCLI(['add', '--help']);
 
       expect(result.success).toBe(true);
-      expect(result.stdout).toContain('Add Context7 MCP to an existing project');
+      expect(result.stdout).toContain('Add CodeFortify to an existing project');
       expect(result.stdout).toContain('--type');
       expect(result.stdout).toContain('--existing');
     });
 
-    it('should add Context7 to existing project', async () => {
+    it('should add CodeFortify to existing project', async () => {
       const result = await runCLI(['add', '--type', 'react-webapp'], {
         cwd: testProjectDir
       });
@@ -188,7 +188,7 @@ describe('Context7 CLI', () => {
         cwd: testProjectDir
       });
 
-      expect(result.stdout).toContain('Validating Context7 Project');
+      expect(result.stdout).toContain('Validating CodeFortify Project');
     });
 
     it('should handle validation in strict mode', async () => {
@@ -196,7 +196,7 @@ describe('Context7 CLI', () => {
         cwd: testProjectDir
       });
 
-      expect(result.stdout).toContain('Validating Context7 Project');
+      expect(result.stdout).toContain('Validating CodeFortify Project');
     });
   });
 
@@ -226,7 +226,7 @@ describe('Context7 CLI', () => {
       const result = await runCLI(['serve', '--help']);
 
       expect(result.success).toBe(true);
-      expect(result.stdout).toContain('Start the Context7 MCP server');
+      expect(result.stdout).toContain('Start the CodeFortify MCP server');
       expect(result.stdout).toContain('--config');
       expect(result.stdout).toContain('--port');
     });
@@ -240,7 +240,7 @@ describe('Context7 CLI', () => {
       const result = await runCLI(['generate', '--help']);
 
       expect(result.success).toBe(true);
-      expect(result.stdout).toContain('Generate Context7-compliant code scaffolds');
+      expect(result.stdout).toContain('Generate CodeFortify-compliant code scaffolds');
       expect(result.stdout).toContain('--name');
       expect(result.stdout).toContain('--framework');
     });
@@ -286,7 +286,7 @@ describe('Context7 CLI', () => {
     it('should handle custom project root', async () => {
       const result = await runCLI(['--project-root', testProjectDir, 'validate']);
 
-      expect(result.stdout).toContain('Validating Context7 Project');
+      expect(result.stdout).toContain('Validating CodeFortify Project');
     });
   });
 
@@ -336,7 +336,7 @@ describe('Context7 CLI', () => {
         cwd: emptyDir
       });
 
-      expect(result.stdout).toContain('Validating Context7 Project');
+      expect(result.stdout).toContain('Validating CodeFortify Project');
 
       await fs.remove(emptyDir);
     });
@@ -361,7 +361,7 @@ describe('Context7 CLI', () => {
         cwd: testProjectDir
       });
 
-      expect(result.stdout).toContain('Validating Context7 Project');
+      expect(result.stdout).toContain('Validating CodeFortify Project');
     });
   });
 

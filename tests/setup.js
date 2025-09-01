@@ -2,7 +2,7 @@
  * Test setup file for Context7 MCP tests
  */
 
-import { vi, beforeAll, afterAll } from 'vitest';
+import { vi, beforeAll, afterAll, beforeEach } from 'vitest';
 import fs from 'fs-extra';
 import path from 'path';
 import { fileURLToPath } from 'url';

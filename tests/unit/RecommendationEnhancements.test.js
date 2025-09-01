@@ -46,7 +46,7 @@ describe('RecommendationEngine Enhancements', () => {
 
   describe('Smart Filtering & Deduplication', () => {
     it('should detect React project type', async () => {
-      const recs = await engine.generateRecommendations(mockResults);
+      await engine.generateRecommendations(mockResults);
       expect(engine.projectType).toBe('react');
     });
 

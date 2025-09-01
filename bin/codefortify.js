@@ -93,6 +93,26 @@ program
     await coordinator.executeScore(options);
   });
 
+// Enhance command - Revolutionary continuous improvement system
+program
+  .command('enhance [input]')
+  .description('🚀 Continuously enhance code quality with AI-powered iterative improvement')
+  .option('-i, --iterations <number>', 'Maximum iterations (default: 5)', '5')
+  .option('-t, --target <score>', 'Target quality score (default: 95)', '95')
+  .option('-f, --format <format>', 'Output format (console, json, html, markdown)', 'console')
+  .option('-o, --output <file>', 'Save results to file')
+  .option('--aggressive', 'Use aggressive enhancement mode')
+  .option('--learn', 'Enable pattern learning from improvements')
+  .option('--context7', 'Enable Context7 prompt enhancement')
+  .option('--no-self-measure', 'Disable self-measurement tracking')
+  .option('--no-visual-testing', 'Disable visual testing and accessibility checks')
+  .option('--browsers <browsers>', 'Comma-separated list of browsers (chromium,firefox,webkit)', 'chromium')
+  .option('--visual-threshold <threshold>', 'Visual difference threshold (0.0-1.0)', '0.2')
+  .action(async (input, options) => {
+    const coordinator = new CommandCoordinator(globalConfig, packageRoot);
+    await coordinator.executeEnhance(input, options);
+  });
+
 // Test command
 program
   .command('test-mcp')

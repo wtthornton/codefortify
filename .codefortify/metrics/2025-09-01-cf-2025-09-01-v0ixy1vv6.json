@@ -1,0 +1,52 @@
+{
+  "session": "cf-2025-09-01-v0ixy1vv6",
+  "duration": 5,
+  "summary": {
+    "iterations": 0,
+    "patterns": 0,
+    "improvements": 0,
+    "tokensSaved": 0,
+    "timeSaved": 0,
+    "roi": 0
+  },
+  "detailed": {
+    "tokens": {
+      "baseline": 0,
+      "optimized": 0,
+      "saved": 0,
+      "reduction": 0
+    },
+    "quality": {
+      "initialScore": 0,
+      "finalScore": 0,
+      "improvement": 0,
+      "bugsFixed": 0,
+      "issuesResolved": 0
+    },
+    "velocity": {
+      "totalDuration": 0,
+      "averageIterationTime": 0,
+      "convergenceRate": 0
+    },
+    "roi": {
+      "timeSaved": 0,
+      "costSaved": 0,
+      "valueGenerated": 0,
+      "efficiency": 0
+    },
+    "iterations": [],
+    "patterns": []
+  },
+  "finalReport": {
+    "summary": {
+      "iterations": 1,
+      "finalScore": 0,
+      "targetScore": "75",
+      "targetAchieved": false,
+      "totalDuration": 0,
+      "averageIterationTime": 0
+    },
+    "progression": []
+  },
+  "timestamp": "2025-09-01T16:17:07.902Z"
+}

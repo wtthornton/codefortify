@@ -48,7 +48,13 @@
       "Read(C:\\cursor\\ha-ingestor/**)",
       "Bash(context7 init:*)",
       "Read(C:\\cursor\\ha-ingestor/**)",
-      "Bash(git remote set-url:*)"
+      "Bash(git remote set-url:*)",
+      "Bash(git branch:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:api.github.com)",
+      "Bash(codefortify:*)",
+      "Bash(npx playwright install:*)",
+      "Bash(vsce package:*)"
     ],
     "deny": [],
     "ask": []

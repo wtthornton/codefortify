@@ -142,7 +142,7 @@ export class ScoreCommand {
 
     // Category breakdown
     console.log('\n' + chalk.bold('📊 Category Breakdown:'));
-    Object.entries(categories).forEach(([key, category]) => {
+    Object.entries(categories).forEach(([_key, category]) => {
       const percentage = Math.round((category.score / category.maxScore) * 100);
       const gradeColor = this.getGradeColor(category.grade);
       const progressBar = this.createProgressBar(percentage);

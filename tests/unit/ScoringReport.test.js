@@ -275,8 +275,6 @@ describe('ScoringReport', () => {
   describe('Browser Opening', () => {
     it('should handle browser opening on different platforms', () => {
       // Test the platform detection logic
-      const originalPlatform = process.platform;
-
       // We can't easily test actual browser opening without mocking exec
       // But we can test that the method exists and handles errors gracefully
       expect(typeof report.openInBrowser).toBe('function');
