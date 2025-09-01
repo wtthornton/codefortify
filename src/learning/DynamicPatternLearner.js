@@ -217,17 +217,42 @@ export class DynamicPatternLearner {
 
   /**
    * Export patterns for sharing
-   * @param {Object} options - Export options
+   * @param {string|Object} filePathOrOptions - File path or export options
    * @returns {Promise<Object>} Export result
    */
-  async exportPatterns(options = {}) {
+  async exportPatterns(filePathOrOptions = {}) {
     try {
+      let filePath;
+      let options = {};
+      
+      if (typeof filePathOrOptions === 'string') {
+        filePath = filePathOrOptions;
+        options = {};
+      } else {
+        filePath = filePathOrOptions.filePath;
+        options = filePathOrOptions;
+      }
+
       const patterns = await this.patternDatabase.exportPatterns(options);
+      
+      if (filePath) {
+        const exportData = {
+          patterns: patterns,
+          metadata: {
+            exportedAt: new Date().toISOString(),
+            count: patterns.length,
+            version: '1.0.0'
+          }
+        };
+        
+        await fileUtils.writeFile(filePath, JSON.stringify(exportData, null, 2));
+      }
 
       return {
         success: true,
         patterns: patterns,
         count: patterns.length,
+        filePath: filePath,
         exportedAt: new Date()
       };
 
@@ -237,6 +262,21 @@ export class DynamicPatternLearner {
         success: false,
         error: error.message
       };
+    }
+  }
+
+  /**
+   * Get all learned patterns
+   * @param {Object} criteria - Optional filtering criteria
+   * @returns {Promise<Array>} All learned patterns
+   */
+  async getLearnedPatterns(criteria = {}) {
+    try {
+      const patterns = await this.patternDatabase.search(criteria);
+      return patterns;
+    } catch (error) {
+      console.error(`❌ Error getting learned patterns: ${error.message}`);
+      return [];
     }
   }
 
@@ -295,15 +335,13 @@ export class DynamicPatternLearner {
         success: true,
         patternId: feedback.patternId,
         updatedEffectiveness: pattern.effectiveness,
+        newEffectiveness: pattern.effectiveness,
         updatedSuccessRate: pattern.successRate
       };
 
     } catch (error) {
       console.error(`❌ Error updating pattern effectiveness: ${error.message}`);
-      return {
-        success: false,
-        error: error.message
-      };
+      throw error;
     }
   }
 
@@ -320,7 +358,10 @@ export class DynamicPatternLearner {
       const importResult = await this.patternDatabase.importPatterns(patterns, options);
 
       console.log(`✅ Import completed: ${importResult.imported} patterns imported`);
-      return importResult;
+      return {
+        ...importResult,
+        importedCount: importResult.imported
+      };
 
     } catch (error) {
       console.error(`❌ Error importing patterns: ${error.message}`);

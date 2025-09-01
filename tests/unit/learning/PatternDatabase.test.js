@@ -117,7 +117,7 @@ describe('PatternDatabase', () => {
       expect(database.patterns.get(pattern.id).effectiveness).toBe(0.9);
 
       // Verify update
-      const retrieved = await database.getPattern(pattern.id);
+      const retrieved = await database.get(pattern.id);
       expect(retrieved.effectiveness).toBe(0.9);
       expect(retrieved.usageCount).toBe(2);
     });
@@ -148,7 +148,7 @@ describe('PatternDatabase', () => {
         id: 'invalid-pattern'
       };
 
-      await expect(database.savePattern(invalidPattern))
+      await expect(database.store(invalidPattern))
         .rejects.toThrow();
     });
   });
@@ -168,7 +168,7 @@ describe('PatternDatabase', () => {
       };
 
       await database.savePattern(pattern);
-      const retrieved = await database.getPattern(pattern.id);
+      const retrieved = await database.get(pattern.id);
 
       expect(retrieved).toBeDefined();
       expect(retrieved.id).toBe(pattern.id);
@@ -177,7 +177,7 @@ describe('PatternDatabase', () => {
     });
 
     it('should return null for non-existent pattern', async () => {
-      const retrieved = await database.getPattern('non-existent-pattern');
+      const retrieved = await database.get('non-existent-pattern');
       expect(retrieved).toBeNull();
     });
 
@@ -198,7 +198,7 @@ describe('PatternDatabase', () => {
       // Wait a bit to ensure timestamp difference
       await new Promise(resolve => setTimeout(resolve, 10));
 
-      const retrieved = await database.getPattern(pattern.id);
+      const retrieved = await database.get(pattern.id);
       expect(new Date(retrieved.lastUsed)).toBeInstanceOf(Date);
       expect(retrieved.lastUsed).not.toBe(originalLastUsed);
     });
@@ -339,7 +339,7 @@ describe('PatternDatabase', () => {
       expect(result.success).toBe(true);
 
       // Verify deletion
-      const retrieved = await database.getPattern(pattern.id);
+      const retrieved = await database.get(pattern.id);
       expect(retrieved).toBeNull();
     });
 
@@ -419,7 +419,7 @@ describe('PatternDatabase', () => {
         await database.savePattern(pattern);
       }
 
-      const stats = await database.getPatternStats();
+      const stats = await database.getStats();
 
       expect(stats).toBeDefined();
       expect(stats.totalPatterns).toBe(2);
@@ -486,7 +486,7 @@ describe('PatternDatabase', () => {
       expect(result.restoredCount).toBe(1);
 
       // Verify pattern was restored
-      const restored = await database.getPattern('restore-test');
+      const restored = await database.get('restore-test');
       expect(restored).toBeDefined();
       expect(restored.code).toBe(backupData.patterns[0].code);
     });

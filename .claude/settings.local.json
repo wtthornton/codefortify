@@ -62,7 +62,9 @@
       "Bash(npx @wtthornton/codefortify:*)",
       "Bash(echo:*)",
       "Bash(netstat:*)",
-      "Bash(taskkill:*)"
+      "Bash(taskkill:*)",
+      "Read(C:\\Users\\tappt\\AppData\\Roaming\\npm\\node_modules\\@wtthornton\\codefortify/**)",
+      "Read(C:\\Users\\tappt\\AppData\\Roaming\\npm\\node_modules\\@wtthornton\\codefortify\\bin/**)"
     ],
     "deny": [],
     "ask": []

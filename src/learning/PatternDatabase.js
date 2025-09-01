@@ -41,31 +41,34 @@ export class PatternDatabase {
    */
   async store(pattern) {
     try {
-      // Validate pattern
-      if (!this.validatePattern(pattern)) {
+      // Normalize pattern first
+      const normalizedPattern = this.normalizePattern(pattern);
+      
+      // Validate normalized pattern
+      if (!this.validatePattern(normalizedPattern)) {
         throw new Error('Invalid pattern data');
       }
 
       // Check if pattern already exists
-      if (this.patterns.has(pattern.id)) {
-        throw new Error(`Pattern with ID ${pattern.id} already exists`);
+      if (this.patterns.has(normalizedPattern.id)) {
+        throw new Error(`Pattern with ID ${normalizedPattern.id} already exists`);
       }
 
-      // Store pattern
-      this.patterns.set(pattern.id, pattern);
+      // Store normalized pattern
+      this.patterns.set(normalizedPattern.id, normalizedPattern);
 
       // Update indexes
-      this.updateIndexes(pattern);
+      this.updateIndexes(normalizedPattern);
 
       // Persist to file system
       await this.persistToFile();
 
-      console.log(`✅ Pattern stored: ${pattern.id}`);
+      console.log(`✅ Pattern stored: ${normalizedPattern.id}`);
       return true;
 
     } catch (error) {
       console.error(`❌ Error storing pattern: ${error.message}`);
-      return false;
+      throw error;
     }
   }
 
@@ -76,7 +79,14 @@ export class PatternDatabase {
    */
   async get(patternId) {
     try {
-      return this.patterns.get(patternId) || null;
+      const pattern = this.patterns.get(patternId);
+      if (pattern) {
+        // Update lastUsed timestamp
+        pattern.lastUsed = new Date().toISOString();
+        this.patterns.set(patternId, pattern);
+        await this.persistToFile();
+      }
+      return pattern || null;
     } catch (error) {
       console.error(`❌ Error retrieving pattern: ${error.message}`);
       return null;
@@ -196,7 +206,15 @@ export class PatternDatabase {
         }
       }
 
-      return results.sort((a, b) => b.effectiveness - a.effectiveness);
+      // Sort by effectiveness by default
+      results.sort((a, b) => b.effectiveness - a.effectiveness);
+
+      // Apply limit if specified
+      if (criteria.limit && criteria.limit > 0) {
+        return results.slice(0, criteria.limit);
+      }
+
+      return results;
 
     } catch (error) {
       console.error(`❌ Error searching patterns: ${error.message}`);
@@ -377,10 +395,7 @@ export class PatternDatabase {
         pattern: normalizedPattern
       };
     } catch (error) {
-      return {
-        success: false,
-        error: error.message
-      };
+      throw error;
     }
   }
 
@@ -404,29 +419,39 @@ export class PatternDatabase {
         byType: {},
         byLanguage: {},
         byFramework: {},
+        languages: {},
+        frameworks: {},
+        types: {},
         averageEffectiveness: 0,
         oldestPattern: null,
         newestPattern: null
       };
 
       let totalEffectiveness = 0;
+      let totalUsageCount = 0;
       let oldestDate = null;
       let newestDate = null;
 
       for (const [id, pattern] of this.patterns) {
         // Count by type
         stats.byType[pattern.type] = (stats.byType[pattern.type] || 0) + 1;
+        stats.types[pattern.type] = (stats.types[pattern.type] || 0) + 1;
 
         // Count by language
-        const language = pattern.metadata?.language || 'unknown';
+        const language = pattern.metadata?.language || pattern.context?.language || 'unknown';
         stats.byLanguage[language] = (stats.byLanguage[language] || 0) + 1;
+        stats.languages[language] = (stats.languages[language] || 0) + 1;
 
         // Count by framework
         const framework = pattern.metadata?.framework || 'unknown';
         stats.byFramework[framework] = (stats.byFramework[framework] || 0) + 1;
+        stats.frameworks[framework] = (stats.frameworks[framework] || 0) + 1;
 
         // Calculate average effectiveness
         totalEffectiveness += pattern.effectiveness;
+        
+        // Calculate total usage count
+        totalUsageCount += pattern.usageCount || 0;
 
         // Find oldest and newest patterns
         const createdAt = new Date(pattern.createdAt);
@@ -442,6 +467,7 @@ export class PatternDatabase {
 
       stats.averageEffectiveness = this.patterns.size > 0 ?
         totalEffectiveness / this.patterns.size : 0;
+      stats.totalUsageCount = totalUsageCount;
 
       return stats;
 
@@ -450,6 +476,93 @@ export class PatternDatabase {
       return {
         error: error.message
       };
+    }
+  }
+
+  /**
+   * Get all patterns (alias for getAllPatterns)
+   * @returns {Promise<Array>} All patterns
+   */
+  async getAllPatterns() {
+    return Array.from(this.patterns.values());
+  }
+
+  /**
+   * Delete a pattern (alias for deletePattern)
+   * @param {string} patternId - Pattern ID
+   * @returns {Promise<Object>} Result object
+   */
+  async deletePattern(patternId) {
+    try {
+      const success = await this.delete(patternId);
+      return { success };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  }
+
+  /**
+   * Create backup of patterns
+   * @param {string} backupPath - Path to save backup
+   * @returns {Promise<Object>} Result object
+   */
+  async createBackup(backupPath) {
+    try {
+      const patterns = Array.from(this.patterns.values());
+      const backupData = {
+        patterns,
+        timestamp: new Date().toISOString(),
+        version: '1.0'
+      };
+
+      await fileUtils.writeFile(backupPath, JSON.stringify(backupData, null, 2));
+      return { success: true, backupPath, patternCount: patterns.length };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  }
+
+  /**
+   * Restore patterns from backup
+   * @param {string} backupPath - Path to backup file
+   * @returns {Promise<Object>} Result object
+   */
+  async restoreFromBackup(backupPath) {
+    try {
+      const backupContent = await fileUtils.readFile(backupPath);
+      const backupData = JSON.parse(backupContent);
+
+      if (!backupData.patterns || !Array.isArray(backupData.patterns)) {
+        throw new Error('Invalid backup format');
+      }
+
+      // Clear existing patterns
+      this.patterns.clear();
+      this.indexes = {
+        byType: new Map(),
+        byEffectiveness: new Map(),
+        byContext: new Map(),
+        byLanguage: new Map(),
+        byFramework: new Map()
+      };
+
+      // Restore patterns
+      let restoredCount = 0;
+      for (const pattern of backupData.patterns) {
+        const normalizedPattern = this.normalizePattern(pattern);
+        if (this.validatePattern(normalizedPattern)) {
+          this.patterns.set(normalizedPattern.id, normalizedPattern);
+          this.updateIndexes(normalizedPattern);
+          restoredCount++;
+        }
+      }
+
+      // Persist to file
+      await this.persistToFile();
+
+      return { success: true, restoredCount, totalInBackup: backupData.patterns.length };
+    } catch (error) {
+      throw error;
     }
   }
 
@@ -484,7 +597,7 @@ export class PatternDatabase {
         before: normalized.code,
         after: normalized.code // For backward compatibility
       };
-      delete normalized.code;
+      // Keep the code property for backward compatibility
     }
     
     // Ensure codeExample exists
@@ -587,7 +700,9 @@ export class PatternDatabase {
            pattern.effectiveness <= 1 &&
            pattern.codeExample &&
            pattern.codeExample.before &&
-           pattern.codeExample.after;
+           pattern.codeExample.after &&
+           pattern.codeExample.before !== '// No code example provided' &&
+           pattern.codeExample.after !== '// No code example provided';
   }
 
   updateIndexes(pattern) {
@@ -685,12 +800,16 @@ export class PatternDatabase {
     }
 
     // Language similarity (20% weight)
-    if (pattern.metadata?.language === targetPattern.metadata?.language) {
+    const patternLanguage = pattern.metadata?.language || pattern.context?.language;
+    const targetLanguage = targetPattern.metadata?.language || targetPattern.context?.language;
+    if (patternLanguage === targetLanguage) {
       similarity += 0.2;
     }
 
     // Framework similarity (20% weight)
-    if (pattern.metadata?.framework === targetPattern.metadata?.framework) {
+    const patternFramework = pattern.metadata?.framework || pattern.context?.framework;
+    const targetFramework = targetPattern.metadata?.framework || targetPattern.context?.framework;
+    if (patternFramework === targetFramework) {
       similarity += 0.2;
     }
 
@@ -752,7 +871,7 @@ export class PatternDatabase {
       return false;
     }
 
-    if (criteria.language && pattern.metadata?.language !== criteria.language) {
+    if (criteria.language && pattern.metadata?.language !== criteria.language && pattern.context?.language !== criteria.language) {
       return false;
     }
 
@@ -761,6 +880,22 @@ export class PatternDatabase {
     }
 
     if (criteria.category && pattern.category !== criteria.category) {
+      return false;
+    }
+
+    if (criteria.minUsageCount && pattern.usageCount < criteria.minUsageCount) {
+      return false;
+    }
+
+    if (criteria.context?.language && pattern.context?.language !== criteria.context.language) {
+      return false;
+    }
+
+    if (criteria.pattern && pattern.context?.pattern !== criteria.pattern) {
+      return false;
+    }
+
+    if (criteria.context?.pattern && pattern.context?.pattern !== criteria.context.pattern) {
       return false;
     }
 
