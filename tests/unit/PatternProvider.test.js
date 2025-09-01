@@ -102,7 +102,8 @@ describe('PatternProvider', () => {
     it('should return "Pattern not found" for unknown pattern', async () => {
       const pattern = await patternProvider.getPattern('unknown', 'react-webapp');
 
-      expect(pattern).toBe('Pattern not found for this framework');
+      expect(pattern).toContain('Pattern \'unknown\' not found for framework \'react-webapp\'');
+      expect(pattern).toContain('Available patterns:');
     });
 
     it('should fallback to JavaScript patterns for unknown framework', async () => {

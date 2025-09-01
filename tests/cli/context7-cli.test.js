@@ -178,7 +178,7 @@ describe('Context7 CLI', () => {
 
     it('should validate project structure', async () => {
       // Create minimal Context7 structure
-      await fs.ensureDir(path.join(testProjectDir, '.agent-os'));
+      await fs.ensureDir(path.join(testProjectDir, '.codefortify'));
       await fs.writeFile(
         path.join(testProjectDir, 'AGENTS.md'),
         '# AGENTS.md\nContext7 integration'

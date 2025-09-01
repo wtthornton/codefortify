@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Template Manager for CodeFortify
  * Handles template discovery, loading, and inheritance resolution
  */
@@ -6,16 +6,20 @@
 import fs from 'fs-extra';
 import path from 'path';
 import yaml from 'js-yaml';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export class TemplateManager {
   constructor(config = {}) {
     this.config = {
       projectRoot: config.projectRoot || process.cwd(),
-      templatesPath: config.templatesPath || 'templates',
+      templatesPath: config.templatesPath || path.join(__dirname, '..', 'templates'),
       ...config
     };
     
-    this.templatesPath = path.join(this.config.projectRoot, this.config.templatesPath);
+    this.templatesPath = this.config.templatesPath;
     this.corePath = path.join(this.templatesPath, 'core');
     this.projectsPath = path.join(this.templatesPath, 'projects');
   }
@@ -72,7 +76,7 @@ export class TemplateManager {
         const content = await fs.readFile(manifestPath, 'utf8');
         return yaml.load(content);
       } catch (error) {
-        console.warn(Failed to load manifest for :, error.message);
+        console.warn(`Failed to load manifest for ${templatePath}:`, error.message);
         return null;
       }
     }
@@ -88,7 +92,7 @@ export class TemplateManager {
     const template = templates.find(t => t.name === templateName);
     
     if (!template) {
-      throw new Error(Template '' not found);
+      throw new Error(`Template '${templateName}' not found`);
     }
     
     // Load core standards if this is a project template
@@ -144,7 +148,7 @@ export class TemplateManager {
     // Add core resources
     Object.keys(resolvedTemplate).forEach(key => {
       if (key !== 'template' && typeof resolvedTemplate[key] === 'string') {
-        resources.push(context7://standards/);
+        resources.push(`context7://standards/${key}`);
       }
     });
     
@@ -164,7 +168,7 @@ export class TemplateManager {
       return resolvedTemplate[standardName];
     }
     
-    throw new Error(Resource '' not found in template '');
+    throw new Error(`Resource '${resourceUri}' not found in template '${templateName}'`);
   }
 }
 

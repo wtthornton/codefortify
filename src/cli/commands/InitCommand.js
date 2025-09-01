@@ -10,11 +10,18 @@ import inquirer from 'inquirer';
 import fs from 'fs-extra';
 import path from 'path';
 import { ProjectTypeDetector } from '../../scoring/core/ProjectTypeDetector.js';
+import { TemplateManager } from '../../TemplateManager.js';
 
 export class InitCommand {
   constructor(globalConfig, packageRoot) {
     this.globalConfig = globalConfig;
     this.packageRoot = packageRoot;
+    
+    // Initialize template manager
+    this.templateManager = new TemplateManager({
+      projectRoot: this.globalConfig.projectRoot,
+      templatesPath: path.join(this.packageRoot, 'templates')
+    });
   }
 
   async execute(options) {
@@ -340,6 +347,9 @@ export class InitCommand {
       // Create/update CLAUDE.md
       await this.createClaudeFile(projectType, metadata, options.force);
 
+      // Add template-based standards if available
+      await this.addTemplateStandards(projectType, options);
+
       // Update package.json with Context7 scripts
       await this.updatePackageJson(metadata);
 
@@ -634,6 +644,38 @@ context7 test-mcp    # Test MCP server functionality
 
     await fs.writeJSON(packageJsonPath, packageJson, { spaces: 2 });
     console.log(chalk.green('✓ Updated package.json with CodeFortify scripts'));
+  }
+
+  async addTemplateStandards(projectType, options) {
+    try {
+      // Check if template exists for this project type
+      const templates = await this.templateManager.discoverTemplates();
+      const template = templates.find(t => t.name === projectType);
+      
+      if (template) {
+        console.log(chalk.green(`✓ Adding standards from ${projectType} template`));
+        
+        // Get template standards
+        const resolvedTemplate = await this.templateManager.resolveTemplate(projectType);
+        
+        // Create .codefortify directory
+        const codefortifyPath = path.join(this.globalConfig.projectRoot, '.codefortify');
+        await fs.ensureDir(codefortifyPath);
+        await fs.ensureDir(path.join(codefortifyPath, 'standards'));
+        
+        // Copy standards
+        for (const [standardName, content] of Object.entries(resolvedTemplate)) {
+          if (standardName !== 'template' && typeof content === 'string') {
+            const filePath = path.join(codefortifyPath, 'standards', `${standardName}.md`);
+            await fs.writeFile(filePath, content);
+          }
+        }
+        
+        console.log(chalk.green('✓ Template standards added successfully'));
+      }
+    } catch (error) {
+      console.warn(chalk.yellow('⚠ Could not add template standards:'), error.message);
+    }
   }
 
   displayNextSteps(projectType) {

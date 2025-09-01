@@ -35,7 +35,7 @@ export class MCPConnectionTester {
       env: {
         ...process.env,
         PROJECT_ROOT: this.config.projectRoot,
-        AGENT_OS_PATH: this.config.agentOsPath || '.agent-os',
+        CODEFORTIFY_PATH: this.config.codefortifyPath || '.codefortify',
         NODE_ENV: 'test'
       }
     });

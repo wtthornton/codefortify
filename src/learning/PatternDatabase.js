@@ -9,7 +9,7 @@
  * - Data persistence
  */
 
-import { fileUtils } from '../utils/fileUtils.js';
+import * as fileUtils from '../utils/fileUtils.js';
 import path from 'path';
 
 export class PatternDatabase {
@@ -360,6 +360,40 @@ export class PatternDatabase {
   }
 
   /**
+   * Save a pattern (alias for store method for backward compatibility)
+   * @param {Object} pattern - Pattern to save
+   * @returns {Promise<Object>} Save result with pattern info
+   */
+  async savePattern(pattern) {
+    try {
+      // Normalize pattern format for backward compatibility
+      const normalizedPattern = this.normalizePattern(pattern);
+      
+      const success = await this.store(normalizedPattern);
+      
+      return {
+        success,
+        patternId: normalizedPattern.id,
+        pattern: normalizedPattern
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message
+      };
+    }
+  }
+
+  /**
+   * Search patterns (alias for search method for backward compatibility)
+   * @param {Object} criteria - Search criteria
+   * @returns {Promise<Array>} Matching patterns
+   */
+  async searchPatterns(criteria) {
+    return await this.search(criteria);
+  }
+
+  /**
    * Get database statistics
    * @returns {Promise<Object>} Database statistics
    */
@@ -421,6 +455,66 @@ export class PatternDatabase {
 
   // Private methods
 
+  /**
+   * Normalize pattern format for backward compatibility
+   * @param {Object} pattern - Pattern to normalize
+   * @returns {Object} Normalized pattern
+   */
+  normalizePattern(pattern) {
+    const normalized = { ...pattern };
+    
+    // Generate ID if not provided
+    if (!normalized.id) {
+      normalized.id = `pattern-${Date.now()}`;
+    }
+    
+    // Generate type if not provided
+    if (!normalized.type) {
+      normalized.type = 'general';
+    }
+    
+    // Ensure effectiveness is valid
+    if (normalized.effectiveness === undefined) {
+      normalized.effectiveness = 0.5;
+    }
+    
+    // Convert legacy code format to codeExample
+    if (normalized.code && !normalized.codeExample) {
+      normalized.codeExample = {
+        before: normalized.code,
+        after: normalized.code // For backward compatibility
+      };
+      delete normalized.code;
+    }
+    
+    // Ensure codeExample exists
+    if (!normalized.codeExample) {
+      normalized.codeExample = {
+        before: '// No code example provided',
+        after: '// No code example provided'
+      };
+    }
+    
+    // Add default timestamps
+    const now = new Date();
+    if (!normalized.createdAt) {
+      normalized.createdAt = now;
+    }
+    if (!normalized.updatedAt) {
+      normalized.updatedAt = now;
+    }
+    if (!normalized.lastUsed) {
+      normalized.lastUsed = now;
+    }
+    
+    // Add default usage tracking
+    if (normalized.usageCount === undefined) {
+      normalized.usageCount = 1;
+    }
+    
+    return normalized;
+  }
+
   async initializeDatabase() {
     try {
       // Create storage directory if it doesn't exist
@@ -464,6 +558,11 @@ export class PatternDatabase {
 
   async persistToFile() {
     try {
+      // Ensure storage directory exists
+      if (!await fileUtils.directoryExists(this.config.storagePath)) {
+        await fileUtils.createDirectory(this.config.storagePath);
+      }
+
       const filePath = path.join(this.config.storagePath, 'patterns.json');
       const data = {
         patterns: Array.from(this.patterns.values()),

@@ -32,7 +32,7 @@ describe('ResourceManager', () => {
   beforeEach(() => {
     mockConfig = {
       projectRoot: '/test/project',
-      agentOsPath: '.agent-os',
+      codefortifyPath: '.codefortify',
       projectType: 'react-webapp'
     };
     resourceManager = new ResourceManager(mockConfig);
@@ -43,7 +43,7 @@ describe('ResourceManager', () => {
     it('should initialize with correct config', () => {
       expect(resourceManager.config).toBe(mockConfig);
       expect(resourceManager.projectRoot).toBe('/test/project');
-      expect(resourceManager.agentOsPath).toBe('.agent-os');
+      expect(resourceManager.codefortifyPath).toBe('.codefortify');
     });
   });
 
@@ -100,7 +100,7 @@ describe('ResourceManager', () => {
       const result = await resourceManager.readResource('context7://standards/tech-stack');
 
       expect(fs.readFile).toHaveBeenCalledWith(
-        path.join('/test/project', '.agent-os', 'standards', 'tech-stack.md'),
+        path.join('/test/project', '.codefortify', 'standards', 'tech-stack.md'),
         'utf-8'
       );
       expect(result).toEqual({
@@ -121,7 +121,7 @@ describe('ResourceManager', () => {
       const result = await resourceManager.readResource('context7://standards/code-style');
 
       expect(fs.readFile).toHaveBeenCalledWith(
-        path.join('/test/project', '.agent-os', 'standards', 'code-style.md'),
+        path.join('/test/project', '.codefortify', 'standards', 'code-style.md'),
         'utf-8'
       );
       expect(result).toEqual({
@@ -164,7 +164,7 @@ describe('ResourceManager', () => {
       const result = await resourceManager.readResource('context7://custom/api-docs');
 
       expect(fs.readFile).toHaveBeenCalledWith(
-        path.join('/test/project', '.agent-os', 'resources', 'api-docs.md'),
+        path.join('/test/project', '.codefortify', 'resources', 'api-docs.md'),
         'utf-8'
       );
       expect(result).toEqual({

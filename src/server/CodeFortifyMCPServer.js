@@ -24,6 +24,7 @@ import { fileURLToPath } from 'url';
 import { ResourceManager } from './ResourceManager.js';
 import { ToolManager } from './ToolManager.js';
 import { PatternProvider } from './PatternProvider.js';
+import { TemplateManager } from '../TemplateManager.js';
 
 const __filename = fileURLToPath(import.meta.url);
 // const _dirname = path.dirname(__filename); // Unused variable - commented out
@@ -55,8 +56,51 @@ export class CodeFortifyMCPServer {
     this.resourceManager = new ResourceManager(this.config);
     this.toolManager = new ToolManager(this.config);
     this.patternProvider = new PatternProvider(this.config);
+    
+    // Initialize template manager
+    this.templateManager = new TemplateManager({
+      projectRoot: this.config.projectRoot,
+      templatesPath: path.join(path.dirname(__filename), '..', '..', 'templates')
+    });
+    
+    // Detect project template
+    this.detectProjectTemplate();
 
     this.setupHandlers();
+  }
+
+  async detectProjectTemplate() {
+    try {
+      const templates = await this.templateManager.discoverTemplates();
+      const projectTemplates = templates.filter(t => t.type === 'project');
+      
+      // Try to detect which template this project uses
+      const packageJsonPath = path.join(this.config.projectRoot, 'package.json');
+      if (await fs.access(packageJsonPath).then(() => true).catch(() => false)) {
+        const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
+        const dependencies = { ...packageJson.dependencies, ...packageJson.devDependencies };
+        
+        // Detect based on dependencies
+        if (dependencies.react && dependencies['react-dom']) {
+          this.config.projectTemplate = 'react-webapp';
+        } else if (dependencies.vue) {
+          this.config.projectTemplate = 'vue-webapp';
+        } else if (dependencies.express || dependencies.fastify) {
+          this.config.projectTemplate = 'node-api';
+        }
+      }
+      
+      // Check for existing .codefortify directory
+      const codefortifyPath = path.join(this.config.projectRoot, this.config.codefortifyPath);
+      if (await fs.access(codefortifyPath).then(() => true).catch(() => false)) {
+        // Project already has standards, use them
+        this.config.projectTemplate = 'existing';
+      }
+      
+    } catch (error) {
+      console.warn('Could not detect project template:', error.message);
+      this.config.projectTemplate = 'default';
+    }
   }
 
   setupHandlers() {
@@ -71,6 +115,17 @@ export class CodeFortifyMCPServer {
       try {
         console.error('MCP: ✅ Received resource list request');
         const result = await this.resourceManager.listResources();
+        
+        // Add template-specific resources if available
+        if (this.config.projectTemplate && this.config.projectTemplate !== 'existing') {
+          try {
+            const templateResources = await this.templateManager.getTemplateResources(this.config.projectTemplate);
+            result.resources.push(...templateResources);
+          } catch (error) {
+            console.warn('Could not load template resources:', error.message);
+          }
+        }
+        
         console.error('MCP: ✅ Resources listed successfully');
         return result;
       } catch (error) {
@@ -84,6 +139,18 @@ export class CodeFortifyMCPServer {
     this.server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
       try {
         console.error(`MCP: ✅ Received resource read request: ${request.params.uri}`);
+        
+        // Try template-specific resource first
+        if (this.config.projectTemplate && this.config.projectTemplate !== 'existing') {
+          try {
+            const templateContent = await this.templateManager.readTemplateResource(this.config.projectTemplate, request.params.uri);
+            console.error('MCP: ✅ Template resource read successfully');
+            return { contents: [{ uri: request.params.uri, text: templateContent }] };
+          } catch (error) {
+            // Fall back to default resource loading
+          }
+        }
+        
         const result = await this.resourceManager.readResource(request.params.uri);
         console.error('MCP: ✅ Resource read successfully');
         return result;

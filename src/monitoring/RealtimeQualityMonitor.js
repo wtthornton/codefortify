@@ -18,16 +18,22 @@ import path from 'path';
 export class RealtimeQualityMonitor {
   constructor(config = {}) {
     this.config = {
-      monitoringInterval: config.monitoringInterval || 1000, // 1 second
-      qualityThresholds: config.qualityThresholds || {
-        complexity: 10,
-        maintainability: 70,
-        security: 80,
-        performance: 75,
-        readability: 80,
-        testability: 70
+      monitoringEnabled: config.monitoringEnabled !== false,
+      analysisInterval: config.analysisInterval || 1000, // 1 second
+      maxHistorySize: config.maxHistorySize || 100,
+      alertThresholds: config.alertThresholds || {
+        critical: 0.3,
+        warning: 0.6
       },
-      enableRealTime: config.enableRealTime !== false,
+      qualityThresholds: config.qualityThresholds || {
+        accessibility: 0.7,
+        codeComplexity: 0.6,
+        documentation: 0.5,
+        maintainability: 0.7,
+        performance: 0.8,
+        security: 0.9,
+        testCoverage: 0.8
+      },
       ...config
     };
 

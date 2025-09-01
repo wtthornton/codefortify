@@ -59,7 +59,8 @@
       "Bash(cursor:*)",
       "Bash(curl:*)",
       "Bash(tasklist:*)",
-      "Bash(npx @wtthornton/codefortify:*)"
+      "Bash(npx @wtthornton/codefortify:*)",
+      "Bash(echo:*)"
     ],
     "deny": [],
     "ask": []

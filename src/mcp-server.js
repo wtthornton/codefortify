@@ -5,7 +5,8 @@ import { CodeFortifyMCPServer } from '../src/server/CodeFortifyMCPServer.js';
 const server = new CodeFortifyMCPServer({
   projectRoot: process.cwd(),
   projectType: 'javascript',
-  projectName: 'context7-mcp'
+  projectName: 'context7-mcp',
+  codefortifyPath: '.codefortify'
 });
 
 server.start().catch(error => {

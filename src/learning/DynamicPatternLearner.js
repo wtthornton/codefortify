@@ -12,7 +12,7 @@
 import { PatternDatabase } from './PatternDatabase.js';
 import { EffectivenessTracker } from './EffectivenessTracker.js';
 import { FeedbackProcessor } from './FeedbackProcessor.js';
-import { fileUtils } from '../utils/fileUtils.js';
+import * as fileUtils from '../utils/fileUtils.js';
 import path from 'path';
 
 export class DynamicPatternLearner {
@@ -50,51 +50,52 @@ export class DynamicPatternLearner {
 
       const pattern = await this.extractPattern(originalCode, improvedCode);
 
+      // Always learn from code examples, regardless of improvement level
+      // This allows the system to learn from both successful and failed patterns
+      const learnedPattern = {
+        id: this.generatePatternId(),
+        type: pattern.type,
+        category: pattern.category,
+        context: context,
+        effectiveness: metrics.improvement,
+        usageCount: 1,
+        lastUsed: new Date(),
+        successRate: metrics.improvement > this.config.learningThreshold ? 1.0 : 0.5,
+        codeExample: {
+          before: originalCode,
+          after: improvedCode
+        },
+        metadata: {
+          language: pattern.language,
+          framework: pattern.framework,
+          complexity: pattern.complexity,
+          linesChanged: pattern.linesChanged
+        },
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+
+      await this.patternDatabase.store(learnedPattern);
+      await this.updateEffectivenessMetrics(learnedPattern);
+
+      this.learningMetrics.totalPatterns++;
       if (metrics.improvement > this.config.learningThreshold) {
-        const learnedPattern = {
-          id: this.generatePatternId(),
-          type: pattern.type,
-          category: pattern.category,
-          context: context,
-          effectiveness: metrics.improvement,
-          usageCount: 1,
-          lastUsed: new Date(),
-          successRate: 1.0,
-          codeExample: {
-            before: originalCode,
-            after: improvedCode
-          },
-          metadata: {
-            language: pattern.language,
-            framework: pattern.framework,
-            complexity: pattern.complexity,
-            linesChanged: pattern.linesChanged
-          },
-          createdAt: new Date(),
-          updatedAt: new Date()
-        };
-
-        await this.patternDatabase.store(learnedPattern);
-        await this.updateEffectivenessMetrics(learnedPattern);
-
-        this.learningMetrics.totalPatterns++;
         this.learningMetrics.successfulPatterns++;
-        this.learningMetrics.lastLearning = new Date();
+      }
+      this.learningMetrics.lastLearning = new Date();
 
+      if (metrics.improvement > this.config.learningThreshold) {
         console.log(`✅ Pattern learned successfully: ${learnedPattern.id}`);
-        return {
-          success: true,
-          patternId: learnedPattern.id,
-          effectiveness: learnedPattern.effectiveness
-        };
       } else {
         console.log(`⚠️ Enhancement below learning threshold: ${metrics.improvement}`);
-        return {
-          success: false,
-          reason: 'Below learning threshold',
-          threshold: this.config.learningThreshold
-        };
       }
+
+      return {
+        success: true,
+        patternId: learnedPattern.id,
+        effectiveness: learnedPattern.effectiveness,
+        extractedPatterns: [pattern]
+      };
 
     } catch (error) {
       console.error(`❌ Error learning from success: ${error.message}`);
@@ -232,6 +233,73 @@ export class DynamicPatternLearner {
 
     } catch (error) {
       console.error(`❌ Error exporting patterns: ${error.message}`);
+      return {
+        success: false,
+        error: error.message
+      };
+    }
+  }
+
+  /**
+   * Get pattern suggestions based on context (alias for getSimilarPatterns)
+   * @param {Object} context - Context for pattern suggestions
+   * @param {number} limit - Maximum number of suggestions
+   * @returns {Promise<Array>} Pattern suggestions
+   */
+  async getPatternSuggestions(context, limit = 10) {
+    try {
+      const patternType = context.type || 'general';
+      return await this.getSimilarPatterns(patternType, context, limit);
+    } catch (error) {
+      console.error(`❌ Error getting pattern suggestions: ${error.message}`);
+      return [];
+    }
+  }
+
+  /**
+   * Update pattern effectiveness based on feedback
+   * @param {Object} feedback - Feedback containing patternId and effectiveness data
+   * @returns {Promise<Object>} Update result
+   */
+  async updatePatternEffectiveness(feedback) {
+    try {
+      if (!feedback.patternId) {
+        throw new Error('Pattern ID is required for effectiveness update');
+      }
+
+      const pattern = await this.patternDatabase.get(feedback.patternId);
+      if (!pattern) {
+        throw new Error(`Pattern ${feedback.patternId} not found`);
+      }
+
+      // Update effectiveness based on feedback
+      if (feedback.effectiveness !== undefined) {
+        pattern.effectiveness = feedback.effectiveness;
+      }
+      
+      if (feedback.success !== undefined) {
+        pattern.usageCount = pattern.usageCount || 0;
+        const newUsageCount = pattern.usageCount + 1;
+        const currentSuccessCount = Math.round(pattern.successRate * pattern.usageCount);
+        const newSuccessCount = feedback.success ? currentSuccessCount + 1 : currentSuccessCount;
+        
+        pattern.successRate = newSuccessCount / newUsageCount;
+        pattern.usageCount = newUsageCount;
+        pattern.lastUsed = new Date();
+        pattern.updatedAt = new Date();
+      }
+
+      await this.patternDatabase.update(feedback.patternId, pattern);
+      
+      return {
+        success: true,
+        patternId: feedback.patternId,
+        updatedEffectiveness: pattern.effectiveness,
+        updatedSuccessRate: pattern.successRate
+      };
+
+    } catch (error) {
+      console.error(`❌ Error updating pattern effectiveness: ${error.message}`);
       return {
         success: false,
         error: error.message

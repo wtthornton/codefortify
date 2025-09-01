@@ -204,6 +204,17 @@ program
     await coordinator.executeGenerate({...options, type});
   });
 
+// Template command
+program
+  .command('template <action>')
+  .description('Manage CodeFortify templates')
+  .option('-t, --template <template>', 'Template name')
+  .option('-n, --name <name>', 'Project name (for init action)')
+  .action(async (action, options) => {
+    const coordinator = new CommandCoordinator(globalConfig, packageRoot);
+    await coordinator.executeTemplate(action, options);
+  });
+
 // Update command
 program
   .command('update')

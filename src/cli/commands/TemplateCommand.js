@@ -65,14 +65,14 @@ export class TemplateCommand {
       if (coreTemplates.length > 0) {
         console.log(chalk.bold('\n Core Templates:'));
         coreTemplates.forEach(template => {
-          console.log(   - );
+          console.log(`  - ${template.name}`);
         });
       }
 
       if (projectTemplates.length > 0) {
         console.log(chalk.bold('\n Project Templates:'));
         projectTemplates.forEach(template => {
-          console.log(   - );
+          console.log(`  - ${template.name}`);
         });
       }
 
@@ -94,16 +94,16 @@ export class TemplateCommand {
       const template = templates.find(t => t.name === templateName);
       
       if (!template) {
-        console.log(chalk.red(Template '' not found));
+        console.log(chalk.red(`Template '${templateName}' not found`));
         return;
       }
 
-      console.log(chalk.bold.blue( Template: ));
+      console.log(chalk.bold.blue(` Template: ${template.name}`));
       console.log(chalk.gray(''.repeat(50)));
       
-      console.log(Type: );
-      console.log(Version: );
-      console.log(Description: );
+      console.log(`Type: ${template.type}`);
+      console.log(`Version: ${template.manifest?.version || '1.0.0'}`);
+      console.log(`Description: ${template.manifest?.description || 'No description available'}`);
       
       // Show available standards
       const resolvedTemplate = await this.templateManager.resolveTemplate(templateName);
@@ -112,16 +112,16 @@ export class TemplateCommand {
       if (standards.length > 0) {
         console.log(chalk.bold('\n Available Standards:'));
         standards.forEach(standard => {
-          console.log(   .md);
+          console.log(`  - ${standard}.md`);
         });
       }
 
       // Show usage
       console.log(chalk.bold('\n Usage:'));
       if (template.type === 'project') {
-        console.log(  codefortify template init <project-name> --template );
+        console.log(`  codefortify template init <project-name> --template ${template.name}`);
       } else {
-        console.log(  codefortify template add --template );
+        console.log(`  codefortify template add --template ${template.name}`);
       }
       
     } catch (error) {
@@ -144,7 +144,7 @@ export class TemplateCommand {
       options.template = templateName;
     }
 
-    console.log(chalk.bold.blue( Initializing  with  template));
+    console.log(chalk.bold.blue(` Initializing ${projectName} with ${templateName} template`));
     
     try {
       const spinner = ora('Initializing project...').start();
@@ -159,10 +159,10 @@ export class TemplateCommand {
       spinner.succeed('Project initialized successfully');
       
       console.log(chalk.green.bold('\n Project created successfully!'));
-      console.log(chalk.cyan(\nNext steps:));
-      console.log(  cd );
-      console.log(  npm install);
-      console.log(  codefortify validate);
+      console.log(chalk.cyan('\nNext steps:'));
+      console.log(`  cd ${projectName}`);
+      console.log('  npm install');
+      console.log('  codefortify validate');
       
     } catch (error) {
       console.error(chalk.red('Failed to initialize project:'), error.message);
@@ -179,7 +179,7 @@ export class TemplateCommand {
       options.template = templateName;
     }
 
-    console.log(chalk.bold.blue( Adding standards from  template));
+    console.log(chalk.bold.blue(` Adding standards from ${templateName} template`));
     
     try {
       const spinner = ora('Adding standards...').start();
@@ -195,7 +195,7 @@ export class TemplateCommand {
       // Copy standards
       for (const [standardName, content] of Object.entries(resolvedTemplate)) {
         if (standardName !== 'template' && typeof content === 'string') {
-          const filePath = path.join(codefortifyPath, 'standards', ${standardName}.md);
+          const filePath = path.join(codefortifyPath, 'standards', `${standardName}.md`);
           await fs.writeFile(filePath, content);
         }
       }
@@ -203,9 +203,9 @@ export class TemplateCommand {
       spinner.succeed('Standards added successfully');
       
       console.log(chalk.green.bold('\n Standards added successfully!'));
-      console.log(chalk.cyan(\nNext steps:));
-      console.log(  codefortify validate);
-      console.log(  codefortify score);
+      console.log(chalk.cyan('\nNext steps:'));
+      console.log('  codefortify validate');
+      console.log('  codefortify score');
       
     } catch (error) {
       console.error(chalk.red('Failed to add standards:'), error.message);
@@ -220,7 +220,7 @@ export class TemplateCommand {
       return;
     }
 
-    console.log(chalk.bold.blue( Updating standards from  template));
+    console.log(chalk.bold.blue(` Updating standards from ${templateName} template`));
     
     try {
       const spinner = ora('Updating standards...').start();
@@ -233,7 +233,7 @@ export class TemplateCommand {
       
       for (const [standardName, content] of Object.entries(resolvedTemplate)) {
         if (standardName !== 'template' && typeof content === 'string') {
-          const filePath = path.join(codefortifyPath, ${standardName}.md);
+          const filePath = path.join(codefortifyPath, `${standardName}.md`);
           await fs.writeFile(filePath, content);
         }
       }
@@ -258,7 +258,7 @@ export class TemplateCommand {
       }
 
       const choices = projectTemplates.map(template => ({
-        name: ${template.name} - ,
+        name: `${template.name} - ${template.manifest?.description || 'No description'}`,
         value: template.name
       }));
 
@@ -281,7 +281,7 @@ export class TemplateCommand {
     const template = templates.find(t => t.name === templateName);
     
     if (!template) {
-      throw new Error(Template '' not found);
+      throw new Error(`Template '${templateName}' not found`);
     }
 
     // Copy template files

@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename);
 // Global test configuration
 global.testConfig = {
   projectRoot: path.join(__dirname, 'fixtures', 'test-project'),
-  agentOsPath: '.agent-os',
+  codefortifyPath: '.codefortify',
   timeout: 5000
 };
 
@@ -42,10 +42,10 @@ async function setupTestFixtures() {
 
   // Create test project structure
   await fs.ensureDir(testProjectDir);
-  await fs.ensureDir(path.join(testProjectDir, '.agent-os'));
-  await fs.ensureDir(path.join(testProjectDir, '.agent-os', 'instructions'));
-  await fs.ensureDir(path.join(testProjectDir, '.agent-os', 'standards'));
-  await fs.ensureDir(path.join(testProjectDir, '.agent-os', 'product'));
+  await fs.ensureDir(path.join(testProjectDir, '.codefortify'));
+  await fs.ensureDir(path.join(testProjectDir, '.codefortify', 'instructions'));
+  await fs.ensureDir(path.join(testProjectDir, '.codefortify', 'standards'));
+  await fs.ensureDir(path.join(testProjectDir, '.codefortify', 'product'));
   await fs.ensureDir(path.join(testProjectDir, 'src'));
   await fs.ensureDir(path.join(testProjectDir, 'examples'));
 
@@ -67,7 +67,7 @@ async function setupTestFixtures() {
   );
 
   await fs.writeFile(
-    path.join(testProjectDir, '.agent-os', 'config.yml'),
+    path.join(testProjectDir, '.codefortify', 'config.yml'),
     `agent_os_version: 1.4.0
 mcp:
   enabled: true
@@ -94,7 +94,7 @@ context7:
   );
 
   await fs.writeFile(
-    path.join(testProjectDir, '.agent-os', 'standards', 'context7-standards.md'),
+    path.join(testProjectDir, '.codefortify', 'standards', 'context7-standards.md'),
     '# Context7 Standards\n\nTest standards documentation.'
   );
 }

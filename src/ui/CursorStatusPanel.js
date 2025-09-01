@@ -13,7 +13,7 @@ export class CursorStatusPanel extends EventEmitter {
     this.activityFeed = [];
     this.maxFeedItems = 5;
     this.updateInterval = 1000; // 1 second updates
-    
+
     this.agents = {
       security: { icon: '🔒', name: 'Security', progress: 0, active: false },
       quality: { icon: '📊', name: 'Quality', progress: 0, active: false },
@@ -22,7 +22,7 @@ export class CursorStatusPanel extends EventEmitter {
       testing: { icon: '🧪', name: 'Testing', progress: 0, active: false },
       visual: { icon: '👁️', name: 'Visual', progress: 0, active: false }
     };
-    
+
     this.categories = {
       structure: { name: 'Structure', score: 0, trend: '→' },
       quality: { name: 'Quality', score: 0, trend: '→' },
@@ -38,7 +38,7 @@ export class CursorStatusPanel extends EventEmitter {
       this.updateStatus();
       this.render();
     }, this.updateInterval);
-    
+
     // Initial render
     this.render();
   }
@@ -52,12 +52,12 @@ export class CursorStatusPanel extends EventEmitter {
   async updateStatus() {
     try {
       const status = await this.statusManager.getCurrentStatus();
-      
+
       // Update overall progress
       this.currentScore = status.score?.currentScore || 0;
       this.targetScore = status.score?.targetScore || 100;
       this.runtime = Math.round((status.globalStatus?.elapsedTime || 0) / 1000 / 60);
-      
+
       // Update agent progress (simulated based on global progress)
       const globalProgress = status.globalStatus?.progress || 0;
       this.agents.security.progress = Math.min(globalProgress + 20, 100);
@@ -66,7 +66,7 @@ export class CursorStatusPanel extends EventEmitter {
       this.agents.enhance.progress = Math.max(globalProgress - 10, 0);
       this.agents.testing.progress = globalProgress;
       this.agents.visual.progress = Math.max(globalProgress - 20, 0);
-      
+
       // Update category scores
       this.categories.structure.score = 88;
       this.categories.quality.score = 63;
@@ -74,12 +74,12 @@ export class CursorStatusPanel extends EventEmitter {
       this.categories.testing.score = 60;
       this.categories.devexp.score = 85;
       this.categories.complete.score = 90;
-      
+
       // Add activity feed items
       if (status.globalStatus?.phase === 'analyzing' && Math.random() > 0.7) {
         this.addActivityItem(this.generateActivityMessage());
       }
-      
+
     } catch (error) {
       console.error('Failed to update status:', error.message);
     }
@@ -88,7 +88,7 @@ export class CursorStatusPanel extends EventEmitter {
   addActivityItem(message) {
     const timestamp = new Date().toLocaleTimeString('en-US', { hour12: false });
     this.activityFeed.unshift(`${timestamp} ${message}`);
-    
+
     // Keep only the latest items
     if (this.activityFeed.length > this.maxFeedItems) {
       this.activityFeed = this.activityFeed.slice(0, this.maxFeedItems);
@@ -108,22 +108,22 @@ export class CursorStatusPanel extends EventEmitter {
       '📊 QualityAgent → Reduced cyclomatic complexity',
       '🏗️ StructureAgent → Validated dependency architecture'
     ];
-    
+
     return activities[Math.floor(Math.random() * activities.length)];
   }
 
   getScoreGrade(score) {
-    if (score >= 90) return 'A';
-    if (score >= 80) return 'B';
-    if (score >= 70) return 'C';
-    if (score >= 60) return 'D';
+    if (score >= 90) {return 'A';}
+    if (score >= 80) {return 'B';}
+    if (score >= 70) {return 'C';}
+    if (score >= 60) {return 'D';}
     return 'F';
   }
 
   getScoreColor(score) {
-    if (score >= 80) return chalk.green;
-    if (score >= 70) return chalk.yellow;
-    if (score >= 60) return chalk.orange;
+    if (score >= 80) {return chalk.green;}
+    if (score >= 70) {return chalk.yellow;}
+    if (score >= 60) {return chalk.orange;}
     return chalk.red;
   }
 
@@ -138,24 +138,24 @@ export class CursorStatusPanel extends EventEmitter {
     const score = this.currentScore || 73;
     const grade = this.getScoreGrade(score);
     const scoreColor = this.getScoreColor(score);
-    
+
     console.clear();
-    
+
     // Header
-    console.log('┌─' + ' CodeFortify '.padEnd(12) + 
-               `│ Score: ${scoreColor(score + '/100 (' + grade + '-)')} │ ` + 
-               `Target: ${this.targetScore}% │ ` + 
+    console.log('┌─' + ' CodeFortify '.padEnd(12) +
+               `│ Score: ${scoreColor(score + '/100 (' + grade + '-)')} │ ` +
+               `Target: ${this.targetScore}% │ ` +
                `🔥 ${this.runtime}min runtime `.padEnd(20) + '─┐');
-    
+
     // Agents and Categories sections
     console.log('├─ AGENTS ─────────────────┬─ CATEGORIES ──────────────────────────┤');
-    
+
     const agentEntries = Object.entries(this.agents);
     const categoryEntries = Object.entries(this.categories);
-    
+
     for (let i = 0; i < Math.max(agentEntries.length, categoryEntries.length); i++) {
       let line = '│ ';
-      
+
       // Agent section (left)
       if (i < agentEntries.length) {
         const [key, agent] = agentEntries[i];
@@ -164,9 +164,9 @@ export class CursorStatusPanel extends EventEmitter {
       } else {
         line += ' '.repeat(26);
       }
-      
+
       line += '│ ';
-      
+
       // Category section (right)
       if (i < categoryEntries.length) {
         const [key, category] = categoryEntries[i];
@@ -175,19 +175,19 @@ export class CursorStatusPanel extends EventEmitter {
       } else {
         line += ' '.repeat(38);
       }
-      
+
       line += ' │';
       console.log(line);
     }
-    
+
     // Activity Feed
     console.log('├─ ACTIVITY FEED ──────────┴───────────────────────────────────────┤');
-    
+
     for (let i = 0; i < this.maxFeedItems; i++) {
       const activity = this.activityFeed[i] || '';
       console.log('│ ' + activity.padEnd(width - 2) + ' │');
     }
-    
+
     // Controls
     console.log('├─ CONTROLS ───────────────────────────────────────────────────────┤');
     console.log('│ ▶️ Active │ ⏸️ Pause │ 🎛️ Settings │ 📊 Report │ 🎯 Focus: Quality │');
@@ -212,7 +212,7 @@ export class CursorStatusPanel extends EventEmitter {
       .filter(agent => agent.active)
       .map(agent => `${agent.icon} ${agent.name}`)
       .join(', ');
-      
+
     return `CodeFortify Dashboard
 Score: ${this.currentScore}/100
 Active Agents: ${activeAgents || 'None'}

@@ -1,0 +1,33 @@
+{
+  "patterns": [
+    {
+      "id": "pattern_1756765863753_6abwewoq0",
+      "type": "general",
+      "category": "function",
+      "context": {
+        "language": "javascript",
+        "pattern": "array-reduce"
+      },
+      "effectiveness": 0.8,
+      "usageCount": 1,
+      "lastUsed": "2025-09-01T22:31:03.753Z",
+      "successRate": 0.5,
+      "codeExample": {
+        "before": "function calculateTotal(items) {\n  return items.reduce((sum, item) => sum + item.price, 0);\n}",
+        "after": "function calculateTotal(items) {\n  return items.reduce((sum, item) => sum + item.price, 0);\n}"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "vanilla",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-01T22:31:03.753Z",
+      "updatedAt": "2025-09-01T22:31:03.753Z"
+    }
+  ],
+  "metadata": {
+    "exportedAt": "2025-09-01T22:31:03.753Z",
+    "version": "1.0.0"
+  }
+}
