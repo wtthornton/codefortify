@@ -4,6 +4,10 @@
   "description": "CodeFortify - AI-powered code strengthening and security enhancement for modern development",
   "type": "module",
   "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./claude-commands": "./src/claude-commands/index.js"
+  },
   "bin": {
     "codefortify": "bin/codefortify.js"
   },

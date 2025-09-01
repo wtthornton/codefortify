@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "label": "CodeFortify Score",
+  "message": "74.0/100",
+  "color": "yellow",
+  "style": "flat-square"
+}

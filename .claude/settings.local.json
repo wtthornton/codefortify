@@ -55,7 +55,8 @@
       "Bash(codefortify:*)",
       "Bash(npx playwright install:*)",
       "Bash(vsce package:*)",
-      "Bash(git reset:*)"
+      "Bash(git reset:*)",
+      "Bash(cursor:*)"
     ],
     "deny": [],
     "ask": []

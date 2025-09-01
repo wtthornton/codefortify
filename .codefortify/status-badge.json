@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "label": "Status",
+  "message": "Ready",
+  "color": "blue",
+  "style": "flat-square"
+}

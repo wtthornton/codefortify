@@ -71,6 +71,15 @@ codefortify serve
 # 🎯 REAL-TIME CURSOR INTEGRATION
 codefortify score --realtime
 # Open Cursor IDE to see live status bar updates and smart notifications
+
+# 🤖 CLAUDE CODE INTEGRATION - Natural Language Commands
+import codefortify from '@wtthornton/codefortify/claude-commands';
+
+await codefortify.quickCheck();           // "Check code quality"
+await codefortify.analyzeQuality();       // "Analyze this project" 
+await codefortify.enhanceCode();          // "Improve the code"
+await codefortify.generateReport();       // "Create a quality report"
+await codefortify.fullAssessment();       // "Run complete audit"
 ```
 
 ## 📖 Documentation
