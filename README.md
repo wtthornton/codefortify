@@ -67,7 +67,18 @@ npm run coverage
 
 # Start MCP server for AI assistants
 codefortify serve
+
+# 🎯 REAL-TIME CURSOR INTEGRATION
+codefortify score --realtime
+# Open Cursor IDE to see live status bar updates and smart notifications
 ```
+
+## 📖 Documentation
+
+- **[Cursor.ai Integration](docs/cursor-integration.md)** - Complete guide for Cursor IDE integration with real-time features
+- **[Agent System](AGENTS.md)** - AI agent architecture and autonomous enhancement system  
+- **[Development Guide](CLAUDE.md)** - Development commands and project context for AI assistants
+- **[Examples](examples/)** - Implementation examples and use cases
 
 ## 📋 Features
 
