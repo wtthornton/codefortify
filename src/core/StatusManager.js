@@ -1,26 +1,26 @@
 /**
  * CodeFortify Status Manager
- * 
+ *
  * Centralized status tracking for all CodeFortify operations with persistence
  */
 
 import fs from 'fs/promises';
 import path from 'path';
 import { EventEmitter } from 'events';
-import { 
-  StatusData, 
-  AgentStatus, 
+import {
+  StatusData,
+  AgentStatus,
   ScoreStatus,
   STATUS_PHASES,
   ANALYSIS_CATEGORIES,
   AGENT_STATUS,
-  OPERATION_TYPES 
+  OPERATION_TYPES
 } from './StatusTypes.js';
 
 export class StatusManager extends EventEmitter {
   constructor(config = {}) {
     super();
-    
+
     this.config = {
       persistenceEnabled: config.persistenceEnabled !== false,
       statusFile: config.statusFile || '.codefortify/status.json',
@@ -168,7 +168,7 @@ export class StatusManager extends EventEmitter {
    */
   addWarning(message, context = {}) {
     this.globalStatus.addWarning(message);
-    
+
     this.emit('status:warning', { message, context, sessionId: this.sessionId });
   }
 
@@ -218,7 +218,7 @@ export class StatusManager extends EventEmitter {
     }
 
     agent.start(message);
-    
+
     this.emit('agent:started', {
       agentId,
       status: agent.toJSON(),
@@ -361,7 +361,7 @@ export class StatusManager extends EventEmitter {
    */
   addToHistory(entry) {
     this.operationHistory.push(entry);
-    
+
     // Maintain history size limit
     if (this.operationHistory.length > this.config.historySize) {
       this.operationHistory = this.operationHistory.slice(-this.config.historySize);
@@ -400,7 +400,7 @@ export class StatusManager extends EventEmitter {
    * Save status to file
    */
   async saveStatus() {
-    if (!this.config.persistenceEnabled) return;
+    if (!this.config.persistenceEnabled) {return;}
 
     try {
       const statusData = {
@@ -449,7 +449,7 @@ export class StatusManager extends EventEmitter {
    */
   async shutdown() {
     this.stopAutoSave();
-    
+
     if (this.config.persistenceEnabled) {
       await this.saveStatus();
     }

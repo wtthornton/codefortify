@@ -2,7 +2,7 @@
  * Tests for ToolChecker - focusing on simple methods and configuration
  */
 
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { ToolChecker } from '../../src/scoring/core/ToolChecker.js';
 
 describe('ToolChecker', () => {

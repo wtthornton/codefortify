@@ -1,0 +1,99 @@
+{
+  "name": "codefortify-cursor-extension",
+  "displayName": "CodeFortify Dashboard",
+  "description": "Real-time AI-powered code quality monitoring and enhancement dashboard",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization",
+    "Testing"
+  ],
+  "keywords": [
+    "code-quality",
+    "ai",
+    "monitoring",
+    "dashboard",
+    "enhancement"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "codefortify.openDashboard",
+        "title": "Open CodeFortify Dashboard",
+        "icon": "🚀"
+      },
+      {
+        "command": "codefortify.toggleMonitoring",
+        "title": "Toggle CodeFortify Monitoring"
+      },
+      {
+        "command": "codefortify.generateReport",
+        "title": "Generate CodeFortify Report"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "codefortify.openDashboard",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "codefortify.toggleMonitoring",
+          "when": "workspaceFolderCount > 0"
+        }
+      ],
+      "statusBar": [
+        {
+          "command": "codefortify.openDashboard",
+          "when": "workspaceFolderCount > 0"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "CodeFortify",
+      "properties": {
+        "codefortify.updateInterval": {
+          "type": "number",
+          "default": 2000,
+          "description": "Status update interval in milliseconds"
+        },
+        "codefortify.showDetailedTooltip": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show detailed information in status bar tooltip"
+        },
+        "codefortify.autoStart": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically start monitoring when workspace opens"
+        },
+        "codefortify.dashboardRefreshRate": {
+          "type": "number",
+          "default": 1000,
+          "description": "Dashboard webview refresh rate in milliseconds"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.60.0",
+    "vsce": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wtthornton/codefortify.git"
+  },
+  "license": "MIT",
+  "publisher": "wtthornton"
+}

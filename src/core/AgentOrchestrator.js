@@ -251,7 +251,7 @@ export class AgentOrchestrator extends EventEmitter {
 
       // Execute the task asynchronously (don't await here!)
       this.executeTaskAsync(agent, queuedTask);
-      
+
       // Continue processing more tasks immediately
       setTimeout(() => this.processNextQueuedTask(), 0);
 
@@ -280,12 +280,12 @@ export class AgentOrchestrator extends EventEmitter {
     // Mark agent as running immediately
     this.runningAgents.add(agent);
     this.metrics.concurrentExecutions = Math.max(this.metrics.concurrentExecutions, this.runningAgents.size);
-    
+
     try {
       const result = await agent.execute(queuedTask.task);
       this.completedTasks.set(queuedTask.id, result);
       queuedTask.resolve(result);
-      
+
       // Mark task as completed
       this.metrics.completedTasks++;
     } catch (error) {
@@ -304,7 +304,7 @@ export class AgentOrchestrator extends EventEmitter {
       // Remove agent from running set
       this.runningAgents.delete(agent);
       this.metrics.concurrentExecutions = this.runningAgents.size;
-      
+
       // Continue processing more tasks
       setTimeout(() => this.processNextQueuedTask(), 0);
     }

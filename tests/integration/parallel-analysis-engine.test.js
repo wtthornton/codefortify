@@ -10,6 +10,9 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+
+// Add performance global for Node.js environments
+const { performance } = globalThis;
 import { ParallelProjectScorer } from '../../src/scoring/ParallelProjectScorer.js';
 import { ProjectScorer } from '../../src/scoring/ProjectScorer.js';
 import { AgentOrchestrator } from '../../src/core/AgentOrchestrator.js';
@@ -55,7 +58,7 @@ describe('Parallel Analysis Engine Integration', () => {
       console.log('🔄 Running traditional analysis benchmark...');
       const traditionalScorer = new ProjectScorer(config);
       const traditionalStart = performance.now();
-      const traditionalResults = await traditionalScorer.scoreProject({
+      await traditionalScorer.scoreProject({
         categories: ['structure', 'quality', 'security']
       });
       const traditionalDuration = performance.now() - traditionalStart;
@@ -258,7 +261,7 @@ describe('Parallel Analysis Engine Integration', () => {
         progressEvents.push(progress);
       });
 
-      const results = await parallelScorer.scoreProject({
+      await parallelScorer.scoreProject({
         categories: ['structure', 'quality', 'security']
       });
 

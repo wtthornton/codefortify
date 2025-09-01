@@ -1,13 +1,13 @@
 /**
  * CodeFortify Real-Time Event Types
- * 
+ *
  * Standardized event schema for real-time status updates across IDE integrations
  */
 
 export const EVENT_TYPES = {
   // Analysis Events
   ANALYSIS_START: 'analysis_start',
-  ANALYSIS_PROGRESS: 'analysis_progress', 
+  ANALYSIS_PROGRESS: 'analysis_progress',
   ANALYSIS_COMPLETE: 'analysis_complete',
   ANALYSIS_ERROR: 'analysis_error',
 
@@ -48,7 +48,7 @@ export const EVENT_TYPES = {
 
 export const PRIORITY_LEVELS = {
   CRITICAL: 'critical',
-  HIGH: 'high', 
+  HIGH: 'high',
   MEDIUM: 'medium',
   LOW: 'low'
 };
@@ -79,7 +79,7 @@ export class EventSchema {
   static validate(event) {
     const required = ['type', 'timestamp', 'session_id'];
     const missing = required.filter(field => !event[field]);
-    
+
     if (missing.length > 0) {
       throw new Error(`Missing required fields: ${missing.join(', ')}`);
     }
@@ -148,16 +148,16 @@ export class EventCreators {
   static scoreUpdate(newScore, previousScore, changes, sessionId) {
     const improvement = newScore > previousScore;
     const eventType = improvement ? EVENT_TYPES.SCORE_IMPROVEMENT : EVENT_TYPES.SCORE_DEGRADATION;
-    
+
     return EventSchema.create(eventType, {
       score: newScore,
       previousScore,
       changes,
       improvement,
       message: `Score ${improvement ? 'improved' : 'decreased'}: ${newScore.toFixed(1)}`
-    }, { 
-      sessionId, 
-      priority: improvement ? PRIORITY_LEVELS.HIGH : PRIORITY_LEVELS.MEDIUM 
+    }, {
+      sessionId,
+      priority: improvement ? PRIORITY_LEVELS.HIGH : PRIORITY_LEVELS.MEDIUM
     });
   }
 
@@ -205,14 +205,14 @@ export class EventFilters {
   static byPriority(events, minPriority) {
     const priorities = [
       PRIORITY_LEVELS.LOW,
-      PRIORITY_LEVELS.MEDIUM, 
+      PRIORITY_LEVELS.MEDIUM,
       PRIORITY_LEVELS.HIGH,
       PRIORITY_LEVELS.CRITICAL
     ];
-    
+
     const minIndex = priorities.indexOf(minPriority);
-    if (minIndex === -1) return events;
-    
+    if (minIndex === -1) {return events;}
+
     return events.filter(event => {
       const eventPriority = event.priority || PRIORITY_LEVELS.LOW;
       const eventIndex = priorities.indexOf(eventPriority);
@@ -227,7 +227,7 @@ export class EventFilters {
   static byTimeRange(events, startTime, endTime) {
     const start = new Date(startTime);
     const end = new Date(endTime);
-    
+
     return events.filter(event => {
       const eventTime = new Date(event.timestamp);
       return eventTime >= start && eventTime <= end;

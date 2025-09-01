@@ -274,7 +274,7 @@ export class ReviewAgent {
   /**
    * Identify minor issues that could be improved
    */
-  async identifyMinorIssues(code, scoreResult) {
+  async identifyMinorIssues(code, _scoreResult) {
     const issues = [];
 
     if (typeof code === 'string') {

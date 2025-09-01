@@ -524,7 +524,7 @@ export class ImprovementAgent {
   /**
    * Apply security fixes
    */
-  async applySecurityFix(code, opportunity) {
+  async applySecurityFix(code, _opportunity) {
     if (typeof code !== 'string') {
       return { success: false, error: 'Cannot fix security issues in non-string code', code };
     }
@@ -549,9 +549,9 @@ export class ImprovementAgent {
       }
 
       // Fix hardcoded secrets
-      if (code.match(/(?:password|token|key|secret)\s*[:=]\s*["'][\w\-\.]+["']/gi)) {
+      if (code.match(/(?:password|token|key|secret)\s*[:=]\s*["'][\w-.]+["']/gi)) {
         improvedCode = improvedCode.replace(
-          /(?:password|token|key|secret)\s*[:=]\s*["']([\w\-\.]+)["']/gi,
+          /(?:password|token|key|secret)\s*[:=]\s*["']([\w-.]+)["']/gi,
           (match) => `${match.split('=')[0]}= process.env.SECRET_VALUE; // SECURITY FIX: Use environment variable`
         );
         changes.push('Replaced hardcoded secrets with environment variable references');
@@ -578,7 +578,7 @@ export class ImprovementAgent {
   /**
    * Apply performance fixes
    */
-  async applyPerformanceFix(code, opportunity) {
+  async applyPerformanceFix(code, _opportunity) {
     if (typeof code !== 'string') {
       return { success: false, error: 'Cannot fix performance issues in non-string code', code };
     }
@@ -626,7 +626,7 @@ export class ImprovementAgent {
   /**
    * Apply code quality fixes
    */
-  async applyQualityFix(code, opportunity) {
+  async applyQualityFix(code, _opportunity) {
     if (typeof code !== 'string') {
       return { success: false, error: 'Cannot fix quality issues in non-string code', code };
     }
@@ -795,7 +795,7 @@ export class ImprovementAgent {
     fixed = fixed.replace(/(\w+\s*=\s*[^;{\n]+)(\n)/g, '$1;$2');
 
     // Fix common missing quotes
-    fixed = fixed.replace(/=\s*([a-zA-Z_]\w*)\s*(?=[,\]\};\n])/g, '="$1"');
+    fixed = fixed.replace(/=\s*([a-zA-Z_]\w*)\s*(?=[,\]};\n])/g, '="$1"');
 
     return fixed;
   }

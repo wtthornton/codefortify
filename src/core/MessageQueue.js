@@ -1,6 +1,6 @@
 /**
  * CodeFortify Message Queue
- * 
+ *
  * Priority-based message queuing system for IDE notifications with deduplication and throttling
  */
 
@@ -10,7 +10,7 @@ import { EventSchema, PRIORITY_LEVELS } from './EventTypes.js';
 export class MessageQueue extends EventEmitter {
   constructor(config = {}) {
     super();
-    
+
     this.config = {
       maxSize: config.maxSize || 1000,
       processInterval: config.processInterval || 100, // ms
@@ -48,7 +48,7 @@ export class MessageQueue extends EventEmitter {
     try {
       // Validate message
       EventSchema.validate(message);
-      
+
       // Check queue size limit
       if (this.queue.length >= this.config.maxSize) {
         this.dropOldestLowPriorityMessage();
@@ -82,10 +82,10 @@ export class MessageQueue extends EventEmitter {
 
       // Insert based on priority
       this.insertByPriority(queueEntry);
-      
+
       // Update stats
       this.stats.totalQueued++;
-      
+
       // Update deduplication cache
       if (this.config.deduplicationEnabled) {
         this.updateDeduplicationCache(message);
@@ -116,7 +116,7 @@ export class MessageQueue extends EventEmitter {
 
     try {
       const batch = this.getBatchForProcessing();
-      
+
       if (batch.length === 0) {
         this.processing = false;
         return;
@@ -150,7 +150,7 @@ export class MessageQueue extends EventEmitter {
       this.emit('error', new Error(`Queue processing error: ${error.message}`));
     } finally {
       this.processing = false;
-      
+
       // Continue processing if there are more messages
       if (this.queue.length > 0) {
         setTimeout(() => this.processQueue(), this.config.processInterval);
@@ -165,10 +165,10 @@ export class MessageQueue extends EventEmitter {
     try {
       // Emit processing event
       this.emit('message:processing', { entry });
-      
+
       // Simulate processing (in real implementation, this would send to clients)
       await new Promise(resolve => setTimeout(resolve, 10));
-      
+
       return true;
     } catch (error) {
       throw new Error(`Failed to process message ${entry.id}: ${error.message}`);
@@ -188,7 +188,7 @@ export class MessageQueue extends EventEmitter {
    */
   insertByPriority(entry) {
     const weight = this.config.priorityWeights[entry.priority] || 0;
-    
+
     // Find insertion point
     let insertIndex = 0;
     for (let i = 0; i < this.queue.length; i++) {
@@ -208,7 +208,7 @@ export class MessageQueue extends EventEmitter {
   isDuplicate(message) {
     const hash = this.getMessageHash(message);
     const cached = this.deduplicationCache.get(hash);
-    
+
     if (!cached) {
       return false;
     }
@@ -228,7 +228,7 @@ export class MessageQueue extends EventEmitter {
   updateDeduplicationCache(message) {
     const hash = this.getMessageHash(message);
     this.deduplicationCache.set(hash, Date.now());
-    
+
     // Clean up old entries
     this.cleanupDeduplicationCache();
   }
@@ -244,7 +244,7 @@ export class MessageQueue extends EventEmitter {
       phase: message.data?.phase,
       category: message.data?.category
     };
-    
+
     return JSON.stringify(content);
   }
 
@@ -254,24 +254,24 @@ export class MessageQueue extends EventEmitter {
   isThrottled(clientId) {
     const now = Date.now();
     const windowStart = now - this.config.throttleWindow;
-    
+
     if (!this.throttleMap.has(clientId)) {
       this.throttleMap.set(clientId, []);
     }
-    
+
     const timestamps = this.throttleMap.get(clientId);
-    
+
     // Remove old timestamps
     const recentTimestamps = timestamps.filter(ts => ts > windowStart);
-    
+
     if (recentTimestamps.length >= this.config.maxMessagesPerWindow) {
       return true;
     }
-    
+
     // Add current timestamp
     recentTimestamps.push(now);
     this.throttleMap.set(clientId, recentTimestamps);
-    
+
     return false;
   }
 
@@ -280,7 +280,7 @@ export class MessageQueue extends EventEmitter {
    */
   handleProcessingFailure(entry, error) {
     entry.retries++;
-    
+
     if (entry.retries >= entry.maxRetries) {
       // Max retries reached, drop message
       this.removeFromQueue(entry.id);
@@ -308,7 +308,7 @@ export class MessageQueue extends EventEmitter {
         return;
       }
     }
-    
+
     // If no low priority messages, drop oldest message
     if (this.queue.length > 0) {
       const entry = this.queue.pop();
@@ -355,7 +355,7 @@ export class MessageQueue extends EventEmitter {
    */
   cleanupDeduplicationCache() {
     const cutoff = Date.now() - this.config.deduplicationWindow;
-    
+
     for (const [hash, timestamp] of this.deduplicationCache.entries()) {
       if (timestamp < cutoff) {
         this.deduplicationCache.delete(hash);
@@ -368,7 +368,7 @@ export class MessageQueue extends EventEmitter {
    */
   updateProcessingTimeStats(processingTime) {
     // Simple moving average
-    this.stats.averageProcessingTime = 
+    this.stats.averageProcessingTime =
       (this.stats.averageProcessingTime * 0.9) + (processingTime * 0.1);
   }
 
@@ -436,16 +436,16 @@ export class MessageQueue extends EventEmitter {
    */
   async shutdown() {
     this.stopProcessing();
-    
+
     // Process remaining messages
     if (this.queue.length > 0) {
       await this.processQueue();
     }
-    
+
     this.clear();
     this.deduplicationCache.clear();
     this.throttleMap.clear();
-    
+
     this.emit('queue:shutdown');
   }
 }

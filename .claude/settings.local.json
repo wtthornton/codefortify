@@ -56,7 +56,10 @@
       "Bash(npx playwright install:*)",
       "Bash(vsce package:*)",
       "Bash(git reset:*)",
-      "Bash(cursor:*)"
+      "Bash(cursor:*)",
+      "Bash(curl:*)",
+      "Bash(tasklist:*)",
+      "Bash(npx @wtthornton/codefortify:*)"
     ],
     "deny": [],
     "ask": []

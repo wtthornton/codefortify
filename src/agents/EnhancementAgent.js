@@ -198,7 +198,7 @@ export class EnhancementAgent {
   /**
    * Security enhancement implementations
    */
-  async identifySecurityEnhancements(code, analysis) {
+  async identifySecurityEnhancements(code, _analysis) {
     const enhancements = [];
 
     // Check for common security issues
@@ -228,7 +228,7 @@ export class EnhancementAgent {
         effort: 2
       },
       {
-        pattern: /(?:password|token|key|secret)\s*[:=]\s*["'][\w\-\.]+["']/gi,
+        pattern: /(?:password|token|key|secret)\s*[:=]\s*["'][\w-.]+["']/gi,
         type: 'security-fix',
         category: 'security',
         description: 'Remove hardcoded secrets and credentials',
@@ -252,7 +252,7 @@ export class EnhancementAgent {
   /**
    * Performance enhancement implementations
    */
-  async identifyPerformanceEnhancements(code, analysis) {
+  async identifyPerformanceEnhancements(code, _analysis) {
     const enhancements = [];
 
     const performanceChecks = [
@@ -294,7 +294,7 @@ export class EnhancementAgent {
   /**
    * Code quality enhancement implementations
    */
-  async identifyQualityEnhancements(code, analysis) {
+  async identifyQualityEnhancements(code, _analysis) {
     const enhancements = [];
 
     const qualityChecks = [
@@ -344,12 +344,12 @@ export class EnhancementAgent {
   /**
    * Pattern-based enhancement implementations
    */
-  async identifyPatternEnhancements(code, analysis) {
+  async identifyPatternEnhancements(code, _analysis) {
     const enhancements = [];
 
     try {
       // Get patterns from the pattern provider based on project type
-      const availablePatterns = await this.patternProvider.generatePattern(
+      await this.patternProvider.generatePattern(
         this.config.projectType,
         'component'
       );
@@ -410,7 +410,7 @@ export class EnhancementAgent {
     if (opportunity.description.includes('hardcoded secrets')) {
       // Replace hardcoded secrets with environment variables
       enhancedCode = enhancedCode.replace(
-        /(?:password|token|key|secret)\s*[:=]\s*["']([\w\-\.]+)["']/gi,
+        /(?:password|token|key|secret)\s*[:=]\s*["']([\w-.]+)["']/gi,
         (match, value) => {
           changes.push(`Replaced hardcoded secret: ${value.slice(0, 4)}...`);
           return match.replace(value, 'process.env.SECRET_VALUE // SECURITY FIX: Use environment variable');
@@ -507,7 +507,7 @@ export class EnhancementAgent {
   /**
    * Apply error handling enhancement
    */
-  async applyErrorHandling(code, opportunity) {
+  async applyErrorHandling(code, _opportunity) {
     let enhancedCode = code;
     const changes = [];
 
@@ -527,7 +527,7 @@ export class EnhancementAgent {
   /**
    * Apply type safety enhancement
    */
-  async applyTypeSafety(code, opportunity) {
+  async applyTypeSafety(code, _opportunity) {
     // Simplified type safety improvements
     return {
       success: true,
@@ -558,7 +558,7 @@ export class EnhancementAgent {
   /**
    * Apply accessibility fix
    */
-  async applyAccessibilityFix(code, opportunity) {
+  async applyAccessibilityFix(code, _opportunity) {
     let enhancedCode = code;
     const changes = [];
 

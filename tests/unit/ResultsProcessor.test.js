@@ -2,7 +2,7 @@
  * Tests for ResultsProcessor - focusing on result processing and aggregation
  */
 
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { ResultsProcessor } from '../../src/scoring/core/ResultsProcessor.js';
 
 describe('ResultsProcessor', () => {

@@ -134,7 +134,6 @@ export class QualityAgent extends IAnalysisAgent {
   async analyzeLintingParallel() {
     this.analysisProgress.linting.status = 'running';
     let score = 0;
-    const maxScore = this.scoringWeights.linting;
 
     try {
       this.emit('lint:started', { agentId: this.agentId });
@@ -454,7 +453,7 @@ export class QualityAgent extends IAnalysisAgent {
     }
 
     const chunkPromises = fileChunks.map(chunk => this.analyzeDocumentationChunk(chunk));
-    const chunkResults = await Promise.allSettled(chunkResults);
+    const chunkResults = await Promise.allSettled(chunkPromises);
 
     // Aggregate results
     const analysis = {
@@ -493,7 +492,6 @@ export class QualityAgent extends IAnalysisAgent {
 
     // Calculate scores based on analysis
     let totalScore = 0;
-    const maxScore = 3.5;
 
     // 1. Class-level JSDoc quality (1pt)
     if (analysis.classDocumentation.total > 0) {
@@ -601,7 +599,6 @@ export class QualityAgent extends IAnalysisAgent {
   async analyzeComplexityParallel() {
     this.analysisProgress.complexity.status = 'running';
     let score = 0;
-    const maxScore = this.scoringWeights.complexity;
 
     try {
       const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx']);
@@ -684,7 +681,6 @@ export class QualityAgent extends IAnalysisAgent {
   async analyzeTypeScriptParallel() {
     this.analysisProgress.typescript.status = 'running';
     let score = 0;
-    const maxScore = this.scoringWeights.typescript;
 
     try {
       // Check TypeScript configuration and files in parallel
@@ -744,7 +740,6 @@ export class QualityAgent extends IAnalysisAgent {
   async analyzeConsistencyParallel() {
     this.analysisProgress.consistency.status = 'running';
     let score = 0;
-    const maxScore = this.scoringWeights.consistency;
 
     try {
       // Analyze module patterns in parallel
@@ -771,8 +766,9 @@ export class QualityAgent extends IAnalysisAgent {
       });
 
       const totalModules = esModuleCount + commonjsCount;
+      let consistency = 0;
       if (totalModules > 0) {
-        const consistency = Math.max(esModuleCount, commonjsCount) / totalModules;
+        consistency = Math.max(esModuleCount, commonjsCount) / totalModules;
         if (consistency > 0.9) {
           score += 2;
           this.addScore(2, 2, `Consistent module patterns (${Math.round(consistency * 100)}%)`);
@@ -791,7 +787,7 @@ export class QualityAgent extends IAnalysisAgent {
       this.streamingResults.consistency.push({
         esModuleCount,
         commonjsCount,
-        consistency: consistency || 0,
+        consistency,
         timestamp: Date.now()
       });
 

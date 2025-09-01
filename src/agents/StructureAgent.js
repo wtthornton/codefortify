@@ -156,7 +156,6 @@ export class StructureAgent extends IAnalysisAgent {
   async analyzeFileOrganizationParallel() {
     this.analysisProgress.fileOrganization.status = 'running';
     let score = 0;
-    const maxScore = this.scoringWeights.fileOrganization;
 
     try {
       this.emit('organization:started', { agentId: this.agentId });
@@ -297,7 +296,6 @@ export class StructureAgent extends IAnalysisAgent {
   async analyzeModuleBoundariesParallel() {
     this.analysisProgress.moduleBoundaries.status = 'running';
     let score = 0;
-    const maxScore = this.scoringWeights.moduleBoundaries;
 
     try {
       // Analyze module structure with caching
@@ -432,7 +430,6 @@ export class StructureAgent extends IAnalysisAgent {
   async analyzeNamingConventionsParallel() {
     this.analysisProgress.namingConventions.status = 'running';
     let score = 0;
-    const maxScore = this.scoringWeights.namingConventions;
 
     try {
       const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx', '.vue', '.svelte']);
@@ -586,7 +583,6 @@ export class StructureAgent extends IAnalysisAgent {
   async analyzeArchitecturePatternsParallel() {
     this.analysisProgress.architecturePatterns.status = 'running';
     let score = 0;
-    const maxScore = this.scoringWeights.architecturePatterns;
 
     try {
       this.emit('patterns:started', { agentId: this.agentId });
@@ -820,7 +816,7 @@ export class StructureAgent extends IAnalysisAgent {
     return patterns;
   }
 
-  async analyzeReactArchitectureParallel(detectedPatterns) {
+  async analyzeReactArchitectureParallel(_detectedPatterns) {
     let score = 0;
     const maxScore = 3;
 
@@ -864,7 +860,7 @@ export class StructureAgent extends IAnalysisAgent {
     return score;
   }
 
-  async analyzeVueArchitectureParallel(detectedPatterns) {
+  async analyzeVueArchitectureParallel(_detectedPatterns) {
     let score = 0;
     const maxScore = 3;
 
@@ -904,7 +900,7 @@ export class StructureAgent extends IAnalysisAgent {
     return score;
   }
 
-  async analyzeNodeArchitectureParallel(detectedPatterns) {
+  async analyzeNodeArchitectureParallel(_detectedPatterns) {
     let score = 0;
     const maxScore = 3;
 
@@ -944,7 +940,7 @@ export class StructureAgent extends IAnalysisAgent {
     return score;
   }
 
-  async analyzeGeneralArchitectureParallel(detectedPatterns) {
+  async analyzeGeneralArchitectureParallel(_detectedPatterns) {
     let score = 0;
     const maxScore = 3;
 
@@ -1052,7 +1048,6 @@ export class StructureAgent extends IAnalysisAgent {
   async analyzeDependenciesParallel() {
     this.analysisProgress.dependencies.status = 'running';
     let score = 0;
-    const maxScore = this.scoringWeights.dependencies;
 
     try {
       const packageJson = await this.readPackageJson();

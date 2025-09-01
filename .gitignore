@@ -81,4 +81,9 @@ __pycache__/
 # Scoring system outputs
 scoring-*.json
 scoring-*.html
-nul
+
+# Package registry authentication (contains tokens)
+.npmrc
+
+# CodeFortify runtime status
+.codefortify/

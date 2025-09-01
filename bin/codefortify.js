@@ -113,6 +113,46 @@ program
     await coordinator.executeEnhance(input, options);
   });
 
+// Status command  
+program
+  .command('status')
+  .description('Show current CodeFortify background activity status')
+  .option('--detailed', 'Show detailed status information')
+  .option('--agents', 'Show individual agent status')
+  .option('--watch', 'Watch status updates in real-time')
+  .option('-f, --format <format>', 'Output format (console, json)', 'console')
+  .action(async (options) => {
+    const coordinator = new CommandCoordinator(globalConfig, packageRoot);
+    await coordinator.executeStatus(options);
+  });
+
+// Stop command
+program
+  .command('stop')
+  .description('Stop all CodeFortify background agents')
+  .option('--force', 'Force stop all processes')
+  .action(async (options) => {
+    const coordinator = new CommandCoordinator(globalConfig, packageRoot);
+    await coordinator.executeStop(options);
+  });
+
+// Pause/Resume commands
+program
+  .command('pause')
+  .description('Pause CodeFortify background agents')
+  .action(async (options) => {
+    const coordinator = new CommandCoordinator(globalConfig, packageRoot);
+    await coordinator.executePause(options);
+  });
+
+program
+  .command('resume')
+  .description('Resume paused CodeFortify background agents')
+  .action(async (options) => {
+    const coordinator = new CommandCoordinator(globalConfig, packageRoot);
+    await coordinator.executeResume(options);
+  });
+
 // Test command
 program
   .command('test-mcp')

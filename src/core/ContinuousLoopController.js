@@ -132,20 +132,20 @@ export class ContinuousLoopController extends EventEmitter {
    */
   generateScoreChanges(scoreData) {
     const changes = [];
-    
+
     if (scoreData.categoryScores && scoreData.previousCategoryScores) {
       Object.keys(scoreData.categoryScores).forEach(category => {
         const current = scoreData.categoryScores[category];
         const previous = scoreData.previousCategoryScores[category] || 0;
         const change = current - previous;
-        
+
         if (Math.abs(change) > 0.5) {
           const sign = change > 0 ? '+' : '';
           changes.push(`${sign}${change.toFixed(1)} ${category}`);
         }
       });
     }
-    
+
     return changes;
   }
 
@@ -297,10 +297,10 @@ export class ContinuousLoopController extends EventEmitter {
       }
       try {
         visualResults = await this.agents.visualTesting.runAnalysis();
-        this.emit('step:complete', { 
-          step: 'visual-testing', 
+        this.emit('step:complete', {
+          step: 'visual-testing',
           regressions: visualResults.summary?.visualRegressions || 0,
-          accessibility: visualResults.summary?.accessibilityViolations || 0 
+          accessibility: visualResults.summary?.accessibilityViolations || 0
         });
       } catch (error) {
         this.emit('step:error', { step: 'visual-testing', error: error.message });

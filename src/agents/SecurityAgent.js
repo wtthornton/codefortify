@@ -9,7 +9,7 @@
  */
 
 import { IAnalysisAgent } from './IAnalysisAgent.js';
-import { execSync, exec } from 'child_process';
+import { exec } from 'child_process';
 import { promisify } from 'util';
 
 const execAsync = promisify(exec);
@@ -134,7 +134,6 @@ export class SecurityAgent extends IAnalysisAgent {
 
   async analyzeDependencyVulnerabilitiesParallel() {
     let score = 0;
-    const maxScore = this.scoringWeights.vulnerabilities;
 
     try {
       const packageJson = await this.readPackageJson();
@@ -245,7 +244,7 @@ export class SecurityAgent extends IAnalysisAgent {
       this.emit('audit:started', { agentId: this.agentId });
 
       // Use async exec for non-blocking operation
-      const { stdout, stderr } = await execAsync('npm audit --json', {
+      const { stdout } = await execAsync('npm audit --json', {
         timeout: 30000,
         cwd: this.config.projectRoot || process.cwd(),
         encoding: 'utf8'
@@ -330,7 +329,6 @@ export class SecurityAgent extends IAnalysisAgent {
 
   async analyzeSecretsManagementParallel() {
     let score = 0;
-    const maxScore = this.scoringWeights.secrets;
 
     try {
       // Get files and environment setup in parallel
@@ -469,7 +467,6 @@ export class SecurityAgent extends IAnalysisAgent {
 
   async analyzeErrorHandlingParallel() {
     let score = 0;
-    const maxScore = this.scoringWeights.errorHandling;
 
     try {
       const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx']);
@@ -660,7 +657,6 @@ export class SecurityAgent extends IAnalysisAgent {
 
   async analyzeInputValidationParallel() {
     let score = 0;
-    const maxScore = this.scoringWeights.inputValidation;
 
     try {
       const [files, packageJson] = await Promise.all([

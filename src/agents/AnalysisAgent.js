@@ -170,7 +170,7 @@ export class AnalysisAgent {
   /**
    * Analyze performance characteristics
    */
-  async analyzePerformance(code, reviewResult) {
+  async analyzePerformance(code, _reviewResult) {
     const performance = {
       bottlenecks: await this.identifyBottlenecks(code),
       optimizationOpportunities: await this.findOptimizationOpportunities(code),
@@ -188,7 +188,7 @@ export class AnalysisAgent {
   /**
    * Analyze quality trends over iterations
    */
-  async analyzeQualityTrends(code, reviewResult) {
+  async analyzeQualityTrends(_code, _reviewResult) {
     const trends = {
       overall: this.calculateQualityTrend(),
       categories: this.analyzeCategoryTrends(),
@@ -203,7 +203,7 @@ export class AnalysisAgent {
   /**
    * Analyze security posture
    */
-  async analyzeSecurityPosture(code, reviewResult) {
+  async analyzeSecurityPosture(code, _reviewResult) {
     const security = {
       vulnerabilities: await this.identifySecurityVulnerabilities(code),
       threatModel: await this.generateThreatModel(code),
@@ -239,7 +239,7 @@ export class AnalysisAgent {
   /**
    * Assess technical debt
    */
-  async assessTechnicalDebt(code, reviewResult) {
+  async assessTechnicalDebt(code, _reviewResult) {
     const debt = {
       totalScore: 0,
       categories: {
@@ -309,7 +309,7 @@ export class AnalysisAgent {
   /**
    * Identify testing gaps
    */
-  async identifyTestingGaps(code, reviewResult) {
+  async identifyTestingGaps(code, _reviewResult) {
     const gaps = {
       coverage: {
         estimated: this.estimateTestCoverage(code),
@@ -336,7 +336,7 @@ export class AnalysisAgent {
   /**
    * Generate insights from all analysis
    */
-  async generateInsights(analysis, reviewResult) {
+  async generateInsights(analysis, _reviewResult) {
     const insights = [];
 
     // Architecture insights
@@ -618,7 +618,7 @@ export class AnalysisAgent {
   }
 
   // Simplified implementations for other methods to avoid file length issues
-  async analyzeTrends(analysis, iterationHistory) {
+  async analyzeTrends(_analysis, _iterationHistory) {
     return { improving: true, velocity: 'medium', stagnantAreas: [] };
   }
 
@@ -631,7 +631,7 @@ export class AnalysisAgent {
     };
   }
 
-  async generateAnalysisRecommendations(analysis, reviewResult) {
+  async generateAnalysisRecommendations(analysis, _reviewResult) {
     const recommendations = [];
 
     if (analysis.performance?.score < 70) {
@@ -647,24 +647,24 @@ export class AnalysisAgent {
   }
 
   // Additional simplified helper methods
-  async analyzeLayers(code) { return { count: 3, separation: 'good' }; }
-  async analyzeCoupling(code) { return { level: 'medium', score: 70 }; }
-  async analyzeCohesion(code) { return { level: 'high', score: 80 }; }
-  async analyzeModularity(code) { return { score: 75, modules: 5 }; }
-  async identifyScalabilityFactors(code) { return []; }
-  async identifyBottlenecks(code) { return []; }
-  async findOptimizationOpportunities(code) { return []; }
-  async analyzeResourceUsage(code) { return { cpu: 'medium', memory: 'low' }; }
-  async analyzeAlgorithmicComplexity(code) { return { average: 'O(n)', worst: 'O(n²)' }; }
-  async analyzeRenderingPerformance(code) { return { score: 80 }; }
-  async analyzeNetworkOptimization(code) { return { score: 70 }; }
-  async analyzeCachingStrategy(code) { return { implemented: false, opportunities: 3 }; }
-  async identifySecurityVulnerabilities(code) { return []; }
-  async generateThreatModel(code) { return { threats: [], mitigations: [] }; }
-  async analyzeSecurityPatterns(code) { return { count: 2, coverage: 'partial' }; }
-  async checkSecurityCompliance(code) { return { compliant: true, standards: ['OWASP'] }; }
-  async assessSecurityRisk(code) { return { level: 'medium', factors: [] }; }
-  async identifyHardeningOpportunities(code) { return []; }
+  async analyzeLayers(_code) { return { count: 3, separation: 'good' }; }
+  async analyzeCoupling(_code) { return { level: 'medium', score: 70 }; }
+  async analyzeCohesion(_code) { return { level: 'high', score: 80 }; }
+  async analyzeModularity(_code) { return { score: 75, modules: 5 }; }
+  async identifyScalabilityFactors(_code) { return []; }
+  async identifyBottlenecks(_code) { return []; }
+  async findOptimizationOpportunities(_code) { return []; }
+  async analyzeResourceUsage(_code) { return { cpu: 'medium', memory: 'low' }; }
+  async analyzeAlgorithmicComplexity(_code) { return { average: 'O(n)', worst: 'O(n²)' }; }
+  async analyzeRenderingPerformance(_code) { return { score: 80 }; }
+  async analyzeNetworkOptimization(_code) { return { score: 70 }; }
+  async analyzeCachingStrategy(_code) { return { implemented: false, opportunities: 3 }; }
+  async identifySecurityVulnerabilities(_code) { return []; }
+  async generateThreatModel(_code) { return { threats: [], mitigations: [] }; }
+  async analyzeSecurityPatterns(_code) { return { count: 2, coverage: 'partial' }; }
+  async checkSecurityCompliance(_code) { return { compliant: true, standards: ['OWASP'] }; }
+  async assessSecurityRisk(_code) { return { level: 'medium', factors: [] }; }
+  async identifyHardeningOpportunities(_code) { return []; }
 
   // Additional method stubs
   calculateQualityTrend() { return 'improving'; }

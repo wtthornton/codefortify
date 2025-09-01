@@ -1,6 +1,6 @@
 /**
  * CodeFortify Real-Time Event Emitter
- * 
+ *
  * WebSocket-based event emitter for real-time status updates to IDE extensions
  */
 
@@ -11,7 +11,7 @@ import { EventSchema, EventCreators, EventFilters, EVENT_TYPES, PRIORITY_LEVELS 
 export class RealtimeEventEmitter extends EventEmitter {
   constructor(config = {}) {
     super();
-    
+
     this.config = {
       port: config.port || 8765,
       maxConnections: config.maxConnections || 10,
@@ -28,7 +28,7 @@ export class RealtimeEventEmitter extends EventEmitter {
     this.sessionId = this.generateSessionId();
     this.isRunning = false;
     this.heartbeatTimer = null;
-    
+
     // Rate limiting
     this.rateLimitMap = new Map();
     this.rateLimitWindow = 1000; // 1 second
@@ -52,6 +52,23 @@ export class RealtimeEventEmitter extends EventEmitter {
 
         this.server.on('connection', this.handleConnection.bind(this));
         this.server.on('error', (error) => {
+          if (error.code === 'EADDRINUSE') {
+            // Try next available port
+            this.config.port = this.config.port + 1;
+            console.log(`Port ${this.config.port - 1} in use, trying port ${this.config.port}...`);
+            this.server = new WebSocketServer({
+              port: this.config.port,
+              maxPayload: 16 * 1024 * 1024
+            });
+            this.server.on('connection', this.handleConnection.bind(this));
+            this.server.on('error', reject);
+            this.server.on('listening', () => {
+              console.log(`✅ WebSocket server started on port ${this.config.port}`);
+              this.isRunning = true;
+              resolve();
+            });
+            return;
+          }
           this.emit('error', error);
           reject(error);
         });
@@ -59,7 +76,7 @@ export class RealtimeEventEmitter extends EventEmitter {
         this.server.on('listening', () => {
           this.isRunning = true;
           this.startHeartbeat();
-          
+
           // Send startup event
           this.broadcastEvent(
             EventCreators.statusUpdate(
@@ -69,7 +86,7 @@ export class RealtimeEventEmitter extends EventEmitter {
               this.sessionId
             )
           );
-          
+
           resolve();
         });
 
@@ -83,7 +100,7 @@ export class RealtimeEventEmitter extends EventEmitter {
    * Stop the WebSocket server
    */
   async stop() {
-    if (!this.isRunning) return;
+    if (!this.isRunning) {return;}
 
     // Send shutdown event
     this.broadcastEvent(
@@ -171,7 +188,7 @@ export class RealtimeEventEmitter extends EventEmitter {
   handleMessage(clientId, data) {
     try {
       const client = this.clients.get(clientId);
-      if (!client) return;
+      if (!client) {return;}
 
       // Apply rate limiting
       if (!this.checkRateLimit(clientId)) {
@@ -184,25 +201,25 @@ export class RealtimeEventEmitter extends EventEmitter {
       }
 
       const message = JSON.parse(data.toString());
-      
+
       switch (message.type) {
-        case 'subscribe':
-          this.handleSubscription(clientId, message.data);
-          break;
-        case 'unsubscribe':
-          this.handleUnsubscription(clientId, message.data);
-          break;
-        case 'set_filters':
-          this.handleFilterUpdate(clientId, message.data);
-          break;
-        case 'ping':
-          this.sendToClient(clientId, { type: 'pong', timestamp: new Date().toISOString() });
-          break;
-        case 'get_status':
-          this.sendCurrentStatus(clientId);
-          break;
-        default:
-          this.emit('client:message', { clientId, message });
+      case 'subscribe':
+        this.handleSubscription(clientId, message.data);
+        break;
+      case 'unsubscribe':
+        this.handleUnsubscription(clientId, message.data);
+        break;
+      case 'set_filters':
+        this.handleFilterUpdate(clientId, message.data);
+        break;
+      case 'ping':
+        this.sendToClient(clientId, { type: 'pong', timestamp: new Date().toISOString() });
+        break;
+      case 'get_status':
+        this.sendCurrentStatus(clientId);
+        break;
+      default:
+        this.emit('client:message', { clientId, message });
       }
 
     } catch (error) {
@@ -295,7 +312,7 @@ export class RealtimeEventEmitter extends EventEmitter {
    */
   shouldSendToClient(clientId, event) {
     const client = this.clients.get(clientId);
-    if (!client) return false;
+    if (!client) {return false;}
 
     // Check subscriptions
     if (client.subscriptions.size > 0 && !client.subscriptions.has(event.type)) {
@@ -304,14 +321,14 @@ export class RealtimeEventEmitter extends EventEmitter {
 
     // Apply filters
     const filters = client.filters;
-    
+
     if (filters.minPriority) {
       const filtered = EventFilters.byPriority([event], filters.minPriority);
-      if (filtered.length === 0) return false;
+      if (filtered.length === 0) {return false;}
     }
 
     if (filters.types && filters.types.length > 0) {
-      if (!filters.types.includes(event.type)) return false;
+      if (!filters.types.includes(event.type)) {return false;}
     }
 
     return true;
@@ -322,7 +339,7 @@ export class RealtimeEventEmitter extends EventEmitter {
    */
   addToBuffer(event) {
     this.eventBuffer.push(event);
-    
+
     // Maintain buffer size
     if (this.eventBuffer.length > this.config.bufferSize) {
       this.eventBuffer = this.eventBuffer.slice(-this.config.bufferSize);
@@ -334,13 +351,13 @@ export class RealtimeEventEmitter extends EventEmitter {
    */
   sendBufferedEvents(clientId) {
     const client = this.clients.get(clientId);
-    if (!client) return;
+    if (!client) {return;}
 
     // Send last 10 important events
     const recentEvents = this.eventBuffer
       .slice(-50) // Last 50 events
-      .filter(event => 
-        event.priority === PRIORITY_LEVELS.HIGH || 
+      .filter(event =>
+        event.priority === PRIORITY_LEVELS.HIGH ||
         event.priority === PRIORITY_LEVELS.CRITICAL ||
         event.type === EVENT_TYPES.SCORE_UPDATE
       )
@@ -358,7 +375,7 @@ export class RealtimeEventEmitter extends EventEmitter {
    */
   handleSubscription(clientId, data) {
     const client = this.clients.get(clientId);
-    if (!client) return;
+    if (!client) {return;}
 
     if (data.types) {
       data.types.forEach(type => client.subscriptions.add(type));
@@ -375,7 +392,7 @@ export class RealtimeEventEmitter extends EventEmitter {
    */
   handleUnsubscription(clientId, data) {
     const client = this.clients.get(clientId);
-    if (!client) return;
+    if (!client) {return;}
 
     if (data.types) {
       data.types.forEach(type => client.subscriptions.delete(type));
@@ -387,7 +404,7 @@ export class RealtimeEventEmitter extends EventEmitter {
    */
   handleFilterUpdate(clientId, filters) {
     const client = this.clients.get(clientId);
-    if (!client) return;
+    if (!client) {return;}
 
     client.filters = { ...client.filters, ...filters };
   }
@@ -416,24 +433,24 @@ export class RealtimeEventEmitter extends EventEmitter {
   checkRateLimit(clientId) {
     const now = Date.now();
     const windowStart = now - this.rateLimitWindow;
-    
+
     if (!this.rateLimitMap.has(clientId)) {
       this.rateLimitMap.set(clientId, []);
     }
-    
+
     const requests = this.rateLimitMap.get(clientId);
-    
+
     // Remove old requests
     const recentRequests = requests.filter(time => time > windowStart);
-    
+
     if (recentRequests.length >= this.rateLimitMax) {
       return false;
     }
-    
+
     // Add current request
     recentRequests.push(now);
     this.rateLimitMap.set(clientId, recentRequests);
-    
+
     return true;
   }
 

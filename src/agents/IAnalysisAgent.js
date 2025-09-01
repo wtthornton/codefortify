@@ -325,7 +325,7 @@ export class IAnalysisAgent extends BaseAnalyzer {
     this.healthMetrics.successRate = successfulExecutions / this.healthMetrics.totalExecutions;
   }
 
-  recordFailure(error) {
+  recordFailure(_error) {
     this.healthMetrics.failureCount++;
     this.healthMetrics.totalExecutions++;
 

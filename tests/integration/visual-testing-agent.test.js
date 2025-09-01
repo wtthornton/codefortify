@@ -1,6 +1,6 @@
 /**
  * Visual Testing Agent Integration Tests
- * 
+ *
  * Tests the revolutionary visual testing capabilities integrated with
  * the continuous enhancement system.
  */
@@ -20,11 +20,11 @@ describe('Visual Testing Agent Integration', () => {
     // Create temporary test directory
     tempDir = path.join(process.cwd(), 'temp-visual-testing');
     await fs.mkdir(tempDir, { recursive: true });
-    
+
     // Create a simple test HTML file
     testProjectPath = path.join(tempDir, 'test-project');
     await fs.mkdir(testProjectPath, { recursive: true });
-    
+
     // Create test HTML file
     const testHtml = `
     <!DOCTYPE html>
@@ -52,9 +52,9 @@ describe('Visual Testing Agent Integration', () => {
       </main>
     </body>
     </html>`;
-    
+
     await fs.writeFile(path.join(testProjectPath, 'index.html'), testHtml);
-    
+
     // Create test HTML file with accessibility issues for testing
     const badHtml = `
     <!DOCTYPE html>
@@ -69,7 +69,7 @@ describe('Visual Testing Agent Integration', () => {
       <div style="color: #ccc; background: white;">Low contrast text</div>
     </body>
     </html>`;
-    
+
     await fs.writeFile(path.join(testProjectPath, 'bad-accessibility.html'), badHtml);
   });
 
@@ -116,14 +116,14 @@ describe('Visual Testing Agent Integration', () => {
 
     it('should create screenshot directories', async () => {
       await visualAgent.ensureDirectories();
-      
+
       const dirs = [
         visualAgent.screenshotsDir,
         visualAgent.baselineDir,
         visualAgent.currentDir,
         visualAgent.diffDir
       ];
-      
+
       for (const dir of dirs) {
         const exists = await fs.access(dir).then(() => true).catch(() => false);
         expect(exists).toBe(true);
@@ -132,7 +132,7 @@ describe('Visual Testing Agent Integration', () => {
 
     it('should discover test targets', async () => {
       const targets = await visualAgent.discoverTestTargets();
-      
+
       // Should discover HTML files
       expect(targets).toBeInstanceOf(Array);
       // Note: This might be empty if discoverTestTargets implementation is not complete
@@ -151,11 +151,11 @@ describe('Visual Testing Agent Integration', () => {
       ];
 
       const results = await visualAgent.runVisualTests(testTargets);
-      
+
       expect(results).toHaveProperty('passed');
       expect(results).toHaveProperty('failed');
       expect(results).toHaveProperty('newScreenshots');
-      
+
       // First run should create new screenshots (baselines)
       expect(results.newScreenshots.length).toBeGreaterThan(0);
     }, 30000); // Increase timeout for browser operations
@@ -172,7 +172,7 @@ describe('Visual Testing Agent Integration', () => {
 
       // Run first test to create baselines
       await visualAgent.runVisualTests(testTargets);
-      
+
       // Modify the HTML to create a visual difference
       const modifiedHtml = `
       <!DOCTYPE html>
@@ -198,12 +198,12 @@ describe('Visual Testing Agent Integration', () => {
         </main>
       </body>
       </html>`;
-      
+
       await fs.writeFile(path.join(testProjectPath, 'index.html'), modifiedHtml);
-      
+
       // Run test again - should detect regression
       const results = await visualAgent.runVisualTests(testTargets);
-      
+
       // Should detect differences
       expect(results.regressions.length).toBeGreaterThan(0);
       expect(results.failed).toBeGreaterThan(0);
@@ -222,14 +222,14 @@ describe('Visual Testing Agent Integration', () => {
       ];
 
       const results = await visualAgent.runAccessibilityTests(testTargets);
-      
+
       expect(results).toHaveProperty('violations');
       expect(results).toHaveProperty('coverage');
-      
+
       // Should find accessibility violations in our bad HTML
       expect(results.violations.length).toBeGreaterThan(0);
       expect(results.failed).toBeGreaterThan(0);
-      
+
       // Check that violations have proper structure
       const violation = results.violations[0];
       expect(violation).toHaveProperty('id');
@@ -248,10 +248,10 @@ describe('Visual Testing Agent Integration', () => {
       ];
 
       const results = await visualAgent.runAccessibilityTests(testTargets);
-      
+
       expect(results).toHaveProperty('violations');
       expect(results).toHaveProperty('coverage');
-      
+
       // Our good HTML should have fewer violations
       expect(results.violations.length).toBeLessThanOrEqual(2); // Some minor violations might still exist
     }, 30000);
@@ -269,10 +269,10 @@ describe('Visual Testing Agent Integration', () => {
       ];
 
       const results = await visualAgent.runPerformanceTests(testTargets);
-      
+
       expect(results).toHaveProperty('metrics');
       expect(results).toHaveProperty('issues');
-      
+
       // Should have metrics for our test target
       expect(results.metrics).toHaveProperty('index');
     }, 30000);
@@ -281,22 +281,22 @@ describe('Visual Testing Agent Integration', () => {
   describe('Full Analysis Integration', () => {
     it('should run complete visual testing analysis', async () => {
       const results = await visualAgent.runAnalysis();
-      
+
       expect(results).toHaveProperty('visual');
       expect(results).toHaveProperty('accessibility');
       expect(results).toHaveProperty('performance');
       expect(results).toHaveProperty('summary');
       expect(results).toHaveProperty('insights');
       expect(results).toHaveProperty('recommendations');
-      
+
       // Check summary
       expect(results.summary).toHaveProperty('overallHealth');
       expect(results.summary.overallHealth).toBeGreaterThanOrEqual(0);
       expect(results.summary.overallHealth).toBeLessThanOrEqual(100);
-      
+
       // Check insights
       expect(results.insights).toBeInstanceOf(Array);
-      
+
       // Check recommendations
       expect(results.recommendations).toBeInstanceOf(Array);
     }, 60000); // Longer timeout for full analysis
@@ -335,12 +335,11 @@ describe('Visual Testing Agent Integration', () => {
   describe('Screenshot Comparison', () => {
     it('should compare screenshots accurately with pixelmatch', async () => {
       // Create two identical test images
-      const testId = 'pixel-match-test';
-      
+
       // This would normally be done by taking actual screenshots
       // For testing, we'll create simple test data
       const results = await visualAgent.runAnalysis();
-      
+
       // The comparison logic is tested indirectly through the full analysis
       expect(results).toBeDefined();
     }, 30000);
@@ -355,7 +354,7 @@ describe('Visual Testing Agent Integration', () => {
 
       // Should not throw, but handle gracefully
       const results = await faultyAgent.runAnalysis();
-      
+
       // Should return results even if some parts failed
       expect(results).toBeDefined();
       expect(results).toHaveProperty('summary');
@@ -372,7 +371,7 @@ describe('Visual Testing Agent Integration', () => {
       ];
 
       const results = await visualAgent.runVisualTests(testTargets);
-      
+
       // Should handle missing files without crashing
       expect(results).toBeDefined();
       expect(results.failed).toBeGreaterThanOrEqual(0);
@@ -382,12 +381,12 @@ describe('Visual Testing Agent Integration', () => {
   describe('Resource Cleanup', () => {
     it('should cleanup browsers and resources properly', async () => {
       await visualAgent.initialize();
-      
+
       // Verify browsers are initialized
       expect(visualAgent.browsers.size).toBeGreaterThan(0);
-      
+
       await visualAgent.cleanup();
-      
+
       // Verify browsers are closed
       expect(visualAgent.browsers.size).toBe(0);
     });

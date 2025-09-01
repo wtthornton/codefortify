@@ -7,7 +7,7 @@
  * - UI regression detection
  * - Performance visual metrics
  * - Component preview server
- * 
+ *
  * This agent works within enhancement loops to ensure visual quality
  * and accessibility compliance as code evolves.
  */
@@ -83,23 +83,23 @@ export class VisualTestingAgent extends IAnalysisAgent {
    */
   async runAnalysis() {
     const startTime = Date.now();
-    
+
     try {
       // Initialize visual testing environment
       await this.initialize();
-      
+
       // Discover testable components/pages
       const testTargets = await this.discoverTestTargets();
-      
+
       // Run visual tests across different browsers and viewports
       const visualResults = await this.runVisualTests(testTargets);
-      
+
       // Run accessibility tests
       const accessibilityResults = await this.runAccessibilityTests(testTargets);
-      
+
       // Run performance visual metrics
       const performanceResults = await this.runPerformanceTests(testTargets);
-      
+
       // Aggregate results for enhancement cycle
       const results = this.aggregateResults({
         visual: visualResults,
@@ -110,11 +110,11 @@ export class VisualTestingAgent extends IAnalysisAgent {
       // Generate insights and recommendations
       results.insights = this.generateInsights(results);
       results.recommendations = this.generateRecommendations(results);
-      
+
       // Update metrics
       this.testMetrics.testDuration = Date.now() - startTime;
       results.metrics = { ...this.testMetrics };
-      
+
       return results;
 
     } catch (error) {
@@ -130,7 +130,7 @@ export class VisualTestingAgent extends IAnalysisAgent {
   async initialize() {
     // Create screenshot directories
     await this.ensureDirectories();
-    
+
     // Initialize browsers based on config
     for (const browserName of this.config.browsers) {
       if (browserName === 'chromium') {
@@ -151,17 +151,17 @@ export class VisualTestingAgent extends IAnalysisAgent {
    */
   async discoverTestTargets() {
     const targets = [];
-    
+
     try {
       // Look for React components
       const componentFiles = await this.findComponentFiles();
-      
+
       // Look for HTML files and templates
       const htmlFiles = await this.findHtmlFiles();
-      
+
       // Look for existing visual test configurations
-      const testConfigs = await this.findExistingTestConfigs();
-      
+      await this.findExistingTestConfigs();
+
       // Create test targets from discovered files
       for (const file of componentFiles) {
         targets.push({
@@ -171,7 +171,7 @@ export class VisualTestingAgent extends IAnalysisAgent {
           name: this.extractComponentName(file)
         });
       }
-      
+
       for (const file of htmlFiles) {
         targets.push({
           type: 'page',
@@ -203,38 +203,38 @@ export class VisualTestingAgent extends IAnalysisAgent {
     for (const target of testTargets) {
       for (const [browserName, browser] of this.browsers) {
         for (const viewport of this.config.viewports) {
-          
+
           const testId = this.generateTestId(target, browserName, viewport);
-          
+
           try {
             const page = await browser.newPage();
             await page.setViewportSize(viewport);
-            
+
             // Navigate to target
             if (target.url.startsWith('http')) {
               await page.goto(target.url, { waitUntil: 'networkidle' });
             } else {
               await page.goto(target.url);
             }
-            
+
             // Wait for content to stabilize
             await page.waitForTimeout(1000);
-            
+
             // Take screenshot
             const screenshotPath = path.join(this.currentDir, `${testId}.png`);
-            await page.screenshot({ 
+            await page.screenshot({
               path: screenshotPath,
               fullPage: true,
               animations: 'disabled'
             });
-            
+
             // Compare with baseline if it exists
             const baselinePath = path.join(this.baselineDir, `${testId}.png`);
             const hasBaseline = await this.fileExists(baselinePath);
-            
+
             if (hasBaseline) {
               const diffResult = await this.compareScreenshots(baselinePath, screenshotPath, testId);
-              
+
               if (diffResult.different) {
                 results.failed++;
                 results.regressions.push({
@@ -259,10 +259,10 @@ export class VisualTestingAgent extends IAnalysisAgent {
                 baselinePath
               });
             }
-            
+
             await page.close();
             this.testMetrics.totalScreenshots++;
-            
+
           } catch (error) {
             console.warn(`⚠️  Visual test failed for ${testId}:`, error.message);
             results.failed++;
@@ -294,13 +294,13 @@ export class VisualTestingAgent extends IAnalysisAgent {
       try {
         const browser = this.browsers.get('chromium'); // Use Chromium for accessibility testing
         const page = await browser.newPage();
-        
+
         // Navigate to target
         await page.goto(target.url, { waitUntil: 'networkidle' });
-        
+
         // Run accessibility scan
         const violations = await this.runAccessibilityScan(page, target);
-        
+
         if (violations.length === 0) {
           results.passed++;
         } else {
@@ -311,9 +311,9 @@ export class VisualTestingAgent extends IAnalysisAgent {
             file: target.file
           })));
         }
-        
+
         await page.close();
-        
+
       } catch (error) {
         console.warn(`⚠️  Accessibility test failed for ${target.name}:`, error.message);
         results.failed++;
@@ -322,7 +322,7 @@ export class VisualTestingAgent extends IAnalysisAgent {
 
     this.testMetrics.accessibilityViolations = results.violations.length;
     results.coverage = testTargets.length > 0 ? (results.passed / testTargets.length) * 100 : 0;
-    
+
     return results;
   }
 
@@ -344,21 +344,25 @@ export class VisualTestingAgent extends IAnalysisAgent {
       try {
         const browser = this.browsers.get('chromium');
         const page = await browser.newPage();
-        
+
         // Enable performance monitoring
         await page.coverage.startCSSCoverage();
         await page.coverage.startJSCoverage();
-        
+
         // Navigate and measure
         const response = await page.goto(target.url, { waitUntil: 'networkidle' });
-        
+
         // Get Core Web Vitals
         const metrics = await page.evaluate(() => {
           return new Promise((resolve) => {
+            if (typeof PerformanceObserver === 'undefined') {
+              resolve({});
+              return;
+            }
             const observer = new PerformanceObserver((list) => {
               const entries = list.getEntries();
               const vitals = {};
-              
+
               entries.forEach((entry) => {
                 if (entry.entryType === 'largest-contentful-paint') {
                   vitals.LCP = entry.startTime;
@@ -370,33 +374,33 @@ export class VisualTestingAgent extends IAnalysisAgent {
                   vitals.CLS = (vitals.CLS || 0) + entry.value;
                 }
               });
-              
+
               resolve(vitals);
             });
-            
+
             observer.observe({ entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift'] });
-            
+
             // Fallback timeout
             setTimeout(() => resolve({}), 3000);
           });
         });
-        
+
         // Stop coverage and get results
         const [jsCoverage, cssCoverage] = await Promise.all([
           page.coverage.stopJSCoverage(),
           page.coverage.stopCSSCoverage()
         ]);
-        
+
         // Calculate unused CSS/JS
         const unusedBytes = this.calculateUnusedBytes(jsCoverage, cssCoverage);
-        
+
         results.metrics[target.name] = {
           ...metrics,
           unusedCSS: unusedBytes.css,
           unusedJS: unusedBytes.js,
           loadTime: response ? await response.request().timing() : null
         };
-        
+
         // Check for performance issues
         if (metrics.LCP > 2500) {
           results.issues.push({
@@ -407,7 +411,7 @@ export class VisualTestingAgent extends IAnalysisAgent {
             message: 'Largest Contentful Paint is too slow'
           });
         }
-        
+
         if (metrics.CLS > 0.1) {
           results.issues.push({
             type: 'CLS',
@@ -417,9 +421,9 @@ export class VisualTestingAgent extends IAnalysisAgent {
             message: 'Cumulative Layout Shift is too high'
           });
         }
-        
+
         await page.close();
-        
+
       } catch (error) {
         console.warn(`⚠️  Performance test failed for ${target.name}:`, error.message);
       }
@@ -434,7 +438,7 @@ export class VisualTestingAgent extends IAnalysisAgent {
    */
   generateInsights(results) {
     const insights = [];
-    
+
     // Visual regression insights
     if (results.visual.regressions.length > 0) {
       insights.push({
@@ -452,7 +456,7 @@ export class VisualTestingAgent extends IAnalysisAgent {
         impact: 'positive'
       });
     }
-    
+
     // Accessibility insights
     if (results.accessibility.violations.length > 0) {
       const criticalViolations = results.accessibility.violations.filter(v => v.impact === 'critical');
@@ -464,7 +468,7 @@ export class VisualTestingAgent extends IAnalysisAgent {
         details: criticalViolations.map(v => v.description)
       });
     }
-    
+
     // Performance insights
     if (results.performance.issues.length > 0) {
       const highImpactIssues = results.performance.issues.filter(i => i.severity === 'high');
@@ -478,7 +482,7 @@ export class VisualTestingAgent extends IAnalysisAgent {
         });
       }
     }
-    
+
     return insights;
   }
 
@@ -487,7 +491,7 @@ export class VisualTestingAgent extends IAnalysisAgent {
    */
   generateRecommendations(results) {
     const recommendations = [];
-    
+
     // Visual regression recommendations
     if (results.visual.regressions.length > 0) {
       recommendations.push({
@@ -499,7 +503,7 @@ export class VisualTestingAgent extends IAnalysisAgent {
         files: results.visual.regressions.map(r => r.diffPath)
       });
     }
-    
+
     // Accessibility recommendations
     if (results.accessibility.violations.length > 0) {
       recommendations.push({
@@ -511,7 +515,7 @@ export class VisualTestingAgent extends IAnalysisAgent {
         violations: results.accessibility.violations.length
       });
     }
-    
+
     // Performance recommendations
     if (results.performance.issues.length > 0) {
       recommendations.push({
@@ -523,7 +527,7 @@ export class VisualTestingAgent extends IAnalysisAgent {
         issues: results.performance.issues.length
       });
     }
-    
+
     return recommendations;
   }
 
@@ -572,11 +576,11 @@ export class VisualTestingAgent extends IAnalysisAgent {
         fs.readFile(baselinePath),
         fs.readFile(currentPath)
       ]);
-      
+
       // Parse PNG images
       const baselineImg = PNG.sync.read(baselineBuffer);
       const currentImg = PNG.sync.read(currentBuffer);
-      
+
       // Images must have same dimensions for pixel-by-pixel comparison
       if (baselineImg.width !== currentImg.width || baselineImg.height !== currentImg.height) {
         return {
@@ -585,10 +589,10 @@ export class VisualTestingAgent extends IAnalysisAgent {
           error: 'Image dimensions do not match'
         };
       }
-      
+
       // Create diff image
       const diffImg = new PNG({ width: baselineImg.width, height: baselineImg.height });
-      
+
       // Calculate pixel differences
       const numDiffPixels = pixelmatch(
         baselineImg.data,
@@ -602,18 +606,18 @@ export class VisualTestingAgent extends IAnalysisAgent {
           antialiasing: true
         }
       );
-      
+
       // Calculate percentage difference
       const totalPixels = baselineImg.width * baselineImg.height;
       const diffPercentage = ((numDiffPixels / totalPixels) * 100).toFixed(2);
       const different = parseFloat(diffPercentage) > (this.config.screenshotOptions.threshold * 100);
-      
+
       if (different) {
         // Save diff image
         const diffPath = path.join(this.diffDir, `${testId}-diff.png`);
         const diffBuffer = PNG.sync.write(diffImg);
         await fs.writeFile(diffPath, diffBuffer);
-        
+
         return {
           different: true,
           percentage: diffPercentage,
@@ -622,14 +626,14 @@ export class VisualTestingAgent extends IAnalysisAgent {
           diffPath
         };
       }
-      
+
       return {
         different: false,
         percentage: diffPercentage,
         diffPixels: numDiffPixels,
         totalPixels: totalPixels
       };
-      
+
     } catch (error) {
       return {
         different: true,
@@ -641,13 +645,13 @@ export class VisualTestingAgent extends IAnalysisAgent {
 
   async runAccessibilityScan(page, target) {
     const violations = [];
-    
+
     try {
       // Use axe-playwright for comprehensive accessibility scanning
       const axeResults = await new AxeBuilder({ page })
         .withTags(this.config.accessibility.standards) // e.g., ['wcag2a', 'wcag2aa']
         .analyze();
-      
+
       // Transform axe results to our format
       for (const violation of axeResults.violations) {
         violations.push({
@@ -669,7 +673,7 @@ export class VisualTestingAgent extends IAnalysisAgent {
           file: target.file
         });
       }
-      
+
       // Log accessibility results if verbose
       if (this.config.verbose && violations.length > 0) {
         console.log(`⚠️  Found ${violations.length} accessibility violations in ${target.name}`);
@@ -679,7 +683,7 @@ export class VisualTestingAgent extends IAnalysisAgent {
       } else if (this.config.verbose) {
         console.log(`✅ No accessibility violations found in ${target.name}`);
       }
-      
+
     } catch (error) {
       console.warn('Accessibility scan error:', error.message);
       violations.push({
@@ -690,14 +694,14 @@ export class VisualTestingAgent extends IAnalysisAgent {
         file: target.file
       });
     }
-    
+
     return violations;
   }
 
   calculateUnusedBytes(jsCoverage, cssCoverage) {
     let unusedJS = 0;
     let unusedCSS = 0;
-    
+
     for (const entry of jsCoverage) {
       let usedBytes = 0;
       for (const range of entry.ranges) {
@@ -705,7 +709,7 @@ export class VisualTestingAgent extends IAnalysisAgent {
       }
       unusedJS += entry.text.length - usedBytes;
     }
-    
+
     for (const entry of cssCoverage) {
       let usedBytes = 0;
       for (const range of entry.ranges) {
@@ -713,7 +717,7 @@ export class VisualTestingAgent extends IAnalysisAgent {
       }
       unusedCSS += entry.text.length - usedBytes;
     }
-    
+
     return { js: unusedJS, css: unusedCSS };
   }
 
@@ -733,7 +737,7 @@ export class VisualTestingAgent extends IAnalysisAgent {
       }
     }
     this.browsers.clear();
-    
+
     // Stop component server if running
     if (this.componentServer) {
       this.componentServer.close();
@@ -768,16 +772,16 @@ export class VisualTestingAgent extends IAnalysisAgent {
 
   calculateOverallHealth(results) {
     let score = 100;
-    
+
     // Deduct for visual regressions
     score -= results.visual.regressions.length * 10;
-    
+
     // Deduct for accessibility violations
     score -= results.accessibility.violations.length * 5;
-    
+
     // Deduct for performance issues
     score -= results.performance.issues.length * 3;
-    
+
     return Math.max(0, score);
   }
 }

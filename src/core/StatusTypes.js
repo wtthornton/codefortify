@@ -1,12 +1,12 @@
 /**
  * CodeFortify Status Types and Definitions
- * 
+ *
  * Centralized status management for all CodeFortify operations
  */
 
 export const STATUS_PHASES = {
   IDLE: 'idle',
-  ANALYZING: 'analyzing', 
+  ANALYZING: 'analyzing',
   ENHANCING: 'enhancing',
   TESTING: 'testing',
   COMPLETE: 'complete',
@@ -45,7 +45,7 @@ export const OPERATION_TYPES = {
 
 export const PROGRESS_STAGES = {
   PREPARATION: 'preparation',
-  EXECUTION: 'execution', 
+  EXECUTION: 'execution',
   VALIDATION: 'validation',
   COMPLETION: 'completion'
 };
@@ -115,7 +115,7 @@ export class StatusData {
     if (!this.estimatedCompletion || this.progress === 0) {
       return null;
     }
-    
+
     const elapsed = this.getElapsedTime();
     const totalEstimated = (elapsed / this.progress) * 100;
     return Math.max(0, totalEstimated - elapsed);
@@ -170,7 +170,7 @@ export class AgentStatus {
 
   updateProgress(progress, message = '') {
     this.progress = Math.min(100, Math.max(0, progress));
-    if (message) this.message = message;
+    if (message) {this.message = message;}
   }
 
   complete(results = null, message = '') {
@@ -201,7 +201,7 @@ export class AgentStatus {
       message: this.message,
       startTime: this.startTime?.toISOString() || null,
       endTime: this.endTime?.toISOString() || null,
-      duration: this.startTime && this.endTime ? 
+      duration: this.startTime && this.endTime ?
         this.endTime.getTime() - this.startTime.getTime() : null,
       results: this.results,
       errors: this.errors,
@@ -229,7 +229,7 @@ export class ScoreStatus {
     this.currentScore = newScore;
     this.categoryScores = { ...categoryScores };
     this.lastCalculation = new Date();
-    
+
     // Add to history
     this.history.push({
       score: newScore,
@@ -253,12 +253,12 @@ export class ScoreStatus {
     }
 
     const recent = this.history.slice(-5); // Last 5 scores
-    const changes = recent.slice(1).map((entry, index) => 
+    const changes = recent.slice(1).map((entry, index) =>
       entry.score - recent[index].score
     );
 
     const avgChange = changes.reduce((sum, change) => sum + change, 0) / changes.length;
-    
+
     if (avgChange > 0.5) {
       this.trend = 'improving';
     } else if (avgChange < -0.5) {

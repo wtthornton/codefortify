@@ -1,8 +1,8 @@
 // Generated Context7 MCP Server for javascript
 
-import { Context7MCPServer } from '../src/server/Context7MCPServer.js';
+import { CodeFortifyMCPServer } from '../src/server/CodeFortifyMCPServer.js';
 
-const server = new Context7MCPServer({
+const server = new CodeFortifyMCPServer({
   projectRoot: process.cwd(),
   projectType: 'javascript',
   projectName: 'context7-mcp'

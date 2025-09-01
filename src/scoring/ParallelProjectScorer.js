@@ -164,7 +164,7 @@ export class ParallelProjectScorer {
         // Start real-time server
         await this.realtimeEmitter.start();
         global.codefortifyRealtimeEmitter = this.realtimeEmitter;
-        
+
         if (this.config.verbose) {
           console.log(`🔴 Real-time scoring server started on port ${this.config.realtimePort}`);
         }
@@ -187,20 +187,20 @@ export class ParallelProjectScorer {
    */
   generateScoreChanges(scoreData) {
     const changes = [];
-    
+
     if (scoreData.categoryScores && scoreData.previousCategoryScores) {
       Object.keys(scoreData.categoryScores).forEach(category => {
         const current = scoreData.categoryScores[category];
         const previous = scoreData.previousCategoryScores[category] || 0;
         const change = current - previous;
-        
+
         if (Math.abs(change) > 0.5) {
           const sign = change > 0 ? '+' : '';
           changes.push(`${sign}${change.toFixed(1)} ${category}`);
         }
       });
     }
-    
+
     return changes;
   }
 
@@ -404,14 +404,14 @@ export class ParallelProjectScorer {
     const analysisPromises = categories.map(async (category) => {
       const agent = this.agents[category];
       const traditionalAnalyzer = this.traditionalAnalyzers[category];
-      
+
       if (agent) {
         // Use agent (which already has internal parallelization)
         const startTime = performance.now();
         try {
           const result = await agent.runAnalysis();
           const duration = performance.now() - startTime;
-          
+
           return {
             category,
             result: {
@@ -432,7 +432,7 @@ export class ParallelProjectScorer {
         try {
           const result = await traditionalAnalyzer.analyze();
           const duration = performance.now() - startTime;
-          
+
           return {
             category,
             result: {
@@ -458,10 +458,10 @@ export class ParallelProjectScorer {
     // Process results
     results.forEach((result, index) => {
       const category = categories[index];
-      
+
       if (result.status === 'fulfilled' && result.value.result) {
         this.results.categories[category] = result.value.result;
-        
+
         if (this.config.verbose) {
           console.log(`✅ ${result.value.result.categoryName} completed in ${result.value.result.executionTime}ms`);
         }
@@ -472,7 +472,7 @@ export class ParallelProjectScorer {
     });
 
     if (this.config.verbose) {
-      console.log(`🎯 Parallel execution completed!`);
+      console.log('🎯 Parallel execution completed!');
     }
   }
 

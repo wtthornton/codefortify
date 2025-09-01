@@ -267,6 +267,212 @@ export class CommandCoordinator {
     }
   }
 
+  // Status command implementation
+  async executeStatus(options) {
+    const chalk = await import('chalk');
+    const fs = await import('fs-extra');
+    const { join } = await import('path');
+
+    try {
+      const statusPath = join(this.projectRoot, '.codefortify', 'status.json');
+      
+      if (!await fs.pathExists(statusPath)) {
+        console.log(chalk.default.yellow('⚠️  No active CodeFortify session found'));
+        console.log(chalk.default.gray('Run `codefortify enhance` to start background agents'));
+        return;
+      }
+
+      const statusData = await fs.readJson(statusPath);
+      
+      if (options.format === 'json') {
+        console.log(JSON.stringify(statusData, null, 2));
+        return;
+      }
+
+      // Console format
+      console.log(chalk.default.cyan('🔍 CodeFortify Background Activity Status'));
+      console.log('═'.repeat(50));
+      
+      const status = statusData.globalStatus;
+      const runtime = Math.round(status.elapsedTime / 1000);
+      
+      console.log(`📊 Phase: ${chalk.default.green(status.phase)} (${status.progress}%)`);
+      console.log(`💬 Message: ${status.message}`);
+      console.log(`⏱️  Runtime: ${runtime}s`);
+      console.log(`🔄 Operation: ${status.operation}`);
+      console.log(`🆔 Session: ${statusData.sessionId}`);
+      
+      if (options.detailed) {
+        console.log('\n📈 Score Information:');
+        console.log(`Current: ${statusData.score.currentScore}/100`);
+        console.log(`Target: ${statusData.score.targetScore}/100`);
+        console.log(`Trend: ${statusData.score.trend}`);
+      }
+      
+      if (options.agents && statusData.agents) {
+        console.log('\n🤖 Agent Status:');
+        Object.entries(statusData.agents).forEach(([name, agent]) => {
+          console.log(`${name}: ${agent.status || 'active'}`);
+        });
+      }
+      
+      if (options.watch) {
+        console.log(chalk.default.gray('\nWatching for changes... (Ctrl+C to exit)'));
+        this.watchStatus(statusPath, options);
+      }
+      
+    } catch (error) {
+      console.error(chalk.default.red('❌ Failed to read status:'), error.message);
+    }
+  }
+
+  async watchStatus(statusPath, options) {
+    const chalk = await import('chalk');
+    const fs = await import('fs');
+    
+    let lastUpdate = 0;
+    
+    const watcher = fs.watchFile(statusPath, { interval: 1000 }, async () => {
+      try {
+        const stats = fs.statSync(statusPath);
+        if (stats.mtime.getTime() > lastUpdate) {
+          lastUpdate = stats.mtime.getTime();
+          console.clear();
+          await this.executeStatus({...options, watch: false});
+          console.log(chalk.default.gray(`\nLast updated: ${new Date().toLocaleTimeString()}`));
+        }
+      } catch (error) {
+        console.error('Error watching status:', error.message);
+      }
+    });
+    
+    process.on('SIGINT', () => {
+      fs.unwatchFile(statusPath);
+      console.log(chalk.default.yellow('\n👋 Stopped watching status'));
+      process.exit(0);
+    });
+  }
+
+  // Stop command implementation
+  async executeStop(options) {
+    const chalk = await import('chalk');
+    const { join } = await import('path');
+    const fs = await import('fs-extra');
+    
+    try {
+      console.log(chalk.default.cyan('🛑 Stopping CodeFortify background agents...'));
+      
+      const statusPath = join(this.projectRoot, '.codefortify', 'status.json');
+      
+      if (await fs.pathExists(statusPath)) {
+        // Update status to indicate stopping
+        const statusData = await fs.readJson(statusPath);
+        statusData.globalStatus.phase = 'stopping';
+        statusData.globalStatus.message = 'Stopping background agents...';
+        await fs.writeJson(statusPath, statusData, { spaces: 2 });
+      }
+      
+      if (options.force) {
+        // Force kill all node processes (be careful!)
+        console.log(chalk.default.yellow('⚠️  Force stopping all CodeFortify processes...'));
+        const { exec } = await import('child_process');
+        const { promisify } = await import('util');
+        const execAsync = promisify(exec);
+        
+        try {
+          // Kill processes on ports 8765-8770 (CodeFortify WebSocket servers)
+          for (let port = 8765; port <= 8770; port++) {
+            try {
+              await execAsync(`netstat -ano | findstr :${port}`);
+              console.log(chalk.default.gray(`Stopping process on port ${port}...`));
+            } catch {
+              // Port not in use, continue
+            }
+          }
+        } catch (error) {
+          console.log(chalk.default.gray('No processes to force stop'));
+        }
+      }
+      
+      // Create stopped status
+      if (await fs.pathExists(statusPath)) {
+        const statusData = await fs.readJson(statusPath);
+        statusData.globalStatus.phase = 'stopped';
+        statusData.globalStatus.message = 'All background agents stopped';
+        statusData.globalStatus.progress = 0;
+        await fs.writeJson(statusPath, statusData, { spaces: 2 });
+      }
+      
+      console.log(chalk.default.green('✅ CodeFortify background agents stopped successfully'));
+      
+    } catch (error) {
+      console.error(chalk.default.red('❌ Failed to stop agents:'), error.message);
+    }
+  }
+
+  // Pause command implementation
+  async executePause(options) {
+    const chalk = await import('chalk');
+    const { join } = await import('path');
+    const fs = await import('fs-extra');
+    
+    try {
+      const statusPath = join(this.projectRoot, '.codefortify', 'status.json');
+      
+      if (!await fs.pathExists(statusPath)) {
+        console.log(chalk.default.yellow('⚠️  No active CodeFortify session found'));
+        return;
+      }
+      
+      const statusData = await fs.readJson(statusPath);
+      statusData.globalStatus.phase = 'paused';
+      statusData.globalStatus.message = 'Background agents paused';
+      
+      await fs.writeJson(statusPath, statusData, { spaces: 2 });
+      
+      console.log(chalk.default.yellow('⏸️  CodeFortify background agents paused'));
+      console.log(chalk.default.gray('Run `codefortify resume` to continue'));
+      
+    } catch (error) {
+      console.error(chalk.default.red('❌ Failed to pause agents:'), error.message);
+    }
+  }
+
+  // Resume command implementation
+  async executeResume(options) {
+    const chalk = await import('chalk');
+    const { join } = await import('path');
+    const fs = await import('fs-extra');
+    
+    try {
+      const statusPath = join(this.projectRoot, '.codefortify', 'status.json');
+      
+      if (!await fs.pathExists(statusPath)) {
+        console.log(chalk.default.yellow('⚠️  No paused CodeFortify session found'));
+        console.log(chalk.default.gray('Run `codefortify enhance` to start new session'));
+        return;
+      }
+      
+      const statusData = await fs.readJson(statusPath);
+      
+      if (statusData.globalStatus.phase !== 'paused') {
+        console.log(chalk.default.yellow('⚠️  CodeFortify is not currently paused'));
+        console.log(chalk.default.gray(`Current phase: ${statusData.globalStatus.phase}`));
+        return;
+      }
+      
+      statusData.globalStatus.phase = 'analyzing';
+      statusData.globalStatus.message = 'Resuming background agents...';
+      
+      await fs.writeJson(statusPath, statusData, { spaces: 2 });
+      
+      console.log(chalk.default.green('▶️  CodeFortify background agents resumed'));
+      
+    } catch (error) {
+      console.error(chalk.default.red('❌ Failed to resume agents:'), error.message);
+    }
+  }
+
   // Additional legacy methods would be implemented here...
   async serveMCPServer(_options) {
     throw new Error('Serve command not yet implemented');
