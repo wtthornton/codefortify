@@ -1,7 +1,7 @@
 {
   "patterns": [
     {
-      "id": "pattern_1756768069202_ihuzij2yi",
+      "id": "pattern_1756770436813_pwgum0v05",
       "type": "general",
       "category": "function",
       "context": {
@@ -12,7 +12,7 @@
       },
       "effectiveness": 0.9,
       "usageCount": 1,
-      "lastUsed": "2025-09-01T23:07:49.202Z",
+      "lastUsed": "2025-09-01T23:47:16.813Z",
       "successRate": 1,
       "codeExample": {
         "before": "function calculateTotal(items) {\n  return items.reduce((sum, item) => sum + item.price, 0);\n}",
@@ -24,11 +24,11 @@
         "complexity": "similar",
         "linesChanged": 0
       },
-      "createdAt": "2025-09-01T23:07:49.202Z",
-      "updatedAt": "2025-09-01T23:07:49.202Z"
+      "createdAt": "2025-09-01T23:47:16.813Z",
+      "updatedAt": "2025-09-01T23:47:16.813Z"
     },
     {
-      "id": "pattern_1756768069217_0ey1z76i3",
+      "id": "pattern_1756770436832_w7aj86cz3",
       "type": "general",
       "category": "function",
       "context": {
@@ -37,7 +37,7 @@
       },
       "effectiveness": 0.8,
       "usageCount": 1,
-      "lastUsed": "2025-09-01T23:07:49.217Z",
+      "lastUsed": "2025-09-01T23:47:16.832Z",
       "successRate": 0.5,
       "codeExample": {
         "before": "function add(a, b) {\n  return a + b;\n}",
@@ -49,11 +49,11 @@
         "complexity": "similar",
         "linesChanged": 0
       },
-      "createdAt": "2025-09-01T23:07:49.217Z",
-      "updatedAt": "2025-09-01T23:07:49.217Z"
+      "createdAt": "2025-09-01T23:47:16.832Z",
+      "updatedAt": "2025-09-01T23:47:16.832Z"
     },
     {
-      "id": "pattern_1756768069219_z4fbjh8bc",
+      "id": "pattern_1756770436836_1vqovsuvo",
       "type": "general",
       "category": "function",
       "context": {
@@ -62,7 +62,7 @@
       },
       "effectiveness": 0.8,
       "usageCount": 1,
-      "lastUsed": "2025-09-01T23:07:49.219Z",
+      "lastUsed": "2025-09-01T23:47:16.837Z",
       "successRate": 0.5,
       "codeExample": {
         "before": "function multiply(a, b) {\n  return a * b;\n}",
@@ -74,11 +74,11 @@
         "complexity": "similar",
         "linesChanged": 0
       },
-      "createdAt": "2025-09-01T23:07:49.219Z",
-      "updatedAt": "2025-09-01T23:07:49.219Z"
+      "createdAt": "2025-09-01T23:47:16.837Z",
+      "updatedAt": "2025-09-01T23:47:16.837Z"
     },
     {
-      "id": "pattern_1756768069232_cj1x8slma",
+      "id": "pattern_1756770436849_9ekc82crg",
       "type": "general",
       "category": "function",
       "context": {
@@ -87,7 +87,7 @@
       },
       "effectiveness": 0.3,
       "usageCount": 1,
-      "lastUsed": "2025-09-01T23:07:49.232Z",
+      "lastUsed": "2025-09-01T23:47:16.849Z",
       "successRate": 0.5,
       "codeExample": {
         "before": "function badFunction() {\n  var unused = 'this is bad';\n  console.log('debugging');\n  return null;\n}",
@@ -99,11 +99,11 @@
         "complexity": "similar",
         "linesChanged": 0
       },
-      "createdAt": "2025-09-01T23:07:49.232Z",
-      "updatedAt": "2025-09-01T23:07:49.232Z"
+      "createdAt": "2025-09-01T23:47:16.849Z",
+      "updatedAt": "2025-09-01T23:47:16.849Z"
     },
     {
-      "id": "pattern_1756768069241_il8wvxmgj",
+      "id": "pattern_1756770436861_mk6xe4a35",
       "type": "refactoring",
       "category": "function",
       "context": {
@@ -113,7 +113,7 @@
       },
       "effectiveness": 0.3,
       "usageCount": 1,
-      "lastUsed": "2025-09-01T23:07:49.241Z",
+      "lastUsed": "2025-09-01T23:47:16.861Z",
       "successRate": 0.5,
       "codeExample": {
         "before": "import React, { useState, useEffect } from 'react';\n\nexport function Counter() {\n  const [count, setCount] = useState(0);\n  \n  useEffect(() => {\n    document.title = `Count: ${count}`;\n  }, [count]);\n  \n  return (\n    <div>\n      <h1>Count: {count}</h1>\n      <button onClick={() => setCount(count + 1)}>\n        Increment\n      </button>\n    </div>\n  );\n}",
@@ -125,11 +125,11 @@
         "complexity": "similar",
         "linesChanged": 0
       },
-      "createdAt": "2025-09-01T23:07:49.241Z",
-      "updatedAt": "2025-09-01T23:07:49.241Z"
+      "createdAt": "2025-09-01T23:47:16.861Z",
+      "updatedAt": "2025-09-01T23:47:16.861Z"
     },
     {
-      "id": "pattern_1756768069246_ggch6iupa",
+      "id": "pattern_1756770436873_6qkojdvej",
       "type": "general",
       "category": "function",
       "context": {
@@ -138,7 +138,7 @@
       },
       "effectiveness": 0.8,
       "usageCount": 1,
-      "lastUsed": "2025-09-01T23:07:49.246Z",
+      "lastUsed": "2025-09-01T23:47:16.873Z",
       "successRate": 0.5,
       "codeExample": {
         "before": "function calculateTotal(items) {\n  return items.reduce((sum, item) => sum + item.price, 0);\n}",
@@ -150,11 +150,11 @@
         "complexity": "similar",
         "linesChanged": 0
       },
-      "createdAt": "2025-09-01T23:07:49.246Z",
-      "updatedAt": "2025-09-01T23:07:49.246Z"
+      "createdAt": "2025-09-01T23:47:16.873Z",
+      "updatedAt": "2025-09-01T23:47:16.873Z"
     },
     {
-      "id": "pattern_1756768069270_qraqxy1wo",
+      "id": "pattern_1756770436910_hdkft6jit",
       "type": "general",
       "category": "function",
       "context": {
@@ -163,7 +163,7 @@
       },
       "effectiveness": 0.8,
       "usageCount": 1,
-      "lastUsed": "2025-09-01T23:07:49.270Z",
+      "lastUsed": "2025-09-01T23:47:16.910Z",
       "successRate": 0.5,
       "codeExample": {
         "before": "function calculateTotal(items) {\n  return items.reduce((sum, item) => sum + item.price, 0);\n}",
@@ -175,11 +175,11 @@
         "complexity": "similar",
         "linesChanged": 0
       },
-      "createdAt": "2025-09-01T23:07:49.270Z",
-      "updatedAt": "2025-09-01T23:07:49.270Z"
+      "createdAt": "2025-09-01T23:47:16.910Z",
+      "updatedAt": "2025-09-01T23:47:16.910Z"
     },
     {
-      "id": "pattern_1756768069281_kg49h4ecg",
+      "id": "pattern_1756770436922_4fdfztvpy",
       "type": "general",
       "category": "function",
       "context": {
@@ -188,7 +188,7 @@
       },
       "effectiveness": 0.8,
       "usageCount": 1,
-      "lastUsed": "2025-09-01T23:07:49.281Z",
+      "lastUsed": "2025-09-01T23:47:16.922Z",
       "successRate": 0.5,
       "codeExample": {
         "before": "function calculateTotal(items) {\n  return items.reduce((sum, item) => sum + item.price, 0);\n}",
@@ -200,168 +200,12 @@
         "complexity": "similar",
         "linesChanged": 0
       },
-      "createdAt": "2025-09-01T23:07:49.281Z",
-      "updatedAt": "2025-09-01T23:07:49.281Z"
-    },
-    {
-      "id": "pattern_1756768069526_olu36spzd",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "project": {
-          "type": "javascript"
-        }
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-01T23:07:49.526Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function highQuality() { return 'excellent'; }",
-        "after": "function highQuality() { return 'excellent'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-01T23:07:49.526Z",
-      "updatedAt": "2025-09-01T23:07:49.526Z"
-    },
-    {
-      "id": "pattern_1756768069529_ypk2hb03m",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "project": {
-          "type": "javascript"
-        }
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-01T23:07:49.529Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function mediumQuality() { return 'good'; }",
-        "after": "function mediumQuality() { return 'good'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-01T23:07:49.529Z",
-      "updatedAt": "2025-09-01T23:07:49.529Z"
-    },
-    {
-      "id": "pattern_1756768069540_hidc9bxy2",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "project": {
-          "type": "javascript"
-        }
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-01T23:07:49.540Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function highQuality() { return 'excellent'; }",
-        "after": "function highQuality() { return 'excellent'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-01T23:07:49.540Z",
-      "updatedAt": "2025-09-01T23:07:49.540Z"
-    },
-    {
-      "id": "pattern_1756768069542_phxelzaup",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "project": {
-          "type": "javascript"
-        }
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-01T23:07:49.542Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function mediumQuality() { return 'good'; }",
-        "after": "function mediumQuality() { return 'good'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-01T23:07:49.542Z",
-      "updatedAt": "2025-09-01T23:07:49.542Z"
-    },
-    {
-      "id": "pattern_1756768069550_qlebjomsz",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "project": {
-          "type": "javascript"
-        }
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-01T23:07:49.550Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function highQuality() { return 'excellent'; }",
-        "after": "function highQuality() { return 'excellent'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-01T23:07:49.550Z",
-      "updatedAt": "2025-09-01T23:07:49.550Z"
-    },
-    {
-      "id": "pattern_1756768069553_a83kb7qt3",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "project": {
-          "type": "javascript"
-        }
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-01T23:07:49.553Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function mediumQuality() { return 'good'; }",
-        "after": "function mediumQuality() { return 'good'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-01T23:07:49.553Z",
-      "updatedAt": "2025-09-01T23:07:49.553Z"
+      "createdAt": "2025-09-01T23:47:16.922Z",
+      "updatedAt": "2025-09-01T23:47:16.922Z"
     }
   ],
   "metadata": {
-    "exportedAt": "2025-09-01T23:07:49.553Z",
+    "exportedAt": "2025-09-01T23:47:16.922Z",
     "version": "1.0.0"
   }
 }
