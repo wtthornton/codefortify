@@ -2,7 +2,7 @@
   "name": "codefortify-realtime",
   "displayName": "CodeFortify Real-Time",
   "description": "Real-time code quality monitoring and enhancement feedback for CodeFortify",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "publisher": "codefortify",
   "engines": {
     "vscode": "^1.74.0"

@@ -1,6 +1,6 @@
 {
   "name": "@wtthornton/codefortify",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "CodeFortify - AI-powered code strengthening and security enhancement for modern development",
   "type": "module",
   "main": "src/index.js",
