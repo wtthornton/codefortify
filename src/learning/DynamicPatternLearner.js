@@ -48,6 +48,11 @@ export class DynamicPatternLearner {
     try {
       console.log('🧠 Learning from successful enhancement...');
 
+      // Validate context - should throw if invalid
+      if (!context || typeof context !== 'object') {
+        throw new Error('Valid context object is required for learning');
+      }
+
       const pattern = await this.extractPattern(originalCode, improvedCode);
 
       // Always learn from code examples, regardless of improvement level
@@ -99,10 +104,7 @@ export class DynamicPatternLearner {
 
     } catch (error) {
       console.error(`❌ Error learning from success: ${error.message}`);
-      return {
-        success: false,
-        error: error.message
-      };
+      throw error;
     }
   }
 
@@ -129,7 +131,12 @@ export class DynamicPatternLearner {
           const recencyScore = (new Date(b.lastUsed) - new Date(a.lastUsed)) / (1000 * 60 * 60 * 24);
           return effectivenessScore + (recencyScore * 0.1);
         })
-        .slice(0, limit);
+        .slice(0, limit)
+        .map(pattern => ({
+          patternId: pattern.id,
+          confidence: pattern.effectiveness,
+          pattern: pattern
+        }));
 
       return rankedPatterns;
 
@@ -312,9 +319,18 @@ export class DynamicPatternLearner {
         throw new Error(`Pattern ${feedback.patternId} not found`);
       }
 
+      const originalEffectiveness = pattern.effectiveness;
+      
       // Update effectiveness based on feedback
       if (feedback.effectiveness !== undefined) {
         pattern.effectiveness = feedback.effectiveness;
+      } else if (feedback.outcome === 'success' && feedback.userRating) {
+        // Calculate new effectiveness based on user rating (1-5 scale)
+        const ratingEffectiveness = feedback.userRating / 5.0;
+        pattern.effectiveness = (pattern.effectiveness + ratingEffectiveness) / 2;
+      } else if (feedback.outcome === 'failure') {
+        // Decrease effectiveness for failures
+        pattern.effectiveness = Math.max(0.1, pattern.effectiveness * 0.8);
       }
       
       if (feedback.success !== undefined) {
@@ -347,12 +363,25 @@ export class DynamicPatternLearner {
 
   /**
    * Import patterns from external source
-   * @param {Array} patterns - Patterns to import
+   * @param {string|Array} filePathOrPatterns - File path to import from or patterns array
    * @param {Object} options - Import options
    * @returns {Promise<Object>} Import result
    */
-  async importPatterns(patterns, options = {}) {
+  async importPatterns(filePathOrPatterns, options = {}) {
     try {
+      let patterns;
+      
+      if (typeof filePathOrPatterns === 'string') {
+        // Import from file
+        const filePath = filePathOrPatterns;
+        const fileContent = await fileUtils.readFile(filePath);
+        const importData = JSON.parse(fileContent);
+        patterns = importData.patterns || [];
+      } else {
+        // Import from patterns array
+        patterns = filePathOrPatterns;
+      }
+
       console.log(`📥 Importing ${patterns.length} patterns...`);
 
       const importResult = await this.patternDatabase.importPatterns(patterns, options);

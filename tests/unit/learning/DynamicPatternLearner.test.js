@@ -208,8 +208,8 @@ export function Counter() {
         framework: 'vanilla'
       };
 
-      const suggestions = await learner.getSimilarPatterns('refactoring', {
-        project: { type: 'javascript' }
+      const suggestions = await learner.getSimilarPatterns('general', {
+        language: 'javascript'
       });
 
       expect(suggestions).toBeDefined();
@@ -239,7 +239,7 @@ export function Counter() {
       for (let i = 0; i < patterns.length; i++) {
         const filePath = path.join(testProjectDir, 'src', `pattern${i}.js`);
         await fs.writeFile(filePath, patterns[i].code);
-        await learner.learnFromSuccess(patterns[i].code, patterns[i].code, { improvement: 0.8 }, { project: { type: 'javascript' } });
+        await learner.learnFromSuccess(patterns[i].code, patterns[i].code, { improvement: 0.8 }, { language: 'javascript' });
       }
 
       const suggestions = await learner.getPatternSuggestions({
@@ -373,7 +373,7 @@ export function Counter() {
       for (let i = 0; i < patterns.length; i++) {
         const filePath = path.join(testProjectDir, 'src', `pattern${i}.js`);
         await fs.writeFile(filePath, patterns[i].code);
-        await learner.learnFromSuccess(patterns[i].code, patterns[i].code, { improvement: 0.8 }, { project: { type: 'javascript' } });
+        await learner.learnFromSuccess(patterns[i].code, patterns[i].code, { improvement: 0.8 }, patterns[i].context);
       }
 
       const jsPatterns = await learner.getLearnedPatterns({ language: 'javascript' });
@@ -422,11 +422,25 @@ export function Counter() {
         patterns: [
           {
             id: 'test-pattern-1',
-            code: 'function imported() { return \'imported\'; }',
+            type: 'general',
+            category: 'function',
             context: { language: 'javascript', pattern: 'imported-pattern' },
             effectiveness: 0.8,
             usageCount: 1,
-            lastUsed: new Date().toISOString()
+            lastUsed: new Date().toISOString(),
+            successRate: 1.0,
+            codeExample: {
+              before: 'function old() { return \'old\'; }',
+              after: 'function imported() { return \'imported\'; }'
+            },
+            metadata: {
+              language: 'javascript',
+              framework: 'vanilla',
+              complexity: 'similar',
+              linesChanged: 1
+            },
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
           }
         ],
         metadata: {

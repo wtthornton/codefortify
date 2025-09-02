@@ -168,7 +168,7 @@ export class PatternDatabase {
 
       for (const pattern of candidates) {
         const similarity = this.calculateSimilarity(pattern, targetPattern, context);
-        if (similarity > 0.7) {
+        if (similarity > 0.3) {
           similarPatterns.push({
             ...pattern,
             similarity
