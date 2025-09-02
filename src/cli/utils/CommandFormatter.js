@@ -10,6 +10,7 @@ export class CommandFormatter {
   constructor(config = {}) {
     this.verbose = config.verbose || false;
     this.quiet = config.quiet || false;
+    this.codefortifyPrefix = chalk.cyan.bold('[🚀 CodeFortify]');
   }
 
   /**
@@ -28,7 +29,7 @@ export class CommandFormatter {
    */
   success(message, data = null) {
     if (!this.quiet) {
-      console.log(chalk.green('✅'), message);
+      console.log(this.codefortifyPrefix, chalk.green('✅'), message);
       if (data && this.verbose) {
         this.formatData(data);
       }
@@ -42,7 +43,7 @@ export class CommandFormatter {
    */
   error(error, includeStack = false) {
     const message = error instanceof Error ? error.message : error;
-    console.error(chalk.red('❌ Error:'), message);
+    console.error(this.codefortifyPrefix, chalk.red('❌ Error:'), message);
 
     if (includeStack && error instanceof Error && error.stack && this.verbose) {
       console.error(chalk.gray(error.stack));
@@ -55,7 +56,7 @@ export class CommandFormatter {
    */
   warning(message) {
     if (!this.quiet) {
-      console.log(chalk.yellow('⚠️'), message);
+      console.log(this.codefortifyPrefix, chalk.yellow('⚠️'), message);
     }
   }
 
@@ -65,7 +66,7 @@ export class CommandFormatter {
    */
   info(message) {
     if (!this.quiet) {
-      console.log(chalk.blue('ℹ️'), message);
+      console.log(this.codefortifyPrefix, chalk.blue('ℹ️'), message);
     }
   }
 
@@ -117,7 +118,7 @@ export class CommandFormatter {
    */
   fileOperation(action, path) {
     if (!this.quiet) {
-      console.log(`${action} ${chalk.cyan(path)}`);
+      console.log(this.codefortifyPrefix, `${action} ${chalk.cyan(path)}`);
     }
   }
 

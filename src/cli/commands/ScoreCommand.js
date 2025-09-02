@@ -235,8 +235,9 @@ export class ScoreCommand {
   outputConsole(results, options) {
     const { overall, categories, recommendations } = results;
 
-    // Header
-    console.log('\n' + chalk.bold.blue('🎯 Context7 Project Quality Score'));
+    // Header - with CodeFortify process indicator
+    const codefortifyPrefix = chalk.cyan.bold('[🚀 CodeFortify]');
+    console.log('\n' + codefortifyPrefix + ' ' + chalk.bold.blue('🎯 Context7 Project Quality Score'));
     console.log(chalk.gray('═'.repeat(50)));
 
     // Overall score
