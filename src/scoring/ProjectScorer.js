@@ -28,6 +28,15 @@ import { QualityHistory } from './QualityHistory.js';
 import { QualityGates } from '../gates/QualityGates.js';
 
 export class ProjectScorer {
+  /**
+   * Create a new ProjectScorer instance
+   * @param {Object} config - Configuration object
+   * @param {string} [config.projectRoot] - Project root directory (default: process.cwd())
+   * @param {string} [config.projectType] - Project type (default: 'javascript')
+   * @param {string} [config.projectName] - Project name (default: basename of projectRoot)
+   * @param {boolean} [config.verbose] - Enable verbose logging (default: false)
+   * @param {Array<string>} [config.categories] - Categories to analyze (default: ['all'])
+   */
   constructor(config = {}) {
     this.config = {
       projectRoot: config.projectRoot || process.cwd(),

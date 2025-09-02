@@ -50,5 +50,9 @@ export { EnhanceCommand } from './cli/commands/EnhanceCommand.js';
 export { ScoreCommand } from './cli/commands/ScoreCommand.js';
 export { CommandCoordinator } from './cli/CommandCoordinator.js';
 
+// Utilities
+export { ErrorHandler } from './utils/ErrorHandler.js';
+export { CodeFortifyError } from './utils/CodeFortifyError.js';
+
 // Default export - the continuous enhancement system as the main feature
 export { ContinuousLoopController as default } from './core/ContinuousLoopController.js';

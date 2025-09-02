@@ -64,7 +64,14 @@
       "Bash(netstat:*)",
       "Bash(taskkill:*)",
       "Read(C:\\Users\\tappt\\AppData\\Roaming\\npm\\node_modules\\@wtthornton\\codefortify/**)",
-      "Read(C:\\Users\\tappt\\AppData\\Roaming\\npm\\node_modules\\@wtthornton\\codefortify\\bin/**)"
+      "Read(C:\\Users\\tappt\\AppData\\Roaming\\npm\\node_modules\\@wtthornton\\codefortify\\bin/**)",
+      "Bash(npx playwright-cli screenshot:*)",
+      "Bash(start dashboard-demo.html)",
+      "Bash(start context7-quality-dashboard.html)",
+      "Bash(start test-cursor-dashboard.html)",
+      "Read(C:\\Users\\tappt\\OneDrive\\Documents/**)",
+      "Read(C:\\Users\\tappt\\OneDrive\\Documents/**)",
+      "Read(C:\\Users\\tappt\\OneDrive\\Documents/**)"
     ],
     "deny": [],
     "ask": []

@@ -36,6 +36,13 @@ export class RealtimeEventEmitter extends EventEmitter {
   }
 
   /**
+   * Initialize the event emitter (alias for start)
+   */
+  async initialize() {
+    return this.start();
+  }
+
+  /**
    * Start the WebSocket server
    */
   async start() {

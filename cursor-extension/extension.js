@@ -83,15 +83,23 @@ async function updateStatusBar() {
         }
 
         const statusData = JSON.parse(fs.readFileSync(statusPath, 'utf8'));
-        const status = statusData.globalStatus;
-        const score = statusData.score;
+        const status = statusData.globalStatus || {};
+        const score = statusData.score || {};
         
-        const runtime = Math.round((status.elapsedTime || 0) / 1000 / 60);
-        const currentScore = score.currentScore || 73; // Default for demo
-        const progress = status.progress || 0;
+        // MONITORING MODE: Show score without autonomous progress
+        const currentScore = score.currentScore || score.totalScore || 0;
+        const mode = statusData.mode || 'monitoring';
+        const changeCount = statusData.changeCount || 0;
 
-        // Update status bar
-        statusBarItem.text = `🚀 ${currentScore}/100 │ ${runtime}min │ ${progress}%`;
+        // Update status bar for monitoring mode
+        if (mode === 'monitoring') {
+            statusBarItem.text = `📊 CF Monitor: ${currentScore}/100 | ${changeCount} changes`;
+        } else {
+            // Legacy autonomous mode (disabled)
+            const runtime = Math.round((status.elapsedTime || 0) / 1000 / 60);
+            const progress = status.progress || 0;
+            statusBarItem.text = `🚀 ${currentScore}/100 │ ${runtime}min │ ${progress}%`;
+        }
         
         // Color coding based on score
         if (currentScore >= 80) {
@@ -349,41 +357,74 @@ function getDashboardHTML() {
             if (ws && ws.readyState === WebSocket.OPEN) return;
             
             try {
-                ws = new WebSocket('ws://localhost:8765');
+                console.log('🔄 Connecting to CodeFortify WebSocket server...');
+                ws = new WebSocket('ws://localhost:8766');
                 
                 ws.onopen = function() {
                     console.log('✅ Connected to CodeFortify WebSocket server');
                     reconnectAttempts = 0;
                     
-                    // Request current status
+                    // Send connection established message
                     ws.send(JSON.stringify({
-                        type: 'get_status'
+                        type: 'connection_established',
+                        client: 'cursor-extension'
                     }));
+                    
+                    // Request current status
+                    setTimeout(() => {
+                        ws.send(JSON.stringify({
+                            type: 'get_status'
+                        }));
+                    }, 100);
                 };
                 
                 ws.onmessage = function(event) {
                     try {
                         const message = JSON.parse(event.data);
-                        console.log('📨 Received:', message.type);
+                        console.log('📨 Received:', message.type, message.data ? 'with data' : 'no data');
                         
-                        if (message.type === 'current_status') {
-                            updateDataFromStatus(message.data);
+                        switch(message.type) {
+                            case 'current_status':
+                                updateDataFromStatus(message.data);
+                                break;
+                            case 'status_update':
+                                updateDataFromStatus(message.data);
+                                break;
+                            case 'score_update':
+                                if (message.data && message.data.currentScore !== undefined) {
+                                    currentData.score = message.data.currentScore;
+                                    updateDashboard();
+                                }
+                                break;
+                            case 'pong':
+                                console.log('📡 Received pong from server');
+                                break;
+                            case 'error':
+                                console.error('❌ Server error:', message.message);
+                                break;
                         }
                     } catch (error) {
                         console.error('Failed to parse WebSocket message:', error);
                     }
                 };
                 
-                ws.onclose = function() {
-                    console.log('🔌 WebSocket connection closed');
+                ws.onclose = function(event) {
+                    console.log('🔌 WebSocket connection closed', event.code, event.reason);
+                    ws = null;
+                    
                     if (reconnectAttempts < maxReconnectAttempts) {
                         reconnectAttempts++;
+                        console.log(\`🔄 Attempting reconnection \${reconnectAttempts}/\${maxReconnectAttempts} in \${2 * reconnectAttempts}s...\`);
                         setTimeout(connectWebSocket, 2000 * reconnectAttempts);
+                    } else {
+                        console.log('❌ Max reconnection attempts reached, using fallback data');
+                        loadFallbackData();
                     }
                 };
                 
                 ws.onerror = function(error) {
                     console.error('❌ WebSocket error:', error);
+                    ws = null;
                 };
                 
             } catch (error) {
@@ -394,43 +435,70 @@ function getDashboardHTML() {
         }
         
         function updateDataFromStatus(statusData) {
+            console.log('🔄 Updating dashboard from server data:', statusData);
+            
             // Update score
-            if (statusData.score && statusData.score.currentScore !== undefined) {
+            if (statusData && statusData.score && statusData.score.currentScore !== undefined) {
                 currentData.score = statusData.score.currentScore;
+                console.log('📊 Score updated to:', currentData.score);
             }
             
             // Update agents based on categories
-            if (statusData.categories) {
-                const categoryMap = {
-                    'Security': statusData.categories.security?.percentage || 0,
-                    'Quality': statusData.categories.quality?.percentage || 0,
-                    'Structure': statusData.categories.structure?.percentage || 0,
-                    'Testing': statusData.categories.testing?.percentage || 0
-                };
+            if (statusData && statusData.categories) {
+                console.log('📊 Updating agents from categories:', statusData.categories);
                 
                 currentData.agents.forEach(agent => {
-                    if (categoryMap[agent.name] !== undefined) {
-                        agent.progress = categoryMap[agent.name];
-                    } else {
-                        agent.progress = 100; // Default for Enhance/Visual
+                    switch(agent.name) {
+                        case 'Security':
+                            agent.progress = statusData.categories.security?.percentage || statusData.categories.security?.score || 0;
+                            break;
+                        case 'Quality':
+                            agent.progress = statusData.categories.quality?.percentage || statusData.categories.quality?.score || 0;
+                            break;
+                        case 'Structure':
+                            agent.progress = statusData.categories.structure?.percentage || statusData.categories.structure?.score || 0;
+                            break;
+                        case 'Testing':
+                            agent.progress = statusData.categories.testing?.percentage || statusData.categories.testing?.score || 0;
+                            break;
+                        case 'Enhance':
+                            agent.progress = statusData.categories.performance?.percentage || statusData.categories.performance?.score || 100;
+                            break;
+                        case 'Visual':
+                            agent.progress = statusData.categories.devexp?.percentage || statusData.categories.devexp?.score || 100;
+                            break;
+                        default:
+                            agent.progress = 100;
                     }
                 });
             }
             
-            // Update activities from operation history
-            if (statusData.globalStatus) {
+            // Update activities from operation history or generate from status
+            if (statusData && statusData.globalStatus) {
                 const timestamp = new Date().toLocaleTimeString('en-US', { hour12: false });
+                const phase = statusData.globalStatus.phase || 'idle';
+                const progress = statusData.globalStatus.progress || 0;
+                
                 currentData.activities = [
-                    \`\${timestamp} 📊 Analysis: \${statusData.globalStatus.message || 'Complete'}\`,
-                    \`\${timestamp} 🏗️ Structure: 93% (Excellent)\`,
-                    \`\${timestamp} 🔒 Security: 81% (Good)\`,
-                    \`\${timestamp} 🧪 Testing: 60% (Needs improvement)\`,
-                    \`\${timestamp} 📊 Quality: 57% (Needs work)\`
+                    \`\${timestamp} 📊 Analysis: \${statusData.globalStatus.message || phase + ' (' + progress + '%)'}\`,
+                    \`\${timestamp} 🏗️ Structure: \${statusData.categories?.structure?.score || 93}% (\${getGrade(statusData.categories?.structure?.score || 93)})\`,
+                    \`\${timestamp} 🔒 Security: \${statusData.categories?.security?.score || 81}% (\${getGrade(statusData.categories?.security?.score || 81)})\`,
+                    \`\${timestamp} 🧪 Testing: \${statusData.categories?.testing?.score || 60}% (\${getGrade(statusData.categories?.testing?.score || 60)})\`,
+                    \`\${timestamp} 📊 Quality: \${statusData.categories?.quality?.score || 57}% (\${getGrade(statusData.categories?.quality?.score || 57)})\`
                 ];
             }
             
             // Update the dashboard
+            console.log('🎨 Updating dashboard display');
             updateDashboard();
+        }
+        
+        function getGrade(score) {
+            if (score >= 90) return 'Excellent';
+            if (score >= 80) return 'Good';
+            if (score >= 70) return 'Fair';
+            if (score >= 60) return 'Poor';
+            return 'Needs work';
         }
         
         function loadFallbackData() {
@@ -529,19 +597,17 @@ function getDashboardHTML() {
             }
         });
         
-        // Try WebSocket connection as backup
-        setTimeout(() => {
-            if (currentData.score === '--') {
-                connectWebSocket();
-            }
-        }, 1000);
+        // Try WebSocket connection immediately
+        console.log('🚀 Starting WebSocket connection...');
+        connectWebSocket();
         
-        // Initial update
+        // Fallback if no connection after reasonable time
         setTimeout(() => {
             if (currentData.score === '--') {
+                console.log('⚠️ No WebSocket data received, loading fallback');
                 loadFallbackData();
             }
-        }, 2000);
+        }, 3000);
     </script>
 </body>
 </html>`;

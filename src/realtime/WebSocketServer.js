@@ -203,6 +203,15 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
                     this.sendToClient(ws, { type: 'pong', timestamp: new Date().toISOString() });
                     break;
                     
+                case 'connection_established':
+                    console.log(`📱 Client identified: ${message.client || 'unknown'}`);
+                    this.sendToClient(ws, { 
+                        type: 'connection_acknowledged',
+                        server: 'CodeFortify WebSocket Server',
+                        version: '1.0.0'
+                    });
+                    break;
+                    
                 default:
                     console.log(`Unknown message type: ${message.type}`);
                     this.sendToClient(ws, {

@@ -26,20 +26,25 @@ export class EnhanceCommand {
   }
 
   /**
-   * Execute the enhance command
+   * Execute the enhance command - MONITORING MODE ONLY
    */
   async execute(input, options = {}) {
-    // Merge options with config
-    const enhanceConfig = {
-      ...this.config,
-      ...options,
-      maxIterations: options.iterations || this.config.maxIterations,
-      targetScore: options.target || this.config.targetScore,
-      outputFormat: options.format || this.config.outputFormat
-    };
-
-    console.log(chalk.cyan('🔄 CodeFortify Continuous Enhancement System'));
-    console.log(chalk.gray(`Target Score: ${enhanceConfig.targetScore}, Max Iterations: ${enhanceConfig.maxIterations}`));
+    // MONITORING MODE: Autonomous enhancement is disabled
+    console.log(chalk.yellow('⚠️  Autonomous Enhancement is DISABLED'));
+    console.log(chalk.cyan('CodeFortify is now in Monitoring Mode'));
+    console.log('');
+    console.log('This mode tracks and analyzes code improvements made by:');
+    console.log('  • AI coding assistants (Claude, Copilot, etc.)');
+    console.log('  • Human developers');
+    console.log('  • External tools');
+    console.log('');
+    console.log('Available commands:');
+    console.log(chalk.green('  codefortify monitor') + ' - Track AI agent improvements in real-time');
+    console.log(chalk.green('  codefortify score') + ' - Analyze current code quality');
+    console.log(chalk.green('  codefortify estimate') + ' - Estimate potential improvements');
+    console.log('');
+    console.log('To start monitoring, run: ' + chalk.cyan('codefortify monitor'));
+    return;
 
     try {
       // Initialize the enhancement system

@@ -12,6 +12,11 @@ import { PromptCommand } from './commands/PromptCommand.js';
 import { ProjectTypeDetector } from '../scoring/core/ProjectTypeDetector.js';
 
 export class CommandCoordinator {
+  /**
+   * Create a new CommandCoordinator instance
+   * @param {Object} globalConfig - Global configuration object
+   * @param {string} packageRoot - Root directory of the package
+   */
   constructor(globalConfig, packageRoot) {
     this.globalConfig = globalConfig;
     this.packageRoot = packageRoot;
@@ -26,26 +31,57 @@ export class CommandCoordinator {
     };
   }
 
+  /**
+   * Execute the init command
+   * @param {Object} options - Command options
+   * @returns {Promise<Object>} Execution result
+   */
   async executeInit(options) {
     return await this.commands.init.execute(options);
   }
 
+  /**
+   * Execute the score command
+   * @param {Object} options - Command options
+   * @returns {Promise<Object>} Execution result
+   */
   async executeScore(options) {
     return await this.commands.score.execute(options);
   }
 
+  /**
+   * Execute the enhance command
+   * @param {string} input - Input to enhance
+   * @param {Object} options - Command options
+   * @returns {Promise<Object>} Execution result
+   */
   async executeEnhance(input, options) {
     return await this.commands.enhance.execute(input, options);
   }
 
+  /**
+   * Execute the template command
+   * @param {string} action - Template action to perform
+   * @param {Object} options - Command options
+   * @returns {Promise<Object>} Execution result
+   */
   async executeTemplate(action, options) {
     return await this.commands.template.execute({ action, ...options });
   }
 
+  /**
+   * Execute the prompt command
+   * @param {Object} options - Command options
+   * @returns {Promise<Object>} Execution result
+   */
   async executePrompt(options) {
     return await this.commands.prompt.execute(options);
   }
 
+  /**
+   * Detect the project type
+   * @returns {Promise<string>} Detected project type
+   */
   async detectProjectType() {
     const detector = new ProjectTypeDetector(this.globalConfig.projectRoot);
     return detector.detectProjectType();
@@ -496,7 +532,16 @@ export class CommandCoordinator {
     const { join } = await import('path');
     const fs = await import('fs-extra');
     const fsStd = await import('fs').then(m => m.promises);
+    const { AIAgentMonitor } = await import('../monitoring/AIAgentMonitor.js');
 
+    // Start monitoring in background
+    const monitor = new AIAgentMonitor({
+      projectRoot: this.globalConfig.projectRoot,
+      monitoringInterval: parseInt(options.refresh) || 2000,
+      enableRealtime: true
+    });
+    
+    await monitor.startMonitoring();
     const refreshInterval = parseInt(options.refresh) || 2000;
 
     try {
@@ -746,5 +791,123 @@ export class CommandCoordinator {
 
   async updateProject(_options) {
     throw new Error('Update command not yet implemented');
+  }
+
+  // Cursor setup command implementation
+  async executeCursor(options) {
+    const chalk = (await import('chalk')).default;
+    const ora = (await import('ora')).default;
+    const { spawn } = await import('child_process');
+    const path = await import('path');
+    const fs = await import('fs-extra');
+
+    console.log(chalk.bold.blue('🎯 Setting up CodeFortify for Cursor IDE Integration'));
+
+    const spinner = ora('Checking current setup...').start();
+
+    try {
+      // Check if real-time server is already running
+      const serverRunning = await this.checkServerStatus(options.port);
+      
+      if (options.startServer || !serverRunning) {
+        spinner.text = 'Starting real-time WebSocket server...';
+        
+        // Start the real-time server
+        const serverProcess = spawn('node', [
+          path.join(this.packageRoot, 'bin', 'codefortify-realtime.js'),
+          'start',
+          '--port', options.port,
+          '--watch'
+        ], {
+          detached: true,
+          stdio: 'ignore'
+        });
+        
+        serverProcess.unref();
+        
+        // Give server time to start
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        const newServerStatus = await this.checkServerStatus(options.port);
+        if (newServerStatus) {
+          spinner.succeed(chalk.green(`✅ Real-time server started on port ${options.port}`));
+        } else {
+          spinner.warn(chalk.yellow('⚠️  Server may be starting (check with status command)'));
+        }
+      } else {
+        spinner.succeed(chalk.green(`✅ Real-time server already running on port ${options.port}`));
+      }
+
+      // Show integration instructions
+      console.log(chalk.blue('\n🚀 Cursor IDE Integration Setup Complete!'));
+      console.log('\n📋 Next steps:');
+      console.log(chalk.gray('1. Open your project in Cursor IDE'));
+      console.log(chalk.gray('2. Click on the CodeFortify status in the bottom status bar'));
+      console.log(chalk.gray('3. The real-time dashboard will open in your browser'));
+      
+      console.log(chalk.blue('\n🔧 Available commands:'));
+      console.log(chalk.gray(`  codefortify score --realtime    # Start real-time monitoring`));
+      console.log(chalk.gray(`  node bin/codefortify-realtime.js status  # Check server status`));
+      console.log(chalk.gray(`  codefortify dashboard           # Open terminal dashboard`));
+
+      if (options.openDashboard) {
+        spinner.start('Opening dashboard...');
+        
+        const dashboardPath = path.join(this.globalConfig.projectRoot, 'context7-quality-dashboard.html');
+        if (await fs.pathExists(dashboardPath)) {
+          const { spawn } = await import('child_process');
+          
+          // Open dashboard in default browser (Windows)
+          if (process.platform === 'win32') {
+            spawn('start', [dashboardPath], { shell: true, detached: true, stdio: 'ignore' });
+          } else if (process.platform === 'darwin') {
+            spawn('open', [dashboardPath], { detached: true, stdio: 'ignore' });
+          } else {
+            spawn('xdg-open', [dashboardPath], { detached: true, stdio: 'ignore' });
+          }
+          
+          spinner.succeed('Dashboard opened in browser');
+        } else {
+          spinner.warn('Dashboard file not found');
+        }
+      }
+
+      console.log(chalk.green('\n✨ CodeFortify is now ready for Cursor IDE integration!'));
+
+    } catch (error) {
+      spinner.fail('Failed to set up Cursor integration');
+      console.error(chalk.red('Error:'), error.message);
+      if (this.globalConfig.verbose) {
+        console.error(error.stack);
+      }
+      process.exit(1);
+    }
+  }
+
+  async checkServerStatus(port = 8765) {
+    try {
+      const { WebSocket } = await import('ws');
+      const ws = new WebSocket(`ws://localhost:${port}`);
+      
+      return new Promise((resolve) => {
+        const timeout = setTimeout(() => {
+          ws.terminate();
+          resolve(false);
+        }, 2000);
+        
+        ws.on('open', () => {
+          clearTimeout(timeout);
+          ws.close();
+          resolve(true);
+        });
+        
+        ws.on('error', () => {
+          clearTimeout(timeout);
+          resolve(false);
+        });
+      });
+    } catch (error) {
+      return false;
+    }
   }
 }

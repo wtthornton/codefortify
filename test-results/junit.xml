@@ -1,179 +1,232 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites name="vitest tests" tests="19" failures="2" errors="0" time="1.219">
-    <testsuite name="tests/unit/learning/DynamicPatternLearner.test.js" timestamp="2025-09-02T00:04:39.169Z" hostname="Mini_IT13" tests="19" failures="2" errors="0" skipped="0" time="0.346888">
-        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; constructor &gt; should initialize with default configuration" time="0.0066592">
+<testsuites name="vitest tests" tests="19" failures="2" errors="0" time="0.3408672">
+    <testsuite name="tests/unit/learning/DynamicPatternLearner.test.js" timestamp="2025-09-02T01:17:04.497Z" hostname="Mini_IT13" tests="19" failures="2" errors="0" skipped="0" time="0.3408672">
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; constructor &gt; should initialize with default configuration" time="0.0132111">
             <system-out>
-📁 Loaded 51 patterns from file
-✅ Pattern database initialized with 51 patterns
-📁 Loaded 51 patterns from file
-✅ Pattern database initialized with 51 patterns
+📁 Loaded 18 patterns from file
+
+✅ Pattern database initialized with 18 patterns
+
+📁 Loaded 18 patterns from file
+
+✅ Pattern database initialized with 18 patterns
 
             </system-out>
         </testcase>
-        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; constructor &gt; should initialize with custom configuration" time="0.006839">
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; constructor &gt; should initialize with custom configuration" time="0.0075323">
             <system-out>
-📁 Loaded 51 patterns from file
-✅ Pattern database initialized with 51 patterns
+📁 Loaded 18 patterns from file
+
+✅ Pattern database initialized with 18 patterns
 
             </system-out>
         </testcase>
-        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; learnFromSuccess &gt; should learn patterns from successful code" time="0.0072574">
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; learnFromSuccess &gt; should learn patterns from successful code" time="0.0116409">
             <system-out>
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478776_fnhh1lw97
-✅ Pattern learned successfully: pattern_1756771478776_fnhh1lw97
-📁 Loaded 1 patterns from file
 ✅ Pattern database initialized with 1 patterns
+
+✅ Pattern stored: pattern_1756775824131_6mkgdsqnk
+
+✅ Pattern learned successfully: pattern_1756775824131_6mkgdsqnk
 
             </system-out>
+            <system-err>
+❌ Error loading patterns from file: Unexpected end of JSON input
+
+            </system-err>
         </testcase>
-        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; learnFromSuccess &gt; should learn from multiple code examples" time="0.0120994">
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; learnFromSuccess &gt; should learn from multiple code examples" time="0.0145388">
             <system-out>
 📁 Loaded 1 patterns from file
+
 ✅ Pattern database initialized with 1 patterns
+
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478783_a7m4ku4oi
+✅ Pattern stored: pattern_1756775824147_jcb8ordv9
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478785_mk2ojdqo0
+✅ Pattern stored: pattern_1756775824150_6n9xv49hk
+
 ⚠️ Enhancement below learning threshold: 0.8
 
             </system-out>
         </testcase>
-        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; learnFromSuccess &gt; should handle failed code examples" time="0.005112">
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; learnFromSuccess &gt; should handle failed code examples" time="0.0097678">
             <system-out>
 📁 Loaded 3 patterns from file
+
 ✅ Pattern database initialized with 3 patterns
+
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478795_yj809ycjw
+✅ Pattern stored: pattern_1756775824159_3d6fgvb8n
+
 ⚠️ Enhancement below learning threshold: 0.3
 
             </system-out>
         </testcase>
-        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; learnFromSuccess &gt; should extract patterns from code structure" time="0.0062896">
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; learnFromSuccess &gt; should extract patterns from code structure" time="0.0060213">
             <system-out>
 📁 Loaded 4 patterns from file
+
 ✅ Pattern database initialized with 4 patterns
 
 🧠 Learning from successful enhancement...
-✅ Pattern stored: pattern_1756771478800_abzys7vr3
+
+✅ Pattern stored: pattern_1756775824167_dqlu1sts6
+
 ⚠️ Enhancement below learning threshold: 0.3
 
             </system-out>
         </testcase>
-        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; getPatternSuggestions &gt; should suggest patterns based on context" time="0.0082883">
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; getPatternSuggestions &gt; should suggest patterns based on context" time="0.0103467">
             <system-out>
 📁 Loaded 5 patterns from file
+
 ✅ Pattern database initialized with 5 patterns
+
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478809_6qqmxng0i
+✅ Pattern stored: pattern_1756775824174_7mxmq912y
+
 ⚠️ Enhancement below learning threshold: 0.8
 
             </system-out>
         </testcase>
-        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; getPatternSuggestions &gt; should rank suggestions by effectiveness" time="0.0080098">
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; getPatternSuggestions &gt; should rank suggestions by effectiveness" time="0.0082517">
             <system-out>
 📁 Loaded 6 patterns from file
+
 ✅ Pattern database initialized with 6 patterns
 
 🧠 Learning from successful enhancement...
-✅ Pattern stored: pattern_1756771478815_mhmjnciqy
+
+✅ Pattern stored: pattern_1756775824183_erztoj99f
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478816_pye0127pg
+✅ Pattern stored: pattern_1756775824185_cc7cb8ykh
+
 ⚠️ Enhancement below learning threshold: 0.8
 
             </system-out>
         </testcase>
-        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; getPatternSuggestions &gt; should return empty array when no patterns match" time="0.0050817">
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; getPatternSuggestions &gt; should return empty array when no patterns match" time="0.0076601">
             <system-out>
 📁 Loaded 8 patterns from file
+
 ✅ Pattern database initialized with 8 patterns
 
             </system-out>
         </testcase>
-        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; updatePatternEffectiveness &gt; should update pattern effectiveness based on feedback" time="0.0106174">
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; updatePatternEffectiveness &gt; should update pattern effectiveness based on feedback" time="0.0077089">
             <system-out>
 📁 Loaded 8 patterns from file
+
 ✅ Pattern database initialized with 8 patterns
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478830_lcec4ld31
+✅ Pattern stored: pattern_1756775824200_5hrryctr5
+
 ⚠️ Enhancement below learning threshold: 0.8
 
-✅ Pattern updated: pattern_1756771478830_lcec4ld31
+✅ Pattern updated: pattern_1756775824200_5hrryctr5
 
             </system-out>
         </testcase>
-        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; updatePatternEffectiveness &gt; should handle negative feedback" time="0.0103417">
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; updatePatternEffectiveness &gt; should handle negative feedback" time="0.0120854">
             <system-out>
 📁 Loaded 9 patterns from file
+
 ✅ Pattern database initialized with 9 patterns
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478842_6gzc5nc4h
+✅ Pattern stored: pattern_1756775824210_xmgh8xdz8
+
 ⚠️ Enhancement below learning threshold: 0.8
 
-✅ Pattern updated: pattern_1756771478842_6gzc5nc4h
+✅ Pattern updated: pattern_1756775824210_xmgh8xdz8
 
             </system-out>
         </testcase>
-        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; getLearnedPatterns &gt; should return all learned patterns" time="0.0103453">
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; getLearnedPatterns &gt; should return all learned patterns" time="0.0098645">
             <system-out>
 📁 Loaded 10 patterns from file
+
 ✅ Pattern database initialized with 10 patterns
-🧠 Learning from successful enhancement...
-✅ Pattern stored: pattern_1756771478850_39l27pgg0
-⚠️ Enhancement below learning threshold: 0.8
+
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478852_4bsvddcrn
+✅ Pattern stored: pattern_1756775824220_zin2o09iq
+
+⚠️ Enhancement below learning threshold: 0.8
+
+🧠 Learning from successful enhancement...
+
+✅ Pattern stored: pattern_1756775824222_dw3aopr8l
+
 ⚠️ Enhancement below learning threshold: 0.8
 
             </system-out>
         </testcase>
-        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; getLearnedPatterns &gt; should filter patterns by criteria" time="0.0383074">
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; getLearnedPatterns &gt; should filter patterns by criteria" time="0.0376666">
             <system-out>
 📁 Loaded 12 patterns from file
+
 ✅ Pattern database initialized with 12 patterns
-🧠 Learning from successful enhancement...
-✅ Pattern stored: pattern_1756771478861_ereamtpmr
-⚠️ Enhancement below learning threshold: 0.8
+
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478862_5mfp64y9z
+✅ Pattern stored: pattern_1756775824231_0xsc3usky
+
+⚠️ Enhancement below learning threshold: 0.8
+
+🧠 Learning from successful enhancement...
+
+✅ Pattern stored: pattern_1756775824233_p44752kbr
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 📁 Loaded 14 patterns from file
+
 ✅ Pattern database initialized with 14 patterns
+
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478881_ajt3s2vez
+✅ Pattern stored: pattern_1756775824249_c1861b2xd
+
 ⚠️ Enhancement below learning threshold: 0.8
+
 🧠 Learning from successful enhancement...
-✅ Pattern stored: pattern_1756771478882_1q0epwamv
+
+✅ Pattern stored: pattern_1756775824251_ahfunfg1j
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 📁 Loaded 16 patterns from file
+
 ✅ Pattern database initialized with 16 patterns
+
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478891_d0ubxwwy1
+✅ Pattern stored: pattern_1756775824256_4wm30c290
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478893_m4w87dvav
+✅ Pattern stored: pattern_1756775824260_auf64alcc
+
 ⚠️ Enhancement below learning threshold: 0.8
 
             </system-out>
@@ -211,20 +264,24 @@ AssertionError: expected false to be true // Object.is equality
  ❯ tests/unit/learning/DynamicPatternLearner.test.js:384:74
             </failure>
         </testcase>
-        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; exportPatterns &gt; should export patterns to file" time="0.0068493">
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; exportPatterns &gt; should export patterns to file" time="0.0073394">
             <system-out>
 📁 Loaded 18 patterns from file
+
 ✅ Pattern database initialized with 18 patterns
+
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478899_qvhdpmlgs
+✅ Pattern stored: pattern_1756775824267_y18q0y8ic
+
 ⚠️ Enhancement below learning threshold: 0.8
 
             </system-out>
         </testcase>
-        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; importPatterns &gt; should import patterns from file" time="0.008838">
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; importPatterns &gt; should import patterns from file" time="0.0077785">
             <system-out>
 📁 Loaded 19 patterns from file
+
 ✅ Pattern database initialized with 19 patterns
 
 📥 Importing 1 patterns...
@@ -233,11 +290,12 @@ AssertionError: expected false to be true // Object.is equality
 
             </system-out>
         </testcase>
-        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; error handling &gt; should handle invalid code context" time="0.0035464">
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; error handling &gt; should handle invalid code context" time="0.0031354">
             <system-out>
 🧠 Learning from successful enhancement...
 
 📁 Loaded 20 patterns from file
+
 ✅ Pattern database initialized with 20 patterns
 
             </system-out>
@@ -246,30 +304,36 @@ AssertionError: expected false to be true // Object.is equality
 
             </system-err>
         </testcase>
-        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; error handling &gt; should handle file system errors" time="0.0259015">
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; error handling &gt; should handle file system errors" time="0.0180426">
             <system-out>
 🧠 Learning from successful enhancement...
 
 ✅ Pattern database initialized with 1 patterns
-✅ Pattern stored: pattern_1756771478918_yqqbp8g0a
+
+✅ Pattern stored: pattern_1756775824285_iak3z1v1g
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
 ✅ Pattern database initialized with 1 patterns
-✅ Pattern stored: pattern_1756771478930_d5omm46b8
+
+✅ Pattern stored: pattern_1756775824296_woax1pt77
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478936_edqu5vomx
+✅ Pattern stored: pattern_1756775824300_d0mh2dyji
+
 ⚠️ Enhancement below learning threshold: 0.8
+
+📁 Loaded 1 patterns from file
+
 ✅ Pattern database initialized with 1 patterns
 
             </system-out>
             <system-err>
-❌ Error loading patterns from file: Unexpected end of JSON input
-
 ❌ Error loading patterns from file: Unexpected end of JSON input
 
 ❌ Error loading patterns from file: Unexpected end of JSON input
@@ -281,11 +345,12 @@ AssertionError: promise resolved &quot;{ success: true, …(3) }&quot; instead o
 - Expected
 + Received
 
-- [Error: rejected promise]
-+ Object {
+- Error {
+-   &quot;message&quot;: &quot;rejected promise&quot;,
++ {
 +   &quot;effectiveness&quot;: 0.8,
-+   &quot;extractedPatterns&quot;: Array [
-+     Object {
++   &quot;extractedPatterns&quot;: [
++     {
 +       &quot;category&quot;: &quot;function&quot;,
 +       &quot;complexity&quot;: &quot;similar&quot;,
 +       &quot;framework&quot;: &quot;vanilla&quot;,
@@ -294,9 +359,9 @@ AssertionError: promise resolved &quot;{ success: true, …(3) }&quot; instead o
 +       &quot;type&quot;: &quot;general&quot;,
 +     },
 +   ],
-+   &quot;patternId&quot;: &quot;pattern_1756771478918_yqqbp8g0a&quot;,
++   &quot;patternId&quot;: &quot;pattern_1756775824285_iak3z1v1g&quot;,
 +   &quot;success&quot;: true,
-+ }
+  }
 
  ❯ tests/unit/learning/DynamicPatternLearner.test.js:488:9
             </failure>
@@ -306,11 +371,12 @@ AssertionError: promise resolved &quot;{ success: true, …(3) }&quot; instead o
 - Expected
 + Received
 
-- [Error: rejected promise]
-+ Object {
+- Error {
+-   &quot;message&quot;: &quot;rejected promise&quot;,
++ {
 +   &quot;effectiveness&quot;: 0.8,
-+   &quot;extractedPatterns&quot;: Array [
-+     Object {
++   &quot;extractedPatterns&quot;: [
++     {
 +       &quot;category&quot;: &quot;function&quot;,
 +       &quot;complexity&quot;: &quot;similar&quot;,
 +       &quot;framework&quot;: &quot;vanilla&quot;,
@@ -319,9 +385,9 @@ AssertionError: promise resolved &quot;{ success: true, …(3) }&quot; instead o
 +       &quot;type&quot;: &quot;general&quot;,
 +     },
 +   ],
-+   &quot;patternId&quot;: &quot;pattern_1756771478930_d5omm46b8&quot;,
++   &quot;patternId&quot;: &quot;pattern_1756775824296_woax1pt77&quot;,
 +   &quot;success&quot;: true,
-+ }
+  }
 
  ❯ tests/unit/learning/DynamicPatternLearner.test.js:488:9
             </failure>
@@ -331,11 +397,12 @@ AssertionError: promise resolved &quot;{ success: true, …(3) }&quot; instead o
 - Expected
 + Received
 
-- [Error: rejected promise]
-+ Object {
+- Error {
+-   &quot;message&quot;: &quot;rejected promise&quot;,
++ {
 +   &quot;effectiveness&quot;: 0.8,
-+   &quot;extractedPatterns&quot;: Array [
-+     Object {
++   &quot;extractedPatterns&quot;: [
++     {
 +       &quot;category&quot;: &quot;function&quot;,
 +       &quot;complexity&quot;: &quot;similar&quot;,
 +       &quot;framework&quot;: &quot;vanilla&quot;,
@@ -344,16 +411,17 @@ AssertionError: promise resolved &quot;{ success: true, …(3) }&quot; instead o
 +       &quot;type&quot;: &quot;general&quot;,
 +     },
 +   ],
-+   &quot;patternId&quot;: &quot;pattern_1756771478936_edqu5vomx&quot;,
++   &quot;patternId&quot;: &quot;pattern_1756775824300_d0mh2dyji&quot;,
 +   &quot;success&quot;: true,
-+ }
+  }
 
  ❯ tests/unit/learning/DynamicPatternLearner.test.js:488:9
             </failure>
         </testcase>
-        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; error handling &gt; should handle invalid feedback data" time="0.0036504">
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; error handling &gt; should handle invalid feedback data" time="0.0022859">
             <system-out>
 📁 Loaded 1 patterns from file
+
 ✅ Pattern database initialized with 1 patterns
 
             </system-out>
@@ -362,244 +430,310 @@ AssertionError: promise resolved &quot;{ success: true, …(3) }&quot; instead o
 
             </system-err>
         </testcase>
-        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; performance &gt; should handle large numbers of patterns efficiently" time="0.1417582">
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; performance &gt; should handle large numbers of patterns efficiently" time="0.1197489">
             <system-out>
 📁 Loaded 1 patterns from file
+
 ✅ Pattern database initialized with 1 patterns
+
 🧠 Learning from successful enhancement...
-✅ Pattern stored: pattern_1756771478949_hcl23p0vx
+
+✅ Pattern stored: pattern_1756775824308_r0estszbi
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478950_ge1gdhbyh
-⚠️ Enhancement below learning threshold: 0.8
-🧠 Learning from successful enhancement...
+✅ Pattern stored: pattern_1756775824310_jbni4jczk
 
-✅ Pattern stored: pattern_1756771478952_r7eysueku
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478954_44btjpnq8
+✅ Pattern stored: pattern_1756775824312_56uj7g3hv
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478957_mbgz3xgwt
+✅ Pattern stored: pattern_1756775824314_taxkitzfu
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478962_ub0g758zf
+✅ Pattern stored: pattern_1756775824315_6be85q4qf
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478966_bdkeygtgk
+✅ Pattern stored: pattern_1756775824317_azpxz4hf9
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478968_obe9mivr9
+✅ Pattern stored: pattern_1756775824321_izvp0yzcx
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478971_oe1pximux
+✅ Pattern stored: pattern_1756775824323_p608fk28s
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478975_bl4as43e9
+✅ Pattern stored: pattern_1756775824326_31dpwsg9y
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478978_oqog6zsmu
+✅ Pattern stored: pattern_1756775824329_uh7jbl8ev
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478979_6abzef8zd
+✅ Pattern stored: pattern_1756775824331_vlzi292cw
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478981_jxwfzkfyd
+✅ Pattern stored: pattern_1756775824332_8ffl50p19
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478983_u47yj2u6y
+✅ Pattern stored: pattern_1756775824334_wuyzf83u3
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478985_gomjzkq11
+✅ Pattern stored: pattern_1756775824335_qfvwa9bue
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478988_m0rk96g2k
-⚠️ Enhancement below learning threshold: 0.8
-🧠 Learning from successful enhancement...
+✅ Pattern stored: pattern_1756775824337_00y8gg6wj
 
-✅ Pattern stored: pattern_1756771478992_1l3lua3an
-⚠️ Enhancement below learning threshold: 0.8
-🧠 Learning from successful enhancement...
-
-✅ Pattern stored: pattern_1756771478994_kol96xr9z
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771478995_z00j2p084
-⚠️ Enhancement below learning threshold: 0.8
-🧠 Learning from successful enhancement...
+✅ Pattern stored: pattern_1756775824338_usoh2hjyn
 
-✅ Pattern stored: pattern_1756771478997_c17h2whjl
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479000_j4gero7yd
+✅ Pattern stored: pattern_1756775824341_buqzpbv4g
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479003_f48r2wtiy
+✅ Pattern stored: pattern_1756775824345_0o0of09a1
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479007_kn0bkqtst
+✅ Pattern stored: pattern_1756775824347_pz0xqhakk
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479011_us5nup8xf
+✅ Pattern stored: pattern_1756775824348_m3iwo1bo4
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479013_uyafpdnq3
-⚠️ Enhancement below learning threshold: 0.8
-🧠 Learning from successful enhancement...
+✅ Pattern stored: pattern_1756775824350_fmp2kfqb1
 
-✅ Pattern stored: pattern_1756771479015_cvdvtetqn
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479016_ixnq7918e
+✅ Pattern stored: pattern_1756775824351_061jtn1fm
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479018_c3rovuygr
+✅ Pattern stored: pattern_1756775824352_z1y5y0nn6
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479021_j4xdq7ldd
+✅ Pattern stored: pattern_1756775824355_dd91l7vwb
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479025_vbg2i2xow
+✅ Pattern stored: pattern_1756775824357_usijug43o
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479027_0kuzyhesk
+✅ Pattern stored: pattern_1756775824359_638ief662
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479029_0bn66tdd4
+✅ Pattern stored: pattern_1756775824362_yma6j6n9w
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479031_94gudwcvk
+✅ Pattern stored: pattern_1756775824364_ug4711xws
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479033_rtnig81c0
-⚠️ Enhancement below learning threshold: 0.8
-🧠 Learning from successful enhancement...
+✅ Pattern stored: pattern_1756775824365_1lbsmkqv3
 
-✅ Pattern stored: pattern_1756771479036_y582vw96u
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479040_hi8avuuc5
-⚠️ Enhancement below learning threshold: 0.8
-🧠 Learning from successful enhancement...
+✅ Pattern stored: pattern_1756775824367_b1qhayb9l
 
-✅ Pattern stored: pattern_1756771479043_hefqo7na7
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479045_uhugbrmkq
+✅ Pattern stored: pattern_1756775824368_bvmkadakn
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479047_nkticiivv
-⚠️ Enhancement below learning threshold: 0.8
-🧠 Learning from successful enhancement...
-✅ Pattern stored: pattern_1756771479049_cj0yb3fm1
-⚠️ Enhancement below learning threshold: 0.8
-🧠 Learning from successful enhancement...
+✅ Pattern stored: pattern_1756775824369_nndftdt6v
 
-✅ Pattern stored: pattern_1756771479050_elfukjstb
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479052_nwf4m9xl5
+✅ Pattern stored: pattern_1756775824371_b4kd9aylw
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479058_neyh21qie
+✅ Pattern stored: pattern_1756775824372_scy1kxug8
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479062_h3buc4gox
-⚠️ Enhancement below learning threshold: 0.8
-🧠 Learning from successful enhancement...
+✅ Pattern stored: pattern_1756775824375_disijd7pj
 
-✅ Pattern stored: pattern_1756771479063_79x8ugc02
-⚠️ Enhancement below learning threshold: 0.8
-🧠 Learning from successful enhancement...
-
-✅ Pattern stored: pattern_1756771479065_w5pu06lc9
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479066_soa8jigc1
-⚠️ Enhancement below learning threshold: 0.8
-🧠 Learning from successful enhancement...
+✅ Pattern stored: pattern_1756775824377_r1vb0k6ho
 
-✅ Pattern stored: pattern_1756771479068_lwoz73lbt
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479071_73qni00fo
+✅ Pattern stored: pattern_1756775824380_86la4s2vs
+
 ⚠️ Enhancement below learning threshold: 0.8
 
 🧠 Learning from successful enhancement...
 
-✅ Pattern stored: pattern_1756771479075_t5rdce1yl
+✅ Pattern stored: pattern_1756775824381_6jdy1dd02
+
+⚠️ Enhancement below learning threshold: 0.8
+
+🧠 Learning from successful enhancement...
+
+✅ Pattern stored: pattern_1756775824383_9y9k5g8cy
+
+⚠️ Enhancement below learning threshold: 0.8
+
+🧠 Learning from successful enhancement...
+
+✅ Pattern stored: pattern_1756775824384_lutap5ccn
+
+⚠️ Enhancement below learning threshold: 0.8
+
+🧠 Learning from successful enhancement...
+
+✅ Pattern stored: pattern_1756775824386_hck59lz43
+
+⚠️ Enhancement below learning threshold: 0.8
+
+🧠 Learning from successful enhancement...
+
+✅ Pattern stored: pattern_1756775824388_wreg660nz
+
+⚠️ Enhancement below learning threshold: 0.8
+
+🧠 Learning from successful enhancement...
+
+✅ Pattern stored: pattern_1756775824391_2t0ir7s91
+
+⚠️ Enhancement below learning threshold: 0.8
+
+🧠 Learning from successful enhancement...
+
+✅ Pattern stored: pattern_1756775824396_6msyviv46
+
+⚠️ Enhancement below learning threshold: 0.8
+
+🧠 Learning from successful enhancement...
+
+✅ Pattern stored: pattern_1756775824399_6l46efbhn
+
+⚠️ Enhancement below learning threshold: 0.8
+
+🧠 Learning from successful enhancement...
+
+✅ Pattern stored: pattern_1756775824400_omc6x8ab5
+
+⚠️ Enhancement below learning threshold: 0.8
+
+🧠 Learning from successful enhancement...
+
+✅ Pattern stored: pattern_1756775824402_xz83b5zii
+
+⚠️ Enhancement below learning threshold: 0.8
+
+🧠 Learning from successful enhancement...
+
+✅ Pattern stored: pattern_1756775824404_azt3dkmrh
+
+⚠️ Enhancement below learning threshold: 0.8
+
+🧠 Learning from successful enhancement...
+
+✅ Pattern stored: pattern_1756775824407_pr9of6t52
+
+⚠️ Enhancement below learning threshold: 0.8
+
+🧠 Learning from successful enhancement...
+
+✅ Pattern stored: pattern_1756775824413_1gt7zikz2
+
 ⚠️ Enhancement below learning threshold: 0.8
 
             </system-out>

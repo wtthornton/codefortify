@@ -410,7 +410,7 @@ export class CodeStyleAnalyzer {
       camelCase: 0,
       snake_case: 0,
       PascalCase: 0,
-      kebab-case: 0,
+      'kebab-case': 0,
       other: 0
     };
     

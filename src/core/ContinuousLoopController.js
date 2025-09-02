@@ -35,6 +35,9 @@ export class ContinuousLoopController extends EventEmitter {
       // Real-time configuration
       enableRealtime: config.enableRealtime !== false,
       realtimePort: config.realtimePort || 8765,
+      // MONITORING MODE: Disable autonomous execution
+      monitoringOnly: config.monitoringOnly !== false, // Default to monitoring-only mode
+      executeEnhancements: config.executeEnhancements || false, // Must explicitly enable
       ...config
     };
 
@@ -244,17 +247,33 @@ export class ContinuousLoopController extends EventEmitter {
   async runIterationCycle(code) {
     const iterationStart = Date.now();
 
-    // Step 1: Enhancement - improve code quality
-    this.emit('step:start', { step: 'enhance', iteration: this.currentIteration });
-    if (this.statusManager) {
-      this.statusManager.updateStatus({
-        phase: 'enhancing',
-        progress: 10,
-        message: 'Enhancing code quality...',
-        category: 'enhancement'
-      });
+    // MONITORING MODE: Skip enhancement if in monitoring-only mode
+    let enhanced = code;
+    
+    if (!this.config.monitoringOnly && this.config.executeEnhancements) {
+      // Step 1: Enhancement - improve code quality (DISABLED BY DEFAULT)
+      this.emit('step:start', { step: 'enhance', iteration: this.currentIteration });
+      if (this.statusManager) {
+        this.statusManager.updateStatus({
+          phase: 'enhancing',
+          progress: 10,
+          message: 'Enhancing code quality...',
+          category: 'enhancement'
+        });
+      }
+      enhanced = await this.agents.enhancement.enhance(code);
+    } else {
+      // MONITORING ONLY: Analyze without modifying
+      this.emit('step:start', { step: 'analyze', iteration: this.currentIteration });
+      if (this.statusManager) {
+        this.statusManager.updateStatus({
+          phase: 'analyzing',
+          progress: 10,
+          message: 'Analyzing code quality (monitoring mode)...',
+          category: 'analysis'
+        });
+      }
     }
-    const enhanced = await this.agents.enhancement.enhance(code);
     this.emit('step:complete', { step: 'enhance', duration: Date.now() - iterationStart });
 
     // Step 2: Review - validate and score improvements

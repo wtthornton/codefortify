@@ -2,6 +2,7 @@
 
 /**
  * CodeFortify CLI - Command Line Interface
+ * Version: 1.2.0
  *
  * Main CLI entry point for CodeFortify AI-powered development operations
  */
@@ -117,10 +118,26 @@ program
     await coordinator.executeEnhance(input, options);
   });
 
+// Monitor command - NEW PRIMARY MONITORING INTERFACE
+program
+  .command('monitor')
+  .description('📊 Monitor AI coding agent effectiveness (no autonomous changes)')
+  .option('-i, --interval <ms>', 'Monitoring interval in milliseconds', '5000')
+  .option('-d, --dashboard', 'Show live dashboard')
+  .option('-s, --status', 'Show periodic status updates')
+  .option('--no-realtime', 'Disable real-time WebSocket server')
+  .option('--no-track-changes', 'Disable file change tracking')
+  .option('--verbose', 'Enable verbose output')
+  .action(async (options) => {
+    const { MonitorCommand } = await import('../src/cli/commands/MonitorCommand.js');
+    const command = new MonitorCommand(globalConfig);
+    await command.execute(options);
+  });
+
 // Status command
 program
   .command('status')
-  .description('Show current CodeFortify background activity status')
+  .description('Show current CodeFortify monitoring status')
   .option('--detailed', 'Show detailed status information')
   .option('--agents', 'Show individual agent status')
   .option('--watch', 'Watch status updates in real-time')
@@ -239,6 +256,18 @@ program
   .action(async (options) => {
     const coordinator = new CommandCoordinator(globalConfig, packageRoot);
     await coordinator.executeUpdate(options);
+  });
+
+// Cursor setup command
+program
+  .command('cursor')
+  .description('🎯 Set up CodeFortify for Cursor IDE integration')
+  .option('--start-server', 'Start the real-time server for Cursor integration')
+  .option('--port <port>', 'WebSocket server port', '8765')
+  .option('--open-dashboard', 'Open the dashboard in browser')
+  .action(async (options) => {
+    const coordinator = new CommandCoordinator(globalConfig, packageRoot);
+    await coordinator.executeCursor(options);
   });
 
 // Start the CLI

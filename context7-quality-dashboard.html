@@ -1221,6 +1221,148 @@
                 });
             }
         });
+        
+        // Real-time WebSocket connection for live updates
+        let websocket = null;
+        let reconnectAttempts = 0;
+        const maxReconnectAttempts = 5;
+        
+        function connectWebSocket() {
+            try {
+                websocket = new WebSocket('ws://localhost:8765');
+                
+                websocket.onopen = function() {
+                    console.log('✅ Connected to CodeFortify real-time server');
+                    reconnectAttempts = 0;
+                    
+                    // Update connection status in UI
+                    updateConnectionStatus(true);
+                    
+                    // Request current status
+                    websocket.send(JSON.stringify({ type: 'get_status' }));
+                };
+                
+                websocket.onmessage = function(event) {
+                    try {
+                        const data = JSON.parse(event.data);
+                        
+                        switch(data.type) {
+                            case 'status_update':
+                            case 'current_status':
+                                updateDashboardFromServer(data.data);
+                                break;
+                            case 'score_update':
+                                updateScoreDisplay(data.data);
+                                break;
+                        }
+                    } catch (error) {
+                        console.error('Error parsing WebSocket message:', error);
+                    }
+                };
+                
+                websocket.onclose = function() {
+                    console.log('❌ Disconnected from CodeFortify server');
+                    updateConnectionStatus(false);
+                    
+                    // Attempt reconnection
+                    if (reconnectAttempts < maxReconnectAttempts) {
+                        reconnectAttempts++;
+                        setTimeout(connectWebSocket, 2000 * reconnectAttempts);
+                    }
+                };
+                
+                websocket.onerror = function(error) {
+                    console.error('WebSocket error:', error);
+                    updateConnectionStatus(false);
+                };
+                
+            } catch (error) {
+                console.error('Failed to create WebSocket connection:', error);
+                updateConnectionStatus(false);
+            }
+        }
+        
+        function updateConnectionStatus(connected) {
+            // Add connection status indicator to the header
+            let statusEl = document.getElementById('connection-status');
+            if (!statusEl) {
+                statusEl = document.createElement('div');
+                statusEl.id = 'connection-status';
+                statusEl.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    padding: 8px 16px;
+                    border-radius: 20px;
+                    font-size: 12px;
+                    font-weight: 500;
+                    z-index: 1000;
+                    transition: all 0.3s ease;
+                `;
+                document.body.appendChild(statusEl);
+            }
+            
+            if (connected) {
+                statusEl.innerHTML = '🟢 Live';
+                statusEl.style.backgroundColor = 'rgba(16, 185, 129, 0.2)';
+                statusEl.style.color = '#10b981';
+                statusEl.style.border = '1px solid rgba(16, 185, 129, 0.3)';
+            } else {
+                statusEl.innerHTML = '🔴 Offline';
+                statusEl.style.backgroundColor = 'rgba(239, 68, 68, 0.2)';
+                statusEl.style.color = '#ef4444';
+                statusEl.style.border = '1px solid rgba(239, 68, 68, 0.3)';
+            }
+        }
+        
+        function updateDashboardFromServer(serverData) {
+            if (serverData.score) {
+                // Update main score display
+                const scoreElements = document.querySelectorAll('.score-number');
+                scoreElements.forEach(el => {
+                    if (el.textContent.includes('/100') || el.textContent.includes('out of')) {
+                        el.textContent = serverData.score.currentScore || '61';
+                    }
+                });
+            }
+            
+            if (serverData.globalStatus) {
+                // Update activity feed with real status
+                addActivityItem(`${new Date().toLocaleTimeString()} 📊 ${serverData.globalStatus.message || 'Analysis running'}`);
+            }
+        }
+        
+        function updateScoreDisplay(scoreData) {
+            const currentScore = scoreData.currentScore || scoreData.score || 61;
+            
+            // Update all score displays
+            document.querySelectorAll('.score-number').forEach(el => {
+                if (el.textContent.includes('/100') || el.textContent.includes('out of')) {
+                    el.textContent = currentScore;
+                }
+            });
+            
+            // Update stat values
+            const statElements = document.querySelectorAll('.stat-value');
+            if (statElements.length > 0) {
+                statElements[0].textContent = currentScore + '%';
+            }
+        }
+        
+        function addActivityItem(message) {
+            // This would integrate with the existing activity system
+            console.log('Activity:', message);
+        }
+        
+        // Connect to WebSocket when page loads
+        connectWebSocket();
+        
+        // Fallback: try to reconnect every 10 seconds if not connected
+        setInterval(() => {
+            if (!websocket || websocket.readyState !== WebSocket.OPEN) {
+                connectWebSocket();
+            }
+        }, 10000);
     </script>
 </body>
 </html>

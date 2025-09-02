@@ -445,6 +445,13 @@ export class StatusManager extends EventEmitter {
   }
 
   /**
+   * Cleanup the status manager (alias for shutdown)
+   */
+  async cleanup() {
+    return this.shutdown();
+  }
+
+  /**
    * Cleanup and save before shutdown
    */
   async shutdown() {
