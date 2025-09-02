@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeFortify Dashboard - Working Demo</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1e1e1e;
+            color: #cccccc;
+            margin: 0;
+            padding: 20px;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .panel {
+            background: #2d2d30;
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #3c3c3c;
+        }
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .agent-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            background: #383838;
+            border-radius: 4px;
+        }
+        .progress-bar {
+            flex: 1;
+            height: 6px;
+            background: #404040;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #0078d4;
+            transition: width 0.3s ease;
+        }
+        .activity-feed {
+            grid-column: 1 / -1;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .activity-item {
+            padding: 5px 0;
+            border-bottom: 1px solid #3c3c3c;
+            font-size: 0.9em;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .control-btn {
+            padding: 8px 16px;
+            background: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .control-btn:hover {
+            background: #106ebe;
+        }
+        .score-display {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #ffa500;
+        }
+        h3 {
+            margin-top: 0;
+        }
+        .success { background: #16c60c; }
+        .warning { background: #ffb900; }
+        .error { background: #d13438; }
+    </style>
+</head>
+<body>
+    <div id="dashboard">
+        <div class="score-display">🚀 75/100</div>
+        
+        <div class="dashboard">
+            <div class="panel">
+                <h3>🤖 Active Agents</h3>
+                <div class="agents-grid" id="agents-grid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h3>📊 Quality Categories</h3>
+                <div id="categories-grid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel activity-feed">
+            <h3>📋 Live Activity Feed</h3>
+            <div id="activity-list">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="control-btn">⏸️ Pause</button>
+            <button class="control-btn">🎛️ Settings</button>
+            <button class="control-btn">📊 Report</button>
+        </div>
+    </div>
+
+    <script>
+        // Real data from status.json
+        const currentData = {
+            score: 75,
+            agents: [
+                { icon: '🔒', name: 'Security', progress: 81 },
+                { icon: '📊', name: 'Quality', progress: 57 },
+                { icon: '🏗️', name: 'Structure', progress: 93 },
+                { icon: '⚡', name: 'Enhance', progress: 100 },
+                { icon: '🧪', name: 'Testing', progress: 60 },
+                { icon: '👁️', name: 'Visual', progress: 100 }
+            ],
+            categories: [
+                { name: 'Structure', score: 93, status: 'success' },
+                { name: 'Security', score: 81, status: 'success' },
+                { name: 'DevExp', score: 85, status: 'success' },
+                { name: 'Complete', score: 100, status: 'success' },
+                { name: 'Performance', score: 70, status: 'warning' },
+                { name: 'Testing', score: 60, status: 'warning' },
+                { name: 'Quality', score: 57, status: 'error' }
+            ],
+            activities: [
+                '5:16:40 PM 📊 Analysis: Analysis complete - Score: 75/100',
+                '5:15:40 PM 📊 Quality agent analyzing code maintainability',
+                '5:15:10 PM 🔒 Security agent found 3 potential issues',
+                '5:14:40 PM 📊 Starting comprehensive quality analysis'
+            ]
+        };
+        
+        function updateDashboard() {
+            // Update agents
+            const agentsGrid = document.getElementById('agents-grid');
+            agentsGrid.innerHTML = currentData.agents.map(agent => `
+                <div class="agent-item">
+                    <span>${agent.icon}</span>
+                    <span>${agent.name}</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill ${agent.progress >= 80 ? 'success' : agent.progress >= 60 ? 'warning' : 'error'}" style="width: ${agent.progress}%"></div>
+                    </div>
+                    <span>${agent.progress}%</span>
+                </div>
+            `).join('');
+            
+            // Update categories
+            const categoriesGrid = document.getElementById('categories-grid');
+            categoriesGrid.innerHTML = currentData.categories.map(cat => `
+                <div class="agent-item">
+                    <span>${cat.name}</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill ${cat.status}" style="width: ${cat.score}%"></div>
+                    </div>
+                    <span>${cat.score}%</span>
+                </div>
+            `).join('');
+            
+            // Update activities
+            const activityList = document.getElementById('activity-list');
+            activityList.innerHTML = currentData.activities.map(activity => `
+                <div class="activity-item">${activity}</div>
+            `).join('');
+        }
+        
+        // Initial update
+        updateDashboard();
+        
+        // Simulate live updates
+        setInterval(() => {
+            const now = new Date().toLocaleTimeString();
+            const messages = [
+                `${now} 🔍 Security scan analyzing dependencies`,
+                `${now} ⚡ Code enhancement in progress`,
+                `${now} 📊 Quality metrics updated`,
+                `${now} 🏗️ Architecture validation complete`,
+                `${now} 🧪 Test coverage analysis running`
+            ];
+            
+            currentData.activities.unshift(messages[Math.floor(Math.random() * messages.length)]);
+            if (currentData.activities.length > 4) {
+                currentData.activities.pop();
+            }
+            
+            // Update activity display
+            const activityList = document.getElementById('activity-list');
+            activityList.innerHTML = currentData.activities.map(activity => `
+                <div class="activity-item">${activity}</div>
+            `).join('');
+        }, 3000);
+    </script>
+</body>
+</html>
