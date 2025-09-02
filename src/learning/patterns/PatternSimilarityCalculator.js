@@ -21,8 +21,8 @@ export class PatternSimilarityCalculator {
    * @returns {number} Similarity score 0-1
    */
   calculateSimilarity(pattern1, pattern2, context = {}) {
-    if (!pattern1 || !pattern2) return 0;
-    if (pattern1.id === pattern2.id) return 1;
+    if (!pattern1 || !pattern2) {return 0;}
+    if (pattern1.id === pattern2.id) {return 1;}
 
     let totalSimilarity = 0;
     let totalWeight = 0;
@@ -34,7 +34,7 @@ export class PatternSimilarityCalculator {
 
     // Context similarity
     const contextSim = this.calculateContextSimilarity(
-      pattern1.context || {}, 
+      pattern1.context || {},
       pattern2.context || {}
     );
     totalSimilarity += contextSim * this.weights.context;
@@ -63,8 +63,8 @@ export class PatternSimilarityCalculator {
     const code1 = this.normalizeCode(pattern1.codeExample || '');
     const code2 = this.normalizeCode(pattern2.codeExample || '');
 
-    if (!code1 || !code2) return 0;
-    if (code1 === code2) return 1;
+    if (!code1 || !code2) {return 0;}
+    if (code1 === code2) {return 1;}
 
     // Use Levenshtein distance for string similarity
     return this.calculateLevenshteinSimilarity(code1, code2);
@@ -83,26 +83,26 @@ export class PatternSimilarityCalculator {
     // File type similarity
     if (context1.fileType || context2.fileType) {
       total++;
-      if (context1.fileType === context2.fileType) matches++;
+      if (context1.fileType === context2.fileType) {matches++;}
     }
 
     // Project type similarity
     if (context1.projectType || context2.projectType) {
       total++;
-      if (context1.projectType === context2.projectType) matches++;
+      if (context1.projectType === context2.projectType) {matches++;}
     }
 
     // Framework similarity
     if (context1.framework || context2.framework) {
       total++;
-      if (context1.framework === context2.framework) matches++;
+      if (context1.framework === context2.framework) {matches++;}
     }
 
     // Directory similarity
     if (context1.directory || context2.directory) {
       total++;
       const dirSim = this.calculateDirectorySimilarity(
-        context1.directory, 
+        context1.directory,
         context2.directory
       );
       matches += dirSim;
@@ -110,7 +110,7 @@ export class PatternSimilarityCalculator {
 
     // Dependencies similarity
     const depSim = this.calculateDependencySimilarity(
-      context1.dependencies || [], 
+      context1.dependencies || [],
       context2.dependencies || []
     );
     if (context1.dependencies?.length || context2.dependencies?.length) {
@@ -145,7 +145,7 @@ export class PatternSimilarityCalculator {
 
     // Tags similarity
     const tagSim = this.calculateTagSimilarity(
-      pattern1.tags || [], 
+      pattern1.tags || [],
       pattern2.tags || []
     );
     if (pattern1.tags?.length || pattern2.tags?.length) {
@@ -179,7 +179,7 @@ export class PatternSimilarityCalculator {
     // Lines of code similarity
     if (struct1.linesOfCode && struct2.linesOfCode) {
       factors++;
-      const ratio = Math.min(struct1.linesOfCode, struct2.linesOfCode) / 
+      const ratio = Math.min(struct1.linesOfCode, struct2.linesOfCode) /
                    Math.max(struct1.linesOfCode, struct2.linesOfCode);
       similarity += ratio;
     }
@@ -194,11 +194,11 @@ export class PatternSimilarityCalculator {
    * @returns {number} Similarity 0-1
    */
   calculateLevenshteinSimilarity(str1, str2) {
-    if (!str1 || !str2) return 0;
-    if (str1 === str2) return 1;
+    if (!str1 || !str2) {return 0;}
+    if (str1 === str2) {return 1;}
 
     const maxLen = Math.max(str1.length, str2.length);
-    if (maxLen === 0) return 1;
+    if (maxLen === 0) {return 1;}
 
     const distance = this.levenshteinDistance(str1, str2);
     return 1 - distance / maxLen;
@@ -211,12 +211,12 @@ export class PatternSimilarityCalculator {
    * @returns {number} Edit distance
    */
   levenshteinDistance(str1, str2) {
-    const matrix = Array(str2.length + 1).fill(null).map(() => 
+    const matrix = Array(str2.length + 1).fill(null).map(() =>
       Array(str1.length + 1).fill(null)
     );
 
-    for (let i = 0; i <= str1.length; i++) matrix[0][i] = i;
-    for (let j = 0; j <= str2.length; j++) matrix[j][0] = j;
+    for (let i = 0; i <= str1.length; i++) {matrix[0][i] = i;}
+    for (let j = 0; j <= str2.length; j++) {matrix[j][0] = j;}
 
     for (let j = 1; j <= str2.length; j++) {
       for (let i = 1; i <= str1.length; i++) {
@@ -252,15 +252,15 @@ export class PatternSimilarityCalculator {
    * @returns {number} Similarity 0-1
    */
   calculateDirectorySimilarity(dir1, dir2) {
-    if (!dir1 || !dir2) return 0;
-    if (dir1 === dir2) return 1;
+    if (!dir1 || !dir2) {return 0;}
+    if (dir1 === dir2) {return 1;}
 
     const parts1 = dir1.split('/').filter(p => p);
     const parts2 = dir2.split('/').filter(p => p);
-    
+
     const commonParts = parts1.filter(part => parts2.includes(part)).length;
     const totalParts = Math.max(parts1.length, parts2.length);
-    
+
     return totalParts > 0 ? commonParts / totalParts : 0;
   }
 
@@ -271,8 +271,8 @@ export class PatternSimilarityCalculator {
    * @returns {number} Similarity 0-1
    */
   calculateDependencySimilarity(deps1, deps2) {
-    if (!deps1.length && !deps2.length) return 1;
-    if (!deps1.length || !deps2.length) return 0;
+    if (!deps1.length && !deps2.length) {return 1;}
+    if (!deps1.length || !deps2.length) {return 0;}
 
     const set1 = new Set(deps1);
     const set2 = new Set(deps2);

@@ -4,6 +4,7 @@
  */
 
 import { spawn } from 'child_process';
+import { createServer } from 'net';
 import path from 'path';
 import fs from 'fs/promises';
 import os from 'os';
@@ -20,27 +21,27 @@ export class SystemUtils {
       let command, args;
 
       switch (platform) {
-        case 'win32':
-          command = 'start';
-          args = ['', target]; // Empty string needed for start command
-          break;
-        case 'darwin':
-          command = 'open';
-          args = [target];
-          break;
-        default: // linux and others
-          command = 'xdg-open';
-          args = [target];
-          break;
+      case 'win32':
+        command = 'start';
+        args = ['', target]; // Empty string needed for start command
+        break;
+      case 'darwin':
+        command = 'open';
+        args = [target];
+        break;
+      default: // linux and others
+        command = 'xdg-open';
+        args = [target];
+        break;
       }
 
       return new Promise((resolve) => {
-        const child = spawn(command, args, { 
-          shell: platform === 'win32', 
-          detached: true, 
-          stdio: 'ignore' 
+        const child = spawn(command, args, {
+          shell: platform === 'win32',
+          detached: true,
+          stdio: 'ignore'
         });
-        
+
         child.unref();
         child.on('error', () => resolve(false));
         child.on('spawn', () => resolve(true));
@@ -57,7 +58,7 @@ export class SystemUtils {
    */
   static async isPortAvailable(port) {
     return new Promise((resolve) => {
-      const server = require('net').createServer();
+      const server = createServer();
       server.listen(port, (err) => {
         if (err) {
           resolve(false);
@@ -107,7 +108,7 @@ export class SystemUtils {
    * @returns {boolean} True if in development
    */
   static isDevelopment() {
-    return process.env.NODE_ENV === 'development' || 
+    return process.env.NODE_ENV === 'development' ||
            process.env.NODE_ENV === 'dev' ||
            !process.env.NODE_ENV;
   }
@@ -155,7 +156,7 @@ export class SystemUtils {
 
       // Ensure directory exists
       await this.ensureDir(path.dirname(filePath));
-      
+
       // Write file
       await fs.writeFile(filePath, content, 'utf8');
       return true;

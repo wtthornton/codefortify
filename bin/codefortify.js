@@ -2,7 +2,7 @@
 
 /**
  * CodeFortify CLI - Command Line Interface
- * Version: 1.2.0
+ * Version: Dynamic (reads from package.json)
  *
  * Main CLI entry point for CodeFortify AI-powered development operations
  */
@@ -10,6 +10,7 @@
 import { Command } from 'commander';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import { readFileSync } from 'fs';
 
 // Import our modular command coordinator
 import { CommandCoordinator } from '../src/cli/CommandCoordinator.js';
@@ -17,6 +18,10 @@ import { CommandCoordinator } from '../src/cli/CommandCoordinator.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const packageRoot = path.join(__dirname, '..');
+
+// Dynamically read version from package.json
+const packageJson = JSON.parse(readFileSync(path.join(packageRoot, 'package.json'), 'utf8'));
+const version = packageJson.version;
 
 const program = new Command();
 
@@ -29,7 +34,7 @@ const globalConfig = {
 program
   .name('codefortify')
   .description('CodeFortify - AI-powered code strengthening and security enhancement CLI')
-  .version('1.0.0')
+  .version(version)
   .option('-v, --verbose', 'Enable verbose logging')
   .option('-p, --project-root <path>', 'Set project root directory', process.cwd())
   .hook('preAction', (thisCommand) => {

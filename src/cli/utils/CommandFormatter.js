@@ -43,7 +43,7 @@ export class CommandFormatter {
   error(error, includeStack = false) {
     const message = error instanceof Error ? error.message : error;
     console.error(chalk.red('❌ Error:'), message);
-    
+
     if (includeStack && error instanceof Error && error.stack && this.verbose) {
       console.error(chalk.gray(error.stack));
     }
@@ -97,7 +97,7 @@ export class CommandFormatter {
    * @param {Object} result - Command execution result
    */
   formatResult(result) {
-    if (!result) return;
+    if (!result) {return;}
 
     if (result.success) {
       this.success(result.message || 'Command completed successfully', result.data);
@@ -143,7 +143,7 @@ export class CommandFormatter {
       this.section('Score Information');
       console.log(`Overall Score: ${chalk.cyan(scoreInfo.overall || 'N/A')}`);
       console.log(`Grade: ${chalk.cyan(scoreInfo.grade || 'N/A')}`);
-      
+
       if (scoreInfo.categories && this.verbose) {
         console.log('\nCategory Breakdown:');
         Object.entries(scoreInfo.categories).forEach(([category, score]) => {

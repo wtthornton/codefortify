@@ -40,7 +40,7 @@ export class TestingStrategy extends RecommendationStrategy {
 
   getTestQualityRecommendations(result) {
     const recommendations = [];
-    const testIssues = result.issues?.filter(issue => 
+    const testIssues = result.issues?.filter(issue =>
       issue.includes('test') || issue.includes('spec')
     ) || [];
 

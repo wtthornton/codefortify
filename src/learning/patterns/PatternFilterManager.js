@@ -16,7 +16,7 @@ export class PatternFilterManager {
    * @returns {boolean} True if pattern matches
    */
   matchesCriteria(pattern, criteria) {
-    if (!pattern || !criteria) return true;
+    if (!pattern || !criteria) {return true;}
 
     // Type filter
     if (criteria.type && pattern.type !== criteria.type) {
@@ -31,10 +31,10 @@ export class PatternFilterManager {
     // Tag filters
     if (criteria.tags && criteria.tags.length > 0) {
       const patternTags = pattern.tags || [];
-      const hasRequiredTags = criteria.tags.every(tag => 
+      const hasRequiredTags = criteria.tags.every(tag =>
         patternTags.includes(tag)
       );
-      if (!hasRequiredTags) return false;
+      if (!hasRequiredTags) {return false;}
     }
 
     // Effectiveness threshold
@@ -100,31 +100,31 @@ export class PatternFilterManager {
     // Created after date
     if (criteria.createdAfter) {
       const afterDate = new Date(criteria.createdAfter);
-      if (createdAt < afterDate) return false;
+      if (createdAt < afterDate) {return false;}
     }
 
     // Created before date
     if (criteria.createdBefore) {
       const beforeDate = new Date(criteria.createdBefore);
-      if (createdAt > beforeDate) return false;
+      if (createdAt > beforeDate) {return false;}
     }
 
     // Used after date
     if (criteria.usedAfter) {
       const afterDate = new Date(criteria.usedAfter);
-      if (lastUsed < afterDate) return false;
+      if (lastUsed < afterDate) {return false;}
     }
 
     // Used before date
     if (criteria.usedBefore) {
       const beforeDate = new Date(criteria.usedBefore);
-      if (lastUsed > beforeDate) return false;
+      if (lastUsed > beforeDate) {return false;}
     }
 
     // Age in days
     if (criteria.maxAgeInDays !== undefined) {
       const maxAge = new Date(Date.now() - criteria.maxAgeInDays * 24 * 60 * 60 * 1000);
-      if (createdAt < maxAge) return false;
+      if (createdAt < maxAge) {return false;}
     }
 
     return true;
@@ -162,10 +162,10 @@ export class PatternFilterManager {
     // Dependencies filter
     if (criteria.dependencies && criteria.dependencies.length > 0) {
       const patternDeps = context.dependencies || [];
-      const hasRequiredDeps = criteria.dependencies.some(dep => 
+      const hasRequiredDeps = criteria.dependencies.some(dep =>
         patternDeps.includes(dep)
       );
-      if (!hasRequiredDeps) return false;
+      if (!hasRequiredDeps) {return false;}
     }
 
     return true;
@@ -178,7 +178,7 @@ export class PatternFilterManager {
    * @returns {boolean} True if matches search
    */
   matchesTextSearch(pattern, searchText) {
-    if (!searchText) return true;
+    if (!searchText) {return true;}
 
     const searchLower = searchText.toLowerCase();
     const searchFields = [
@@ -188,7 +188,7 @@ export class PatternFilterManager {
       ...(pattern.tags || [])
     ];
 
-    return searchFields.some(field => 
+    return searchFields.some(field =>
       field.toLowerCase().includes(searchLower)
     );
   }
@@ -209,28 +209,28 @@ export class PatternFilterManager {
     // Complexity filter
     this.registerFilter('complexity', (pattern, criteria) => {
       const complexity = pattern.structure?.complexity || 0;
-      return complexity >= (criteria.min || 0) && 
+      return complexity >= (criteria.min || 0) &&
              complexity <= (criteria.max || 10);
     });
 
     // Usage count filter
     this.registerFilter('usageCount', (pattern, criteria) => {
       const usage = pattern.usageCount || 0;
-      return usage >= (criteria.min || 0) && 
+      return usage >= (criteria.min || 0) &&
              usage <= (criteria.max || Infinity);
     });
 
     // Effectiveness range filter
     this.registerFilter('effectivenessRange', (pattern, criteria) => {
       const effectiveness = pattern.effectiveness || 0;
-      return effectiveness >= (criteria.min || 0) && 
+      return effectiveness >= (criteria.min || 0) &&
              effectiveness <= (criteria.max || 1);
     });
 
     // Pattern size filter
     this.registerFilter('patternSize', (pattern, criteria) => {
       const size = pattern.codeExample?.length || 0;
-      return size >= (criteria.min || 0) && 
+      return size >= (criteria.min || 0) &&
              size <= (criteria.max || Infinity);
     });
 

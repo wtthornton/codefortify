@@ -1,6 +1,6 @@
 /**
  * Auto Refactor Suggestions - Intelligent refactoring recommendations
- * 
+ *
  * Provides specific, actionable refactoring suggestions for large files
  * and complex patterns to help developers maintain healthy codebases.
  */
@@ -26,7 +26,7 @@ export class AutoRefactorSuggestions {
     try {
       const content = await fs.readFile(filePath, 'utf-8');
       const analysis = await this.analyzeFile(content, filePath);
-      
+
       const plan = {
         filePath,
         currentSize: analysis.lines,
@@ -88,11 +88,11 @@ export class AutoRefactorSuggestions {
   extractClasses(content) {
     const classes = [];
     const classMatches = content.matchAll(/class\s+(\w+)(?:\s+extends\s+\w+)?\s*{([\s\S]*?)(?=\nclass|\n\}$)/g);
-    
+
     for (const match of classMatches) {
       const [, className, classBody] = match;
       const methods = this.extractMethodsFromClass(classBody);
-      
+
       classes.push({
         name: className,
         methods: methods,
@@ -161,7 +161,7 @@ export class AutoRefactorSuggestions {
   extractImports(content) {
     const imports = [];
     const importMatches = content.matchAll(/import\s+(?:{[^}]+}|\w+|\*\s+as\s+\w+)\s+from\s+['"]([^'"]+)['"]/g);
-    
+
     for (const match of importMatches) {
       imports.push({
         path: match[1],
@@ -178,7 +178,7 @@ export class AutoRefactorSuggestions {
   extractExports(content) {
     const exports = [];
     const exportMatches = content.matchAll(/export\s+(?:default\s+)?(?:class|function|const|let|var)\s+(\w+)/g);
-    
+
     for (const match of exportMatches) {
       exports.push({
         name: match[1],
@@ -214,7 +214,7 @@ export class AutoRefactorSuggestions {
     if (methodCount > 20) {
       patterns.push({
         type: 'god-class',
-        severity: 'high', 
+        severity: 'high',
         count: methodCount,
         description: `Single class with ${methodCount} methods`,
         suggestion: 'Split into multiple focused classes with single responsibilities'
@@ -388,7 +388,7 @@ export class AutoRefactorSuggestions {
 
     for (const method of methods) {
       const name = method.name.toLowerCase();
-      
+
       if (name.includes('valid') || name.includes('check') || name.includes('verify')) {
         groups.validation.methods.push(method);
       } else if (name.includes('format') || name.includes('display') || name.includes('render')) {
@@ -421,7 +421,7 @@ export class AutoRefactorSuggestions {
   calculateCyclomaticComplexity(content) {
     const complexityNodes = [
       /\bif\s*\(/g,
-      /\belse\s+if\s*\(/g, 
+      /\belse\s+if\s*\(/g,
       /\bwhile\s*\(/g,
       /\bfor\s*\(/g,
       /\bcase\s+/g,
@@ -469,10 +469,10 @@ export class AutoRefactorSuggestions {
    */
   calculatePriority(analysis) {
     let priority = 'low';
-    
-    if (analysis.lines > 1000) priority = 'critical';
-    else if (analysis.lines > 500) priority = 'high'; 
-    else if (analysis.lines > 300) priority = 'medium';
+
+    if (analysis.lines > 1000) {priority = 'critical';}
+    else if (analysis.lines > 500) {priority = 'high';}
+    else if (analysis.lines > 300) {priority = 'medium';}
 
     // Boost priority for anti-patterns
     for (const pattern of analysis.patterns) {
@@ -489,10 +489,10 @@ export class AutoRefactorSuggestions {
    */
   calculateEffort(refactorings) {
     const efforts = refactorings.map(r => r.effort);
-    
-    if (efforts.includes('high')) return 'high';
-    if (efforts.filter(e => e === 'medium').length > 2) return 'high';
-    if (efforts.includes('medium')) return 'medium';
+
+    if (efforts.includes('high')) {return 'high';}
+    if (efforts.filter(e => e === 'medium').length > 2) {return 'high';}
+    if (efforts.includes('medium')) {return 'medium';}
     return 'low';
   }
 
@@ -501,18 +501,18 @@ export class AutoRefactorSuggestions {
    */
   calculateBenefits(analysis, refactorings) {
     const benefits = new Set();
-    
+
     const totalReduction = refactorings.reduce((sum, r) => sum + (r.estimatedReduction || 0), 0);
     const reductionPercentage = Math.round((totalReduction / analysis.lines) * 100);
-    
+
     benefits.add(`${reductionPercentage}% file size reduction`);
     benefits.add('Improved maintainability');
     benefits.add('Better testability');
-    
+
     if (analysis.patterns.some(p => p.type === 'command-coordinator')) {
       benefits.add('Cleaner separation of concerns');
     }
-    
+
     if (analysis.classes.length > 1) {
       benefits.add('Single responsibility principle adherence');
     }
@@ -526,7 +526,7 @@ export class AutoRefactorSuggestions {
   prioritizeRefactorings(refactorings) {
     const priorityWeights = { critical: 4, high: 3, medium: 2, low: 1 };
     const effortWeights = { low: 3, medium: 2, high: 1 };
-    
+
     return refactorings
       .map(r => ({
         ...r,
@@ -543,8 +543,8 @@ export class AutoRefactorSuggestions {
   }
 
   getMethodType(methodSignature) {
-    if (methodSignature.includes('function')) return 'function';
-    if (methodSignature.includes('=>')) return 'arrow';
+    if (methodSignature.includes('function')) {return 'function';}
+    if (methodSignature.includes('=>')) {return 'arrow';}
     return 'method';
   }
 
@@ -553,7 +553,7 @@ export class AutoRefactorSuggestions {
     const lines = content.split('\n').map(line => line.trim()).filter(line => line.length > 10);
     const duplicates = [];
     const seen = new Map();
-    
+
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
       if (seen.has(line)) {
@@ -562,7 +562,7 @@ export class AutoRefactorSuggestions {
         seen.set(line, i + 1);
       }
     }
-    
+
     return duplicates;
   }
 }

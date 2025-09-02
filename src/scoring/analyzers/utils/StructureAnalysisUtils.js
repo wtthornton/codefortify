@@ -73,10 +73,10 @@ export class FileOrganizationUtils {
   static async isFlat(projectRoot) {
     try {
       const entries = await fs.readdir(projectRoot, { withFileTypes: true });
-      const jsFiles = entries.filter(entry => 
+      const jsFiles = entries.filter(entry =>
         entry.isFile() && (entry.name.endsWith('.js') || entry.name.endsWith('.ts'))
       );
-      const directories = entries.filter(entry => 
+      const directories = entries.filter(entry =>
         entry.isDirectory() && !entry.name.startsWith('.') && entry.name !== 'node_modules'
       );
 
@@ -162,11 +162,11 @@ export class NamingConventionUtils {
 
     for (const file of files) {
       const basename = path.basename(file, path.extname(file));
-      
-      if (this.isCamelCase(basename)) patterns.camelCase++;
-      else if (this.isKebabCase(basename)) patterns.kebabCase++;
-      else if (this.isSnakeCase(basename)) patterns.snakeCase++;
-      else if (this.isPascalCase(basename)) patterns.PascalCase++;
+
+      if (this.isCamelCase(basename)) {patterns.camelCase++;}
+      else if (this.isKebabCase(basename)) {patterns.kebabCase++;}
+      else if (this.isSnakeCase(basename)) {patterns.snakeCase++;}
+      else if (this.isPascalCase(basename)) {patterns.PascalCase++;}
     }
 
     const total = files.length;
@@ -218,7 +218,7 @@ export class DependencyAnalysisUtils {
       // Basic dependency analysis
       const files = await this.findSourceFiles(projectRoot);
       const dependencies = await this.extractDependencies(files);
-      
+
       // Check for circular dependencies (simplified)
       const circular = this.findCircularDependencies(dependencies);
       analysis.circularDependencies = circular;
@@ -259,10 +259,10 @@ export class DependencyAnalysisUtils {
     async function scanDirectory(dir) {
       try {
         const entries = await fs.readdir(dir, { withFileTypes: true });
-        
+
         for (const entry of entries) {
           const fullPath = path.join(dir, entry.name);
-          
+
           if (entry.isDirectory() && !entry.name.startsWith('.') && entry.name !== 'node_modules') {
             await scanDirectory(fullPath);
           } else if (entry.isFile() && extensions.includes(path.extname(entry.name))) {
@@ -379,7 +379,7 @@ export class DependencyAnalysisUtils {
    */
   static calculateCoupling(dependencies) {
     const files = Object.keys(dependencies);
-    if (files.length === 0) return 0;
+    if (files.length === 0) {return 0;}
 
     const totalDependencies = Object.values(dependencies)
       .reduce((sum, deps) => sum + deps.length, 0);

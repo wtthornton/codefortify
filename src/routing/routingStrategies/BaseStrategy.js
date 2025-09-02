@@ -7,6 +7,7 @@
 
 import path from 'path';
 import fs from 'fs/promises';
+import { readFileSync } from 'fs';
 
 /**
 
@@ -155,7 +156,7 @@ export class BaseStrategy {
    */
   getProjectName() {
     try {
-      const packageJson = require(path.join(this.projectRoot, 'package.json'));
+      const packageJson = JSON.parse(readFileSync(path.join(this.projectRoot, 'package.json'), 'utf8'));
       return packageJson.name || path.basename(this.projectRoot);
     } catch {
       return path.basename(this.projectRoot);

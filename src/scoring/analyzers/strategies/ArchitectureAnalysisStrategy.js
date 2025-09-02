@@ -36,7 +36,7 @@ export class BaseArchitectureStrategy {
  */
 export class ReactArchitectureStrategy extends BaseArchitectureStrategy {
   applies(projectContext) {
-    return projectContext.framework === 'react' || 
+    return projectContext.framework === 'react' ||
            projectContext.projectType === 'react-webapp';
   }
 
@@ -87,7 +87,7 @@ export class ReactArchitectureStrategy extends BaseArchitectureStrategy {
     try {
       const srcDir = path.join(projectRoot, 'src');
       const files = await this.findFiles(srcDir, ['.jsx', '.tsx']);
-      
+
       for (const file of files) {
         const content = await fs.readFile(file, 'utf8');
         if (content.includes('useState') || content.includes('useEffect')) {
@@ -97,7 +97,7 @@ export class ReactArchitectureStrategy extends BaseArchitectureStrategy {
     } catch (error) {
       return false;
     }
-    
+
     return false;
   }
 
@@ -107,12 +107,12 @@ export class ReactArchitectureStrategy extends BaseArchitectureStrategy {
       const packageJsonPath = path.join(projectRoot, 'package.json');
       const packageContent = await fs.readFile(packageJsonPath, 'utf8');
       const packageJson = JSON.parse(packageContent);
-      
+
       const stateManagers = ['redux', '@reduxjs/toolkit', 'zustand', 'jotai', 'recoil'];
-      const hasStateManager = stateManagers.some(manager => 
+      const hasStateManager = stateManagers.some(manager =>
         packageJson.dependencies?.[manager] || packageJson.devDependencies?.[manager]
       );
-      
+
       return hasStateManager;
     } catch {
       return false;
@@ -143,7 +143,7 @@ export class ReactArchitectureStrategy extends BaseArchitectureStrategy {
  */
 export class VueArchitectureStrategy extends BaseArchitectureStrategy {
   applies(projectContext) {
-    return projectContext.framework === 'vue' || 
+    return projectContext.framework === 'vue' ||
            projectContext.projectType === 'vue-webapp';
   }
 
@@ -192,7 +192,7 @@ export class VueArchitectureStrategy extends BaseArchitectureStrategy {
  */
 export class NodeArchitectureStrategy extends BaseArchitectureStrategy {
   applies(projectContext) {
-    return projectContext.projectType === 'node-api' || 
+    return projectContext.projectType === 'node-api' ||
            projectContext.framework === 'express' ||
            projectContext.framework === 'fastify';
   }

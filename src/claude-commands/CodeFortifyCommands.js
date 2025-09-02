@@ -6,7 +6,7 @@
  */
 
 import { execSync } from 'child_process';
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync, existsSync, statSync } from 'fs';
 import path from 'path';
 
 /**
@@ -842,7 +842,7 @@ export class CodeFortifyCommands {
 
   getFileSize(filePath) {
     try {
-      const stats = require('fs').statSync(filePath);
+      const stats = statSync(filePath);
       const sizeInBytes = stats.size;
       const sizeInKB = (sizeInBytes / 1024).toFixed(2);
       return `${sizeInKB} KB`;

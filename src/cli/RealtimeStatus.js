@@ -374,7 +374,7 @@ export class RealtimeStatus {
     const trendIcon = this.getTrendIcon(status.trend);
 
     const line1 = `${chalk.gray('│')} Status: ${this.getConnectionStatus()} ${chalk.gray('│')}`;
-    const line2 = `${chalk.gray('│')} Score: ${scoreColor(status.score?.toFixed(1) || '—')} ${trendIcon} ${chalk.gray('│')}`;
+    const line2 = `${chalk.gray('│')} Score: ${scoreColor((typeof status.score === 'number' ? status.score.toFixed(1) : '—'))} ${trendIcon} ${chalk.gray('│')}`;
     const line3 = `${chalk.gray('│')} Phase: ${this.getPhaseDisplay()} ${chalk.gray('│')}`;
     const line4 = `${chalk.gray('│')} Issues: ${this.getIssuesDisplay()} ${chalk.gray('│')}`;
 
@@ -409,7 +409,7 @@ export class RealtimeStatus {
       const trendIcon = this.getTrendIcon(status.trend);
       const scoreLabel = this.getScoreLabel(status.score);
 
-      console.log(`${chalk.gray('│')} Overall Score: ${scoreColor(status.score.toFixed(1))}/100 ${trendIcon} ${scoreLabel}`);
+      console.log(`${chalk.gray('│')} Overall Score: ${scoreColor((typeof status.score === 'number' ? status.score.toFixed(1) : '—'))}/100 ${trendIcon} ${scoreLabel}`);
     } else {
       console.log(`${chalk.gray('│')} Overall Score: ${chalk.gray('—/100')} (Not Available)`);
     }

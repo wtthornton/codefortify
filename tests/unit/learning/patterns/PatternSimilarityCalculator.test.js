@@ -204,11 +204,11 @@ describe('PatternSimilarityCalculator', () => {
     });
 
     it('should handle tag similarities', () => {
-      const pattern1 = { 
+      const pattern1 = {
         type: 'component',
         tags: ['react', 'ui', 'button']
       };
-      const pattern2 = { 
+      const pattern2 = {
         type: 'component',
         tags: ['react', 'form', 'input']
       };

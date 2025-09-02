@@ -12,7 +12,7 @@ describe('PatternSearchStrategy', () => {
 
   beforeEach(() => {
     strategy = new PatternSearchStrategy();
-    
+
     // Mock database
     mockDatabase = {
       patterns: new Map(),
@@ -39,7 +39,7 @@ describe('PatternSearchStrategy', () => {
         lastUsed: new Date().toISOString()
       },
       {
-        id: 'pattern2', 
+        id: 'pattern2',
         type: 'component',
         title: 'Input Component',
         codeExample: 'const Input = () => <input />',
@@ -142,7 +142,7 @@ describe('PatternSearchStrategy', () => {
 
       // First search
       await strategy.findSimilarPatterns(targetPattern, context, mockDatabase);
-      
+
       // Second search with same parameters
       const results = await strategy.findSimilarPatterns(targetPattern, context, mockDatabase);
 
@@ -196,7 +196,7 @@ describe('PatternSearchStrategy', () => {
     });
 
     it('should apply filters correctly', async () => {
-      const criteria = { 
+      const criteria = {
         type: 'component',
         minEffectiveness: 0.7
       };
@@ -221,7 +221,7 @@ describe('PatternSearchStrategy', () => {
     });
 
     it('should sort results correctly', async () => {
-      const criteria = { 
+      const criteria = {
         sort: { field: 'usageCount', direction: 'desc' }
       };
 
@@ -237,22 +237,22 @@ describe('PatternSearchStrategy', () => {
   describe('getCandidatesByType', () => {
     it('should return patterns from type index', () => {
       const candidates = strategy.getCandidatesByType('component', mockDatabase);
-      
+
       expect(candidates).toHaveLength(2);
       expect(candidates.every(p => p.type === 'component')).toBe(true);
     });
 
     it('should return all patterns when type index is missing', () => {
       mockDatabase.indexes = null;
-      
+
       const candidates = strategy.getCandidatesByType('component', mockDatabase);
-      
+
       expect(candidates).toHaveLength(3); // All patterns
     });
 
     it('should handle non-existent types', () => {
       const candidates = strategy.getCandidatesByType('nonexistent', mockDatabase);
-      
+
       expect(candidates).toEqual([]);
     });
   });

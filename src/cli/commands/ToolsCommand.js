@@ -18,18 +18,18 @@ export class ToolsCommand extends BaseCommand {
     const action = options.action || 'help';
 
     switch (action) {
-      case 'add':
-        return await this.executeAdd(options);
-      case 'test-mcp':
-        return await this.executeTestMcp(options);
-      case 'generate':
-        return await this.executeGenerate(options);
-      case 'update':
-        return await this.executeUpdate(options);
-      case 'cursor':
-        return await this.executeCursor(options);
-      default:
-        return this.getHelp();
+    case 'add':
+      return await this.executeAdd(options);
+    case 'test-mcp':
+      return await this.executeTestMcp(options);
+    case 'generate':
+      return await this.executeGenerate(options);
+    case 'update':
+      return await this.executeUpdate(options);
+    case 'cursor':
+      return await this.executeCursor(options);
+    default:
+      return this.getHelp();
     }
   }
 
@@ -38,7 +38,7 @@ export class ToolsCommand extends BaseCommand {
       // Implementation for adding tools/components
       const { TemplateCommand } = await import('./TemplateCommand.js');
       const templateCommand = new TemplateCommand(this.config, this.packageRoot);
-      
+
       return await templateCommand.execute({
         action: 'add',
         type: options.type || 'component',
@@ -58,11 +58,11 @@ export class ToolsCommand extends BaseCommand {
   async executeTestMcp(options) {
     try {
       // Test MCP server functionality
-      const { MCPTester } = await import('../../testing/MCPTester.js');
-      const tester = new MCPTester(this.config);
-      
+      const { MCPConnectionTester } = await import('../../testing/MCPTester.js');
+      const tester = new MCPConnectionTester(this.config);
+
       const testResult = await tester.runTests(options);
-      
+
       return {
         success: testResult.success,
         message: testResult.success ? 'MCP tests passed' : 'MCP tests failed',
@@ -82,7 +82,7 @@ export class ToolsCommand extends BaseCommand {
     try {
       // Generate scaffolding or documentation
       const type = options.type || 'component';
-      
+
       if (type === 'docs') {
         return await this.generateDocumentation(options);
       } else {
@@ -125,7 +125,7 @@ export class ToolsCommand extends BaseCommand {
     try {
       // Set up Cursor IDE integration
       const cursorSetup = await this.setupCursorIntegration(options);
-      
+
       return {
         success: cursorSetup.success,
         message: cursorSetup.message,
@@ -162,11 +162,11 @@ export class ToolsCommand extends BaseCommand {
   async setupCursorIntegration(options) {
     try {
       const spinner = this.formatter.createSpinner('Setting up Cursor integration...');
-      
+
       // Create or update cursor extension
       const extensionPath = 'cursor-extension/extension.js';
       const extensionExists = await SystemUtils.fileExists(extensionPath);
-      
+
       if (!extensionExists && !options.force) {
         spinner.warn('Cursor extension not found');
         return {
@@ -178,14 +178,14 @@ export class ToolsCommand extends BaseCommand {
       // Setup dashboard if needed
       const dashboardPath = 'context7-quality-dashboard.html';
       const dashboardExists = await SystemUtils.fileExists(dashboardPath);
-      
+
       if (dashboardExists && options.openDashboard !== false) {
         await SystemUtils.openExternal(dashboardPath);
         spinner.succeed('Dashboard opened in browser');
       }
 
       spinner.succeed('Cursor integration setup completed');
-      
+
       return {
         success: true,
         message: 'CodeFortify is now ready for Cursor IDE integration!',
@@ -210,7 +210,7 @@ export class ToolsCommand extends BaseCommand {
       usage: 'codefortify tools <action> [options]',
       actions: [
         'add: Add components or tools',
-        'test-mcp: Test MCP server functionality', 
+        'test-mcp: Test MCP server functionality',
         'generate: Generate scaffolding or documentation',
         'update: Update project dependencies',
         'cursor: Setup Cursor IDE integration'

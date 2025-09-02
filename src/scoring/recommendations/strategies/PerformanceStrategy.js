@@ -19,7 +19,7 @@ export class PerformanceStrategy extends RecommendationStrategy {
 
   getBundleRecommendations(result) {
     const recommendations = [];
-    const bundleIssues = result.issues?.filter(issue => 
+    const bundleIssues = result.issues?.filter(issue =>
       issue.includes('bundle') || issue.includes('size')
     ) || [];
 
@@ -42,7 +42,7 @@ export class PerformanceStrategy extends RecommendationStrategy {
 
   getOptimizationRecommendations(result) {
     const recommendations = [];
-    const perfIssues = result.issues?.filter(issue => 
+    const perfIssues = result.issues?.filter(issue =>
       issue.includes('performance') || issue.includes('slow')
     ) || [];
 

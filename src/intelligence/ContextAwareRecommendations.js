@@ -152,7 +152,7 @@ export class ContextAwareRecommendations extends EventEmitter {
    * @param {Object} context - Context in which it was applied
    */
   recordSuccess(recommendation, context = {}) {
-    if (!this.options.learningEnabled) return;
+    if (!this.options.learningEnabled) {return;}
 
     this.successfulRecommendations.push({
       ...recommendation,
@@ -201,7 +201,7 @@ export class ContextAwareRecommendations extends EventEmitter {
    * @returns {number} Average confidence score
    */
   calculateAverageConfidence() {
-    if (this.successfulRecommendations.length === 0) return 0;
+    if (this.successfulRecommendations.length === 0) {return 0;}
 
     const totalConfidence = this.successfulRecommendations.reduce(
       (sum, rec) => sum + (rec.confidence || 0.5),

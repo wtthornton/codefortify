@@ -49,16 +49,16 @@ export class ScoringCalculator {
    * @returns {string} Letter grade (A+ to F)
    */
   calculateGrade(percentage) {
-    if (percentage >= 0.98) return 'A+'; // 98%+ for A+ - near perfect
-    if (percentage >= 0.95) return 'A';  // 95%+ for A - excellent  
-    if (percentage >= 0.90) return 'A-'; // 90%+ for A- - very good
-    if (percentage >= 0.85) return 'B+'; // 85%+ for B+ - good
-    if (percentage >= 0.80) return 'B';  // 80%+ for B - above average
-    if (percentage >= 0.75) return 'B-'; // 75%+ for B- - satisfactory
-    if (percentage >= 0.70) return 'C+'; // 70%+ for C+ - acceptable
-    if (percentage >= 0.65) return 'C';  // 65%+ for C - needs improvement
-    if (percentage >= 0.60) return 'C-'; // 60%+ for C- - significant issues
-    if (percentage >= 0.50) return 'D';  // 50%+ for D - major problems
+    if (percentage >= 0.98) {return 'A+';} // 98%+ for A+ - near perfect
+    if (percentage >= 0.95) {return 'A';}  // 95%+ for A - excellent
+    if (percentage >= 0.90) {return 'A-';} // 90%+ for A- - very good
+    if (percentage >= 0.85) {return 'B+';} // 85%+ for B+ - good
+    if (percentage >= 0.80) {return 'B';}  // 80%+ for B - above average
+    if (percentage >= 0.75) {return 'B-';} // 75%+ for B- - satisfactory
+    if (percentage >= 0.70) {return 'C+';} // 70%+ for C+ - acceptable
+    if (percentage >= 0.65) {return 'C';}  // 65%+ for C - needs improvement
+    if (percentage >= 0.60) {return 'C-';} // 60%+ for C- - significant issues
+    if (percentage >= 0.50) {return 'D';}  // 50%+ for D - major problems
     return 'F'; // <50% - failing, needs major work
   }
 
@@ -167,7 +167,7 @@ export class ScoringCalculator {
     // Calculate statistics
     const percentages = categoryScores.map(c => c.percentage);
     const mean = percentages.reduce((a, b) => a + b, 0) / percentages.length;
-    
+
     const sortedPercentages = [...percentages].sort((a, b) => a - b);
     const median = sortedPercentages.length % 2 === 0
       ? (sortedPercentages[sortedPercentages.length / 2 - 1] + sortedPercentages[sortedPercentages.length / 2]) / 2
@@ -215,9 +215,9 @@ export class ScoringCalculator {
 
     const { percentage, grade } = results.overall;
     const categoryCount = Object.keys(results.categories).length;
-    
+
     let summary = `Overall score: ${percentage}% (${grade} grade)`;
-    
+
     if (percentage >= 90) {
       summary += ' - Excellent code quality!';
     } else if (percentage >= 80) {
@@ -231,7 +231,7 @@ export class ScoringCalculator {
     }
 
     summary += ` (${categoryCount} categories analyzed)`;
-    
+
     return summary;
   }
 }

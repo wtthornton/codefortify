@@ -264,7 +264,7 @@ export class ScoreCommand {
       const gradeColor = this.getGradeColor(category.grade);
       const progressBar = this.createProgressBar(percentage);
 
-      console.log(`\n  ${chalk.bold(category.categoryName)}`);
+      console.log(`\n  ${chalk.bold(category.categoryName || category.name || _key)}`);
       console.log(`  ${progressBar} ${percentage}% ${gradeColor(category.grade)} (${category.score}/${category.maxScore})`);      /**
    * Performs the specified operation
    * @param {Object} options.detailed && category.issues?.length > 0

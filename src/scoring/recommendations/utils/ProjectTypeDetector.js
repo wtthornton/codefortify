@@ -17,22 +17,22 @@ export class ProjectTypeDetector {
 
     // Analyze categories and details for project type clues
     const categories = results.categories || {};
-    
+
     // Check for React indicators
     if (this.hasReactIndicators(categories)) {
       return 'react-webapp';
     }
-    
+
     // Check for Vue indicators
     if (this.hasVueIndicators(categories)) {
       return 'vue-webapp';
     }
-    
+
     // Check for Node.js API indicators
     if (this.hasNodeApiIndicators(categories)) {
       return 'node-api';
     }
-    
+
     // Default to JavaScript
     return 'javascript';
   }
@@ -42,11 +42,11 @@ export class ProjectTypeDetector {
    */
   static hasReactIndicators(categories) {
     const structure = categories.structure;
-    if (!structure) return false;
+    if (!structure) {return false;}
 
     const details = structure.details || {};
     const issues = structure.issues || [];
-    
+
     // Look for React-specific patterns
     return (
       details.hasReactComponents ||
@@ -60,11 +60,11 @@ export class ProjectTypeDetector {
    */
   static hasVueIndicators(categories) {
     const structure = categories.structure;
-    if (!structure) return false;
+    if (!structure) {return false;}
 
     const details = structure.details || {};
     const issues = structure.issues || [];
-    
+
     return (
       details.hasVueComponents ||
       issues.some(issue => issue.includes('Vue') || issue.includes('.vue')) ||
@@ -77,11 +77,11 @@ export class ProjectTypeDetector {
    */
   static hasNodeApiIndicators(categories) {
     const structure = categories.structure;
-    if (!structure) return false;
+    if (!structure) {return false;}
 
     const details = structure.details || {};
     const issues = structure.issues || [];
-    
+
     return (
       details.hasApiRoutes ||
       details.hasExpressServer ||

@@ -41,11 +41,11 @@ export class CodeContextAnalyzer {
     const extension = path.extname(filePath).toLowerCase();
     const basename = path.basename(filePath).toLowerCase();
 
-    if (basename.includes('test') || basename.includes('spec')) return 'test';
-    if (basename.includes('config')) return 'config';
-    if (extension === '.jsx' || extension === '.tsx') return 'component';
-    if (extension === '.js' || extension === '.ts') return 'module';
-    if (extension === '.css' || extension === '.scss') return 'styles';
+    if (basename.includes('test') || basename.includes('spec')) {return 'test';}
+    if (basename.includes('config')) {return 'config';}
+    if (extension === '.jsx' || extension === '.tsx') {return 'component';}
+    if (extension === '.js' || extension === '.ts') {return 'module';}
+    if (extension === '.css' || extension === '.scss') {return 'styles';}
 
     return 'unknown';
   }
@@ -101,17 +101,17 @@ export class CodeContextAnalyzer {
 
     // React patterns
     if (framework.name === 'react') {
-      if (code.includes('useState')) patterns.push('react-hooks');
-      if (code.includes('useEffect')) patterns.push('react-effects');
-      if (code.includes('React.memo')) patterns.push('react-optimization');
-      if (code.includes('jsx')) patterns.push('jsx');
+      if (code.includes('useState')) {patterns.push('react-hooks');}
+      if (code.includes('useEffect')) {patterns.push('react-effects');}
+      if (code.includes('React.memo')) {patterns.push('react-optimization');}
+      if (code.includes('jsx')) {patterns.push('jsx');}
     }
 
     // General patterns
-    if (code.includes('async') || code.includes('await')) patterns.push('async-await');
-    if (code.includes('Promise')) patterns.push('promises');
-    if (code.includes('class')) patterns.push('classes');
-    if (code.includes('=>')) patterns.push('arrow-functions');
+    if (code.includes('async') || code.includes('await')) {patterns.push('async-await');}
+    if (code.includes('Promise')) {patterns.push('promises');}
+    if (code.includes('class')) {patterns.push('classes');}
+    if (code.includes('=>')) {patterns.push('arrow-functions');}
 
     return patterns;
   }

@@ -51,7 +51,7 @@ export class PatternDatabase {
    * @returns {Promise<void>}
    */
   async initialize() {
-    if (this.isInitialized) return;
+    if (this.isInitialized) {return;}
 
     try {
       await this.loadFromFile();
@@ -73,7 +73,7 @@ export class PatternDatabase {
 
     const normalizedPattern = this.normalizePattern(pattern);
     const patternId = normalizedPattern.id || this.generateId();
-    
+
     normalizedPattern.id = patternId;
     normalizedPattern.createdAt = normalizedPattern.createdAt || new Date().toISOString();
     normalizedPattern.lastModified = new Date().toISOString();
@@ -81,10 +81,10 @@ export class PatternDatabase {
 
     // Store pattern
     this.patterns.set(patternId, normalizedPattern);
-    
+
     // Update indexes
     this.indexManager.updateIndexes(normalizedPattern);
-    
+
     // Update metadata
     this.updateMetadata();
     this.operationStats.stores++;
@@ -130,7 +130,7 @@ export class PatternDatabase {
 
     this.patterns.set(patternId, updatedPattern);
     this.indexManager.updateIndexes(updatedPattern);
-    
+
     this.updateMetadata();
     this.operationStats.updates++;
 
@@ -155,7 +155,7 @@ export class PatternDatabase {
 
     this.patterns.delete(patternId);
     this.indexManager.removeFromIndexes(patternId);
-    
+
     this.updateMetadata();
     this.operationStats.deletes++;
 
@@ -175,10 +175,10 @@ export class PatternDatabase {
   async findSimilarPatterns(targetPattern, context = {}) {
     await this.ensureInitialized();
     this.operationStats.searches++;
-    
+
     return await this.searchStrategy.findSimilarPatterns(
-      targetPattern, 
-      context, 
+      targetPattern,
+      context,
       this
     );
   }
@@ -191,7 +191,7 @@ export class PatternDatabase {
   async search(criteria = {}) {
     await this.ensureInitialized();
     this.operationStats.searches++;
-    
+
     return await this.searchStrategy.search(criteria, this);
   }
 
@@ -220,10 +220,10 @@ export class PatternDatabase {
    */
   async getStats() {
     await this.ensureInitialized();
-    
+
     const patterns = Array.from(this.patterns.values());
     const now = Date.now();
-    
+
     return {
       totalPatterns: patterns.length,
       patternsByType: this.getPatternCountsByType(patterns),
@@ -248,7 +248,7 @@ export class PatternDatabase {
    */
   async exportPatterns(options = {}) {
     await this.ensureInitialized();
-    
+
     let patterns = Array.from(this.patterns.values());
 
     // Apply filters if provided
@@ -285,7 +285,7 @@ export class PatternDatabase {
    */
   async importPatterns(patterns, options = {}) {
     await this.ensureInitialized();
-    
+
     const results = {
       imported: 0,
       updated: 0,
@@ -304,7 +304,7 @@ export class PatternDatabase {
         }
 
         await this.store(normalized);
-        
+
         if (exists) {
           results.updated++;
         } else {
@@ -328,7 +328,7 @@ export class PatternDatabase {
    */
   async cleanup(options = {}) {
     await this.ensureInitialized();
-    
+
     const {
       maxAge = 365, // days
       minEffectiveness = 0.1,
@@ -414,13 +414,13 @@ export class PatternDatabase {
     try {
       const content = await fs.readFile(this.config.filePath, 'utf8');
       const data = JSON.parse(content);
-      
+
       if (data.patterns) {
         for (const pattern of data.patterns) {
           this.patterns.set(pattern.id, pattern);
         }
       }
-      
+
       if (data.metadata) {
         this.metadata = { ...this.metadata, ...data.metadata };
       }
@@ -451,13 +451,13 @@ export class PatternDatabase {
   }
 
   calculateAverageEffectiveness(patterns) {
-    if (patterns.length === 0) return 0;
+    if (patterns.length === 0) {return 0;}
     const total = patterns.reduce((sum, p) => sum + (p.effectiveness || 0), 0);
     return total / patterns.length;
   }
 
   findMostUsedPattern(patterns) {
-    return patterns.reduce((max, p) => 
+    return patterns.reduce((max, p) =>
       (p.usageCount || 0) > (max?.usageCount || 0) ? p : max, null);
   }
 

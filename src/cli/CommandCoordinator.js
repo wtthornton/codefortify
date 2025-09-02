@@ -1,6 +1,6 @@
 /**
  * Command Coordinator (Refactored)
- * 
+ *
  * Clean implementation using proper Command pattern
  * Replaces the 1881-line anti-pattern with a focused coordinator
  */
@@ -13,18 +13,18 @@ export class CommandCoordinator {
   constructor(globalConfig, packageRoot) {
     this.globalConfig = globalConfig;
     this.packageRoot = packageRoot;
-    
+
     // Initialize command registry with proper Command pattern
     this.commandRegistry = new CommandRegistry(globalConfig, packageRoot);
     this.formatter = new CommandFormatter(globalConfig);
-    
+
     // Initialize learning system
-    this.learningController = globalConfig.enableLearning !== false ? 
+    this.learningController = globalConfig.enableLearning !== false ?
       new LearningLoopController({
         projectRoot: packageRoot,
         ...globalConfig
       }) : null;
-    
+
     // Start learning system if enabled
     if (this.learningController) {
       this.initializeLearning();
@@ -55,29 +55,29 @@ export class CommandCoordinator {
    */
   async execute(commandName, options = {}) {
     const startTime = Date.now();
-    
+
     try {
       // Log command execution for learning
       await this.logCommandExecution(commandName, options, 'start');
-      
+
       // Execute command through registry
       const result = await this.commandRegistry.execute(commandName, options);
-      
+
       // Log result for learning
       await this.logCommandExecution(commandName, options, 'complete', {
         success: result ? result.success : true,
         duration: Date.now() - startTime
       });
-      
+
       return result;
-      
+
     } catch (error) {
       // Log error for learning
       await this.logCommandExecution(commandName, options, 'error', {
         error: error.message,
         duration: Date.now() - startTime
       });
-      
+
       throw error;
     }
   }
@@ -111,13 +111,13 @@ export class CommandCoordinator {
   sanitizeOptions(options) {
     const sanitized = { ...options };
     const sensitiveKeys = ['password', 'token', 'key', 'secret', 'auth'];
-    
+
     sensitiveKeys.forEach(key => {
       if (sanitized[key]) {
         sanitized[key] = '[REDACTED]';
       }
     });
-    
+
     return sanitized;
   }
 
@@ -154,7 +154,7 @@ export class CommandCoordinator {
   async getLearningMetrics() {
     try {
       if (this.learningController) {
-        return { 
+        return {
           learning: 'active',
           status: 'monitoring commands and patterns',
           controller: 'LearningLoopController'
@@ -195,7 +195,7 @@ export class CommandCoordinator {
 // Legacy method mappings for backward compatibility
 // These delegate to the command registry
 const legacyMethods = [
-  'executeInit', 'executeScore', 'executeEnhance', 'executeTemplate', 
+  'executeInit', 'executeScore', 'executeEnhance', 'executeTemplate',
   'executePrompt', 'executeAgentInit', 'executeSetup', 'executeAnalyze',
   'executeMonitor', 'executeTools', 'executeAdd', 'executeValidate',
   'executeTestMcp', 'executeServe', 'executeGenerate', 'executeUpdate',

@@ -1,6 +1,6 @@
 {
   "name": "@wtthornton/codefortify",
-  "version": "1.3.0",
+  "version": "1.3.2",
   "description": "CodeFortify - AI-powered code strengthening and security enhancement for modern development",
   "type": "module",
   "main": "src/index.js",
@@ -10,7 +10,8 @@
   },
   "bin": {
     "codefortify": "bin/codefortify.js",
-    "codefortify-simple": "bin/codefortify-simplified.js"
+    "codefortify-simple": "bin/codefortify-simplified.js",
+    "codefortify-realtime": "bin/codefortify-realtime.js"
   },
   "scripts": {
     "dev": "node src/server/CodeFortifyMCPServer.js",
@@ -74,7 +75,11 @@
     "simple:analyze": "node bin/codefortify-simplified.js analyze",
     "simple:enhance": "node bin/codefortify-simplified.js enhance",
     "simple:monitor": "node bin/codefortify-simplified.js monitor",
-    "simple:tools": "node bin/codefortify-simplified.js tools"
+    "simple:tools": "node bin/codefortify-simplified.js tools",
+    "version:check": "node scripts/version.js check",
+    "version:bump": "node scripts/version.js bump",
+    "version:bump:minor": "node scripts/version.js bump minor",
+    "version:bump:major": "node scripts/version.js bump major"
   },
   "keywords": [
     "codefortify",

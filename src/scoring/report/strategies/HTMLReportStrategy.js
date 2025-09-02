@@ -22,7 +22,7 @@ export class HTMLReportStrategy extends ReportStrategy {
 
     const metadata = this.extractMetadata(results, options);
     const categories = this.formatCategories(results.categories);
-    
+
     const templateData = {
       projectName: metadata.projectName,
       overall: results.overall,
@@ -55,7 +55,7 @@ export class HTMLReportStrategy extends ReportStrategy {
 
     const metadata = this.extractMetadata(results, options);
     const categories = this.formatCategories(results.categories);
-    
+
     const templateData = {
       projectName: metadata.projectName,
       overall: results.overall,
@@ -65,7 +65,7 @@ export class HTMLReportStrategy extends ReportStrategy {
     };
 
     const jsContent = this.jsGenerator.generateClientScript(templateData);
-    
+
     return this.templateBuilder.generateTemplate(templateData, customCSS, jsContent);
   }
 
@@ -77,7 +77,7 @@ export class HTMLReportStrategy extends ReportStrategy {
 
     const metadata = this.extractMetadata(results, options);
     const categories = this.formatCategories(results.categories);
-    
+
     const templateData = {
       projectName: metadata.projectName,
       overall: results.overall,
@@ -88,7 +88,7 @@ export class HTMLReportStrategy extends ReportStrategy {
 
     const cssContent = this.cssGenerator.generateStyles();
     const minimalJS = '// Minimal report - no interactive features';
-    
+
     return this.templateBuilder.generateTemplate(templateData, cssContent, minimalJS);
   }
 }

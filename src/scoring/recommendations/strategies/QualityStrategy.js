@@ -13,10 +13,10 @@ export class QualityStrategy extends RecommendationStrategy {
     if (percentage < 0.7) {
       // ESLint recommendations
       recommendations.push(...this.getESLintRecommendations(result));
-      
-      // Code complexity recommendations  
+
+      // Code complexity recommendations
       recommendations.push(...this.getComplexityRecommendations(result));
-      
+
       // JSDoc recommendations
       recommendations.push(...this.getJSDocRecommendations(result));
     }
@@ -26,7 +26,7 @@ export class QualityStrategy extends RecommendationStrategy {
 
   getESLintRecommendations(result) {
     const recommendations = [];
-    const eslintIssues = result.issues?.filter(issue => 
+    const eslintIssues = result.issues?.filter(issue =>
       issue.includes('ESLint') || issue.includes('lint')
     ) || [];
 
@@ -49,7 +49,7 @@ export class QualityStrategy extends RecommendationStrategy {
 
   getComplexityRecommendations(result) {
     const recommendations = [];
-    const complexityIssues = result.issues?.filter(issue => 
+    const complexityIssues = result.issues?.filter(issue =>
       issue.includes('complex') || issue.includes('cyclomatic')
     ) || [];
 
@@ -71,7 +71,7 @@ export class QualityStrategy extends RecommendationStrategy {
 
   getJSDocRecommendations(result) {
     const recommendations = [];
-    const jsdocIssues = result.issues?.filter(issue => 
+    const jsdocIssues = result.issues?.filter(issue =>
       issue.includes('JSDoc') || issue.includes('documentation')
     ) || [];
 

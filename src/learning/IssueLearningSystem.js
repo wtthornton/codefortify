@@ -159,7 +159,7 @@ export class IssueLearningSystem extends EventEmitter {
     const patternId = this.generatePatternId('session_completion_optimization');
     this.patterns.set(patternId, sessionLearnings);
     await this.saveLearningData();
-    
+
     return sessionLearnings;
   }
 

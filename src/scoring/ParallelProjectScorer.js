@@ -50,7 +50,7 @@ export class ParallelProjectScorer {
       // Initialize agent-based analyzers (parallel)
       this.agents = {
         security: new SecurityAgent(this.config),
-        quality: new QualityAgent(this.config), 
+        quality: new QualityAgent(this.config),
         structure: new StructureAgent(this.config),
         visual: new VisualTestingAgent(this.config)
       };
@@ -67,7 +67,7 @@ export class ParallelProjectScorer {
       await this.initializeRealtimeInfrastructure();
 
       this.isInitialized = true;
-      
+
     } catch (error) {
       throw new Error(`Parallel scorer initialization failed: ${error.message}`);
     }
@@ -105,11 +105,11 @@ export class ParallelProjectScorer {
     }
 
     this.startTime = performance.now();
-    
+
     try {
       // Determine categories to analyze
       const categories = this.determineCategories(options.categories);
-      
+
       // Separate agent-based from traditional analysis
       const agentCategories = categories.filter(cat => this.agents[cat]);
       const traditionalCategories = categories.filter(cat => this.analyzers[cat]);
@@ -147,7 +147,7 @@ export class ParallelProjectScorer {
       if (this.config.verbose) {
         console.error('❌ Parallel scoring failed:', error.message);
       }
-      
+
       return {
         success: false,
         error: error.message,
@@ -168,19 +168,19 @@ export class ParallelProjectScorer {
    */
   determineCategories(categories = 'all') {
     const allCategories = [...Object.keys(this.agents), ...Object.keys(this.analyzers)];
-    
+
     if (categories === 'all' || !categories) {
       return allCategories;
     }
-    
+
     if (Array.isArray(categories)) {
       return categories.filter(cat => allCategories.includes(cat));
     }
-    
+
     if (typeof categories === 'string') {
       return categories.split(',').map(c => c.trim()).filter(cat => allCategories.includes(cat));
     }
-    
+
     return allCategories;
   }
 
@@ -191,7 +191,7 @@ export class ParallelProjectScorer {
    * @returns {Promise<Object>} Analysis results
    */
   async executeParallelAnalysis(categories, options) {
-    if (categories.length === 0) return {};
+    if (categories.length === 0) {return {};}
 
     const tasks = categories.map(category => ({
       id: `${category}_analysis`,
@@ -209,7 +209,7 @@ export class ParallelProjectScorer {
       });
 
       return this.processParallelResults(results);
-      
+
     } catch (error) {
       console.error('Parallel analysis failed:', error.message);
       return {};
@@ -227,7 +227,7 @@ export class ParallelProjectScorer {
 
     for (const category of categories) {
       const analyzer = this.analyzers[category];
-      if (!analyzer) continue;
+      if (!analyzer) {continue;}
 
       try {
         const startTime = performance.now();
@@ -249,7 +249,7 @@ export class ParallelProjectScorer {
 
       } catch (error) {
         console.error(`❌ ${category} analysis failed:`, error.message);
-        
+
         results[category] = {
           score: 0,
           maxScore: analyzer.maxScore || 0,
@@ -321,7 +321,7 @@ export class ParallelProjectScorer {
       });
 
       this.results.recommendations = recommendations;
-      
+
     } catch (error) {
       if (this.config.verbose) {
         console.warn('⚠️ Recommendation generation failed:', error.message);
@@ -351,7 +351,7 @@ export class ParallelProjectScorer {
       detailedReport.executionMetrics = this.getPerformanceMetrics();
 
       return detailedReport;
-      
+
     } catch (error) {
       if (this.config.verbose) {
         console.warn('⚠️ Report generation failed:', error.message);
@@ -368,7 +368,7 @@ export class ParallelProjectScorer {
     const totalTime = this.startTime ? performance.now() - this.startTime : 0;
     const categoryTimes = Object.values(this.results.categories)
       .map(r => r.analysisTime || 0);
-    
+
     const parallelCategories = Object.values(this.results.categories)
       .filter(r => r.type === 'parallel').length;
     const traditionalCategories = Object.values(this.results.categories)
@@ -376,7 +376,7 @@ export class ParallelProjectScorer {
 
     return {
       totalAnalysisTime: Math.round(totalTime),
-      averageCategoryTime: categoryTimes.length > 0 ? 
+      averageCategoryTime: categoryTimes.length > 0 ?
         Math.round(categoryTimes.reduce((a, b) => a + b, 0) / categoryTimes.length) : 0,
       parallelCategories,
       traditionalCategories,

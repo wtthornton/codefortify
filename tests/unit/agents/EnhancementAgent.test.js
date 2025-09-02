@@ -401,11 +401,11 @@ describe('EnhancementAgent', () => {
   describe('Enhancement History', () => {
     it('should track enhancement history', async () => {
       const code = 'var test = "old style";';
-      
+
       expect(agent.enhancementHistory).toHaveLength(0);
-      
+
       await agent.enhance(code);
-      
+
       expect(agent.enhancementHistory.length).toBeGreaterThan(0);
       const lastEnhancement = agent.enhancementHistory[agent.enhancementHistory.length - 1];
       expect(lastEnhancement.timestamp).toBeDefined();
@@ -414,9 +414,9 @@ describe('EnhancementAgent', () => {
 
     it('should include enhancement metadata in history', async () => {
       const code = 'console.log("debug");';
-      
+
       await agent.enhance(code);
-      
+
       const lastEnhancement = agent.enhancementHistory[agent.enhancementHistory.length - 1];
       expect(lastEnhancement.enhancements).toBeDefined();
       expect(lastEnhancement.scoreImprovement).toBeDefined();
@@ -430,10 +430,10 @@ describe('EnhancementAgent', () => {
         ...mockConfig,
         enhancementMode: 'basic'
       });
-      
+
       const code = 'function test() { return true; }';
       const result = await basicAgent.enhance(code);
-      
+
       expect(result).toBeDefined();
     });
 
@@ -442,10 +442,10 @@ describe('EnhancementAgent', () => {
         ...mockConfig,
         targetScore: 98
       });
-      
+
       const code = 'var x = 1;';
       const result = await highTargetAgent.enhance(code);
-      
+
       expect(result).toBeDefined();
     });
 
@@ -454,10 +454,10 @@ describe('EnhancementAgent', () => {
         ...mockConfig,
         projectType: 'react'
       });
-      
+
       const code = 'const Component = () => <div>Hello</div>;';
       const result = await reactAgent.enhance(code);
-      
+
       expect(result).toBeDefined();
     });
   });
@@ -467,20 +467,20 @@ describe('EnhancementAgent', () => {
       mockPatternProvider.getEnhancementPatterns.mockRejectedValue(
         new Error('Pattern provider failed')
       );
-      
+
       const code = 'function test() {}';
       const result = await agent.enhance(code);
-      
+
       expect(result).toBeDefined();
       expect(result.errors).toBeDefined();
     });
 
     it('should handle scoring errors during enhancement', async () => {
       mockProjectScorer.score.mockRejectedValue(new Error('Scoring failed'));
-      
+
       const code = 'function test() {}';
       const result = await agent.enhance(code);
-      
+
       expect(result).toBeDefined();
       // Should still attempt enhancement even if initial scoring fails
     });
@@ -489,10 +489,10 @@ describe('EnhancementAgent', () => {
       mockPerformanceMonitor.startTiming.mockImplementation(() => {
         throw new Error('Performance monitoring failed');
       });
-      
+
       const code = 'function test() {}';
       const result = await agent.enhance(code);
-      
+
       expect(result).toBeDefined();
       // Should continue with enhancement despite monitoring issues
     });
@@ -508,9 +508,9 @@ describe('EnhancementAgent', () => {
           return JSON.parse(xhr.responseText);
         }
       `;
-      
+
       const result = await agent.enhance(realCode);
-      
+
       expect(result).toBeDefined();
       expect(result.enhancedCode).toBeDefined();
     });
@@ -525,9 +525,9 @@ describe('EnhancementAgent', () => {
           return total;
         }
       `;
-      
+
       const result = await agent.enhance(functionalCode);
-      
+
       expect(result.enhancedCode).toContain('function calculateSum');
       expect(result.enhancedCode).toContain('return total');
       // Core functionality should be preserved

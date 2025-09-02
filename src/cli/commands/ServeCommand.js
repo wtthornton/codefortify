@@ -22,7 +22,7 @@ export class ServeCommand extends BaseCommand {
       // Import and start MCP server
       const { CodeFortifyMCPServer } = await import('../../server/CodeFortifyMCPServer.js');
       const server = new CodeFortifyMCPServer(this.config);
-      
+
       await server.start({
         port,
         host: options.host || 'localhost',

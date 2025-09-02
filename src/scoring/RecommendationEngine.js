@@ -106,7 +106,7 @@ export class RecommendationEngine {
     }
 
     const results = [];
-    
+
     for (const command of recommendation.commands) {
       try {
         const result = await this.executeCommand(command, options);
@@ -193,7 +193,7 @@ export class RecommendationEngine {
    */
   async generateEnhancedPrompts(recommendations, context = {}) {
     const prompts = [];
-    
+
     for (const rec of recommendations) {
       try {
         const prompt = await this.promptGenerator.generatePrompt(rec, context);
@@ -207,7 +207,7 @@ export class RecommendationEngine {
         continue;
       }
     }
-    
+
     return prompts;
   }
 

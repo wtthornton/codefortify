@@ -40,7 +40,7 @@ export class MarkdownReportStrategy extends ReportStrategy {
   generateOverview(overall) {
     const percentage = Math.round(overall.percentage * 100);
     const description = this.getScoreDescription(overall.percentage);
-    
+
     return `## 📊 Overall Score
 
 **Score:** ${overall.score}/${overall.maxScore} (${percentage}%) - **Grade: ${overall.grade}**
@@ -67,11 +67,11 @@ ${description}
     }
 
     section += '\n### Category Details\n\n';
-    
+
     for (const [key, category] of Object.entries(categories)) {
       section += `#### ${category.name}\n`;
       section += `**Score:** ${category.score}/${category.maxScore} (${Math.round((category.score / category.maxScore) * 100)}%) - Grade: ${category.grade}\n\n`;
-      
+
       if (category.issues.length > 0) {
         section += '**Issues:**\n';
         category.issues.forEach(issue => {
@@ -79,7 +79,7 @@ ${description}
         });
         section += '\n';
       }
-      
+
       if (category.suggestions.length > 0) {
         section += '**Suggestions:**\n';
         category.suggestions.forEach(suggestion => {
@@ -112,7 +112,7 @@ No specific recommendations available.
       section += `### ${index + 1}. ${rec.title} ${priority}\n\n`;
       section += `${rec.description}\n\n`;
       section += `**Priority:** ${rec.priority} | **Impact:** ${rec.impact}/10 | **Effort:** ${rec.effort}\n\n`;
-      
+
       if (rec.benefits && rec.benefits.length > 0) {
         section += '**Benefits:**\n';
         rec.benefits.forEach(benefit => {
@@ -120,7 +120,7 @@ No specific recommendations available.
         });
         section += '\n';
       }
-      
+
       if (rec.commands && rec.commands.length > 0) {
         section += '**Commands:**\n';
         rec.commands.forEach(command => {
@@ -147,20 +147,20 @@ Timestamp: ${metadata.timestamp}
 
   getPriorityIcon(priority) {
     switch (priority?.toLowerCase()) {
-      case 'critical': return '🔴';
-      case 'high': return '🟡';
-      case 'medium': return '🟢';
-      case 'low': return '🔵';
-      default: return '⚪';
+    case 'critical': return '🔴';
+    case 'high': return '🟡';
+    case 'medium': return '🟢';
+    case 'low': return '🔵';
+    default: return '⚪';
     }
   }
 
   getScoreDescription(percentage) {
-    if (percentage >= 0.9) return "🎉 **Excellent code quality!**";
-    if (percentage >= 0.8) return "👍 **Good quality with room for improvement**";
-    if (percentage >= 0.7) return "⚖️ **Acceptable quality, focus on key areas**";
-    if (percentage >= 0.6) return "⚠️ **Needs improvement in multiple areas**";
-    return "🚨 **Significant quality issues require attention**";
+    if (percentage >= 0.9) {return '🎉 **Excellent code quality!**';}
+    if (percentage >= 0.8) {return '👍 **Good quality with room for improvement**';}
+    if (percentage >= 0.7) {return '⚖️ **Acceptable quality, focus on key areas**';}
+    if (percentage >= 0.6) {return '⚠️ **Needs improvement in multiple areas**';}
+    return '🚨 **Significant quality issues require attention**';
   }
 
   getFileExtension() {

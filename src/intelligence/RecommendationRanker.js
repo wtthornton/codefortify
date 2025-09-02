@@ -67,7 +67,7 @@ export class RecommendationRanker {
 
     // Pattern relevance
     if (recommendation.patterns && context.detectedPatterns) {
-      const commonPatterns = recommendation.patterns.filter(p => 
+      const commonPatterns = recommendation.patterns.filter(p =>
         context.detectedPatterns.includes(p)
       );
       relevance += (commonPatterns.length / recommendation.patterns.length) * 0.4;
@@ -139,7 +139,7 @@ export class RecommendationRanker {
     }
 
     // Look for similar recommendations in successful history
-    const similarCount = successful.filter(succ => 
+    const similarCount = successful.filter(succ =>
       this.areSimilarRecommendations(recommendation, succ)
     ).length;
 
@@ -154,10 +154,10 @@ export class RecommendationRanker {
    */
   areSimilarRecommendations(rec1, rec2) {
     // Check category similarity
-    if (rec1.category === rec2.category) return true;
+    if (rec1.category === rec2.category) {return true;}
 
     // Check type similarity
-    if (rec1.type === rec2.type) return true;
+    if (rec1.type === rec2.type) {return true;}
 
     // Check pattern similarity
     if (rec1.patterns && rec2.patterns) {

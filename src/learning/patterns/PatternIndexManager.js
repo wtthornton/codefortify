@@ -21,7 +21,7 @@ export class PatternIndexManager {
    * @param {Object} pattern - Pattern to index
    */
   updateIndexes(pattern) {
-    if (!pattern || !pattern.id) return;
+    if (!pattern || !pattern.id) {return;}
 
     this.removeFromIndexes(pattern.id);
     this.addToIndexes(pattern);
@@ -85,12 +85,12 @@ export class PatternIndexManager {
    */
   addToIndex(indexName, key, pattern) {
     const index = this.indexes[indexName];
-    if (!index) return;
+    if (!index) {return;}
 
     if (!index.has(key)) {
       index.set(key, []);
     }
-    
+
     const patterns = index.get(key);
     if (!patterns.some(p => p.id === pattern.id)) {
       patterns.push(pattern);
@@ -148,7 +148,7 @@ export class PatternIndexManager {
    */
   processBatch() {
     const batch = this.indexUpdateQueue.splice(0, this.batchSize);
-    
+
     for (const update of batch) {
       if (update.action === 'add' || update.action === 'update') {
         this.updateIndexes(update.pattern);
@@ -173,7 +173,7 @@ export class PatternIndexManager {
    */
   getIndexStats() {
     const stats = {};
-    
+
     for (const [indexName, index] of Object.entries(this.indexes)) {
       stats[indexName] = {
         keys: index.size,
@@ -226,16 +226,16 @@ export class PatternIndexManager {
 
     for (const [indexName, index] of Object.entries(this.indexes)) {
       const keysToRemove = [];
-      
+
       for (const [key, patterns] of index.entries()) {
         if (patterns.length === 0) {
           keysToRemove.push(key);
         } else {
           // Deduplicate patterns in this index entry
-          const uniquePatterns = patterns.filter((pattern, index, arr) => 
+          const uniquePatterns = patterns.filter((pattern, index, arr) =>
             arr.findIndex(p => p.id === pattern.id) === index
           );
-          
+
           if (uniquePatterns.length !== patterns.length) {
             deduplicatedPatterns += patterns.length - uniquePatterns.length;
             index.set(key, uniquePatterns);

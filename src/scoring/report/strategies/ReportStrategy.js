@@ -68,7 +68,7 @@ export class ReportStrategy {
    */
   formatCategories(categories) {
     const formatted = {};
-    
+
     for (const [key, category] of Object.entries(categories)) {
       formatted[key] = {
         name: category.categoryName || key,
@@ -80,7 +80,7 @@ export class ReportStrategy {
         suggestions: category.suggestions || []
       };
     }
-    
+
     return formatted;
   }
 }

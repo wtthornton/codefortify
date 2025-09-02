@@ -1,33 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites name="vitest tests" tests="389" failures="11" errors="0" time="6.1618686">
-    <testsuite name="tests/monitoring-workflow.test.js" timestamp="2025-09-02T17:25:19.330Z" hostname="Mini_IT13" tests="12" failures="0" errors="0" skipped="0" time="0">
-        <testcase classname="tests/monitoring-workflow.test.js" name="Monitoring-Only Workflow &gt; AIAgentMonitor &gt; should start monitoring without making changes" time="0">
-        </testcase>
-        <testcase classname="tests/monitoring-workflow.test.js" name="Monitoring-Only Workflow &gt; AIAgentMonitor &gt; should track external code changes" time="0">
-        </testcase>
-        <testcase classname="tests/monitoring-workflow.test.js" name="Monitoring-Only Workflow &gt; AIAgentMonitor &gt; should generate recommendations without executing them" time="0">
-        </testcase>
-        <testcase classname="tests/monitoring-workflow.test.js" name="Monitoring-Only Workflow &gt; AIAgentMonitor &gt; should calculate AI agent effectiveness" time="0">
-        </testcase>
-        <testcase classname="tests/monitoring-workflow.test.js" name="Monitoring-Only Workflow &gt; AIAgentMonitor &gt; should provide effectiveness report" time="0">
-        </testcase>
-        <testcase classname="tests/monitoring-workflow.test.js" name="Monitoring-Only Workflow &gt; ContinuousLoopController Monitoring Mode &gt; should default to monitoring-only mode" time="0">
-        </testcase>
-        <testcase classname="tests/monitoring-workflow.test.js" name="Monitoring-Only Workflow &gt; ContinuousLoopController Monitoring Mode &gt; should skip enhancement in monitoring mode" time="0">
-        </testcase>
-        <testcase classname="tests/monitoring-workflow.test.js" name="Monitoring-Only Workflow &gt; ContinuousLoopController Monitoring Mode &gt; should only execute enhancements when explicitly enabled" time="0">
-        </testcase>
-        <testcase classname="tests/monitoring-workflow.test.js" name="Monitoring-Only Workflow &gt; Score Command &gt; should provide analysis without modifications" time="0">
-        </testcase>
-        <testcase classname="tests/monitoring-workflow.test.js" name="Monitoring-Only Workflow &gt; Integration Test &gt; should complete full monitoring workflow" time="0">
-        </testcase>
-        <testcase classname="tests/monitoring-workflow.test.js" name="CLI Commands in Monitoring Mode &gt; enhance command should show disabled message" time="0">
-        </testcase>
-        <testcase classname="tests/monitoring-workflow.test.js" name="CLI Commands in Monitoring Mode &gt; monitor command should work correctly" time="0">
-        </testcase>
+<testsuites name="vitest tests" tests="451" failures="11" errors="0" time="0.5384952">
+    <testsuite name="tests/monitoring-workflow.test.js" timestamp="2025-09-02T19:10:36.427Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
     </testsuite>
-    <testsuite name="tests/cli/context7-cli.test.js" timestamp="2025-09-02T17:25:19.333Z" hostname="Mini_IT13" tests="28" failures="0" errors="0" skipped="4" time="2.4350515">
-        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Help and Version &gt; should display help when no arguments provided" time="2.4156036">
+    <testsuite name="tests/cli/context7-cli.test.js" timestamp="2025-09-02T19:10:36.429Z" hostname="Mini_IT13" tests="28" failures="0" errors="0" skipped="4" time="0">
+        <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Help and Version &gt; should display help when no arguments provided" time="0">
         </testcase>
         <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Help and Version &gt; should display help with --help flag" time="0">
         </testcase>
@@ -88,41 +64,9 @@
         <testcase classname="tests/cli/context7-cli.test.js" name="Context7 CLI &gt; Interactive Prompts &gt; should handle non-interactive environments" time="0">
         </testcase>
     </testsuite>
-    <testsuite name="tests/integration/cli-commands.test.js" timestamp="2025-09-02T17:25:19.338Z" hostname="Mini_IT13" tests="16" failures="0" errors="0" skipped="0" time="2.5704388">
-        <testcase classname="tests/integration/cli-commands.test.js" name="CLI Commands Integration &gt; Basic CLI Operations &gt; should display help message" time="2.5582607">
-        </testcase>
-        <testcase classname="tests/integration/cli-commands.test.js" name="CLI Commands Integration &gt; Basic CLI Operations &gt; should display version" time="0">
-        </testcase>
-        <testcase classname="tests/integration/cli-commands.test.js" name="CLI Commands Integration &gt; Basic CLI Operations &gt; should handle unknown commands" time="0">
-        </testcase>
-        <testcase classname="tests/integration/cli-commands.test.js" name="CLI Commands Integration &gt; Status Command &gt; should display status when status file exists" time="0">
-        </testcase>
-        <testcase classname="tests/integration/cli-commands.test.js" name="CLI Commands Integration &gt; Status Command &gt; should output JSON format" time="0">
-        </testcase>
-        <testcase classname="tests/integration/cli-commands.test.js" name="CLI Commands Integration &gt; Status Command &gt; should handle missing status file" time="0">
-        </testcase>
-        <testcase classname="tests/integration/cli-commands.test.js" name="CLI Commands Integration &gt; Agent Control Commands &gt; should stop agents" time="0">
-        </testcase>
-        <testcase classname="tests/integration/cli-commands.test.js" name="CLI Commands Integration &gt; Agent Control Commands &gt; should pause agents" time="0">
-        </testcase>
-        <testcase classname="tests/integration/cli-commands.test.js" name="CLI Commands Integration &gt; Agent Control Commands &gt; should resume paused agents" time="0">
-        </testcase>
-        <testcase classname="tests/integration/cli-commands.test.js" name="CLI Commands Integration &gt; Dashboard Command &gt; should start dashboard with compact view" time="0">
-        </testcase>
-        <testcase classname="tests/integration/cli-commands.test.js" name="CLI Commands Integration &gt; Dashboard Command &gt; should handle missing status file for dashboard" time="0">
-        </testcase>
-        <testcase classname="tests/integration/cli-commands.test.js" name="CLI Commands Integration &gt; Test MCP Command &gt; should attempt to test MCP server" time="0">
-        </testcase>
-        <testcase classname="tests/integration/cli-commands.test.js" name="CLI Commands Integration &gt; Validate Command &gt; should display validate help" time="0">
-        </testcase>
-        <testcase classname="tests/integration/cli-commands.test.js" name="CLI Commands Integration &gt; Score Command &gt; should display score help" time="0">
-        </testcase>
-        <testcase classname="tests/integration/cli-commands.test.js" name="CLI Commands Integration &gt; Error Handling &gt; should handle filesystem errors gracefully" time="0">
-        </testcase>
-        <testcase classname="tests/integration/cli-commands.test.js" name="CLI Commands Integration &gt; Error Handling &gt; should handle malformed status file" time="0">
-        </testcase>
+    <testsuite name="tests/integration/cli-commands.test.js" timestamp="2025-09-02T19:10:36.440Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
     </testsuite>
-    <testsuite name="tests/integration/context7-enhancement-system.test.js" timestamp="2025-09-02T17:25:19.340Z" hostname="Mini_IT13" tests="10" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/integration/context7-enhancement-system.test.js" timestamp="2025-09-02T19:10:36.441Z" hostname="Mini_IT13" tests="10" failures="0" errors="0" skipped="0" time="0">
         <testcase classname="tests/integration/context7-enhancement-system.test.js" name="Context7 Enhancement System Integration &gt; Complete Enhancement Workflow &gt; should perform complete enhancement workflow" time="0">
         </testcase>
         <testcase classname="tests/integration/context7-enhancement-system.test.js" name="Context7 Enhancement System Integration &gt; Complete Enhancement Workflow &gt; should integrate context analysis with pattern learning" time="0">
@@ -144,7 +88,7 @@
         <testcase classname="tests/integration/context7-enhancement-system.test.js" name="Context7 Enhancement System Integration &gt; Data Persistence and State Management &gt; should maintain quality monitoring state" time="0">
         </testcase>
     </testsuite>
-    <testsuite name="tests/integration/enhanced-reporting.test.js" timestamp="2025-09-02T17:25:19.342Z" hostname="Mini_IT13" tests="15" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/integration/enhanced-reporting.test.js" timestamp="2025-09-02T19:10:36.444Z" hostname="Mini_IT13" tests="15" failures="0" errors="0" skipped="0" time="0">
         <testcase classname="tests/integration/enhanced-reporting.test.js" name="Enhanced Reporting System &gt; Phase 1: Critical Enhancements &gt; should run complete analysis with enhanced data" time="0">
         </testcase>
         <testcase classname="tests/integration/enhanced-reporting.test.js" name="Enhanced Reporting System &gt; Phase 1: Critical Enhancements &gt; should integrate real npm audit data" time="0">
@@ -176,7 +120,7 @@
         <testcase classname="tests/integration/enhanced-reporting.test.js" name="Enhanced Reporting System &gt; Performance and Reliability &gt; should handle missing tools gracefully" time="0">
         </testcase>
     </testsuite>
-    <testsuite name="tests/integration/enhancement-system.test.js" timestamp="2025-09-02T17:25:19.344Z" hostname="Mini_IT13" tests="17" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/integration/enhancement-system.test.js" timestamp="2025-09-02T19:10:36.448Z" hostname="Mini_IT13" tests="17" failures="0" errors="0" skipped="0" time="0">
         <testcase classname="tests/integration/enhancement-system.test.js" name="Enhancement System Integration &gt; ContinuousLoopController &gt; should orchestrate complete enhancement workflow" time="0">
         </testcase>
         <testcase classname="tests/integration/enhancement-system.test.js" name="Enhancement System Integration &gt; ContinuousLoopController &gt; should stop when target score is reached" time="0">
@@ -212,7 +156,7 @@
         <testcase classname="tests/integration/enhancement-system.test.js" name="Performance and Reliability &gt; should respect iteration limits" time="0">
         </testcase>
     </testsuite>
-    <testsuite name="tests/integration/parallel-analysis-engine.test.js" timestamp="2025-09-02T17:25:19.346Z" hostname="Mini_IT13" tests="11" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/integration/parallel-analysis-engine.test.js" timestamp="2025-09-02T19:10:36.451Z" hostname="Mini_IT13" tests="11" failures="0" errors="0" skipped="0" time="0">
         <testcase classname="tests/integration/parallel-analysis-engine.test.js" name="Parallel Analysis Engine Integration &gt; Performance Benchmarks &gt; should achieve 60-80% performance improvement over traditional analysis" time="0">
         </testcase>
         <testcase classname="tests/integration/parallel-analysis-engine.test.js" name="Parallel Analysis Engine Integration &gt; Performance Benchmarks &gt; should scale efficiently with larger projects" time="0">
@@ -236,7 +180,7 @@
         <testcase classname="tests/integration/parallel-analysis-engine.test.js" name="Parallel Analysis Engine Integration &gt; Streaming and Real-time Features &gt; should provide streaming analysis results" time="0">
         </testcase>
     </testsuite>
-    <testsuite name="tests/integration/realtime-integration.test.js" timestamp="2025-09-02T17:25:19.347Z" hostname="Mini_IT13" tests="15" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/integration/realtime-integration.test.js" timestamp="2025-09-02T19:10:36.454Z" hostname="Mini_IT13" tests="15" failures="0" errors="0" skipped="0" time="0">
         <testcase classname="tests/integration/realtime-integration.test.js" name="Real-Time Integration Tests &gt; WebSocket Server Integration &gt; should start WebSocket server and accept connections" time="0">
         </testcase>
         <testcase classname="tests/integration/realtime-integration.test.js" name="Real-Time Integration Tests &gt; WebSocket Server Integration &gt; should handle multiple concurrent connections" time="0">
@@ -268,7 +212,7 @@
         <testcase classname="tests/integration/realtime-integration.test.js" name="Real-Time Integration Tests &gt; Performance Tests &gt; should handle high-frequency updates efficiently" time="0">
         </testcase>
     </testsuite>
-    <testsuite name="tests/integration/realtime-performance.test.js" timestamp="2025-09-02T17:25:19.350Z" hostname="Mini_IT13" tests="7" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/integration/realtime-performance.test.js" timestamp="2025-09-02T19:10:36.456Z" hostname="Mini_IT13" tests="7" failures="0" errors="0" skipped="0" time="0">
         <testcase classname="tests/integration/realtime-performance.test.js" name="Real-Time Performance Tests &gt; Connection Performance &gt; should handle rapid connection establishment" time="0">
         </testcase>
         <testcase classname="tests/integration/realtime-performance.test.js" name="Real-Time Performance Tests &gt; Connection Performance &gt; should maintain performance with many concurrent connections" time="0">
@@ -284,458 +228,210 @@
         <testcase classname="tests/integration/realtime-performance.test.js" name="Real-Time Performance Tests &gt; Stress Testing &gt; should remain stable under mixed load patterns" time="0">
         </testcase>
     </testsuite>
-    <testsuite name="tests/integration/visual-testing-agent.test.js" timestamp="2025-09-02T17:25:19.351Z" hostname="Mini_IT13" tests="15" failures="0" errors="0" skipped="0" time="0">
-        <testcase classname="tests/integration/visual-testing-agent.test.js" name="Visual Testing Agent Integration &gt; Visual Testing Agent Core &gt; should initialize successfully" time="0">
-        </testcase>
-        <testcase classname="tests/integration/visual-testing-agent.test.js" name="Visual Testing Agent Integration &gt; Visual Testing Agent Core &gt; should create screenshot directories" time="0">
-        </testcase>
-        <testcase classname="tests/integration/visual-testing-agent.test.js" name="Visual Testing Agent Integration &gt; Visual Testing Agent Core &gt; should discover test targets" time="0">
-        </testcase>
-        <testcase classname="tests/integration/visual-testing-agent.test.js" name="Visual Testing Agent Integration &gt; Visual Regression Testing &gt; should take screenshots and create baselines" time="0">
-        </testcase>
-        <testcase classname="tests/integration/visual-testing-agent.test.js" name="Visual Testing Agent Integration &gt; Visual Regression Testing &gt; should detect visual regressions" time="0">
-        </testcase>
-        <testcase classname="tests/integration/visual-testing-agent.test.js" name="Visual Testing Agent Integration &gt; Accessibility Testing &gt; should detect accessibility violations" time="0">
-        </testcase>
-        <testcase classname="tests/integration/visual-testing-agent.test.js" name="Visual Testing Agent Integration &gt; Accessibility Testing &gt; should pass accessibility tests on good HTML" time="0">
-        </testcase>
-        <testcase classname="tests/integration/visual-testing-agent.test.js" name="Visual Testing Agent Integration &gt; Performance Testing &gt; should measure performance metrics" time="0">
-        </testcase>
-        <testcase classname="tests/integration/visual-testing-agent.test.js" name="Visual Testing Agent Integration &gt; Full Analysis Integration &gt; should run complete visual testing analysis" time="0">
-        </testcase>
-        <testcase classname="tests/integration/visual-testing-agent.test.js" name="Visual Testing Agent Integration &gt; Continuous Enhancement Integration &gt; should integrate with ContinuousLoopController" time="0">
-        </testcase>
-        <testcase classname="tests/integration/visual-testing-agent.test.js" name="Visual Testing Agent Integration &gt; Continuous Enhancement Integration &gt; should be disabled when visualTesting is false" time="0">
-        </testcase>
-        <testcase classname="tests/integration/visual-testing-agent.test.js" name="Visual Testing Agent Integration &gt; Screenshot Comparison &gt; should compare screenshots accurately with pixelmatch" time="0">
-        </testcase>
-        <testcase classname="tests/integration/visual-testing-agent.test.js" name="Visual Testing Agent Integration &gt; Error Handling &gt; should handle browser launch failures gracefully" time="0">
-        </testcase>
-        <testcase classname="tests/integration/visual-testing-agent.test.js" name="Visual Testing Agent Integration &gt; Error Handling &gt; should handle missing files gracefully" time="0">
-        </testcase>
-        <testcase classname="tests/integration/visual-testing-agent.test.js" name="Visual Testing Agent Integration &gt; Resource Cleanup &gt; should cleanup browsers and resources properly" time="0">
-        </testcase>
+    <testsuite name="tests/integration/visual-testing-agent.test.js" timestamp="2025-09-02T19:10:36.457Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
     </testsuite>
-    <testsuite name="tests/unit/AnalyzerErrorHandler.test.js" timestamp="2025-09-02T17:25:19.353Z" hostname="Mini_IT13" tests="36" failures="0" errors="0" skipped="0" time="0.507258">
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Constructor and Configuration &gt; should initialize with provided configuration" time="0.0021211">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Constructor and Configuration &gt; should initialize with default configuration" time="0.0003463">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Constructor and Configuration &gt; should initialize empty error collections" time="0.0015151">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; AnalyzerError Class &gt; should create error with all parameters" time="0.0033585">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; AnalyzerError Class &gt; should use default values for optional parameters" time="0.0008204">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; AnalyzerError Class &gt; should convert to object correctly" time="0.0131019">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; AnalyzerError Class &gt; should handle null original error in toObject" time="0.0005246">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Classification &gt; should classify file access errors" time="0.000594">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Classification &gt; should classify permission errors" time="0.0003832">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Classification &gt; should classify timeout errors" time="0.0006009">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Classification &gt; should classify parse errors" time="0.0003264">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Classification &gt; should classify tool unavailable errors" time="0.0003281">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Classification &gt; should classify network errors" time="0.0003533">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Classification &gt; should default to unknown for unrecognized errors" time="0.0003051">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Classification &gt; should handle errors without messages" time="0.0002901">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Handling &gt; should handle AnalyzerError instances" time="0.0029054">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Handling &gt; should handle regular Error instances" time="0.0023346">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Handling &gt; should track error counts" time="0.0003965">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Handling &gt; should store critical errors in errors array" time="0.0008387">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Handling &gt; should store low severity errors in warnings array" time="0.0006009">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Handling &gt; should throw critical errors in fail fast mode" time="0.0015477">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Recovery Strategies &gt; should attempt recovery for file access errors" time="0.033174">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Recovery Strategies &gt; should attempt recovery for tool unavailable errors" time="0.0004449">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Recovery Strategies &gt; should attempt recovery for parse errors" time="0.0003669">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Recovery Strategies &gt; should handle recovery for dependency missing errors" time="0.0004159">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Recovery Strategies &gt; should handle unknown error types in recovery" time="0.0003197">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Execute With Retry &gt; should execute function successfully on first try" time="0.0009049">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Execute With Retry &gt; should retry on failure and eventually succeed" time="0.113606">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Execute With Retry &gt; should exhaust retries and throw last error" time="0.3103915">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Execute With Retry &gt; should not retry permission errors" time="0">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Execute With Retry &gt; should use custom retry count" time="0">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Summary Generation &gt; should generate complete error summary" time="0">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error State Management &gt; should reset all error state" time="0">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error State Management &gt; should return all issues in structured format" time="0">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Types and Severity Constants &gt; should export all error types" time="0">
-        </testcase>
-        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Types and Severity Constants &gt; should export all severity levels" time="0">
-        </testcase>
-    </testsuite>
-    <testsuite name="tests/unit/BaseAnalyzer.test.js" timestamp="2025-09-02T17:25:19.363Z" hostname="Mini_IT13" tests="31" failures="1" errors="0" skipped="1" time="0.0916884">
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Constructor and Configuration &gt; should initialize with provided configuration" time="0.0031451">
-        </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Constructor and Configuration &gt; should use default values when config is incomplete" time="0.0005463">
-        </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Constructor and Configuration &gt; should initialize results structure correctly" time="0.0017995">
-        </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Constructor and Configuration &gt; should initialize with default category info" time="0.0004037">
-        </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Grade Calculation &gt; should calculate correct grades for different percentages" time="0.001251">
-        </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Grade Calculation &gt; should handle edge cases" time="0.0003585">
-        </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Score Management &gt; should add scores correctly" time="0.0003375">
-        </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Score Management &gt; should handle addScore without reason" time="0.0002419">
-        </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Score Management &gt; should log verbose output when enabled" time="0.0237718">
-            <failure message="expected &quot;log&quot; to be called with arguments: [ &apos;     +3/5 - Verbose test&apos; ][90m
-
-Number of calls: [1m0[22m
-[39m" type="AssertionError">
-AssertionError: expected &quot;log&quot; to be called with arguments: [ &apos;     +3/5 - Verbose test&apos; ]
-
-Number of calls: 0
-
- ❯ tests/unit/BaseAnalyzer.test.js:107:26
-            </failure>
-            <failure message="expected &quot;log&quot; to be called with arguments: [ &apos;     +3/5 - Verbose test&apos; ][90m
-
-Number of calls: [1m0[22m
-[39m" type="AssertionError">
-AssertionError: expected &quot;log&quot; to be called with arguments: [ &apos;     +3/5 - Verbose test&apos; ]
-
-Number of calls: 0
-
- ❯ tests/unit/BaseAnalyzer.test.js:107:26
-            </failure>
-            <failure message="expected &quot;log&quot; to be called with arguments: [ &apos;     +3/5 - Verbose test&apos; ][90m
-
-Number of calls: [1m0[22m
-[39m" type="AssertionError">
-AssertionError: expected &quot;log&quot; to be called with arguments: [ &apos;     +3/5 - Verbose test&apos; ]
-
-Number of calls: 0
-
- ❯ tests/unit/BaseAnalyzer.test.js:107:26
-            </failure>
-        </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Issue Management &gt; should add issues correctly" time="0">
-        </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Issue Management &gt; should add issues with suggestions" time="0">
-        </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Issue Management &gt; should add multiple issues" time="0">
-        </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Detail Management &gt; should set details correctly" time="0">
-        </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Detail Management &gt; should handle multiple details" time="0">
-        </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Pattern Matching Utilities &gt; containsPattern &gt; should find string patterns" time="0">
-        </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Pattern Matching Utilities &gt; containsPattern &gt; should handle regex patterns" time="0">
-        </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Pattern Matching Utilities &gt; containsPattern &gt; should handle array of patterns" time="0">
-        </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Pattern Matching Utilities &gt; containsPattern &gt; should handle mixed pattern types" time="0">
-        </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Pattern Matching Utilities &gt; countPatterns &gt; should count string patterns correctly" time="0">
-        </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Pattern Matching Utilities &gt; countPatterns &gt; should count regex patterns" time="0">
+    <testsuite name="tests/unit/AnalyzerErrorHandler.test.js" timestamp="2025-09-02T19:10:36.457Z" hostname="Mini_IT13" tests="37" failures="1" errors="0" skipped="36" time="0.0207636">
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Constructor and Configuration &gt; should initialize with provided configuration" time="0">
             <skipped/>
         </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Pattern Matching Utilities &gt; countPatterns &gt; should handle array of patterns" time="0">
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Constructor and Configuration &gt; should initialize with default configuration" time="0">
+            <skipped/>
         </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Project Type Detection &gt; should detect React projects" time="0">
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Constructor and Configuration &gt; should initialize empty error collections" time="0">
+            <skipped/>
         </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Project Type Detection &gt; should detect Vue projects" time="0">
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; AnalyzerError Class &gt; should create error with all parameters" time="0">
+            <skipped/>
         </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Project Type Detection &gt; should detect Node projects" time="0">
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; AnalyzerError Class &gt; should use default values for optional parameters" time="0">
+            <skipped/>
         </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Project Type Detection &gt; should detect JavaScript projects" time="0">
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; AnalyzerError Class &gt; should convert to object correctly" time="0">
+            <skipped/>
         </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Project Type Detection &gt; should detect Svelte projects" time="0">
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; AnalyzerError Class &gt; should handle null original error in toObject" time="0">
+            <skipped/>
         </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Scoring Patterns &gt; scoreByPresence &gt; should score items that exist" time="0">
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Classification &gt; should classify file access errors" time="0">
+            <skipped/>
         </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Scoring Patterns &gt; scoreByPresence &gt; should handle all existing items" time="0">
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Classification &gt; should classify permission errors" time="0">
+            <skipped/>
         </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Scoring Patterns &gt; scoreByQuality &gt; should score items by quality levels" time="0">
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Classification &gt; should classify timeout errors" time="0">
+            <skipped/>
         </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Scoring Patterns &gt; scoreByQuality &gt; should cap quality at maxScorePerItem" time="0">
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Classification &gt; should classify parse errors" time="0">
+            <skipped/>
         </testcase>
-        <testcase classname="tests/unit/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; Abstract Method Enforcement &gt; should throw error when runAnalysis is not implemented" time="0">
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Classification &gt; should classify tool unavailable errors" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Classification &gt; should classify network errors" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Classification &gt; should default to unknown for unrecognized errors" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Classification &gt; should handle errors without messages" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Handling &gt; should handle AnalyzerError instances" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Handling &gt; should handle regular Error instances" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Handling &gt; should track error counts" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Handling &gt; should store critical errors in errors array" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Handling &gt; should store low severity errors in warnings array" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Handling &gt; should throw critical errors in fail fast mode" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Recovery Strategies &gt; should attempt recovery for file access errors" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Recovery Strategies &gt; should attempt recovery for tool unavailable errors" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Recovery Strategies &gt; should attempt recovery for parse errors" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Recovery Strategies &gt; should handle recovery for dependency missing errors" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Recovery Strategies &gt; should handle unknown error types in recovery" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Execute With Retry &gt; should execute function successfully on first try" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Execute With Retry &gt; should retry on failure and eventually succeed" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Execute With Retry &gt; should exhaust retries and throw last error" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Execute With Retry &gt; should not retry permission errors" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Execute With Retry &gt; should use custom retry count" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Summary Generation &gt; should generate complete error summary" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error State Management &gt; should reset all error state" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error State Management &gt; should return all issues in structured format" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Types and Severity Constants &gt; should export all error types" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="AnalyzerErrorHandler &gt; Error Types and Severity Constants &gt; should export all severity levels" time="0">
+            <skipped/>
+        </testcase>
+        <testcase classname="tests/unit/AnalyzerErrorHandler.test.js" name="tests/unit/AnalyzerErrorHandler.test.js" time="0.0207636">
+            <failure message="ENOENT: no such file or directory, open &apos;C:\cursor\context7-mcp\tests\fixtures\test-project\.codefortify\standards\context7-standards.md&apos;" type="Error">
+Error: ENOENT: no such file or directory, open &apos;C:\cursor\context7-mcp\tests\fixtures\test-project\.codefortify\standards\context7-standards.md&apos;
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { errno: -4058, code: &apos;ENOENT&apos;, syscall: &apos;open&apos;, path: &apos;C:\cursor\context7-mcp\tests\fixtures\test-project\.codefortify\standards\context7-standards.md&apos; }
+            </failure>
         </testcase>
     </testsuite>
-    <testsuite name="tests/unit/CommandCoordinator.test.js" timestamp="2025-09-02T17:25:19.372Z" hostname="Mini_IT13" tests="16" failures="0" errors="0" skipped="0" time="0">
-        <testcase classname="tests/unit/CommandCoordinator.test.js" name="CommandCoordinator &gt; executeStatus &gt; should display basic status when status file exists" time="0">
+    <testsuite name="tests/unit/BaseAnalyzer.test.js" timestamp="2025-09-02T19:10:36.467Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    </testsuite>
+    <testsuite name="tests/unit/CommandCoordinator.test.js" timestamp="2025-09-02T19:10:36.467Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    </testsuite>
+    <testsuite name="tests/unit/fileUtils.test.js" timestamp="2025-09-02T19:10:36.468Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    </testsuite>
+    <testsuite name="tests/unit/PatternProvider.test.js" timestamp="2025-09-02T19:10:36.468Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    </testsuite>
+    <testsuite name="tests/unit/ProjectScorer.test.js" timestamp="2025-09-02T19:10:36.468Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    </testsuite>
+    <testsuite name="tests/unit/RecommendationEnhancements.test.js" timestamp="2025-09-02T19:10:36.469Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    </testsuite>
+    <testsuite name="tests/unit/ResourceManager.test.js" timestamp="2025-09-02T19:10:36.469Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    </testsuite>
+    <testsuite name="tests/unit/ResultsProcessor.test.js" timestamp="2025-09-02T19:10:36.469Z" hostname="Mini_IT13" tests="30" failures="0" errors="0" skipped="0" time="0">
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; Constructor and Configuration &gt; should initialize with provided configuration" time="0">
         </testcase>
-        <testcase classname="tests/unit/CommandCoordinator.test.js" name="CommandCoordinator &gt; executeStatus &gt; should show no session message when status file does not exist" time="0">
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; Constructor and Configuration &gt; should initialize with empty config when none provided" time="0">
         </testcase>
-        <testcase classname="tests/unit/CommandCoordinator.test.js" name="CommandCoordinator &gt; executeStatus &gt; should output JSON format when requested" time="0">
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; initializeResults &gt; should create complete results structure" time="0">
         </testcase>
-        <testcase classname="tests/unit/CommandCoordinator.test.js" name="CommandCoordinator &gt; executeStop &gt; should stop agents and update status file" time="0">
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; initializeResults &gt; should initialize overall results correctly" time="0">
         </testcase>
-        <testcase classname="tests/unit/CommandCoordinator.test.js" name="CommandCoordinator &gt; executeStop &gt; should handle missing status file gracefully" time="0">
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; initializeResults &gt; should initialize metadata correctly" time="0">
         </testcase>
-        <testcase classname="tests/unit/CommandCoordinator.test.js" name="CommandCoordinator &gt; executePause &gt; should pause agents and update status" time="0">
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; initializeResults &gt; should use default version when not provided" time="0">
         </testcase>
-        <testcase classname="tests/unit/CommandCoordinator.test.js" name="CommandCoordinator &gt; executeResume &gt; should resume paused agents" time="0">
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; processAnalyzerResult &gt; should process complete analyzer result" time="0">
         </testcase>
-        <testcase classname="tests/unit/CommandCoordinator.test.js" name="CommandCoordinator &gt; executeResume &gt; should handle non-paused agents gracefully" time="0">
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; processAnalyzerResult &gt; should handle missing optional fields" time="0">
         </testcase>
-        <testcase classname="tests/unit/CommandCoordinator.test.js" name="CommandCoordinator &gt; executeDashboard &gt; should start dashboard when status file exists" time="0">
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; processAnalyzerResult &gt; should cap score at maxScore" time="0">
         </testcase>
-        <testcase classname="tests/unit/CommandCoordinator.test.js" name="CommandCoordinator &gt; executeDashboard &gt; should show no session message when status file does not exist" time="0">
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; processAnalyzerResult &gt; should ensure score is not negative" time="0">
         </testcase>
-        <testcase classname="tests/unit/CommandCoordinator.test.js" name="CommandCoordinator &gt; executeTestMcp &gt; should test MCP server functionality" time="0">
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; processAnalyzerResult &gt; should handle zero maxScore" time="0">
         </testcase>
-        <testcase classname="tests/unit/CommandCoordinator.test.js" name="CommandCoordinator &gt; executeServe &gt; should attempt to start MCP server" time="0">
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; processAnalyzerResult &gt; should handle error results" time="0">
         </testcase>
-        <testcase classname="tests/unit/CommandCoordinator.test.js" name="CommandCoordinator &gt; Error Handling &gt; should handle file system errors gracefully" time="0">
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; calculateOverallScore &gt; should calculate overall score from categories" time="0">
         </testcase>
-        <testcase classname="tests/unit/CommandCoordinator.test.js" name="CommandCoordinator &gt; Error Handling &gt; should handle JSON parsing errors" time="0">
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; calculateOverallScore &gt; should detect errors in categories" time="0">
         </testcase>
-        <testcase classname="tests/unit/CommandCoordinator.test.js" name="CommandCoordinator &gt; Configuration &gt; should use correct project root path" time="0">
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; calculateOverallScore &gt; should handle empty categories" time="0">
         </testcase>
-        <testcase classname="tests/unit/CommandCoordinator.test.js" name="CommandCoordinator &gt; Configuration &gt; should initialize with provided package root" time="0">
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; calculateGrade &gt; should return correct grades for different percentages" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; getPerformanceLevel &gt; should return correct performance levels" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; getComplexityScore &gt; should return correct complexity scores" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; getComplexityScore &gt; should handle edge case at exact threshold" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; aggregateRecommendations &gt; should collect and sort recommendations" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; aggregateRecommendations &gt; should remove duplicate recommendations" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; addSystemInfo &gt; should add system info to results" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; validateResults &gt; should validate complete results structure" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; validateResults &gt; should detect missing overall results" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; validateResults &gt; should detect missing categories" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; validateResults &gt; should detect score inconsistency" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; formatResultsForOutput &gt; should format console output" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; formatResultsForOutput &gt; should format JSON output" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; formatResultsForOutput &gt; should format summary output" time="0">
+        </testcase>
+        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; formatResultsForOutput &gt; should return raw results for unknown format" time="0">
         </testcase>
     </testsuite>
-    <testsuite name="tests/unit/fileUtils.test.js" timestamp="2025-09-02T17:25:19.374Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/scoringConfig.test.js" timestamp="2025-09-02T19:10:36.473Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
     </testsuite>
-    <testsuite name="tests/unit/PatternProvider.test.js" timestamp="2025-09-02T17:25:19.375Z" hostname="Mini_IT13" tests="24" failures="0" errors="0" skipped="0" time="0.0281766">
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; constructor &gt; should initialize with correct config" time="0.0027193">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; generatePatterns &gt; should generate React patterns for react-webapp" time="0.0008189">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; generatePatterns &gt; should generate Vue patterns for vue-webapp" time="0.0003856">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; generatePatterns &gt; should generate Node patterns for node-api" time="0.0003449">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; generatePatterns &gt; should generate JavaScript patterns for unknown type" time="0.0005907">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getPattern &gt; should return React component pattern" time="0.000741">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getPattern &gt; should return React hook pattern" time="0.0004941">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getPattern &gt; should return service pattern" time="0.0004616">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getPattern &gt; should return Vue component pattern" time="0.000559">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getPattern &gt; should return Node service pattern" time="0.0004228">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getPattern &gt; should return &quot;Pattern not found&quot; for unknown pattern" time="0.0003672">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getPattern &gt; should fallback to JavaScript patterns for unknown framework" time="0.0003468">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getReactComponentPattern &gt; should include all required React patterns" time="0.0006181">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getReactHookPattern &gt; should include all required hook patterns" time="0.0004843">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getServicePattern &gt; should include all required service patterns" time="0.000401">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getNodePatterns &gt; should include Node.js patterns" time="0.0003133">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getNodeServicePattern &gt; should include Node service patterns" time="0.0003457">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getMiddlewarePattern &gt; should include Express middleware patterns" time="0.0003802">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; getRoutePattern &gt; should include Express route patterns" time="0.0004226">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; generateComponentScaffold &gt; should generate React component scaffold" time="0.0007255">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; generateComponentScaffold &gt; should handle empty props array" time="0.0005131">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; Vue patterns &gt; should generate Vue component pattern" time="0.000415">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; JavaScript patterns &gt; should generate JavaScript class pattern" time="0.0004196">
-        </testcase>
-        <testcase classname="tests/unit/PatternProvider.test.js" name="PatternProvider &gt; JavaScript patterns &gt; should generate JavaScript function pattern" time="0.0004048">
-        </testcase>
+    <testsuite name="tests/unit/ScoringReport.test.js" timestamp="2025-09-02T19:10:36.473Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
     </testsuite>
-    <testsuite name="tests/unit/ProjectScorer.test.js" timestamp="2025-09-02T17:25:19.379Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/ToolChecker.test.js" timestamp="2025-09-02T19:10:36.474Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
     </testsuite>
-    <testsuite name="tests/unit/RecommendationEnhancements.test.js" timestamp="2025-09-02T17:25:19.379Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/ToolManager.test.js" timestamp="2025-09-02T19:10:36.474Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
     </testsuite>
-    <testsuite name="tests/unit/ResourceManager.test.js" timestamp="2025-09-02T17:25:19.379Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
-    </testsuite>
-    <testsuite name="tests/unit/ResultsProcessor.test.js" timestamp="2025-09-02T17:25:19.379Z" hostname="Mini_IT13" tests="30" failures="0" errors="0" skipped="0" time="0.0331852">
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; Constructor and Configuration &gt; should initialize with provided configuration" time="0.0033703">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; Constructor and Configuration &gt; should initialize with empty config when none provided" time="0.0004152">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; initializeResults &gt; should create complete results structure" time="0.0023823">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; initializeResults &gt; should initialize overall results correctly" time="0.0006539">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; initializeResults &gt; should initialize metadata correctly" time="0.0004673">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; initializeResults &gt; should use default version when not provided" time="0.0001756">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; processAnalyzerResult &gt; should process complete analyzer result" time="0.0006915">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; processAnalyzerResult &gt; should handle missing optional fields" time="0.0003417">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; processAnalyzerResult &gt; should cap score at maxScore" time="0.0001973">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; processAnalyzerResult &gt; should ensure score is not negative" time="0.0001634">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; processAnalyzerResult &gt; should handle zero maxScore" time="0.0001589">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; processAnalyzerResult &gt; should handle error results" time="0.0011913">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; calculateOverallScore &gt; should calculate overall score from categories" time="0.0007796">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; calculateOverallScore &gt; should detect errors in categories" time="0.0003367">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; calculateOverallScore &gt; should handle empty categories" time="0.0006215">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; calculateGrade &gt; should return correct grades for different percentages" time="0.0011821">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; getPerformanceLevel &gt; should return correct performance levels" time="0.0007554">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; getComplexityScore &gt; should return correct complexity scores" time="0.0007286">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; getComplexityScore &gt; should handle edge case at exact threshold" time="0.0003134">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; aggregateRecommendations &gt; should collect and sort recommendations" time="0.0012105">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; aggregateRecommendations &gt; should remove duplicate recommendations" time="0.0004242">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; addSystemInfo &gt; should add system info to results" time="0.0004442">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; validateResults &gt; should validate complete results structure" time="0.00047">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; validateResults &gt; should detect missing overall results" time="0.0003315">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; validateResults &gt; should detect missing categories" time="0.0002313">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; validateResults &gt; should detect score inconsistency" time="0.0002109">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; formatResultsForOutput &gt; should format console output" time="0.0003191">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; formatResultsForOutput &gt; should format JSON output" time="0.0001563">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; formatResultsForOutput &gt; should format summary output" time="0.0004037">
-        </testcase>
-        <testcase classname="tests/unit/ResultsProcessor.test.js" name="ResultsProcessor &gt; formatResultsForOutput &gt; should return raw results for unknown format" time="0.0001429">
-        </testcase>
-    </testsuite>
-    <testsuite name="tests/unit/scoringConfig.test.js" timestamp="2025-09-02T17:25:19.383Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
-    </testsuite>
-    <testsuite name="tests/unit/ScoringReport.test.js" timestamp="2025-09-02T17:25:19.383Z" hostname="Mini_IT13" tests="23" failures="0" errors="0" skipped="0" time="0">
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; Performance Level Classification &gt; should classify performance levels correctly" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; Score Descriptions &gt; should provide appropriate score descriptions" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; Category Descriptions &gt; should provide descriptions for all categories" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; Category Descriptions &gt; should provide default description for unknown categories" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should generate valid HTML structure" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should include project information" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should include Chart.js integration" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should include FontAwesome icons" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should include all categories" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should display issues correctly" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should display recommendations" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should include theme toggle functionality" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should include search functionality" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should handle missing recommendations" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; HTML Report Generation &gt; should format scores with proper precision" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; JSON Report Generation &gt; should generate valid JSON" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; JSON Report Generation &gt; should format JSON with proper indentation" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; Markdown Report Generation &gt; should generate valid markdown" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; Markdown Report Generation &gt; should include project metadata" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; Markdown Report Generation &gt; should include category information" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; Markdown Report Generation &gt; should include recommendations when present" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; Markdown Report Generation &gt; should use appropriate emojis based on scores" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ScoringReport.test.js" name="ScoringReport &gt; Browser Opening &gt; should handle browser opening on different platforms" time="0">
-        </testcase>
-    </testsuite>
-    <testsuite name="tests/unit/ToolChecker.test.js" timestamp="2025-09-02T17:25:19.385Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
-    </testsuite>
-    <testsuite name="tests/unit/ToolManager.test.js" timestamp="2025-09-02T17:25:19.386Z" hostname="Mini_IT13" tests="21" failures="0" errors="0" skipped="0" time="0">
-        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; constructor &gt; should initialize with correct config" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; listTools &gt; should return all available tools" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; listTools &gt; should include proper tool schemas" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; executeTool &gt; should execute validate_context7_compliance tool" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; executeTool &gt; should execute get_pattern_examples tool" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; executeTool &gt; should execute check_naming_conventions tool" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; executeTool &gt; should throw error for unknown tool" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; validateContext7Compliance &gt; should validate React component code" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; validateContext7Compliance &gt; should find issues in non-compliant React code" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; validateContext7Compliance &gt; should validate custom hooks" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; validateContext7Compliance &gt; should find issues with bad hook naming" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; checkNamingConventions &gt; should validate component names" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; checkNamingConventions &gt; should validate hook names" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; checkNamingConventions &gt; should validate file names" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; suggestImprovements &gt; should suggest performance improvements" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; suggestImprovements &gt; should suggest accessibility improvements" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; suggestImprovements &gt; should suggest Context7 improvements" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; getValidationRules &gt; should return default validation rules" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; getValidationRules &gt; should override with config rules" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; getAppliedStandards &gt; should return React standards for React project" time="0">
-        </testcase>
-        <testcase classname="tests/unit/ToolManager.test.js" name="ToolManager &gt; getAppliedStandards &gt; should return base standards for non-React project" time="0">
-        </testcase>
-    </testsuite>
-    <testsuite name="tests/unit/agents/AnalysisAgent.test.js" timestamp="2025-09-02T17:25:19.388Z" hostname="Mini_IT13" tests="28" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/agents/AnalysisAgent.test.js" timestamp="2025-09-02T19:10:36.474Z" hostname="Mini_IT13" tests="28" failures="0" errors="0" skipped="0" time="0">
         <testcase classname="tests/unit/agents/AnalysisAgent.test.js" name="AnalysisAgent &gt; Constructor &gt; should initialize with default config" time="0">
         </testcase>
         <testcase classname="tests/unit/agents/AnalysisAgent.test.js" name="AnalysisAgent &gt; Constructor &gt; should initialize with provided config" time="0">
@@ -793,261 +489,48 @@ Number of calls: 0
         <testcase classname="tests/unit/agents/AnalysisAgent.test.js" name="AnalysisAgent &gt; Configuration Variations &gt; should handle different project types" time="0">
         </testcase>
     </testsuite>
-    <testsuite name="tests/unit/agents/EnhancementAgent.test.js" timestamp="2025-09-02T17:25:19.392Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/agents/EnhancementAgent.test.js" timestamp="2025-09-02T19:10:36.478Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
     </testsuite>
-    <testsuite name="tests/unit/agents/ImprovementAgent.test.js" timestamp="2025-09-02T17:25:19.392Z" hostname="Mini_IT13" tests="34" failures="10" errors="0" skipped="0" time="0.4960701">
-        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; Constructor &gt; should initialize with default config" time="0.0033776">
+    <testsuite name="tests/unit/agents/ImprovementAgent.test.js" timestamp="2025-09-02T19:10:36.478Z" hostname="Mini_IT13" tests="34" failures="0" errors="0" skipped="0" time="0">
+        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; Constructor &gt; should initialize with default config" time="0">
         </testcase>
-        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; Constructor &gt; should initialize with provided config" time="0.0005718">
+        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; Constructor &gt; should initialize with provided config" time="0">
         </testcase>
-        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; Constructor &gt; should initialize improvement strategies and applied fixes" time="0.0020905">
+        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; Constructor &gt; should initialize improvement strategies and applied fixes" time="0">
         </testcase>
-        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; improve &gt; should identify and apply improvements successfully" time="0.0041121">
+        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; improve &gt; should identify and apply improvements successfully" time="0">
         </testcase>
-        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; improve &gt; should track performance metrics" time="0.0195772">
-            <failure message="expected undefined to be defined" type="AssertionError">
-AssertionError: expected undefined to be defined
- ❯ tests/unit/agents/ImprovementAgent.test.js:137:34
-            </failure>
-            <failure message="expected undefined to be defined" type="AssertionError">
-AssertionError: expected undefined to be defined
- ❯ tests/unit/agents/ImprovementAgent.test.js:137:34
-            </failure>
-            <failure message="expected undefined to be defined" type="AssertionError">
-AssertionError: expected undefined to be defined
- ❯ tests/unit/agents/ImprovementAgent.test.js:137:34
-            </failure>
+        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; improve &gt; should track performance metrics" time="0">
         </testcase>
-        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; improve &gt; should handle empty review and analysis results" time="0.0008566">
+        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; improve &gt; should handle empty review and analysis results" time="0">
         </testcase>
-        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; improve &gt; should respect max improvements limit" time="0.0005379">
+        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; improve &gt; should respect max improvements limit" time="0">
         </testcase>
-        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; improve &gt; should respect priority threshold" time="0.000334">
+        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; improve &gt; should respect priority threshold" time="0">
         </testcase>
-        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; improve &gt; should handle improvement errors gracefully" time="0.0025063">
-            <failure message="expected undefined to be defined" type="AssertionError">
-AssertionError: expected undefined to be defined
- ❯ tests/unit/agents/ImprovementAgent.test.js:177:29
-            </failure>
-            <failure message="expected undefined to be defined" type="AssertionError">
-AssertionError: expected undefined to be defined
- ❯ tests/unit/agents/ImprovementAgent.test.js:177:29
-            </failure>
-            <failure message="expected undefined to be defined" type="AssertionError">
-AssertionError: expected undefined to be defined
- ❯ tests/unit/agents/ImprovementAgent.test.js:177:29
-            </failure>
+        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; improve &gt; should handle improvement errors gracefully" time="0">
         </testcase>
-        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; identifyImprovementOpportunities &gt; should extract opportunities from review issues" time="0.0049206">
-            <failure message="expected &apos;issue-fix&apos; to be &apos;security&apos; // Object.is equality" type="AssertionError">
-AssertionError: expected &apos;issue-fix&apos; to be &apos;security&apos; // Object.is equality
-
-Expected: &quot;security&quot;
-Received: &quot;issue-fix&quot;
-
- ❯ tests/unit/agents/ImprovementAgent.test.js:198:37
-            </failure>
-            <failure message="expected &apos;issue-fix&apos; to be &apos;security&apos; // Object.is equality" type="AssertionError">
-AssertionError: expected &apos;issue-fix&apos; to be &apos;security&apos; // Object.is equality
-
-Expected: &quot;security&quot;
-Received: &quot;issue-fix&quot;
-
- ❯ tests/unit/agents/ImprovementAgent.test.js:198:37
-            </failure>
-            <failure message="expected &apos;issue-fix&apos; to be &apos;security&apos; // Object.is equality" type="AssertionError">
-AssertionError: expected &apos;issue-fix&apos; to be &apos;security&apos; // Object.is equality
-
-Expected: &quot;security&quot;
-Received: &quot;issue-fix&quot;
-
- ❯ tests/unit/agents/ImprovementAgent.test.js:198:37
-            </failure>
+        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; identifyImprovementOpportunities &gt; should extract opportunities from review issues" time="0">
         </testcase>
-        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; identifyImprovementOpportunities &gt; should extract opportunities from review recommendations" time="0.0031813">
-            <failure message="expected &apos;enhancement&apos; to be &apos;testing&apos; // Object.is equality" type="AssertionError">
-AssertionError: expected &apos;enhancement&apos; to be &apos;testing&apos; // Object.is equality
-
-Expected: &quot;testing&quot;
-Received: &quot;enhancement&quot;
-
- ❯ tests/unit/agents/ImprovementAgent.test.js:217:37
-            </failure>
-            <failure message="expected &apos;enhancement&apos; to be &apos;testing&apos; // Object.is equality" type="AssertionError">
-AssertionError: expected &apos;enhancement&apos; to be &apos;testing&apos; // Object.is equality
-
-Expected: &quot;testing&quot;
-Received: &quot;enhancement&quot;
-
- ❯ tests/unit/agents/ImprovementAgent.test.js:217:37
-            </failure>
-            <failure message="expected &apos;enhancement&apos; to be &apos;testing&apos; // Object.is equality" type="AssertionError">
-AssertionError: expected &apos;enhancement&apos; to be &apos;testing&apos; // Object.is equality
-
-Expected: &quot;testing&quot;
-Received: &quot;enhancement&quot;
-
- ❯ tests/unit/agents/ImprovementAgent.test.js:217:37
-            </failure>
+        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; identifyImprovementOpportunities &gt; should extract opportunities from review recommendations" time="0">
         </testcase>
-        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; identifyImprovementOpportunities &gt; should extract opportunities from analysis insights" time="0.0024783">
-            <failure message="expected &apos;insight-fix&apos; to be &apos;performance&apos; // Object.is equality" type="AssertionError">
-AssertionError: expected &apos;insight-fix&apos; to be &apos;performance&apos; // Object.is equality
-
-Expected: &quot;performance&quot;
-Received: &quot;insight-fix&quot;
-
- ❯ tests/unit/agents/ImprovementAgent.test.js:237:37
-            </failure>
-            <failure message="expected &apos;insight-fix&apos; to be &apos;performance&apos; // Object.is equality" type="AssertionError">
-AssertionError: expected &apos;insight-fix&apos; to be &apos;performance&apos; // Object.is equality
-
-Expected: &quot;performance&quot;
-Received: &quot;insight-fix&quot;
-
- ❯ tests/unit/agents/ImprovementAgent.test.js:237:37
-            </failure>
-            <failure message="expected &apos;insight-fix&apos; to be &apos;performance&apos; // Object.is equality" type="AssertionError">
-AssertionError: expected &apos;insight-fix&apos; to be &apos;performance&apos; // Object.is equality
-
-Expected: &quot;performance&quot;
-Received: &quot;insight-fix&quot;
-
- ❯ tests/unit/agents/ImprovementAgent.test.js:237:37
-            </failure>
+        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; identifyImprovementOpportunities &gt; should extract opportunities from analysis insights" time="0">
         </testcase>
-        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; identifyImprovementOpportunities &gt; should extract opportunities from technical debt recommendations" time="0.0048234">
-            <failure message="expected &apos;debt-fix&apos; to be &apos;refactoring&apos; // Object.is equality" type="AssertionError">
-AssertionError: expected &apos;debt-fix&apos; to be &apos;refactoring&apos; // Object.is equality
-
-Expected: &quot;refactoring&quot;
-Received: &quot;debt-fix&quot;
-
- ❯ tests/unit/agents/ImprovementAgent.test.js:257:37
-            </failure>
-            <failure message="expected &apos;debt-fix&apos; to be &apos;refactoring&apos; // Object.is equality" type="AssertionError">
-AssertionError: expected &apos;debt-fix&apos; to be &apos;refactoring&apos; // Object.is equality
-
-Expected: &quot;refactoring&quot;
-Received: &quot;debt-fix&quot;
-
- ❯ tests/unit/agents/ImprovementAgent.test.js:257:37
-            </failure>
-            <failure message="expected &apos;debt-fix&apos; to be &apos;refactoring&apos; // Object.is equality" type="AssertionError">
-AssertionError: expected &apos;debt-fix&apos; to be &apos;refactoring&apos; // Object.is equality
-
-Expected: &quot;refactoring&quot;
-Received: &quot;debt-fix&quot;
-
- ❯ tests/unit/agents/ImprovementAgent.test.js:257:37
-            </failure>
+        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; identifyImprovementOpportunities &gt; should extract opportunities from technical debt recommendations" time="0">
         </testcase>
-        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; identifyImprovementOpportunities &gt; should handle missing or malformed input" time="0.0081208">
-            <failure message="Cannot read properties of null (reading &apos;issues&apos;)" type="TypeError">
-TypeError: Cannot read properties of null (reading &apos;issues&apos;)
- ❯ ImprovementAgent.identifyImprovementOpportunities src/agents/ImprovementAgent.js:85:20
- ❯ tests/unit/agents/ImprovementAgent.test.js:262:41
-            </failure>
-            <failure message="Cannot read properties of null (reading &apos;issues&apos;)" type="TypeError">
-TypeError: Cannot read properties of null (reading &apos;issues&apos;)
- ❯ ImprovementAgent.identifyImprovementOpportunities src/agents/ImprovementAgent.js:85:20
- ❯ tests/unit/agents/ImprovementAgent.test.js:262:41
-            </failure>
-            <failure message="Cannot read properties of null (reading &apos;issues&apos;)" type="TypeError">
-TypeError: Cannot read properties of null (reading &apos;issues&apos;)
- ❯ ImprovementAgent.identifyImprovementOpportunities src/agents/ImprovementAgent.js:85:20
- ❯ tests/unit/agents/ImprovementAgent.test.js:262:41
-            </failure>
+        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; identifyImprovementOpportunities &gt; should handle missing or malformed input" time="0">
         </testcase>
-        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; prioritizeImprovements &gt; should prioritize by severity and priority" time="0.0006108">
+        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; prioritizeImprovements &gt; should prioritize by severity and priority" time="0">
         </testcase>
-        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; prioritizeImprovements &gt; should filter by priority threshold" time="0.0004503">
+        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; prioritizeImprovements &gt; should filter by priority threshold" time="0">
         </testcase>
-        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; prioritizeImprovements &gt; should handle opportunities without explicit priority" time="0.0003141">
+        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; prioritizeImprovements &gt; should handle opportunities without explicit priority" time="0">
         </testcase>
-        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; applyImprovements &gt; should apply multiple improvements to code" time="0.0028433">
-            <failure message="expected &apos;var x = 1; var y = 2;&apos; not to be &apos;var x = 1; var y = 2;&apos; // Object.is equality" type="AssertionError">
-AssertionError: expected &apos;var x = 1; var y = 2;&apos; not to be &apos;var x = 1; var y = 2;&apos; // Object.is equality
- ❯ tests/unit/agents/ImprovementAgent.test.js:330:31
-            </failure>
-            <failure message="expected &apos;var x = 1; var y = 2;&apos; not to be &apos;var x = 1; var y = 2;&apos; // Object.is equality" type="AssertionError">
-AssertionError: expected &apos;var x = 1; var y = 2;&apos; not to be &apos;var x = 1; var y = 2;&apos; // Object.is equality
- ❯ tests/unit/agents/ImprovementAgent.test.js:330:31
-            </failure>
-            <failure message="expected &apos;var x = 1; var y = 2;&apos; not to be &apos;var x = 1; var y = 2;&apos; // Object.is equality" type="AssertionError">
-AssertionError: expected &apos;var x = 1; var y = 2;&apos; not to be &apos;var x = 1; var y = 2;&apos; // Object.is equality
- ❯ tests/unit/agents/ImprovementAgent.test.js:330:31
-            </failure>
+        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; applyImprovements &gt; should apply multiple improvements to code" time="0">
         </testcase>
-        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; applyImprovements &gt; should handle improvements that don&apos;t apply" time="0.010503">
-            <failure message="expected [ { type: &apos;modernization&apos;, …(6) } ] to have a length of +0 but got 1" type="AssertionError">
-AssertionError: expected [ { type: &apos;modernization&apos;, …(6) } ] to have a length of +0 but got 1
-
-- Expected
-+ Received
-
-- 0
-+ 1
-
- ❯ tests/unit/agents/ImprovementAgent.test.js:350:28
-            </failure>
-            <failure message="expected [ { type: &apos;modernization&apos;, …(6) } ] to have a length of +0 but got 1" type="AssertionError">
-AssertionError: expected [ { type: &apos;modernization&apos;, …(6) } ] to have a length of +0 but got 1
-
-- Expected
-+ Received
-
-- 0
-+ 1
-
- ❯ tests/unit/agents/ImprovementAgent.test.js:350:28
-            </failure>
-            <failure message="expected [ { type: &apos;modernization&apos;, …(6) } ] to have a length of +0 but got 1" type="AssertionError">
-AssertionError: expected [ { type: &apos;modernization&apos;, …(6) } ] to have a length of +0 but got 1
-
-- Expected
-+ Received
-
-- 0
-+ 1
-
- ❯ tests/unit/agents/ImprovementAgent.test.js:350:28
-            </failure>
+        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; applyImprovements &gt; should handle improvements that don&apos;t apply" time="0">
         </testcase>
-        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; applyImprovements &gt; should track successful and failed improvements" time="0.0026641">
-            <failure message="expected 2 to be 1 // Object.is equality" type="AssertionError">
-AssertionError: expected 2 to be 1 // Object.is equality
-
-- Expected
-+ Received
-
-- 1
-+ 2
-
- ❯ tests/unit/agents/ImprovementAgent.test.js:374:35
-            </failure>
-            <failure message="expected 2 to be 1 // Object.is equality" type="AssertionError">
-AssertionError: expected 2 to be 1 // Object.is equality
-
-- Expected
-+ Received
-
-- 1
-+ 2
-
- ❯ tests/unit/agents/ImprovementAgent.test.js:374:35
-            </failure>
-            <failure message="expected 2 to be 1 // Object.is equality" type="AssertionError">
-AssertionError: expected 2 to be 1 // Object.is equality
-
-- Expected
-+ Received
-
-- 1
-+ 2
-
- ❯ tests/unit/agents/ImprovementAgent.test.js:374:35
-            </failure>
+        <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; applyImprovements &gt; should track successful and failed improvements" time="0">
         </testcase>
         <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; validateImprovements &gt; should validate that improvements don&apos;t break syntax" time="0">
         </testcase>
@@ -1078,44 +561,669 @@ AssertionError: expected 2 to be 1 // Object.is equality
         <testcase classname="tests/unit/agents/ImprovementAgent.test.js" name="ImprovementAgent &gt; Integration &gt; should work with complex real-world scenarios" time="0">
         </testcase>
     </testsuite>
-    <testsuite name="tests/unit/agents/QualityAgent.test.js" timestamp="2025-09-02T17:25:19.413Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/agents/QualityAgent.test.js" timestamp="2025-09-02T19:10:36.485Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
     </testsuite>
-    <testsuite name="tests/unit/agents/SecurityAgent.test.js" timestamp="2025-09-02T17:25:19.413Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/agents/SecurityAgent.test.js" timestamp="2025-09-02T19:10:36.486Z" hostname="Mini_IT13" tests="28" failures="0" errors="0" skipped="0" time="0">
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; constructor &gt; should initialize with correct default values" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; constructor &gt; should initialize security patterns" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; constructor &gt; should initialize with custom config" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; execute &gt; should execute all security analysis phases" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; execute &gt; should skip disabled analysis phases" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; execute &gt; should handle execution errors gracefully" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; analyzeNpmSecurity &gt; should analyze npm audit results successfully" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; analyzeNpmSecurity &gt; should handle npm audit with vulnerabilities (non-zero exit)" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; analyzeNpmSecurity &gt; should handle npm audit parsing errors" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; scanForSecrets &gt; should scan files for potential secrets" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; scanForSecrets &gt; should handle secret scanning errors" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; analyzeDependencySecurity &gt; should analyze dependency security" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; analyzeDependencySecurity &gt; should handle missing package.json" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; analyzeErrorHandling &gt; should analyze error handling patterns" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; calculateFinalScore &gt; should add npm security suggestions for vulnerabilities" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; calculateFinalScore &gt; should add secrets suggestions when found" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; calculateSecurityScore &gt; should return maximum score for no vulnerabilities" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; calculateSecurityScore &gt; should calculate score based on vulnerability severity" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; calculateSecurityScore &gt; should not go below zero" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; scanFileForSecrets &gt; should detect hardcoded secrets" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; scanFileForSecrets &gt; should detect secret logging" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; scanFileForSecrets &gt; should detect eval usage" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; scanFileForSecrets &gt; should handle file reading errors" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; analyzeDependencyRisk &gt; should identify high-risk packages" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; analyzeDependencyRisk &gt; should return empty array for safe packages" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; calculateOverallRisk &gt; should return high risk for high severity factors" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; calculateOverallRisk &gt; should return medium risk for medium severity factors" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/SecurityAgent.test.js" name="SecurityAgent &gt; calculateOverallRisk &gt; should return low risk for no factors" time="0">
+        </testcase>
     </testsuite>
-    <testsuite name="tests/unit/agents/StructureAgent.test.js" timestamp="2025-09-02T17:25:19.413Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/agents/StructureAgent.test.js" timestamp="2025-09-02T19:10:36.490Z" hostname="Mini_IT13" tests="31" failures="0" errors="0" skipped="0" time="0">
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; constructor &gt; should initialize with correct default values" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; constructor &gt; should initialize naming patterns" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; constructor &gt; should initialize with custom config" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; execute &gt; should execute all structure analysis phases" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; execute &gt; should skip disabled analysis phases" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; execute &gt; should handle execution errors gracefully" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; analyzeFileOrganization &gt; should analyze directory structure successfully" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; analyzeFileOrganization &gt; should handle file organization analysis errors" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; analyzeNamingConventions &gt; should analyze naming conventions across files" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; analyzeNamingConventions &gt; should handle naming analysis errors" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; analyzeArchitecturePatterns &gt; should detect architectural patterns" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; analyzeArchitecturePatterns &gt; should handle architecture analysis errors" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; analyzeModularization &gt; should analyze code modularization" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; analyzeModularization &gt; should handle modularization analysis errors" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; calculateFinalScore &gt; should calculate final score and grade" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; calculateFinalScore &gt; should add organization suggestions for low depth score" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; calculateFinalScore &gt; should add naming suggestions for low consistency" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; calculateDepthScore &gt; should give optimal score for ideal depth" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; calculateDepthScore &gt; should give lower score for extreme depths" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; analyzeFileNaming &gt; should score files with good naming conventions" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; analyzeFileNaming &gt; should handle empty file list" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; analyzeFileNaming &gt; should properly test naming patterns" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; calculateNamingConsistency &gt; should calculate consistency from scoring variance" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; calculateNamingConsistency &gt; should return high consistency for similar scores" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; calculateVariance &gt; should calculate correct variance" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; calculateVariance &gt; should return zero variance for identical numbers" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; calculateVariance &gt; should handle single number" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; helper methods &gt; should get project files" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; helper methods &gt; should analyze directory structure" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; helper methods &gt; should detect architectural patterns" time="0">
+        </testcase>
+        <testcase classname="tests/unit/agents/StructureAgent.test.js" name="StructureAgent &gt; helper methods &gt; should identify modules" time="0">
+        </testcase>
     </testsuite>
-    <testsuite name="tests/unit/cli/CommandCoordinator.test.js" timestamp="2025-09-02T17:25:19.414Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/cli/CommandCoordinator.test.js" timestamp="2025-09-02T19:10:36.494Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
     </testsuite>
-    <testsuite name="tests/unit/context/AdvancedContextAnalyzer.minimal.test.js" timestamp="2025-09-02T17:25:19.414Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/context/AdvancedContextAnalyzer.minimal.test.js" timestamp="2025-09-02T19:10:36.494Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
     </testsuite>
-    <testsuite name="tests/unit/context/AdvancedContextAnalyzer.test.js" timestamp="2025-09-02T17:25:19.414Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/context/AdvancedContextAnalyzer.test.js" timestamp="2025-09-02T19:10:36.494Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
     </testsuite>
-    <testsuite name="tests/unit/context/ArchitectureDetector.test.js" timestamp="2025-09-02T17:25:19.414Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/context/ArchitectureDetector.test.js" timestamp="2025-09-02T19:10:36.495Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
     </testsuite>
-    <testsuite name="tests/unit/context/CodeStyleAnalyzer.test.js" timestamp="2025-09-02T17:25:19.414Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/context/CodeStyleAnalyzer.test.js" timestamp="2025-09-02T19:10:36.495Z" hostname="Mini_IT13" tests="26" failures="10" errors="0" skipped="0" time="0.4536226">
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; constructor &gt; should initialize with default configuration" time="0.049384">
+            <failure message="expected undefined to be an instance of Map" type="AssertionError">
+AssertionError: expected undefined to be an instance of Map
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:38:35
+            </failure>
+            <failure message="expected undefined to be an instance of Map" type="AssertionError">
+AssertionError: expected undefined to be an instance of Map
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:38:35
+            </failure>
+            <failure message="expected undefined to be an instance of Map" type="AssertionError">
+AssertionError: expected undefined to be an instance of Map
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:38:35
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; analyzeCodeStyle &gt; should detect Prettier configuration" time="0.0460612">
+            <failure message="expected undefined to be &apos;prettier&apos; // Object.is equality" type="AssertionError">
+AssertionError: expected undefined to be &apos;prettier&apos; // Object.is equality
+
+- Expected: 
+&quot;prettier&quot;
+
++ Received: 
+undefined
+
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:59:31
+            </failure>
+            <failure message="expected undefined to be &apos;prettier&apos; // Object.is equality" type="AssertionError">
+AssertionError: expected undefined to be &apos;prettier&apos; // Object.is equality
+
+- Expected: 
+&quot;prettier&quot;
+
++ Received: 
+undefined
+
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:59:31
+            </failure>
+            <failure message="expected undefined to be &apos;prettier&apos; // Object.is equality" type="AssertionError">
+AssertionError: expected undefined to be &apos;prettier&apos; // Object.is equality
+
+- Expected: 
+&quot;prettier&quot;
+
++ Received: 
+undefined
+
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:59:31
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; analyzeCodeStyle &gt; should detect ESLint configuration" time="0.027861">
+            <failure message="expected undefined to be &apos;eslint&apos; // Object.is equality" type="AssertionError">
+AssertionError: expected undefined to be &apos;eslint&apos; // Object.is equality
+
+- Expected: 
+&quot;eslint&quot;
+
++ Received: 
+undefined
+
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:87:28
+            </failure>
+            <failure message="expected undefined to be &apos;eslint&apos; // Object.is equality" type="AssertionError">
+AssertionError: expected undefined to be &apos;eslint&apos; // Object.is equality
+
+- Expected: 
+&quot;eslint&quot;
+
++ Received: 
+undefined
+
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:87:28
+            </failure>
+            <failure message="expected undefined to be &apos;eslint&apos; // Object.is equality" type="AssertionError">
+AssertionError: expected undefined to be &apos;eslint&apos; // Object.is equality
+
+- Expected: 
+&quot;eslint&quot;
+
++ Received: 
+undefined
+
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:87:28
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; analyzeCodeStyle &gt; should detect multiple style tools" time="0.0356927">
+            <failure message="expected undefined to be &apos;prettier&apos; // Object.is equality" type="AssertionError">
+AssertionError: expected undefined to be &apos;prettier&apos; // Object.is equality
+
+- Expected: 
+&quot;prettier&quot;
+
++ Received: 
+undefined
+
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:117:31
+            </failure>
+            <failure message="expected undefined to be &apos;prettier&apos; // Object.is equality" type="AssertionError">
+AssertionError: expected undefined to be &apos;prettier&apos; // Object.is equality
+
+- Expected: 
+&quot;prettier&quot;
+
++ Received: 
+undefined
+
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:117:31
+            </failure>
+            <failure message="expected undefined to be &apos;prettier&apos; // Object.is equality" type="AssertionError">
+AssertionError: expected undefined to be &apos;prettier&apos; // Object.is equality
+
+- Expected: 
+&quot;prettier&quot;
+
++ Received: 
+undefined
+
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:117:31
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; analyzeCodeStyle &gt; should analyze code patterns from source files" time="0.0405787">
+            <failure message="expected undefined to be defined" type="AssertionError">
+AssertionError: expected undefined to be defined
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:142:30
+            </failure>
+            <failure message="expected undefined to be defined" type="AssertionError">
+AssertionError: expected undefined to be defined
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:142:30
+            </failure>
+            <failure message="expected undefined to be defined" type="AssertionError">
+AssertionError: expected undefined to be defined
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:142:30
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; analyzeCodeStyle &gt; should handle TypeScript files" time="0.0260219">
+            <failure message="the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string" type="AssertionError">
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:163:31
+            </failure>
+            <failure message="the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string" type="AssertionError">
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:163:31
+            </failure>
+            <failure message="the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string" type="AssertionError">
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:163:31
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; analyzeCodeStyle &gt; should handle React/JSX files" time="0.0253007">
+            <failure message="the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string" type="AssertionError">
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:183:31
+            </failure>
+            <failure message="the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string" type="AssertionError">
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:183:31
+            </failure>
+            <failure message="the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string" type="AssertionError">
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:183:31
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; detectFormatter &gt; should detect Prettier from .prettierrc" time="0.0147435">
+            <failure message="analyzer.detectFormatter is not a function" type="TypeError">
+TypeError: analyzer.detectFormatter is not a function
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:194:40
+            </failure>
+            <failure message="analyzer.detectFormatter is not a function" type="TypeError">
+TypeError: analyzer.detectFormatter is not a function
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:194:40
+            </failure>
+            <failure message="analyzer.detectFormatter is not a function" type="TypeError">
+TypeError: analyzer.detectFormatter is not a function
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:194:40
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; detectFormatter &gt; should detect Prettier from package.json" time="0.0152494">
+            <failure message="analyzer.detectFormatter is not a function" type="TypeError">
+TypeError: analyzer.detectFormatter is not a function
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:210:40
+            </failure>
+            <failure message="analyzer.detectFormatter is not a function" type="TypeError">
+TypeError: analyzer.detectFormatter is not a function
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:210:40
+            </failure>
+            <failure message="analyzer.detectFormatter is not a function" type="TypeError">
+TypeError: analyzer.detectFormatter is not a function
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:210:40
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; detectFormatter &gt; should return null when no formatter detected" time="0.0141241">
+            <failure message="analyzer.detectFormatter is not a function" type="TypeError">
+TypeError: analyzer.detectFormatter is not a function
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:216:40
+            </failure>
+            <failure message="analyzer.detectFormatter is not a function" type="TypeError">
+TypeError: analyzer.detectFormatter is not a function
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:216:40
+            </failure>
+            <failure message="analyzer.detectFormatter is not a function" type="TypeError">
+TypeError: analyzer.detectFormatter is not a function
+ ❯ tests/unit/context/CodeStyleAnalyzer.test.js:216:40
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; detectLinter &gt; should detect ESLint from eslint.config.js" time="0">
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; detectLinter &gt; should detect ESLint from .eslintrc.json" time="0">
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; detectLinter &gt; should return null when no linter detected" time="0">
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; analyzeCodePatterns &gt; should analyze quote usage patterns" time="0">
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; analyzeCodePatterns &gt; should analyze semicolon usage" time="0">
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; analyzeCodePatterns &gt; should analyze indentation patterns" time="0">
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; analyzeCodePatterns &gt; should analyze import/export patterns" time="0">
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; getStyleRecommendations &gt; should provide style recommendations" time="0">
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; getStyleRecommendations &gt; should recommend formatter when none detected" time="0">
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; getStyleRecommendations &gt; should recommend linter when none detected" time="0">
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; caching &gt; should cache analysis results" time="0">
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; caching &gt; should clear cache" time="0">
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; error handling &gt; should handle non-existent directory" time="0">
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; error handling &gt; should handle invalid configuration files" time="0">
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; error handling &gt; should handle unreadable files gracefully" time="0">
+        </testcase>
+        <testcase classname="tests/unit/context/CodeStyleAnalyzer.test.js" name="CodeStyleAnalyzer &gt; performance &gt; should complete analysis within reasonable time" time="0">
+        </testcase>
     </testsuite>
-    <testsuite name="tests/unit/context/simple.test.js" timestamp="2025-09-02T17:25:19.414Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/context/simple.test.js" timestamp="2025-09-02T19:10:36.518Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
     </testsuite>
-    <testsuite name="tests/unit/core/ContinuousLoopController.test.js" timestamp="2025-09-02T17:25:19.415Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/core/ContinuousLoopController.test.js" timestamp="2025-09-02T19:10:36.518Z" hostname="Mini_IT13" tests="25" failures="0" errors="0" skipped="0" time="0">
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; constructor &gt; should initialize with provided config" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; constructor &gt; should use default values when not provided" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; constructor &gt; should initialize agents" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; constructor &gt; should initialize visual testing agent when enabled" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; constructor &gt; should not initialize visual testing agent when disabled" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; constructor &gt; should initialize tracking variables" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; startContinuousLoop &gt; should run through all iterations when target not reached" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; startContinuousLoop &gt; should stop early when target score is reached" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; startContinuousLoop &gt; should stop on convergence threshold" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; startContinuousLoop &gt; should throw error if already running" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; startContinuousLoop &gt; should emit proper events during loop execution" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; runSingleIteration &gt; should execute configured agents in sequence" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; runSingleIteration &gt; should not execute enhancement agent in monitoring mode" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; runSingleIteration &gt; should execute enhancement agent when explicitly enabled" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; runSingleIteration &gt; should handle agent execution errors gracefully" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; runSingleIteration &gt; should aggregate scores and improvements from agents" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; status and control methods &gt; should return current status" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; status and control methods &gt; should return metrics" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; status and control methods &gt; should calculate average score correctly" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; status and control methods &gt; should stop running loop" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; status and control methods &gt; should reset controller state" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; real-time infrastructure &gt; should initialize real-time components when enabled" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; real-time infrastructure &gt; should not initialize real-time components when disabled" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; event emission &gt; should emit target-reached event when score meets target" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/ContinuousLoopController.test.js" name="ContinuousLoopController &gt; event emission &gt; should emit converged event when convergence threshold is reached" time="0">
+        </testcase>
     </testsuite>
-    <testsuite name="tests/unit/core/RealtimeEventEmitter.test.js" timestamp="2025-09-02T17:25:19.415Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/core/RealtimeEventEmitter.test.js" timestamp="2025-09-02T19:10:36.522Z" hostname="Mini_IT13" tests="29" failures="0" errors="0" skipped="0" time="0">
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; constructor &gt; should initialize with provided config" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; constructor &gt; should use default values when not provided" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; constructor &gt; should initialize tracking variables" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; server lifecycle &gt; should start server successfully" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; server lifecycle &gt; should throw error if already started" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; server lifecycle &gt; should stop server successfully" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; server lifecycle &gt; should handle stop when not started" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; event emission &gt; should emit status update" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; event emission &gt; should emit iteration start" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; event emission &gt; should emit iteration end" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; event emission &gt; should emit agent result" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; client management &gt; should add client successfully" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; client management &gt; should reject client when at capacity" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; client management &gt; should remove client" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; client management &gt; should close client connection safely" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; client management &gt; should handle client close errors gracefully" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; event buffering &gt; should buffer events when server not started" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; event buffering &gt; should respect buffer size limit" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; event buffering &gt; should flush buffer to new client" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; event buffering &gt; should clear buffer" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; broadcasting &gt; should broadcast event to all connected clients" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; broadcasting &gt; should handle client send errors during broadcast" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; broadcasting &gt; should remove clients with closed connections" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; heartbeat &gt; should start heartbeat timer" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; heartbeat &gt; should stop heartbeat timer" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; heartbeat &gt; should not start multiple timers" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; statistics and monitoring &gt; should return comprehensive stats" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; statistics and monitoring &gt; should return connected clients info" time="0">
+        </testcase>
+        <testcase classname="tests/unit/core/RealtimeEventEmitter.test.js" name="RealtimeEventEmitter &gt; statistics and monitoring &gt; should track statistics during operation" time="0">
+        </testcase>
     </testsuite>
-    <testsuite name="tests/unit/learning/DynamicPatternLearner.test.js" timestamp="2025-09-02T17:25:19.415Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/learning/DynamicPatternLearner.test.js" timestamp="2025-09-02T19:10:36.525Z" hostname="Mini_IT13" tests="19" failures="0" errors="0" skipped="0" time="0">
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; constructor &gt; should initialize with default configuration" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; constructor &gt; should initialize with custom configuration" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; learnFromSuccess &gt; should learn patterns from successful code" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; learnFromSuccess &gt; should learn from multiple code examples" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; learnFromSuccess &gt; should handle failed code examples" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; learnFromSuccess &gt; should extract patterns from code structure" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; getPatternSuggestions &gt; should suggest patterns based on context" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; getPatternSuggestions &gt; should rank suggestions by effectiveness" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; getPatternSuggestions &gt; should return empty array when no patterns match" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; updatePatternEffectiveness &gt; should update pattern effectiveness based on feedback" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; updatePatternEffectiveness &gt; should handle negative feedback" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; getLearnedPatterns &gt; should return all learned patterns" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; getLearnedPatterns &gt; should filter patterns by criteria" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; exportPatterns &gt; should export patterns to file" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; importPatterns &gt; should import patterns from file" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; error handling &gt; should handle invalid code context" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; error handling &gt; should handle file system errors" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; error handling &gt; should handle invalid feedback data" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/DynamicPatternLearner.test.js" name="DynamicPatternLearner &gt; performance &gt; should handle large numbers of patterns efficiently" time="0">
+        </testcase>
     </testsuite>
-    <testsuite name="tests/unit/learning/IssueLearningSystem.test.js" timestamp="2025-09-02T17:25:19.415Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/learning/IssueLearningSystem.test.js" timestamp="2025-09-02T19:10:36.527Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
     </testsuite>
-    <testsuite name="tests/unit/learning/PatternDatabase.test.js" timestamp="2025-09-02T17:25:19.415Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/learning/PatternDatabase.test.js" timestamp="2025-09-02T19:10:36.527Z" hostname="Mini_IT13" tests="28" failures="0" errors="0" skipped="0" time="0">
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; constructor &gt; should initialize with default configuration" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; constructor &gt; should initialize with custom configuration" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; store &gt; should save a new pattern" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; store &gt; should update existing pattern" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; store &gt; should generate ID if not provided" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; store &gt; should validate pattern data" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; getPattern &gt; should retrieve existing pattern" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; getPattern &gt; should return null for non-existent pattern" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; getPattern &gt; should update lastUsed timestamp on retrieval" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; searchPatterns &gt; should search by language" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; searchPatterns &gt; should search by pattern type" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; searchPatterns &gt; should search by effectiveness threshold" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; searchPatterns &gt; should search by usage count" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; searchPatterns &gt; should combine multiple search criteria" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; searchPatterns &gt; should return empty array when no patterns match" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; searchPatterns &gt; should limit results when specified" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; searchPatterns &gt; should sort results by effectiveness by default" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; deletePattern &gt; should delete existing pattern" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; deletePattern &gt; should return false for non-existent pattern" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; getAllPatterns &gt; should return all patterns" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; getAllPatterns &gt; should return empty array when no patterns exist" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; getPatternStats &gt; should return database statistics" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; backup and restore &gt; should create backup of patterns" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; backup and restore &gt; should restore patterns from backup" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; error handling &gt; should handle invalid pattern data" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; error handling &gt; should handle file system errors gracefully" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; error handling &gt; should handle corrupted backup files" time="0">
+        </testcase>
+        <testcase classname="tests/unit/learning/PatternDatabase.test.js" name="PatternDatabase &gt; performance &gt; should handle large numbers of patterns efficiently" time="0">
+        </testcase>
     </testsuite>
-    <testsuite name="tests/unit/monitoring/CodeAnalysisEngine.test.js" timestamp="2025-09-02T17:25:19.415Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/monitoring/CodeAnalysisEngine.test.js" timestamp="2025-09-02T19:10:36.532Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
     </testsuite>
-    <testsuite name="tests/unit/monitoring/RealtimeQualityMonitor.test.js" timestamp="2025-09-02T17:25:19.416Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/monitoring/RealtimeQualityMonitor.test.js" timestamp="2025-09-02T19:10:36.532Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
     </testsuite>
-    <testsuite name="tests/unit/server/CodeFortifyMCPServer.test.js" timestamp="2025-09-02T17:25:19.416Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/utils/PerformanceOptimizer.test.js" timestamp="2025-09-02T19:10:36.533Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
     </testsuite>
-    <testsuite name="tests/unit/utils/PerformanceOptimizer.test.js" timestamp="2025-09-02T17:25:19.416Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/server/CodeFortifyMCPServer.test.js" timestamp="2025-09-02T19:10:36.533Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
     </testsuite>
-    <testsuite name="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" timestamp="2025-09-02T17:25:19.416Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/learning/patterns/PatternSearchStrategy.test.js" timestamp="2025-09-02T19:10:36.533Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
     </testsuite>
-    <testsuite name="tests/unit/scoring/core/AnalyzerOrchestrator.test.js" timestamp="2025-09-02T17:25:19.416Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    <testsuite name="tests/unit/learning/patterns/PatternSimilarityCalculator.test.js" timestamp="2025-09-02T19:10:36.533Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
+    </testsuite>
+    <testsuite name="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" timestamp="2025-09-02T19:10:36.534Z" hostname="Mini_IT13" tests="33" failures="0" errors="0" skipped="0" time="0.064109">
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; constructor &gt; should initialize with provided config" time="0.0023096">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; constructor &gt; should use default values when not provided" time="0.0004345">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; constructor &gt; should initialize results structure correctly" time="0.0014571">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; constructor &gt; should set default category name and description" time="0.0004554">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; constructor &gt; should initialize error handler" time="0.0002961">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; analyze method &gt; should handle unimplemented runAnalysis gracefully" time="0.0013141">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; analyze method &gt; should calculate grade based on score percentage" time="0.0006643">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; analyze method &gt; should include execution time in results" time="0.0099943">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; analyze method &gt; should include error summary and issues in results" time="0.0014823">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; analyze method &gt; should handle recoverable errors" time="0.0024345">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; calculateGrade &gt; should return correct grades for different percentages" time="0.0004836">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; addScore &gt; should add points to total score" time="0.0001996">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; addScore &gt; should handle multiple scores" time="0.0001234">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; addIssue &gt; should add issue to results" time="0.000237">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; addIssue &gt; should add suggestion when provided" time="0.0005086">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; setDetail &gt; should set detail value" time="0.0001631">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; project type detection &gt; should detect React project" time="0.0002453">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; project type detection &gt; should detect Vue project" time="0.0001505">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; project type detection &gt; should detect Svelte project" time="0.0002075">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; project type detection &gt; should detect Node project" time="0.0002057">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; project type detection &gt; should detect JavaScript project" time="0.0001796">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; utility methods &gt; pattern matching &gt; containsPattern &gt; should detect string patterns" time="0.0002508">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; utility methods &gt; pattern matching &gt; containsPattern &gt; should detect regex patterns" time="0.0003937">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; utility methods &gt; pattern matching &gt; containsPattern &gt; should handle array of patterns" time="0.0002236">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; utility methods &gt; pattern matching &gt; countPatterns &gt; should count string occurrences" time="0.0002408">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; utility methods &gt; pattern matching &gt; countPatterns &gt; should count regex matches" time="0.0002643">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; utility methods &gt; pattern matching &gt; countPatterns &gt; should handle array of patterns" time="0.0001999">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; utility methods &gt; scoring utilities &gt; scoreByPresence &gt; should score items by presence" time="0.000509">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; utility methods &gt; scoring utilities &gt; scoreByQuality &gt; should score items by quality" time="0.0004514">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; utility methods &gt; safeCommandExecution &gt; should execute command successfully" time="0.0165129">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; utility methods &gt; safeCommandExecution &gt; should handle command failures gracefully" time="0">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; utility methods &gt; safeJsonParse &gt; should parse valid JSON" time="0">
+        </testcase>
+        <testcase classname="tests/unit/scoring/analyzers/BaseAnalyzer.test.js" name="BaseAnalyzer &gt; utility methods &gt; safeJsonParse &gt; should handle invalid JSON with default value" time="0">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/scoring/core/AnalyzerOrchestrator.test.js" timestamp="2025-09-02T19:10:36.537Z" hostname="Mini_IT13" tests="0" failures="0" errors="0" skipped="0" time="0">
     </testsuite>
 </testsuites>

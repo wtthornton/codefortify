@@ -106,9 +106,9 @@ export class RecommendationEngineFactory {
     if (context.framework && context.framework.name) {
       engines.push({
         type: 'framework',
-        engine: this.createEngine('framework', { 
+        engine: this.createEngine('framework', {
           framework: context.framework,
-          ...context 
+          ...context
         })
       });
     }
@@ -138,12 +138,12 @@ export class RecommendationEngineFactory {
   needsSecurityAnalysis(context) {
     // Check for security-sensitive patterns
     const securityPatterns = ['auth', 'password', 'token', 'api', 'database'];
-    const hasSecurityConcerns = securityPatterns.some(pattern => 
+    const hasSecurityConcerns = securityPatterns.some(pattern =>
       context.filePath.toLowerCase().includes(pattern) ||
       context.detectedPatterns?.includes(pattern)
     );
 
-    return hasSecurityConcerns || context.dependencies?.some(dep => 
+    return hasSecurityConcerns || context.dependencies?.some(dep =>
       ['express', 'passport', 'jwt', 'bcrypt', 'crypto'].includes(dep)
     );
   }
@@ -170,7 +170,7 @@ export class RecommendationEngineFactory {
    */
   needsTestingAnalysis(context) {
     // Don't analyze test files themselves
-    return context.fileType !== 'test' && 
+    return context.fileType !== 'test' &&
            context.fileType !== 'config' &&
            context.functions?.length > 0;
   }

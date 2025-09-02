@@ -64,11 +64,11 @@ export class ProjectScorer {
    */
   async scoreProject(options = {}) {
     this.startTime = Date.now();
-    
+
     try {
       // Determine which categories to analyze
       const categoriesToAnalyze = this.determineCategories(options.categories);
-      
+
       if (this.config.verbose) {
         console.log(`📊 Analyzing ${categoriesToAnalyze.length} categories...`);
       }
@@ -105,7 +105,7 @@ export class ProjectScorer {
       if (this.config.verbose) {
         console.error('❌ Scoring failed:', error.message);
       }
-      
+
       return {
         success: false,
         error: error.message,
@@ -121,19 +121,19 @@ export class ProjectScorer {
    */
   determineCategories(categories = 'all') {
     const allCategories = Object.keys(this.analyzers);
-    
+
     if (categories === 'all' || !categories) {
       return allCategories;
     }
-    
+
     if (Array.isArray(categories)) {
       return categories.filter(cat => allCategories.includes(cat));
     }
-    
+
     if (typeof categories === 'string') {
       return categories.split(',').map(c => c.trim()).filter(cat => allCategories.includes(cat));
     }
-    
+
     return allCategories;
   }
 
@@ -145,7 +145,7 @@ export class ProjectScorer {
   async runCategoryAnalysis(categoriesToAnalyze, options) {
     for (const categoryKey of categoriesToAnalyze) {
       const analyzer = this.analyzers[categoryKey];
-      
+
       if (!analyzer) {
         console.warn(`⚠️ Unknown analyzer: ${categoryKey}`);
         continue;
@@ -172,7 +172,7 @@ export class ProjectScorer {
 
       } catch (error) {
         console.error(`❌ ${categoryKey} analysis failed:`, error.message);
-        
+
         this.results.categories[categoryKey] = {
           score: 0,
           maxScore: analyzer.maxScore || 0,
@@ -197,7 +197,7 @@ export class ProjectScorer {
       });
 
       this.results.recommendations = recommendations;
-      
+
     } catch (error) {
       if (this.config.verbose) {
         console.warn('⚠️ Recommendation generation failed:', error.message);
@@ -212,13 +212,13 @@ export class ProjectScorer {
     try {
       const gates = new QualityGates(this.config.gates || {});
       const gateResults = await gates.checkGates(this.results);
-      
+
       this.results.qualityGates = gateResults;
-      
+
       if (this.config.verbose && gateResults.failed > 0) {
         console.log(`⚠️ ${gateResults.failed} quality gate(s) failed`);
       }
-      
+
     } catch (error) {
       if (this.config.verbose) {
         console.warn('⚠️ Quality gates check failed:', error.message);
@@ -233,7 +233,7 @@ export class ProjectScorer {
     try {
       const history = new QualityHistory(this.config.projectRoot);
       await history.recordScore(this.results);
-      
+
     } catch (error) {
       if (this.config.verbose) {
         console.warn('⚠️ History recording failed:', error.message);
@@ -257,7 +257,7 @@ export class ProjectScorer {
 
       const report = new ScoringReport(this.results, reportOptions);
       return await report.generate();
-      
+
     } catch (error) {
       if (this.config.verbose) {
         console.warn('⚠️ Report generation failed:', error.message);
@@ -307,10 +307,10 @@ export class ProjectScorer {
     const totalTime = this.startTime ? Date.now() - this.startTime : 0;
     const categoryTimes = Object.values(this.results.categories)
       .map(r => r.analysisTime || 0);
-    
+
     return {
       totalAnalysisTime: totalTime,
-      averageCategoryTime: categoryTimes.length > 0 ? 
+      averageCategoryTime: categoryTimes.length > 0 ?
         categoryTimes.reduce((a, b) => a + b, 0) / categoryTimes.length : 0,
       categoriesAnalyzed: Object.keys(this.results.categories).length,
       hasErrors: Object.values(this.results.categories).some(r => r.error)

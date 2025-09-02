@@ -1,6 +1,6 @@
 /**
  * File Size Monitor - Real-time prevention of large files
- * 
+ *
  * Monitors file changes and provides immediate feedback when files
  * are growing too large, helping prevent technical debt accumulation.
  */
@@ -14,7 +14,7 @@ import chalk from 'chalk';
 export class FileSizeMonitor extends EventEmitter {
   constructor(config = {}) {
     super();
-    
+
     this.config = {
       watchPatterns: config.watchPatterns || ['**/*.{js,ts,jsx,tsx}'],
       ignorePatterns: config.ignorePatterns || [
@@ -50,7 +50,7 @@ export class FileSizeMonitor extends EventEmitter {
 
     try {
       this.projectRoot = projectRoot;
-      
+
       // Initialize watcher
       this.watcher = watch(this.config.watchPatterns, {
         cwd: projectRoot,
@@ -67,7 +67,7 @@ export class FileSizeMonitor extends EventEmitter {
 
       this.isMonitoring = true;
       this.emit('monitoring-started', { projectRoot, config: this.config });
-      
+
       if (this.config.enableRealTimeAlerts) {
         console.log(chalk.blue('📏 File size monitoring active - watching for large files...'));
       }
@@ -86,7 +86,7 @@ export class FileSizeMonitor extends EventEmitter {
       await this.watcher.close();
       this.watcher = null;
     }
-    
+
     this.isMonitoring = false;
     this.lastAlerts.clear();
     this.emit('monitoring-stopped');
@@ -99,7 +99,7 @@ export class FileSizeMonitor extends EventEmitter {
     try {
       const fullPath = path.join(this.projectRoot, relativePath);
       const analysis = await this.analyzeFile(fullPath);
-      
+
       if (analysis.needsAlert) {
         await this.handleSizeAlert(relativePath, analysis, changeType);
       }
@@ -211,7 +211,7 @@ export class FileSizeMonitor extends EventEmitter {
   async handleSizeAlert(filePath, analysis, changeType) {
     const alertKey = `${filePath}-${analysis.severity}`;
     const now = Date.now();
-    
+
     // Check cooldown
     if (this.lastAlerts.has(alertKey)) {
       const lastAlert = this.lastAlerts.get(alertKey);
@@ -239,14 +239,14 @@ export class FileSizeMonitor extends EventEmitter {
    */
   displayAlert(filePath, analysis, changeType) {
     const { severity, lines, issues, suggestions } = analysis;
-    
+
     // Choose colors based on severity
     const colors = {
       warning: chalk.yellow,
       major: chalk.orange || chalk.yellow,
       critical: chalk.red
     };
-    
+
     const icons = {
       warning: '⚠️',
       major: '🚨',
@@ -260,17 +260,17 @@ export class FileSizeMonitor extends EventEmitter {
     console.log(color.bold(`${icon} FILE SIZE ALERT (${severity.toUpperCase()})`));
     console.log(color(`File: ${filePath} (${changeType})`));
     console.log(color(`Lines: ${lines}`));
-    
+
     if (issues.length > 0) {
       console.log(color('\nIssues:'));
       issues.forEach(issue => console.log(color(`  • ${issue}`)));
     }
-    
+
     if (suggestions.length > 0) {
       console.log(chalk.cyan('\nSuggestions:'));
       suggestions.forEach(suggestion => console.log(chalk.cyan(`  💡 ${suggestion}`)));
     }
-    
+
     console.log('─'.repeat(60) + '\n');
   }
 

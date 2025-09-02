@@ -40,7 +40,7 @@ export class PerformanceRecommendationEngine extends BaseRecommendationEngine {
 export class QualityRecommendationEngine extends BaseRecommendationEngine {
   async generateRecommendations(context) {
     const recommendations = [];
-    
+
     if (context.functions?.length > 10) {
       recommendations.push({
         type: 'quality',
@@ -61,7 +61,7 @@ export class QualityRecommendationEngine extends BaseRecommendationEngine {
 export class TestingRecommendationEngine extends BaseRecommendationEngine {
   async generateRecommendations(context) {
     const recommendations = [];
-    
+
     if (context.fileType !== 'test' && context.functions?.length > 0) {
       recommendations.push({
         type: 'testing',
@@ -83,7 +83,7 @@ export class AccessibilityRecommendationEngine extends BaseRecommendationEngine 
   async generateRecommendations(context) {
     const recommendations = [];
     const content = context.lines.join('\n').toLowerCase();
-    
+
     if (context.fileType === 'component' && !content.includes('aria-')) {
       recommendations.push({
         type: 'accessibility',
@@ -105,7 +105,7 @@ export class FrameworkSpecificEngine extends BaseRecommendationEngine {
   async generateRecommendations(context) {
     const recommendations = [];
     const framework = this.options.framework?.name;
-    
+
     if (framework === 'react' && context.detectedPatterns?.includes('classes')) {
       recommendations.push({
         type: 'framework',

@@ -25,7 +25,7 @@ export class CommandRegistry {
     this.globalConfig = globalConfig;
     this.packageRoot = packageRoot;
     this.formatter = new CommandFormatter(globalConfig);
-    
+
     // Register all commands
     this.commands = new Map();
     this.registerCommands();

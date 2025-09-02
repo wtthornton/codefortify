@@ -15,14 +15,14 @@ export class ScoringReport {
     this.config = config;
     this.projectRoot = config.projectRoot || process.cwd();
     this.router = new SmartReportRouter(config);
-    
+
     // Initialize report generation strategies
     this.strategies = new Map();
     this.strategies.set('html', new HTMLReportStrategy());
     this.strategies.set('json', new JSONReportStrategy());
     this.strategies.set('markdown', new MarkdownReportStrategy());
     this.strategies.set('md', new MarkdownReportStrategy());
-    
+
     // Default format
     this.defaultFormat = config.defaultFormat || 'html';
   }
@@ -37,7 +37,7 @@ export class ScoringReport {
   async generateReport(results, format = null, options = {}) {
     const outputFormat = format || this.defaultFormat;
     const strategy = this.getStrategy(outputFormat);
-    
+
     if (!strategy) {
       throw new Error(`Unsupported report format: ${outputFormat}`);
     }
@@ -61,14 +61,14 @@ export class ScoringReport {
   async saveReport(results, options = {}) {
     const format = options.format || this.defaultFormat;
     const strategy = this.getStrategy(format);
-    
+
     if (!strategy) {
       throw new Error(`Unsupported report format: ${format}`);
     }
 
     // Generate report content
     const content = await this.generateReport(results, format, options);
-    
+
     // Determine output path using smart routing
     const routingResult = await this.router.determineOutputPath({
       format,
@@ -252,11 +252,11 @@ export class ScoringReport {
     const execAsync = promisify(exec);
 
     try {
-      const command = process.platform === 'win32' 
-        ? `start "${filePath}"` 
-        : process.platform === 'darwin' 
-        ? `open "${filePath}"` 
-        : `xdg-open "${filePath}"`;
+      const command = process.platform === 'win32'
+        ? `start "${filePath}"`
+        : process.platform === 'darwin'
+          ? `open "${filePath}"`
+          : `xdg-open "${filePath}"`;
 
       await execAsync(command);
     } catch (error) {
@@ -293,13 +293,13 @@ export class ScoringReport {
    */
   getScoreDescription(percentage) {
     const level = this.getPerformanceLevel(percentage);
-    
+
     const descriptions = {
-      excellent: "Your project demonstrates exceptional code quality! Keep up the excellent work.",
-      good: "Your project has good quality with minor areas for improvement.",
-      acceptable: "Your project has acceptable quality but would benefit from focused improvements.",
-      'needs-improvement': "Your project needs improvement in multiple areas to reach good quality standards.",
-      poor: "Your project has significant quality issues that require immediate attention."
+      excellent: 'Your project demonstrates exceptional code quality! Keep up the excellent work.',
+      good: 'Your project has good quality with minor areas for improvement.',
+      acceptable: 'Your project has acceptable quality but would benefit from focused improvements.',
+      'needs-improvement': 'Your project needs improvement in multiple areas to reach good quality standards.',
+      poor: 'Your project has significant quality issues that require immediate attention.'
     };
 
     return descriptions[level.level] || descriptions.poor;

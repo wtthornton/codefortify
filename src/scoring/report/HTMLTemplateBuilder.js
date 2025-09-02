@@ -20,7 +20,7 @@ export class HTMLTemplateBuilder {
    */
   generateTemplate(data, cssContent, jsContent) {
     const { projectName, overall, categories, recommendations, metadata } = data;
-    
+
     return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -152,10 +152,10 @@ export class HTMLTemplateBuilder {
   }
 
   getScoreDescription(percentage) {
-    if (percentage >= 0.9) return "Excellent code quality! 🎉";
-    if (percentage >= 0.8) return "Good quality with room for improvement";
-    if (percentage >= 0.7) return "Acceptable quality, focus on key areas";
-    if (percentage >= 0.6) return "Needs improvement in multiple areas";
-    return "Significant quality issues require attention";
+    if (percentage >= 0.9) {return 'Excellent code quality! 🎉';}
+    if (percentage >= 0.8) {return 'Good quality with room for improvement';}
+    if (percentage >= 0.7) {return 'Acceptable quality, focus on key areas';}
+    if (percentage >= 0.6) {return 'Needs improvement in multiple areas';}
+    return 'Significant quality issues require attention';
   }
 }

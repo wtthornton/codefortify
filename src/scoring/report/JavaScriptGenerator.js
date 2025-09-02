@@ -6,7 +6,7 @@
 export class JavaScriptGenerator {
   generateClientScript(data) {
     const { categories } = data;
-    
+
     return `
       // Initialize charts when DOM is loaded
       document.addEventListener('DOMContentLoaded', function() {

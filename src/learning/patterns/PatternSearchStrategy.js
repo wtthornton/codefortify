@@ -17,7 +17,7 @@ export class PatternSearchStrategy {
    * @returns {Promise<Array>} Similar patterns
    */
   async findSimilarPatterns(targetPattern, context, database) {
-    if (!targetPattern || !database) return [];
+    if (!targetPattern || !database) {return [];}
 
     const cacheKey = this.getCacheKey(targetPattern, context);
     if (this.searchCache.has(cacheKey)) {
@@ -26,18 +26,18 @@ export class PatternSearchStrategy {
 
     // Get candidates by type first for efficiency
     const candidates = this.getCandidatesByType(targetPattern.type, database);
-    if (candidates.length === 0) return [];
+    if (candidates.length === 0) {return [];}
 
     // Calculate similarities
     const results = [];
     const minSimilarity = context?.minSimilarity || 0.3;
 
     for (const candidate of candidates) {
-      if (candidate.id === targetPattern.id) continue;
+      if (candidate.id === targetPattern.id) {continue;}
 
       const similarity = database.similarityCalculator.calculateSimilarity(
-        candidate, 
-        targetPattern, 
+        candidate,
+        targetPattern,
         context
       );
 
@@ -71,7 +71,7 @@ export class PatternSearchStrategy {
    * @returns {Promise<Array>} Matching patterns
    */
   async search(criteria, database) {
-    if (!criteria || !database) return [];
+    if (!criteria || !database) {return [];}
 
     let candidates = Array.from(database.patterns.values());
 
@@ -81,7 +81,7 @@ export class PatternSearchStrategy {
     }
 
     // Apply filters
-    const filtered = candidates.filter(pattern => 
+    const filtered = candidates.filter(pattern =>
       database.filterManager.matchesCriteria(pattern, criteria)
     );
 
@@ -140,10 +140,10 @@ export class PatternSearchStrategy {
    * @returns {Array} Sorted patterns
    */
   applySorting(patterns, sortCriteria) {
-    if (!sortCriteria) return patterns;
+    if (!sortCriteria) {return patterns;}
 
     const { field = 'lastUsed', direction = 'desc' } = sortCriteria;
-    
+
     return patterns.sort((a, b) => {
       let aVal = a[field] || 0;
       let bVal = b[field] || 0;

@@ -15,7 +15,7 @@ export class ValidateCommand extends BaseCommand {
       // Use existing validator
       const { CodeFortifyValidator } = await import('../../validation/CodeFortifyValidator.js');
       const validator = new CodeFortifyValidator(this.config);
-      
+
       const validationResult = await validator.validate({
         strict: options.strict || false,
         categories: options.categories,

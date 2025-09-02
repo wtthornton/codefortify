@@ -1,10 +1,10 @@
 /**
  * File Size Analyzer - Prevents large file anti-patterns
- * 
+ *
  * Analyzes file sizes and complexity to prevent maintenance issues
  * Key thresholds based on industry best practices:
  * - 300+ lines: Warning (should consider splitting)
- * - 500+ lines: Major issue (requires refactoring)  
+ * - 500+ lines: Major issue (requires refactoring)
  * - 1000+ lines: Critical issue (immediate attention)
  */
 
@@ -17,11 +17,11 @@ export class FileSizeAnalyzer extends BaseAnalyzer {
     super(config);
     this.categoryName = 'File Size & Complexity';
     this.maxScore = 5; // Part of Structure score
-    
+
     // Configurable thresholds
     this.thresholds = {
       warning: config.fileSizeWarning || 300,    // Lines
-      major: config.fileSizeMajor || 500,        // Lines  
+      major: config.fileSizeMajor || 500,        // Lines
       critical: config.fileSizeCritical || 1000, // Lines
       methodLimit: config.methodLimit || 15,     // Methods per class
       classLimit: config.classLimit || 3        // Classes per file
@@ -34,11 +34,11 @@ export class FileSizeAnalyzer extends BaseAnalyzer {
       const files = await this.getSourceFiles(projectRoot);
       const sizeAnalysis = await this.analyzeSizes(files);
       const complexityAnalysis = await this.analyzeComplexity(files);
-      
+
       this.scoreFileSize(sizeAnalysis);
       this.scoreFileComplexity(complexityAnalysis);
       this.generateRefactoringRecommendations(sizeAnalysis, complexityAnalysis);
-      
+
       return this.getResults();
     } catch (error) {
       this.addIssue(`File size analysis failed: ${error.message}`);
@@ -49,14 +49,14 @@ export class FileSizeAnalyzer extends BaseAnalyzer {
   async getSourceFiles(projectRoot) {
     const extensions = ['.js', '.ts', '.jsx', '.tsx'];
     const files = [];
-    
+
     const scanDirectory = async (dir) => {
       try {
         const entries = await fs.readdir(dir, { withFileTypes: true });
-        
+
         for (const entry of entries) {
           const fullPath = path.join(dir, entry.name);
-          
+
           if (entry.isDirectory() && !this.shouldSkipDirectory(entry.name)) {
             await scanDirectory(fullPath);
           } else if (entry.isFile() && extensions.includes(path.extname(entry.name))) {
@@ -67,7 +67,7 @@ export class FileSizeAnalyzer extends BaseAnalyzer {
         // Skip inaccessible directories
       }
     };
-    
+
     await scanDirectory(projectRoot);
     return files;
   }
@@ -94,7 +94,7 @@ export class FileSizeAnalyzer extends BaseAnalyzer {
         const content = await fs.readFile(filePath, 'utf-8');
         const lines = content.split('\n').length;
         const size = { path: filePath, lines, content };
-        
+
         fileSizes.push(size);
 
         // Categorize by severity
@@ -131,7 +131,7 @@ export class FileSizeAnalyzer extends BaseAnalyzer {
       try {
         const content = await fs.readFile(filePath, 'utf-8');
         const complexity = this.analyzeFileComplexity(content, filePath);
-        
+
         if (complexity.methodCount > this.thresholds.methodLimit) {
           analysis.highMethodCountFiles.push({
             path: path.basename(filePath),
@@ -142,7 +142,7 @@ export class FileSizeAnalyzer extends BaseAnalyzer {
 
         if (complexity.classCount > this.thresholds.classLimit) {
           analysis.multiClassFiles.push({
-            path: path.basename(filePath), 
+            path: path.basename(filePath),
             classes: complexity.classCount,
             lines: content.split('\n').length
           });
@@ -176,7 +176,7 @@ export class FileSizeAnalyzer extends BaseAnalyzer {
 
     // Detect specific anti-patterns
     const fileName = path.basename(filePath, path.extname(filePath));
-    
+
     // Command Coordinator anti-pattern
     if (fileName.includes('Coordinator') || fileName.includes('Manager')) {
       const executeMatches = content.match(/execute\w+\s*\(/g);
@@ -196,7 +196,7 @@ export class FileSizeAnalyzer extends BaseAnalyzer {
       complexity.patterns.push({
         type: 'god-class-antipattern',
         file: path.basename(filePath),
-        severity: 'major', 
+        severity: 'major',
         description: `Single class with ${complexity.methodCount} methods`,
         suggestion: 'Extract related methods into separate classes or mixins'
       });
@@ -219,16 +219,16 @@ export class FileSizeAnalyzer extends BaseAnalyzer {
 
   scoreFileSize(analysis) {
     let sizeScore = 5;
-    
+
     // Deduct points based on problem files
     const totalProblems = analysis.criticalFiles.length + analysis.majorFiles.length;
     const problemRatio = totalProblems / analysis.totalFiles;
-    
+
     if (analysis.criticalFiles.length > 0) {
       sizeScore -= 3; // Major penalty for critical files
       this.addIssue(`${analysis.criticalFiles.length} files exceed ${this.thresholds.critical} lines`);
     }
-    
+
     if (analysis.majorFiles.length > 0) {
       sizeScore -= Math.min(2, analysis.majorFiles.length * 0.5);
       this.addIssue(`${analysis.majorFiles.length} files exceed ${this.thresholds.major} lines`);
@@ -245,14 +245,14 @@ export class FileSizeAnalyzer extends BaseAnalyzer {
   }
 
   scoreFileComplexity(analysis) {
-    let complexityScore = 0; // This adds to the structure score
-    
+    const complexityScore = 0; // This adds to the structure score
+
     // Penalty for high method count files
     if (analysis.highMethodCountFiles.length > 0) {
       this.addIssue(`${analysis.highMethodCountFiles.length} files have excessive methods (>${this.thresholds.methodLimit})`);
     }
 
-    // Penalty for multiple class files  
+    // Penalty for multiple class files
     if (analysis.multiClassFiles.length > 0) {
       this.addIssue(`${analysis.multiClassFiles.length} files contain multiple classes`);
     }

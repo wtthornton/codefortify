@@ -1,0 +1,29 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2025-09-02T18:28:26.601Z",
+    "lastModified": "2025-09-02T18:28:26.621Z",
+    "totalPatterns": 1
+  },
+  "patterns": [
+    {
+      "id": "test-pattern-1",
+      "type": "refactoring",
+      "title": "Untitled Pattern",
+      "description": "",
+      "codeExample": {
+        "before": "function old() { return 1; }",
+        "after": "function new() { return 1; }"
+      },
+      "context": {},
+      "tags": [],
+      "category": "function",
+      "effectiveness": 0.8,
+      "usageCount": 1,
+      "createdAt": "2025-09-02T18:28:26.620Z",
+      "lastModified": "2025-09-02T18:28:26.621Z",
+      "lastUsed": "2025-09-02T18:28:26.620Z",
+      "structure": {}
+    }
+  ]
+}

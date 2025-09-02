@@ -18,13 +18,13 @@ export class RecommendationFilter {
   process(recommendations, projectType) {
     // Remove duplicates
     const deduplicated = this.deduplicateRecommendations(recommendations);
-    
+
     // Filter by project type
     const filtered = this.filterByProjectType(deduplicated, projectType);
-    
+
     // Sort by priority and impact
     const sorted = this.sortRecommendations(filtered);
-    
+
     // Limit results
     return sorted.slice(0, this.maxRecommendations);
   }
@@ -58,9 +58,9 @@ export class RecommendationFilter {
    * Filter recommendations by project type
    */
   filterByProjectType(recommendations, projectType) {
-    if (!projectType) return recommendations;
-    
-    return recommendations.filter(rec => 
+    if (!projectType) {return recommendations;}
+
+    return recommendations.filter(rec =>
       !rec.excludeProjectTypes?.includes(projectType) &&
       (!rec.includeProjectTypes || rec.includeProjectTypes.includes(projectType))
     );
@@ -75,12 +75,12 @@ export class RecommendationFilter {
       if (a.impact !== b.impact) {
         return b.impact - a.impact;
       }
-      
+
       // Then by priority (high > medium > low)
       const priorityOrder = { high: 3, medium: 2, low: 1 };
       const aPriority = priorityOrder[a.priority] || 1;
       const bPriority = priorityOrder[b.priority] || 1;
-      
+
       return bPriority - aPriority;
     });
   }
@@ -90,14 +90,14 @@ export class RecommendationFilter {
    */
   groupByCategory(recommendations) {
     const groups = {};
-    
+
     for (const rec of recommendations) {
       if (!groups[rec.category]) {
         groups[rec.category] = [];
       }
       groups[rec.category].push(rec);
     }
-    
+
     return groups;
   }
 }

@@ -1564,13 +1564,13 @@ export class StructureAnalyzer extends BaseAnalyzer {
     try {
       const fileSizeAnalyzer = new FileSizeAnalyzer({
         fileSizeWarning: 300,
-        fileSizeMajor: 500, 
+        fileSizeMajor: 500,
         fileSizeCritical: 1000,
         methodLimit: 15
       });
 
       const sizeResults = await fileSizeAnalyzer.analyze(this.projectRoot);
-      
+
       // Integrate file size issues into structure analysis
       if (sizeResults && sizeResults.issues) {
         for (const issue of sizeResults.issues) {
@@ -1583,7 +1583,7 @@ export class StructureAnalyzer extends BaseAnalyzer {
         }
       }
 
-      // Add file size details to structure analysis  
+      // Add file size details to structure analysis
       if (sizeResults && sizeResults.details) {
         this.setDetail('fileSizeAnalysis', {
           averageFileSize: sizeResults.details.averageFileSize,

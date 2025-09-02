@@ -24,9 +24,9 @@ export class AnalyzeCommand extends BaseCommand {
       if (scoreResult.success && options.includeStatus !== false) {
         const { MonitorCommand } = await import('./MonitorCommand.js');
         const monitorCommand = new MonitorCommand(this.config);
-        const statusResult = await monitorCommand.execute({ 
-          action: 'status', 
-          format: 'json' 
+        const statusResult = await monitorCommand.execute({
+          action: 'status',
+          format: 'json'
         });
         results.push({ command: 'status', result: statusResult });
       }

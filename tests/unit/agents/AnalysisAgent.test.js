@@ -41,7 +41,7 @@ describe('AnalysisAgent', () => {
     fs.readFileSync = vi.fn(() => 'mock file content');
 
     agent = new AnalysisAgent(mockConfig);
-    
+
     // Mock missing methods that are called internally
     agent.identifyMissingPatterns = vi.fn(() => Promise.resolve([]));
     agent.identifyPatternOpportunities = vi.fn(() => Promise.resolve([]));
@@ -50,9 +50,9 @@ describe('AnalysisAgent', () => {
       score: 75,
       items: [{ type: 'todo', description: 'Fix this' }]
     }));
-    agent.generatePredictiveInsights = vi.fn(() => Promise.resolve({ 
-      futureScore: 85, 
-      recommendations: [] 
+    agent.generatePredictiveInsights = vi.fn(() => Promise.resolve({
+      futureScore: 85,
+      recommendations: []
     }));
     agent.analyzeProgressHistory = vi.fn(() => Promise.resolve({
       trend: 'improving',
@@ -111,9 +111,9 @@ describe('AnalysisAgent', () => {
 
     it('should perform basic analysis when depth is basic', async () => {
       agent.config.analysisDepth = 'basic';
-      
+
       const result = await agent.analyze(mockCode, mockReviewResult, mockIterationHistory);
-      
+
       expect(result).toBeDefined();
       expect(result.analysisLevel).toBe('basic');
       expect(result.performance).toBeDefined();
@@ -121,9 +121,9 @@ describe('AnalysisAgent', () => {
 
     it('should perform comprehensive analysis when depth is comprehensive', async () => {
       agent.config.analysisDepth = 'comprehensive';
-      
+
       const result = await agent.analyze(mockCode, mockReviewResult, mockIterationHistory);
-      
+
       expect(result).toBeDefined();
       expect(result.analysisLevel).toBe('comprehensive');
       expect(result.architecture).toBeDefined();
@@ -133,9 +133,9 @@ describe('AnalysisAgent', () => {
 
     it('should perform deep analysis when depth is deep', async () => {
       agent.config.analysisDepth = 'deep';
-      
+
       const result = await agent.analyze(mockCode, mockReviewResult, mockIterationHistory);
-      
+
       expect(result).toBeDefined();
       expect(result.analysisLevel).toBe('deep');
       expect(result.qualityTrends).toBeDefined();
@@ -149,26 +149,26 @@ describe('AnalysisAgent', () => {
         { score: 70, timestamp: Date.now() - 1000 },
         { score: 80, timestamp: Date.now() }
       ];
-      
+
       const result = await agent.analyze(mockCode, mockReviewResult, mockIterationHistory);
-      
+
       expect(result.predictiveInsights).toBeDefined();
     });
 
     it('should store analysis in history', async () => {
       const initialHistoryLength = agent.analysisHistory.length;
-      
+
       await agent.analyze(mockCode, mockReviewResult, mockIterationHistory);
-      
+
       expect(agent.analysisHistory).toHaveLength(initialHistoryLength + 1);
     });
 
     it('should handle analysis errors gracefully', async () => {
       // Mock an error in one of the analysis methods
       vi.spyOn(agent, 'analyzePerformance').mockRejectedValue(new Error('Performance analysis failed'));
-      
+
       const result = await agent.analyze(mockCode, mockReviewResult, mockIterationHistory);
-      
+
       expect(result).toBeDefined();
       expect(result.errors).toBeDefined();
       expect(result.errors).toContain('Performance analysis failed');
@@ -187,9 +187,9 @@ describe('AnalysisAgent', () => {
           async handleGetUser(req, res) { /* */ }
         }
       `;
-      
+
       const result = await agent.analyzeArchitecture(mockCode);
-      
+
       expect(result).toBeDefined();
       expect(result.style).toBeDefined();
       expect(result.patterns).toBeDefined();
@@ -203,9 +203,9 @@ describe('AnalysisAgent', () => {
         app.get('/api/users', handler);
         app.listen(3000);
       `;
-      
+
       const result = await agent.analyzeArchitecture(mockCode);
-      
+
       expect(result.style).toBeDefined();
     });
   });
@@ -218,9 +218,9 @@ describe('AnalysisAgent', () => {
           { type: 'async', severity: 'minor', category: 'Performance' }
         ]
       };
-      
+
       const result = await agent.analyzePatterns(mockCode, mockReviewResult);
-      
+
       expect(result).toBeDefined();
       expect(result.identifiedPatterns).toBeDefined();
       expect(result.antiPatterns).toBeDefined();
@@ -229,9 +229,9 @@ describe('AnalysisAgent', () => {
     it('should calculate pattern confidence scores', async () => {
       const mockCode = 'const singleton = new Singleton();';
       const mockReviewResult = { issues: [] };
-      
+
       const result = await agent.analyzePatterns(mockCode, mockReviewResult);
-      
+
       expect(result.identifiedPatterns).toBeDefined();
       if (result.identifiedPatterns.length > 0) {
         expect(result.identifiedPatterns[0]).toHaveProperty('confidence');
@@ -247,9 +247,9 @@ describe('AnalysisAgent', () => {
           document.getElementById('test');
         }
       `;
-      
+
       const result = await agent.analyzePerformance(mockCode, {});
-      
+
       expect(result).toBeDefined();
       expect(result.bottlenecks).toBeDefined();
       expect(result.optimizations).toBeDefined();
@@ -265,9 +265,9 @@ describe('AnalysisAgent', () => {
           }
         }
       `;
-      
+
       const result = await agent.analyzePerformance(mockCode, {});
-      
+
       expect(result.bottlenecks).toBeDefined();
       expect(Array.isArray(result.bottlenecks)).toBe(true);
     });
@@ -287,9 +287,9 @@ describe('AnalysisAgent', () => {
           return 0;
         }
       `;
-      
+
       const result = await agent.analyzeMaintainability(mockCode);
-      
+
       expect(result).toBeDefined();
       expect(result.complexity).toBeDefined();
       expect(result.readability).toBeDefined();
@@ -305,9 +305,9 @@ describe('AnalysisAgent', () => {
           return 'zero';
         }
       `;
-      
+
       const result = await agent.analyzeMaintainability(mockCode);
-      
+
       expect(result.complexity).toBeDefined();
       expect(result.complexity.cyclomatic).toBeDefined();
       expect(typeof result.complexity.cyclomatic).toBe('number');
@@ -323,9 +323,9 @@ describe('AnalysisAgent', () => {
           eval('dangerous code');
         }
       `;
-      
+
       const result = await agent.assessTechnicalDebt(mockCode, {});
-      
+
       expect(result).toBeDefined();
       expect(result.debtScore).toBeDefined();
       expect(result.debtItems).toBeDefined();
@@ -338,9 +338,9 @@ describe('AnalysisAgent', () => {
         function duplicatedLogic1() { console.log('test'); }
         function duplicatedLogic2() { console.log('test'); }
       `;
-      
+
       const result = await agent.assessTechnicalDebt(mockCode, {});
-      
+
       expect(result.debtItems).toBeDefined();
     });
   });
@@ -349,12 +349,12 @@ describe('AnalysisAgent', () => {
     it('should maintain analysis history', async () => {
       const mockCode = 'function test() {}';
       const mockReviewResult = { score: 85 };
-      
+
       expect(agent.analysisHistory).toHaveLength(0);
-      
+
       await agent.analyze(mockCode, mockReviewResult);
       expect(agent.analysisHistory).toHaveLength(1);
-      
+
       await agent.analyze(mockCode, mockReviewResult);
       expect(agent.analysisHistory).toHaveLength(2);
     });
@@ -362,9 +362,9 @@ describe('AnalysisAgent', () => {
     it('should include timestamp in analysis history', async () => {
       const mockCode = 'function test() {}';
       const mockReviewResult = { score: 85 };
-      
+
       await agent.analyze(mockCode, mockReviewResult);
-      
+
       const lastAnalysis = agent.analysisHistory[agent.analysisHistory.length - 1];
       expect(lastAnalysis.timestamp).toBeDefined();
       expect(typeof lastAnalysis.timestamp).toBe('number');
@@ -375,19 +375,19 @@ describe('AnalysisAgent', () => {
     it('should handle missing dependencies gracefully', async () => {
       // Mock file system errors
       fs.existsSync = vi.fn(() => false);
-      
+
       const newAgent = new AnalysisAgent(mockConfig);
       const result = await newAgent.analyze('test code', { score: 85 });
-      
+
       expect(result).toBeDefined();
       // Should still return some analysis even with missing dependencies
     });
 
     it('should handle malformed code input', async () => {
       const malformedCode = 'function unclosed() { if (true) ';
-      
+
       const result = await agent.analyze(malformedCode, { score: 85 });
-      
+
       expect(result).toBeDefined();
       expect(result.errors).toBeDefined();
     });
@@ -395,9 +395,9 @@ describe('AnalysisAgent', () => {
     it('should handle invalid review results', async () => {
       const mockCode = 'function test() {}';
       const invalidReviewResult = null;
-      
+
       const result = await agent.analyze(mockCode, invalidReviewResult);
-      
+
       expect(result).toBeDefined();
       // Should handle gracefully and still provide analysis
     });
@@ -406,7 +406,7 @@ describe('AnalysisAgent', () => {
   describe('Configuration Variations', () => {
     it('should work with minimal config', () => {
       const minimalAgent = new AnalysisAgent({ projectRoot: '/test' });
-      
+
       expect(minimalAgent.config.projectType).toBe('javascript');
       expect(minimalAgent.config.analysisDepth).toBe('comprehensive');
       expect(minimalAgent.config.enablePredictiveAnalysis).toBe(true);
@@ -417,10 +417,10 @@ describe('AnalysisAgent', () => {
         ...mockConfig,
         enablePredictiveAnalysis: false
       });
-      
+
       const mockIterationHistory = [{ score: 70 }, { score: 80 }];
       const result = await agentWithoutPredictive.analyze('test code', { score: 85 }, mockIterationHistory);
-      
+
       expect(result.predictiveInsights).toBeUndefined();
     });
 
@@ -429,9 +429,9 @@ describe('AnalysisAgent', () => {
         ...mockConfig,
         projectType: 'react'
       });
-      
+
       const result = await reactAgent.analyze('const App = () => <div>Hello</div>', { score: 85 });
-      
+
       expect(result).toBeDefined();
     });
   });

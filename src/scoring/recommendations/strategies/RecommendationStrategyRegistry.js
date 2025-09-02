@@ -46,7 +46,7 @@ export class RecommendationStrategyRegistry {
     this.strategies.set('security', new DefaultStrategy());
     this.strategies.set('developerExperience', new DefaultStrategy());
     this.strategies.set('completeness', new DefaultStrategy());
-    
+
     // Fallback strategy
     this.defaultStrategy = new DefaultStrategy();
   }

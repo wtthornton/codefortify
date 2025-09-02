@@ -22,7 +22,7 @@ export class RecommendationStrategy {
    * Calculate category percentage
    */
   calculatePercentage(result) {
-    if (!result || result.maxScore === 0) return 0;
+    if (!result || result.maxScore === 0) {return 0;}
     return result.score / result.maxScore;
   }
 
@@ -58,9 +58,9 @@ export class RecommendationStrategy {
    * Filter recommendations by project type
    */
   filterByProjectType(recommendations, projectType) {
-    if (!projectType) return recommendations;
-    
-    return recommendations.filter(rec => 
+    if (!projectType) {return recommendations;}
+
+    return recommendations.filter(rec =>
       !rec.excludeProjectTypes?.includes(projectType) &&
       (!rec.includeProjectTypes || rec.includeProjectTypes.includes(projectType))
     );

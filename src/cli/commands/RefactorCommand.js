@@ -1,6 +1,6 @@
 /**
  * Refactor Command - Provides intelligent refactoring suggestions for large files
- * 
+ *
  * Helps developers identify and fix large file anti-patterns with specific,
  * actionable recommendations and implementation steps.
  */
@@ -27,13 +27,13 @@ export class RefactorCommand {
   async execute(options = {}) {
     try {
       const projectRoot = options.projectRoot || process.cwd();
-      
+
       console.log(chalk.blue('🔧 CodeFortify Refactoring Analysis'));
       console.log(chalk.gray('Analyzing large files and anti-patterns...\n'));
 
       // Find files needing refactoring
       const candidates = await this.findRefactoringCandidates(projectRoot, options);
-      
+
       if (candidates.length === 0) {
         console.log(chalk.green('✅ No large files detected - your codebase looks healthy!'));
         return { success: true, candidates: [], message: 'No refactoring needed' };
@@ -86,7 +86,7 @@ export class RefactorCommand {
     // Add critical and major files
     if (analysis.results?.details) {
       const details = analysis.results.details;
-      
+
       // Critical files (highest priority)
       if (details.criticalFiles) {
         for (const file of details.criticalFiles) {
@@ -99,11 +99,11 @@ export class RefactorCommand {
         }
       }
 
-      // Major files  
+      // Major files
       if (details.majorFiles) {
         for (const file of details.majorFiles) {
           candidates.push({
-            path: file.path, 
+            path: file.path,
             lines: file.lines,
             priority: 'high',
             reason: `${file.lines} lines (major threshold)`
@@ -127,7 +127,7 @@ export class RefactorCommand {
     return candidates.sort((a, b) => {
       const priorityOrder = { critical: 3, high: 2, medium: 1 };
       const priorityDiff = priorityOrder[b.priority] - priorityOrder[a.priority];
-      if (priorityDiff !== 0) return priorityDiff;
+      if (priorityDiff !== 0) {return priorityDiff;}
       return b.lines - a.lines;
     });
   }
@@ -163,14 +163,14 @@ export class RefactorCommand {
 
     if (plan.refactorings.length > 0) {
       console.log(chalk.cyan('\n   🔧 Refactoring Recommendations:'));
-      
+
       for (let i = 0; i < Math.min(plan.refactorings.length, 4); i++) {
         const refactor = plan.refactorings[i];
         const icon = this.getRefactoringIcon(refactor.type);
         const effort = this.getEffortIndicator(refactor.effort);
-        
+
         console.log(chalk.white(`   ${i + 1}. ${icon} ${refactor.description} ${effort}`));
-        
+
         if (refactor.steps) {
           refactor.steps.slice(0, 2).forEach(step => {
             console.log(chalk.gray(`      • ${step}`));
@@ -214,13 +214,13 @@ export class RefactorCommand {
     // Effort breakdown
     const effortCounts = { high: 0, medium: 0, low: 0 };
     plans.forEach(p => effortCounts[p.estimatedEffort]++);
-    
+
     console.log(chalk.yellow(`Effort required: ${effortCounts.high} high, ${effortCounts.medium} medium, ${effortCounts.low} low`));
 
     // Priority breakdown
     const priorityCounts = { critical: 0, high: 0, medium: 0, low: 0 };
     plans.forEach(p => priorityCounts[p.priority]++);
-    
+
     console.log(chalk.red(`Priority: ${priorityCounts.critical} critical, ${priorityCounts.high} high, ${priorityCounts.medium} medium`));
 
     console.log('\n' + chalk.cyan('💡 TIP: Start with critical priority files for maximum impact'));
