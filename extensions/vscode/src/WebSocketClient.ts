@@ -39,6 +39,8 @@ export class WebSocketClient extends EventEmitter {
     private connectionTimer: NodeJS.Timeout | null = null;
     private subscriptions: Set<string> = new Set();
     private filters: any = {};
+    private lastAnalysisRequest: number = 0;
+    private analysisDebounceMs: number = 2000; // 2 seconds debounce
 
     constructor(config: vscode.WorkspaceConfiguration) {
         super();
@@ -47,12 +49,16 @@ export class WebSocketClient extends EventEmitter {
 
     async connect(url?: string): Promise<void> {
         if (this.isConnecting || this.isConnected) {
+            console.log(`[CodeFortify WebSocket] Already connecting or connected, skipping`);
             return;
         }
 
         this.connectionUrl = url || `ws://localhost:${this.config.serverPort}`;
         this.isConnecting = true;
         this.reconnectAttempts = 0;
+
+        console.log(`[CodeFortify WebSocket] Attempting to connect to: ${this.connectionUrl}`);
+        console.log(`[CodeFortify WebSocket] Configuration:`, this.config);
 
         return this.attemptConnection();
     }
@@ -125,11 +131,22 @@ export class WebSocketClient extends EventEmitter {
     }
 
     requestAnalysis(): void {
-        if (this.isConnected) {
-            this.sendMessage({
-                type: 'run_analysis'
-            });
+        if (!this.isConnected) {
+            console.warn('[CodeFortify WebSocket] Cannot request analysis: not connected');
+            return;
         }
+
+        const now = Date.now();
+        if (now - this.lastAnalysisRequest < this.analysisDebounceMs) {
+            console.log(`[CodeFortify WebSocket] Analysis request debounced (last request ${now - this.lastAnalysisRequest}ms ago)`);
+            return;
+        }
+
+        this.lastAnalysisRequest = now;
+        console.log('[CodeFortify WebSocket] Sending analysis request...');
+        this.sendMessage({
+            type: 'run_analysis'
+        });
     }
 
     ping(): void {
@@ -143,28 +160,47 @@ export class WebSocketClient extends EventEmitter {
 
     private async attemptConnection(): Promise<void> {
         if (!this.connectionUrl) {
-            throw new Error('No connection URL specified');
+            const error = new Error('No connection URL specified');
+            console.error('[CodeFortify WebSocket] Connection failed:', error.message);
+            throw error;
         }
+
+        console.log(`[CodeFortify WebSocket] Creating WebSocket connection to: ${this.connectionUrl}`);
 
         return new Promise((resolve, reject) => {
             try {
+                // Note: WebSocket library doesn't support custom headers in the same way
+                // We'll identify ourselves in the connection_established message instead
                 this.ws = new WebSocket(this.connectionUrl!);
+                console.log(`[CodeFortify WebSocket] WebSocket created, state: ${this.ws.readyState}`);
 
                 // Set connection timeout
                 this.connectionTimer = setTimeout(() => {
+                    console.warn(`[CodeFortify WebSocket] Connection timeout after ${this.config.connectionTimeout}ms`);
                     if (this.ws && this.ws.readyState === WebSocket.CONNECTING) {
                         this.ws.terminate();
-                        this.handleConnectionError(new Error('Connection timeout'));
-                        reject(new Error('Connection timeout'));
+                        const timeoutError = new Error('Connection timeout');
+                        this.handleConnectionError(timeoutError);
+                        reject(timeoutError);
                     }
                 }, this.config.connectionTimeout);
 
                 this.ws.on('open', () => {
+                    console.log(`[CodeFortify WebSocket] ✅ Connection established successfully`);
                     this.clearConnectionTimer();
                     this.isConnecting = false;
                     this.isConnected = true;
                     this.reconnectAttempts = 0;
                     
+                    console.log(`[CodeFortify WebSocket] Sending connection established message...`);
+                    // Send the connection_established message that the server expects
+                    this.sendMessage({
+                        type: 'connection_established',
+                        client: 'CodeFortify VS Code Extension',
+                        version: '1.0.0'
+                    });
+                    
+                    console.log(`[CodeFortify WebSocket] Setting up heartbeat and restoring state...`);
                     this.setupHeartbeat();
                     this.restoreSubscriptions();
                     this.restoreFilters();
@@ -178,7 +214,7 @@ export class WebSocketClient extends EventEmitter {
                     this.cleanup();
                     
                     const reasonStr = reason.toString();
-                    console.log(`WebSocket closed: ${code} - ${reasonStr}`);
+                    console.log(`[CodeFortify WebSocket] Connection closed: Code ${code}, Reason: ${reasonStr}`);
                     
                     if (this.isConnected) {
                         this.isConnected = false;
@@ -186,14 +222,25 @@ export class WebSocketClient extends EventEmitter {
                         
                         // Attempt reconnection if not intentional disconnect
                         if (code !== 1000) {
+                            console.log(`[CodeFortify WebSocket] Scheduling reconnection (code ${code} is not normal closure)`);
                             this.scheduleReconnect();
+                        } else {
+                            console.log(`[CodeFortify WebSocket] Normal closure, not reconnecting`);
                         }
                     }
                 });
 
                 this.ws.on('error', (error: Error) => {
                     this.clearConnectionTimer();
-                    console.error('WebSocket error:', error);
+                    console.error(`[CodeFortify WebSocket] Connection error:`, error);
+                    console.error(`[CodeFortify WebSocket] Error details:`, {
+                        message: error.message,
+                        code: (error as any).code,
+                        errno: (error as any).errno,
+                        syscall: (error as any).syscall,
+                        address: (error as any).address,
+                        port: (error as any).port
+                    });
                     
                     if (this.isConnecting) {
                         this.handleConnectionError(error);
@@ -204,10 +251,12 @@ export class WebSocketClient extends EventEmitter {
                 });
 
                 this.ws.on('message', (data: WebSocket.Data) => {
+                    console.log(`[CodeFortify WebSocket] Received message:`, data.toString());
                     this.handleMessage(data);
                 });
 
                 this.ws.on('ping', () => {
+                    console.log(`[CodeFortify WebSocket] Received ping, sending pong`);
                     if (this.ws && this.ws.readyState === WebSocket.OPEN) {
                         this.ws.pong();
                     }
@@ -216,6 +265,7 @@ export class WebSocketClient extends EventEmitter {
             } catch (error) {
                 this.clearConnectionTimer();
                 this.isConnecting = false;
+                console.error(`[CodeFortify WebSocket] Failed to create WebSocket:`, error);
                 this.handleConnectionError(error as Error);
                 reject(error);
             }
@@ -308,6 +358,11 @@ export class WebSocketClient extends EventEmitter {
                     
                 case 'pong':
                     // Handle pong response
+                    break;
+                    
+                case 'connection_acknowledged':
+                    console.log(`[CodeFortify WebSocket] ✅ Server acknowledged connection:`, message);
+                    this.emit('connectionAcknowledged', message);
                     break;
                     
                 case 'current_status':

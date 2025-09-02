@@ -31,25 +31,42 @@ export class CodeFortifyExtension {
     }
 
     async activate(): Promise<void> {
-        console.log('CodeFortify Real-Time extension is activating...');
+        console.log('[CodeFortify Extension] Starting activation...');
 
         try {
             // Initialize components
+            console.log('[CodeFortify Extension] Initializing status bar manager...');
             this.statusBarManager.initialize();
+            
+            console.log('[CodeFortify Extension] Initializing notification manager...');
             this.notificationManager.initialize();
             
             // Auto-connect if enabled
             const config = this.getConfiguration();
+            console.log('[CodeFortify Extension] Configuration loaded:', {
+                autoConnect: config.get('realtime.autoConnect', true),
+                serverPort: config.get('realtime.serverPort', 8765),
+                connectionTimeout: config.get('realtime.connectionTimeout', 10000)
+            });
+            
             if (config.get('realtime.autoConnect', true)) {
+                console.log('[CodeFortify Extension] Auto-connect enabled, starting real-time monitoring...');
                 await this.startRealTimeMonitoring();
+            } else {
+                console.log('[CodeFortify Extension] Auto-connect disabled, skipping connection');
             }
 
             // Set context for conditional command visibility
             vscode.commands.executeCommand('setContext', 'codefortify.realtimeActive', this.isActive);
+            console.log(`[CodeFortify Extension] Context set: realtimeActive = ${this.isActive}`);
 
-            console.log('CodeFortify Real-Time extension activated successfully');
+            console.log('[CodeFortify Extension] ✅ Activation completed successfully');
         } catch (error) {
-            console.error('Failed to activate CodeFortify extension:', error);
+            console.error('[CodeFortify Extension] ❌ Activation failed:', error);
+            console.error('[CodeFortify Extension] Error details:', {
+                message: error instanceof Error ? error.message : String(error),
+                stack: error instanceof Error ? error.stack : undefined
+            });
             vscode.window.showErrorMessage(`Failed to activate CodeFortify: ${error instanceof Error ? error.message : String(error)}`);
         }
     }
@@ -166,15 +183,23 @@ export class CodeFortifyExtension {
 
     private async startRealTimeMonitoring(): Promise<void> {
         try {
+            console.log('[CodeFortify Extension] Starting real-time monitoring...');
             this.statusBarManager.setConnectionStatus('connecting');
             
             const config = this.getConfiguration();
             const port = config.get('realtime.serverPort', 8765);
+            const connectionUrl = `ws://localhost:${port}`;
             
-            await this.webSocketClient.connect(`ws://localhost:${port}`);
+            console.log(`[CodeFortify Extension] Connecting to: ${connectionUrl}`);
+            await this.webSocketClient.connect(connectionUrl);
+            console.log('[CodeFortify Extension] ✅ Real-time monitoring started successfully');
             
         } catch (error) {
-            console.error('Failed to start real-time monitoring:', error);
+            console.error('[CodeFortify Extension] ❌ Failed to start real-time monitoring:', error);
+            console.error('[CodeFortify Extension] Connection error details:', {
+                message: error instanceof Error ? error.message : String(error),
+                stack: error instanceof Error ? error.stack : undefined
+            });
             this.statusBarManager.setError('Connection failed');
             throw error;
         }

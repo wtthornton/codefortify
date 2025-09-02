@@ -54,9 +54,16 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
     this.isRunning = false;
     this.statusManager = null;
     this.analysisEngine = null;
+    this.startTime = null;
+
+    // Enhanced logging
+    this.logLevel = options.logLevel || 'info';
+    this.logPrefix = '[CodeFortify WebSocket]';
 
     this.setupSignalHandlers();
-  }  /**
+    this.log('info', `WebSocket server initialized on ${this.host}:${this.port}`);
+  }
+  /**
    * Performs the specified operation
    * @param {any} statusManager - Optional parameter
    * @param {boolean} analysisEngine - Optional parameter
@@ -70,27 +77,23 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
    */
 
 
-  async start(statusManager = null, analysisEngine = null) {  /**
-   * Performs the specified operation
-   * @param {boolean} this.isRunning
-   * @returns {boolean} True if successful, false otherwise
-   */
-    /**
-   * Performs the specified operation
-   * @param {boolean} this.isRunning
-   * @returns {boolean} True if successful, false otherwise
-   */
-
+  async start(statusManager = null, analysisEngine = null) {
+    this.log('info', 'Starting WebSocket server...');
+    
     if (this.isRunning) {
-      // LOG: WebSocket server is already running
+      this.log('warn', 'WebSocket server is already running');
       return;
     }
 
     this.statusManager = statusManager;
     this.analysisEngine = analysisEngine;
+    this.log('info', `Status manager: ${statusManager ? 'provided' : 'none'}`);
+    this.log('info', `Analysis engine: ${analysisEngine ? 'provided' : 'none'}`);
 
     return new Promise((resolve, reject) => {
       try {
+        this.log('info', `Creating WebSocket server on ${this.host}:${this.port}`);
+        
         this.server = new WebSocketServer({
           port: this.port,
           host: this.host,
@@ -98,44 +101,43 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
         });
 
         this.server.on('connection', (ws, request) => {
+          this.log('info', `New connection attempt from ${request.socket.remoteAddress}`);
           this.handleConnection(ws, request);
         });
 
         this.server.on('listening', () => {
           this.isRunning = true;
-          // LOG: `🔄 CodeFortify WebSocket server running on ws://${this.host}:${this.port}`
+          this.startTime = Date.now();
+          this.log('info', `✅ WebSocket server successfully started on ws://${this.host}:${this.port}`);
+          this.log('info', `Server ready to accept connections`);
           this.emit('server_started', { host: this.host, port: this.port });
           resolve();
         });
 
         this.server.on('error', (error) => {
-          // ERROR: WebSocket server error:, error
-          this.emit('server_error', error);          /**
-   * Performs the specified operation
-   * @param {any} error.code - Optional parameter
-   * @returns {any} The operation result
-   */
-          /**
-   * Performs the specified operation
-   * @param {any} error.code - Optional parameter
-   * @returns {any} The operation result
-   */
-
-
+          this.log('error', `WebSocket server error: ${error.message}`, error);
+          this.emit('server_error', error);
+          
           if (error.code === 'EADDRINUSE') {
-            reject(new Error(`Port ${this.port} is already in use. Try a different port or stop existing server.`));
+            const errorMsg = `Port ${this.port} is already in use. Try a different port or stop existing server.`;
+            this.log('error', errorMsg);
+            reject(new Error(errorMsg));
           } else {
+            this.log('error', `Unexpected server error: ${error.code || 'unknown'}`, error);
             reject(error);
           }
         });
 
+        this.log('info', 'Setting up heartbeat mechanism...');
         this.setupHeartbeat();
 
       } catch (error) {
+        this.log('error', `Failed to create WebSocket server: ${error.message}`, error);
         reject(error);
       }
     });
-  }  /**
+  }
+  /**
    * Performs the specified operation
    * @returns {Promise} Promise that resolves with the result
    */
@@ -145,7 +147,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
    */
 
 
-  async stop() {  /**
+  async stop() {
+  /**
    * Performs the specified operation
    * @param {boolean} !this.isRunning
    * @returns {boolean} True if successful, false otherwise
@@ -162,7 +165,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
 
     // LOG: Stopping CodeFortify WebSocket server...
     // Close all client connections
-    this.clients.forEach((client, ws) => {      /**
+    this.clients.forEach((client, ws) => {
+      /**
    * Performs the specified operation
    * @param {any} ws.readyState - Optional parameter
    * @returns {string} The operation result
@@ -181,7 +185,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
     this.clients.clear();
     this.sessions.clear();
 
-    // Clear heartbeat    /**
+    // Clear heartbeat
+    /**
    * Performs the specified operation
    * @param {boolean} this.heartbeatTimer
    * @returns {boolean} True if successful, false otherwise
@@ -197,7 +202,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
       this.heartbeatTimer = null;
     }
 
-    return new Promise((resolve) => {      /**
+    return new Promise((resolve) => {
+      /**
    * Performs the specified operation
    * @param {boolean} this.server
    * @returns {boolean} True if successful, false otherwise
@@ -219,7 +225,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
         resolve();
       }
     });
-  }  /**
+  }
+  /**
    * Handles the specified event
    * @param {any} ws
    * @param {any} request
@@ -248,55 +255,61 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
     this.clients.set(ws, clientInfo);
     this.sessions.set(sessionId, ws);
 
-    // LOG: `📱 New client connected: ${sessionId} (${clientInfo.ip})`
+    this.log('info', `📱 New client connected: ${sessionId} (${clientInfo.ip})`);
+    this.log('info', `User-Agent: ${clientInfo.userAgent}`);
+    this.log('info', `Total connected clients: ${this.clients.size}`);
+
     // Send welcome message
-    this.sendToClient(ws, {
+    const welcomeMessage = {
       type: 'connection_established',
       session_id: sessionId,
       server_info: {
         version: '1.1.0',
         capabilities: ['real-time-analysis', 'file-watching', 'notifications']
       }
-    });
+    };
+    
+    this.log('debug', `Sending welcome message to ${sessionId}:`, welcomeMessage);
+    this.sendToClient(ws, welcomeMessage);
 
     // Setup client event handlers
     ws.on('message', (data) => {
+      this.log('debug', `Received message from ${sessionId}:`, data.toString());
       this.handleClientMessage(ws, data);
     });
 
     ws.on('close', (code, reason) => {
+      this.log('info', `Client ${sessionId} disconnected (Code: ${code}, Reason: ${reason})`);
       this.handleClientDisconnect(ws, code, reason);
     });
 
     ws.on('error', (error) => {
-      // ERROR: `Client error (${sessionId}):`, error
+      this.log('error', `Client error (${sessionId}): ${error.message}`, error);
     });
 
     ws.on('pong', () => {
       if (this.clients.has(ws)) {
         this.clients.get(ws).lastActivity = new Date();
+        this.log('debug', `Received pong from ${sessionId}`);
       }
     });
 
-    // Send initial status if available    /**
-   * Performs the specified operation
-   * @param {boolean} this.statusManager
-   * @returns {boolean} True if successful, false otherwise
-   */
-    /**
-   * Performs the specified operation
-   * @param {boolean} this.statusManager
-   * @returns {boolean} True if successful, false otherwise
-   */
-
+    // Send initial status if available
     if (this.statusManager) {
+      this.log('info', `Sending initial status to ${sessionId}`);
+      setTimeout(() => {
+        this.sendCurrentStatus(ws);
+      }, 100);
+    } else {
+      this.log('info', `No status manager available, sending default status to ${sessionId}`);
       setTimeout(() => {
         this.sendCurrentStatus(ws);
       }, 100);
     }
 
     this.emit('client_connected', { sessionId, clientInfo });
-  }  /**
+  }
+  /**
    * Handles the specified event
    * @param {any} ws
    * @param {any} data
@@ -311,62 +324,54 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
 
 
   handleClientMessage(ws, data) {
-    const clientInfo = this.clients.get(ws);    /**
-   * Performs the specified operation
-   * @param {any} !clientInfo
-   * @returns {any} The operation result
-   */
-    /**
-   * Performs the specified operation
-   * @param {any} !clientInfo
-   * @returns {any} The operation result
-   */
-
-    if (!clientInfo) {return;}
+    const clientInfo = this.clients.get(ws);
+    
+    if (!clientInfo) {
+      this.log('warn', 'Received message from unknown client');
+      return;
+    }
 
     clientInfo.lastActivity = new Date();
+    this.log('debug', `Processing message from ${clientInfo.sessionId}`);
 
     try {
       const message = JSON.parse(data.toString());
+      this.log('debug', `Parsed message type: ${message.type}`, message);
 
-      // Handle different message types      /**
-   * Performs the specified operation
-   * @param {any} message.type
-   * @returns {any} The operation result
-   */
-      /**
-   * Performs the specified operation
-   * @param {any} message.type
-   * @returns {any} The operation result
-   */
-
+      // Handle different message types
       switch (message.type) {
       case 'subscribe':
+        this.log('info', `Client ${clientInfo.sessionId} subscribing to:`, message.data?.types);
         this.handleSubscription(ws, message);
         break;
 
       case 'unsubscribe':
+        this.log('info', `Client ${clientInfo.sessionId} unsubscribing from:`, message.data?.types);
         this.handleUnsubscription(ws, message);
         break;
 
       case 'set_filters':
+        this.log('info', `Client ${clientInfo.sessionId} setting filters:`, message.data);
         this.handleSetFilters(ws, message);
         break;
 
       case 'get_status':
+        this.log('info', `Client ${clientInfo.sessionId} requesting status`);
         this.sendCurrentStatus(ws);
         break;
 
       case 'run_analysis':
+        this.log('info', `Client ${clientInfo.sessionId} requesting analysis`);
         this.handleAnalysisRequest(ws, message);
         break;
 
       case 'ping':
+        this.log('debug', `Client ${clientInfo.sessionId} sent ping`);
         this.sendToClient(ws, { type: 'pong', timestamp: new Date().toISOString() });
         break;
 
       case 'connection_established':
-        // LOG: `📱 Client identified: ${message.client || unknown}`
+        this.log('info', `Client ${clientInfo.sessionId} confirmed connection`);
         this.sendToClient(ws, {
           type: 'connection_acknowledged',
           server: 'CodeFortify WebSocket Server',
@@ -375,7 +380,7 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
         break;
 
       default:
-        // LOG: `Unknown message type: ${message.type}`
+        this.log('warn', `Unknown message type from ${clientInfo.sessionId}: ${message.type}`);
         this.sendToClient(ws, {
           type: 'error',
           message: `Unknown message type: ${message.type}`
@@ -384,13 +389,15 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
       }
 
     } catch (error) {
-      // ERROR: Failed to parse client message:, error
+      this.log('error', `Failed to parse message from ${clientInfo.sessionId}: ${error.message}`, error);
+      this.log('error', `Raw message data: ${data.toString()}`);
       this.sendToClient(ws, {
         type: 'error',
         message: 'Invalid JSON message'
       });
     }
-  }  /**
+  }
+  /**
    * Handles the specified event
    * @param {any} ws
    * @param {any} code
@@ -407,7 +414,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
 
 
   handleClientDisconnect(ws, code, reason) {
-    const clientInfo = this.clients.get(ws);    /**
+    const clientInfo = this.clients.get(ws);
+    /**
    * Performs the specified operation
    * @param {any} clientInfo
    * @returns {any} The operation result
@@ -424,7 +432,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
       this.clients.delete(ws);
       this.emit('client_disconnected', { sessionId: clientInfo.sessionId, code, reason });
     }
-  }  /**
+  }
+  /**
    * Handles the specified event
    * @param {any} ws
    * @param {any} message
@@ -439,7 +448,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
 
 
   handleSubscription(ws, message) {
-    const clientInfo = this.clients.get(ws);    /**
+    const clientInfo = this.clients.get(ws);
+    /**
    * Performs the specified operation
    * @param {any} !clientInfo || !message.data?.types
    * @returns {any} The operation result
@@ -462,7 +472,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
     });
 
     // LOG: `Client ${clientInfo.sessionId} subscribed to:`, message.data.types
-  }  /**
+  }
+  /**
    * Handles the specified event
    * @param {any} ws
    * @param {any} message
@@ -477,7 +488,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
 
 
   handleUnsubscription(ws, message) {
-    const clientInfo = this.clients.get(ws);    /**
+    const clientInfo = this.clients.get(ws);
+    /**
    * Performs the specified operation
    * @param {any} !clientInfo || !message.data?.types
    * @returns {any} The operation result
@@ -500,7 +512,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
     });
 
     // LOG: `Client ${clientInfo.sessionId} unsubscribed from:`, message.data.types
-  }  /**
+  }
+  /**
    * Sets configuration
    * @param {any} ws
    * @param {any} message
@@ -515,7 +528,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
 
 
   handleSetFilters(ws, message) {
-    const clientInfo = this.clients.get(ws);    /**
+    const clientInfo = this.clients.get(ws);
+    /**
    * Performs the specified operation
    * @param {any} !clientInfo
    * @returns {any} The operation result
@@ -534,7 +548,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
       type: 'filters_updated',
       data: clientInfo.filters
     });
-  }  /**
+  }
+  /**
    * Handles the specified event
    * @param {any} ws
    * @param {any} message
@@ -549,7 +564,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
 
 
   async handleAnalysisRequest(ws, message) {
-    const clientInfo = this.clients.get(ws);    /**
+    const clientInfo = this.clients.get(ws);
+    /**
    * Performs the specified operation
    * @param {any} !clientInfo
    * @returns {any} The operation result
@@ -573,7 +589,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
     });
 
     try {
-      // Trigger analysis if analysis engine is available      /**
+      // Trigger analysis if analysis engine is available
+      /**
    * Performs the specified operation
    * @param {boolean} this.analysisEngine
    * @returns {boolean} True if successful, false otherwise
@@ -601,7 +618,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
         }
       });
     }
-  }  /**
+  }
+  /**
    * Performs the specified operation
    * @param {any} ws
    * @returns {Promise} Promise that resolves with the result
@@ -615,7 +633,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
 
   async sendCurrentStatus(ws) {
     try {
-      let statusData;      /**
+      let statusData;
+      /**
    * Performs the specified operation
    * @param {boolean} this.statusManager
    * @returns {boolean} True if successful, false otherwise
@@ -666,7 +685,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
         message: 'Failed to retrieve current status'
       });
     }
-  }  /**
+  }
+  /**
    * Performs the specified operation
    * @param {any} ws
    * @returns {boolean} True if successful, false otherwise
@@ -682,7 +702,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
     let progress = 0;
 
     const progressTimer = setInterval(() => {
-      progress += Math.random() * 20;      /**
+      progress += Math.random() * 20;
+      /**
    * Performs the specified operation
    * @param {any} progress > - Optional parameter
    * @returns {any} The operation result
@@ -725,7 +746,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
     }, 500);
   }
 
-  // Broadcast methods for external use  /**
+  // Broadcast methods for external use
+  /**
    * Performs the specified operation
    * @param {any} message
    * @param {any} filter - Optional parameter
@@ -739,7 +761,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
    */
 
   broadcast(message, filter = null) {
-    this.clients.forEach((clientInfo, ws) => {      /**
+    this.clients.forEach((clientInfo, ws) => {
+      /**
    * Performs the specified operation
    * @param {any} ws.readyState - Optional parameter
    * @returns {string} The operation result
@@ -759,7 +782,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
         this.sendToClient(ws, message);
       }
     });
-  }  /**
+  }
+  /**
    * Updates existing data
    * @param {any} statusData
    * @returns {any} The operation result
@@ -777,7 +801,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
       data: statusData,
       timestamp: new Date().toISOString()
     });
-  }  /**
+  }
+  /**
    * Updates existing data
    * @param {any} scoreData
    * @returns {any} The operation result
@@ -795,7 +820,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
       data: scoreData,
       timestamp: new Date().toISOString()
     });
-  }  /**
+  }
+  /**
    * Performs the specified operation
    * @param {any} notification
    * @returns {any} The operation result
@@ -814,7 +840,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
       timestamp: new Date().toISOString(),
       priority: notification.priority || 'medium'
     });
-  }  /**
+  }
+  /**
    * Performs the specified operation
    * @param {any} ws
    * @param {any} message
@@ -828,32 +855,29 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
    */
 
 
-  sendToClient(ws, message) {  /**
-   * Performs the specified operation
-   * @param {any} ws.readyState - Optional parameter
-   * @returns {string} The operation result
-   */
-    /**
-   * Performs the specified operation
-   * @param {any} ws.readyState - Optional parameter
-   * @returns {string} The operation result
-   */
-
+  sendToClient(ws, message) {
+    const clientInfo = this.clients.get(ws);
+    const sessionId = clientInfo?.sessionId || 'unknown';
+    
     if (ws.readyState === 1) { // OPEN
-      const clientInfo = this.clients.get(ws);
       const fullMessage = {
         ...message,
-        session_id: clientInfo?.sessionId || 'unknown',
+        session_id: sessionId,
         timestamp: message.timestamp || new Date().toISOString()
       };
 
       try {
-        ws.send(JSON.stringify(fullMessage));
+        const messageStr = JSON.stringify(fullMessage);
+        this.log('debug', `Sending message to ${sessionId}:`, fullMessage);
+        ws.send(messageStr);
       } catch (error) {
-        // ERROR: Failed to send message to client:, error
+        this.log('error', `Failed to send message to client ${sessionId}: ${error.message}`, error);
       }
+    } else {
+      this.log('warn', `Cannot send message to ${sessionId}: WebSocket not open (state: ${ws.readyState})`);
     }
-  }  /**
+  }
+  /**
    * Performs the specified operation
    * @param {any} clientInfo
    * @param {any} filter
@@ -868,7 +892,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
 
 
   clientMatchesFilter(clientInfo, filter) {
-    // Implement filtering logic  /**
+    // Implement filtering logic
+  /**
    * Performs the specified operation
    * @param {any} filter.subscriptions
    * @returns {any} The operation result
@@ -882,7 +907,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
     if (filter.subscriptions) {
       const hasSubscription = filter.subscriptions.some(sub =>
         clientInfo.subscriptions.has(sub)
-      );      /**
+      );
+      /**
    * Performs the specified operation
    * @param {boolean} !hasSubscription
    * @returns {any} The operation result
@@ -897,7 +923,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
     }
 
     return true;
-  }  /**
+  }
+  /**
    * Sets configuration
    * @returns {any} The operation result
    */
@@ -911,7 +938,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
     this.heartbeatTimer = setInterval(() => {
       const now = new Date();
 
-      this.clients.forEach((clientInfo, ws) => {        /**
+      this.clients.forEach((clientInfo, ws) => {
+        /**
    * Performs the specified operation
    * @param {any} ws.readyState - Optional parameter
    * @returns {string} The operation result
@@ -923,7 +951,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
    */
 
         if (ws.readyState === 1) { // OPEN
-          const timeSinceActivity = now - clientInfo.lastActivity;          /**
+          const timeSinceActivity = now - clientInfo.lastActivity;
+          /**
    * Performs the specified operation
    * @param {boolean} timeSinceActivity > this.clientTimeout
    * @returns {boolean} True if successful, false otherwise
@@ -945,7 +974,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
         }
       });
     }, this.heartbeatInterval);
-  }  /**
+  }
+  /**
    * Sets configuration
    * @returns {any} The operation result
    */
@@ -964,7 +994,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
 
     process.on('SIGINT', cleanup);
     process.on('SIGTERM', cleanup);
-  }  /**
+  }
+  /**
    * Generates new data
    * @returns {any} The created resource
    */
@@ -978,7 +1009,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
     return crypto.randomBytes(16).toString('hex');
   }
 
-  // Status methods  /**
+  // Status methods
+  /**
    * Retrieves data
    * @returns {string} The retrieved data
    */
@@ -995,7 +1027,8 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
       clientCount: this.clients.size,
       uptime: this.isRunning ? Date.now() - this.startTime : 0
     };
-  }  /**
+  }
+  /**
    * Retrieves data
    * @returns {string} The retrieved data
    */
@@ -1019,6 +1052,24 @@ export class CodeFortifyWebSocketServer extends EventEmitter {
       });
     });
     return clients;
+  }
+
+  // Enhanced logging method
+  log(level, message, data = null) {
+    const timestamp = new Date().toISOString();
+    const logLevels = { error: 0, warn: 1, info: 2, debug: 3 };
+    const currentLevel = logLevels[this.logLevel] || 2;
+    const messageLevel = logLevels[level] || 2;
+
+    if (messageLevel <= currentLevel) {
+      const prefix = `${this.logPrefix} [${level.toUpperCase()}] ${timestamp}`;
+      
+      if (data) {
+        console.log(`${prefix} ${message}`, data);
+      } else {
+        console.log(`${prefix} ${message}`);
+      }
+    }
   }
 }
 

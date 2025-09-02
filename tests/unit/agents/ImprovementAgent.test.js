@@ -149,7 +149,7 @@ describe('ImprovementAgent', () => {
 
     it('should respect max improvements limit', async () => {
       agent.config.maxImprovements = 1;
-      
+
       const result = await agent.improve(mockCode, mockReviewResult, mockAnalysisResult);
 
       expect(result.fixes.length).toBeLessThanOrEqual(1);
@@ -157,7 +157,7 @@ describe('ImprovementAgent', () => {
 
     it('should respect priority threshold', async () => {
       agent.config.priorityThreshold = 5;
-      
+
       const result = await agent.improve(mockCode, mockReviewResult, mockAnalysisResult);
 
       // Should skip low priority improvements
@@ -170,7 +170,7 @@ describe('ImprovementAgent', () => {
 
     it('should handle improvement errors gracefully', async () => {
       const invalidCode = 'function unclosed() { if (true) ';
-      
+
       const result = await agent.improve(invalidCode, mockReviewResult, mockAnalysisResult);
 
       expect(result).toBeDefined();
@@ -418,7 +418,7 @@ describe('ImprovementAgent', () => {
 
     it('should have strategies for common improvement types', () => {
       const strategies = agent.improvementStrategies;
-      
+
       // Should have strategies for common types
       expect(strategies.security || strategies.performance || strategies.style).toBeDefined();
     });

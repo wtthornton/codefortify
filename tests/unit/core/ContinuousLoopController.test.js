@@ -43,6 +43,12 @@ const createMockAgent = () => ({
     improvements: [],
     issues: []
   }),
+  // Add specific methods that the controller calls
+  enhance: vi.fn().mockResolvedValue({ code: 'enhanced code' }),
+  review: vi.fn().mockResolvedValue({ score: 85, issues: [], recommendations: [] }),
+  analyze: vi.fn().mockResolvedValue({ insights: [], recommendations: [] }),
+  improve: vi.fn().mockResolvedValue({ code: 'improved code', fixes: [] }),
+  runAnalysis: vi.fn().mockResolvedValue({ summary: { visualRegressions: 0, accessibilityViolations: 0 } }),
   getCapabilities: vi.fn().mockReturnValue([]),
   isReady: vi.fn().mockReturnValue(true)
 });
@@ -164,9 +170,13 @@ class TestableLoopController extends EventEmitter {
         }
       }
 
+      const finalScore = this.iterationHistory.length > 0 
+        ? this.iterationHistory[this.iterationHistory.length - 1].score 
+        : this.lastScore;
+
       this.emit('loop:completed', {
         iterations: this.currentIteration,
-        finalScore: this.lastScore,
+        finalScore: finalScore,
         history: this.iterationHistory
       });
 
@@ -174,10 +184,14 @@ class TestableLoopController extends EventEmitter {
       this.isRunning = false;
     }
 
+    const finalScore = this.iterationHistory.length > 0 
+      ? this.iterationHistory[this.iterationHistory.length - 1].score 
+      : this.lastScore;
+
     return {
       success: true,
       iterations: this.currentIteration,
-      finalScore: this.lastScore,
+      finalScore: finalScore,
       history: this.iterationHistory
     };
   }
@@ -359,11 +373,30 @@ describe('ContinuousLoopController', () => {
 
     it('should stop early when target score is reached', async () => {
       // Mock agents to return high score immediately
-      Object.values(controller.agents).forEach(agent => {
-        if (agent) {
-          agent.execute.mockResolvedValue({ success: true, score: 95 });
-        }
-      });
+      if (controller.agents.review) {
+        controller.agents.review.execute = vi.fn().mockResolvedValue({ 
+          success: true, 
+          score: 95, 
+          issues: [], 
+          recommendations: [] 
+        });
+      }
+      if (controller.agents.analysis) {
+        controller.agents.analysis.execute = vi.fn().mockResolvedValue({ 
+          success: true, 
+          score: 95, 
+          insights: [], 
+          recommendations: [] 
+        });
+      }
+      if (controller.agents.improvement) {
+        controller.agents.improvement.execute = vi.fn().mockResolvedValue({ 
+          success: true, 
+          score: 95, 
+          improvements: [], 
+          fixes: [] 
+        });
+      }
 
       const result = await controller.startContinuousLoop();
 
