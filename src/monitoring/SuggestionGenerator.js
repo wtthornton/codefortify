@@ -39,7 +39,17 @@ export class SuggestionGenerator {
     try {
       const suggestions = [];
 
-      // Generate suggestions for each issue
+      // Generate suggestions for each issue      /**
+   * Performs the specified operation
+   * @param {boolean} const issue of issues
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} const issue of issues
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       for (const issue of issues) {
         const issueSuggestions = await this.generateIssueSuggestions(issue, code, context);
         suggestions.push(...issueSuggestions);
@@ -56,7 +66,7 @@ export class SuggestionGenerator {
       return rankedSuggestions.slice(0, this.config.maxSuggestions);
 
     } catch (error) {
-      console.error(`❌ Error generating suggestions: ${error.message}`);
+      // ERROR: `❌ Error generating suggestions: ${error.message}`
       return [];
     }
   }
@@ -69,7 +79,17 @@ export class SuggestionGenerator {
    * @returns {Promise<Array>} Issue-specific suggestions
    */
   async generateIssueSuggestions(issue, code, context) {
-    const suggestions = [];
+    const suggestions = [];    /**
+   * Performs the specified operation
+   * @param {boolean} issue.type
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} issue.type
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     switch (issue.type) {
     case 'complexity':
@@ -152,7 +172,17 @@ export class SuggestionGenerator {
    * @returns {Array} Complexity suggestions
    */
   generateComplexitySuggestions(issue, code, context) {
-    const suggestions = [];
+    const suggestions = [];    /**
+   * Performs the specified operation
+   * @param {boolean} issue.value > 15
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} issue.value > 15
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (issue.value > 15) {
       suggestions.push({
@@ -194,7 +224,17 @@ export class SuggestionGenerator {
    * @returns {Array} Maintainability suggestions
    */
   generateMaintainabilitySuggestions(issue, code, context) {
-    const suggestions = [];
+    const suggestions = [];    /**
+   * Performs the specified operation
+   * @param {boolean} issue.value < 60
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} issue.value < 60
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (issue.value < 60) {
       suggestions.push({
@@ -213,7 +253,17 @@ export class SuggestionGenerator {
       });
     }
 
-    const longLines = code.split('\n').filter(line => line.length > 100);
+    const longLines = code.split('\n').filter(line => line.length > 100);    /**
+   * Performs the specified operation
+   * @param {any} longLines.length > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} longLines.length > 0
+   * @returns {any} The operation result
+   */
+
     if (longLines.length > 0) {
       suggestions.push({
         type: 'maintainability',
@@ -330,7 +380,17 @@ export class SuggestionGenerator {
    * @returns {Array} Readability suggestions
    */
   generateReadabilitySuggestions(issue, code, context) {
-    const suggestions = [];
+    const suggestions = [];    /**
+   * Performs the specified operation
+   * @param {boolean} issue.value < 70
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} issue.value < 70
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (issue.value < 70) {
       suggestions.push({
@@ -349,7 +409,17 @@ export class SuggestionGenerator {
       });
     }
 
-    const shortVars = (code.match(/\b[a-z]{1,2}\b/g) || []).length;
+    const shortVars = (code.match(/\b[a-z]{1,2}\b/g) || []).length;    /**
+   * Performs the specified operation
+   * @param {any} shortVars > 5
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} shortVars > 5
+   * @returns {any} The operation result
+   */
+
     if (shortVars > 5) {
       suggestions.push({
         type: 'readability',
@@ -373,7 +443,17 @@ export class SuggestionGenerator {
    * @returns {Array} Testability suggestions
    */
   generateTestabilitySuggestions(issue, code, context) {
-    const suggestions = [];
+    const suggestions = [];    /**
+   * Performs the specified operation
+   * @param {boolean} issue.value < 60
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} issue.value < 60
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (issue.value < 60) {
       suggestions.push({
@@ -417,7 +497,17 @@ export class SuggestionGenerator {
     return suggestions.sort((a, b) => {
       // Priority order: critical > high > medium > low
       const priorityOrder = { critical: 4, high: 3, medium: 2, low: 1 };
-      const priorityDiff = priorityOrder[b.priority] - priorityOrder[a.priority];
+      const priorityDiff = priorityOrder[b.priority] - priorityOrder[a.priority];      /**
+   * Performs the specified operation
+   * @param {any} priorityDiff ! - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} priorityDiff ! - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
       if (priorityDiff !== 0) {
         return priorityDiff;
@@ -494,16 +584,58 @@ export class SuggestionGenerator {
     };
 
     let totalRating = 0;
-    let ratingCount = 0;
+    let ratingCount = 0;    /**
+   * Performs the specified operation
+   * @param {number} const [suggestionId
+   * @param {boolean} feedback] of this.feedbackHistory
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {number} const [suggestionId
+   * @param {boolean} feedback] of this.feedbackHistory
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     for (const [suggestionId, feedback] of this.feedbackHistory) {
       stats.totalSuggestions++;
-      stats.totalFeedback += feedback.length;
+      stats.totalFeedback += feedback.length;      /**
+   * Performs the specified operation
+   * @param {any} const fb of feedback
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const fb of feedback
+   * @returns {any} The operation result
+   */
 
-      for (const fb of feedback) {
+
+      for (const fb of feedback) {        /**
+   * Performs the specified operation
+   * @param {any} fb.type
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} fb.type
+   * @returns {any} The operation result
+   */
+
         if (fb.type) {
           stats.feedbackByType[fb.type] = (stats.feedbackByType[fb.type] || 0) + 1;
-        }
+        }        /**
+   * Performs the specified operation
+   * @param {any} fb.rating
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} fb.rating
+   * @returns {any} The operation result
+   */
+
 
         if (fb.rating) {
           totalRating += fb.rating;

@@ -14,6 +14,36 @@
 import { fileUtils } from '../utils/fileUtils.js';
 import path from 'path';
 
+/**
+
+
+ * ArchitectureDetector class implementation
+
+
+ *
+
+
+ * Provides functionality for architecturedetector operations
+
+
+ */
+
+
+/**
+
+
+ * ArchitectureDetector class implementation
+
+
+ *
+
+
+ * Provides functionality for architecturedetector operations
+
+
+ */
+
+
 export class ArchitectureDetector {
   constructor(config = {}) {
     this.config = config;
@@ -63,8 +93,7 @@ export class ArchitectureDetector {
    */
   async detectArchitecturePatterns(projectRoot) {
     try {
-      console.log(`🏗️ Detecting architecture patterns in: ${projectRoot}`);
-
+      // LOG: `🏗️ Detecting architecture patterns in: ${projectRoot}`
       const patterns = {
         mvc: await this.detectMVC(projectRoot),
         repository: await this.detectRepository(projectRoot),
@@ -86,7 +115,7 @@ export class ArchitectureDetector {
       };
 
     } catch (error) {
-      console.error(`❌ Error detecting architecture patterns: ${error.message}`);
+      // ERROR: `❌ Error detecting architecture patterns: ${error.message}`
       return {
         patterns: {},
         primary: null,
@@ -269,7 +298,19 @@ export class ArchitectureDetector {
     };
   }
 
-  // Private methods
+  // Private methods  /**
+   * Performs the specified operation
+   * @param {any} projectRoot
+   * @param {any} indicators
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} projectRoot
+   * @param {any} indicators
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async scanForPatterns(projectRoot, indicators) {
     const results = {
@@ -279,7 +320,17 @@ export class ArchitectureDetector {
     };
 
     try {
-      // Scan for directories
+      // Scan for directories      /**
+   * Performs the specified operation
+   * @param {any} const dir of indicators.directories
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const dir of indicators.directories
+   * @returns {any} The operation result
+   */
+
       for (const dir of indicators.directories) {
         const dirPath = path.join(projectRoot, dir);
         if (await fileUtils.directoryExists(dirPath)) {
@@ -287,32 +338,84 @@ export class ArchitectureDetector {
         }
       }
 
-      // Scan for files
+      // Scan for files      /**
+   * Performs the specified operation
+   * @param {any} const file of indicators.files
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const file of indicators.files
+   * @returns {any} The operation result
+   */
+
       for (const file of indicators.files) {
         const files = await this.scanForFiles(projectRoot, [file]);
         results.files.push(...files);
       }
 
-      // Scan for code patterns
+      // Scan for code patterns      /**
+   * Performs the specified operation
+   * @param {any} const pattern of indicators.patterns
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const pattern of indicators.patterns
+   * @returns {any} The operation result
+   */
+
       for (const pattern of indicators.patterns) {
         const matches = await this.scanForCodePatterns(projectRoot, [pattern]);
         results.patterns.push(...matches);
       }
 
     } catch (error) {
-      console.error(`Error scanning for patterns: ${error.message}`);
+      // ERROR: `Error scanning for patterns: ${error.message}`
     }
 
     return results;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} projectRoot
+   * @param {any} filePatterns
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} projectRoot
+   * @param {any} filePatterns
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async scanForFiles(projectRoot, filePatterns) {
     const files = [];
 
     try {
-      const allFiles = await fileUtils.getAllFiles(projectRoot);
+      const allFiles = await fileUtils.getAllFiles(projectRoot);      /**
+   * Performs the specified operation
+   * @param {any} const file of allFiles
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const file of allFiles
+   * @returns {any} The operation result
+   */
 
-      for (const file of allFiles) {
+
+      for (const file of allFiles) {        /**
+   * Performs the specified operation
+   * @param {any} const pattern of filePatterns
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} const pattern of filePatterns
+   * @returns {any} The operation result
+   */
+
         for (const pattern of filePatterns) {
           if (file.includes(pattern) || file.endsWith(pattern)) {
             files.push(file);
@@ -321,21 +424,53 @@ export class ArchitectureDetector {
         }
       }
     } catch (error) {
-      console.error(`Error scanning for files: ${error.message}`);
+      // ERROR: `Error scanning for files: ${error.message}`
     }
 
     return files;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} projectRoot
+   * @param {any} patterns
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} projectRoot
+   * @param {any} patterns
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async scanForCodePatterns(projectRoot, patterns) {
     const matches = [];
 
     try {
-      const jsFiles = await fileUtils.getFilesByExtension(projectRoot, ['.js', '.jsx', '.ts', '.tsx']);
+      const jsFiles = await fileUtils.getFilesByExtension(projectRoot, ['.js', '.jsx', '.ts', '.tsx']);      /**
+   * Performs the specified operation
+   * @param {any} const file of jsFiles
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const file of jsFiles
+   * @returns {any} The operation result
+   */
+
 
       for (const file of jsFiles) {
         try {
-          const content = await fileUtils.readFile(file);
+          const content = await fileUtils.readFile(file);          /**
+   * Performs the specified operation
+   * @param {any} const pattern of patterns
+   * @returns {any} The operation result
+   */
+          /**
+   * Performs the specified operation
+   * @param {any} const pattern of patterns
+   * @returns {any} The operation result
+   */
+
 
           for (const pattern of patterns) {
             if (pattern.test(content)) {
@@ -352,37 +487,109 @@ export class ArchitectureDetector {
         }
       }
     } catch (error) {
-      console.error(`Error scanning for code patterns: ${error.message}`);
+      // ERROR: `Error scanning for code patterns: ${error.message}`
     }
 
     return matches;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} patterns
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} patterns
+   * @returns {any} The operation result
+   */
+
 
   rankPatterns(patterns) {
     return Object.entries(patterns)
       .map(([name, pattern]) => ({ name, ...pattern }))
       .sort((a, b) => b.confidence - a.confidence);
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} rankedPatterns
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} rankedPatterns
+   * @returns {any} The operation result
+   */
 
-  identifyPrimaryPattern(rankedPatterns) {
+
+  identifyPrimaryPattern(rankedPatterns) {  /**
+   * Performs the specified operation
+   * @param {any} rankedPatterns.length - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} rankedPatterns.length - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (rankedPatterns.length === 0) {return null;}
 
     const topPattern = rankedPatterns[0];
     return topPattern.confidence > 0.5 ? topPattern : null;
-  }
+  }  /**
+   * Calculates the result
+   * @param {any} rankedPatterns
+   * @returns {number} The calculated result
+   */
+  /**
+   * Calculates the result
+   * @param {any} rankedPatterns
+   * @returns {number} The calculated result
+   */
 
-  calculateOverallConfidence(rankedPatterns) {
+
+  calculateOverallConfidence(rankedPatterns) {  /**
+   * Performs the specified operation
+   * @param {any} rankedPatterns.length - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} rankedPatterns.length - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (rankedPatterns.length === 0) {return 0;}
 
     const topPattern = rankedPatterns[0];
     return topPattern.confidence;
-  }
+  }  /**
+   * Generates new data
+   * @param {any} patterns
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Generates new data
+   * @param {any} patterns
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async generateArchitectureRecommendations(patterns, projectRoot) {
     const recommendations = [];
 
     // Check for missing patterns
-    const lowConfidencePatterns = patterns.filter(p => p.confidence < 0.3);
+    const lowConfidencePatterns = patterns.filter(p => p.confidence < 0.3);    /**
+   * Performs the specified operation
+   * @param {number} const pattern of lowConfidencePatterns
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {number} const pattern of lowConfidencePatterns
+   * @returns {any} The operation result
+   */
+
 
     for (const pattern of lowConfidencePatterns) {
       recommendations.push({
@@ -395,7 +602,17 @@ export class ArchitectureDetector {
     }
 
     // Check for mixed patterns
-    const highConfidencePatterns = patterns.filter(p => p.confidence > 0.7);
+    const highConfidencePatterns = patterns.filter(p => p.confidence > 0.7);    /**
+   * Performs the specified operation
+   * @param {number} highConfidencePatterns.length > 1
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {number} highConfidencePatterns.length > 1
+   * @returns {any} The operation result
+   */
+
     if (highConfidencePatterns.length > 1) {
       recommendations.push({
         type: 'architecture',
@@ -407,7 +624,15 @@ export class ArchitectureDetector {
     }
 
     return recommendations;
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   getMVCImplementationGuide() {
     return {
@@ -422,7 +647,15 @@ export class ArchitectureDetector {
         'controllers/UserController.js - User request handling'
       ]
     };
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   getRepositoryImplementationGuide() {
     return {
@@ -436,7 +669,15 @@ export class ArchitectureDetector {
         'repositories/ProductRepository.js - Product data access'
       ]
     };
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   getServiceLayerImplementationGuide() {
     return {
@@ -450,7 +691,15 @@ export class ArchitectureDetector {
         'services/OrderService.js - Order business logic'
       ]
     };
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   getMicroservicesImplementationGuide() {
     return {
@@ -465,7 +714,15 @@ export class ArchitectureDetector {
         'api/gateway.js - API gateway'
       ]
     };
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   getEventDrivenImplementationGuide() {
     return {
@@ -480,7 +737,15 @@ export class ArchitectureDetector {
         'listeners/UserListener.js - Event listener'
       ]
     };
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   getComponentBasedImplementationGuide() {
     return {
@@ -495,7 +760,15 @@ export class ArchitectureDetector {
         'pages/HomePage.jsx - Home page component'
       ]
     };
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   getLayeredImplementationGuide() {
     return {

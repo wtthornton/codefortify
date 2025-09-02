@@ -258,6 +258,19 @@ program
     await coordinator.executeUpdate(options);
   });
 
+// Agent initialization command - Fast setup for new AI agents
+program
+  .command('agent-init')
+  .description('🤖 Fast initialization for new AI agents working on this project')
+  .option('-f, --format <format>', 'Output format (console, json, markdown)', 'console')
+  .option('-o, --output <file>', 'Save initialization info to file')
+  .option('--quick', 'Show only essential information for immediate use')
+  .option('--detailed', 'Include detailed project analysis and recommendations')
+  .action(async (options) => {
+    const coordinator = new CommandCoordinator(globalConfig, packageRoot);
+    await coordinator.executeAgentInit(options);
+  });
+
 // Cursor setup command
 program
   .command('cursor')

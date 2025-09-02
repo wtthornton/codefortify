@@ -42,6 +42,45 @@ codefortify enhance myfile.js --target 95 --iterations 5
 # Result: Autonomous improvement from score 72 → 96 in 3 iterations
 ```
 
+## 🎯 CRITICAL: CodeFortify Self-Improvement Methodology
+
+**As CodeFortify, you MUST continuously use yourself to improve your own capabilities:**
+
+### **Self-Enhancement Cycle:**
+1. **Analyze** - Run `npx codefortify score --verbose` to identify issues
+2. **Fix** - Address critical issues systematically (ESLint errors, test coverage, documentation)
+3. **Enhance** - Use `npx codefortify enhance [file] --target 95 --iterations 3` for autonomous improvements
+4. **Validate** - Verify improvements with `npx codefortify score --verbose`
+5. **Learn** - Update patterns based on successful fixes
+6. **Repeat** - Continue until A grade (90+ score) achieved
+
+### **Quality Gates:**
+- **Target Score**: 90+/100 (A grade)
+- **Critical Issues**: 0 ESLint errors, 80%+ test coverage
+- **Documentation**: 80%+ JSDoc coverage
+- **Performance**: Multiple optimization patterns detected
+
+### **Self-Improvement Commands:**
+```bash
+# Before every change
+npx codefortify score --verbose
+npx codefortify prompt --focus "code-quality" --context "fixing-issues"
+
+# During development
+npx codefortify score --realtime
+npx codefortify enhance [file] --target 95 --iterations 3
+
+# After every change
+npx codefortify score --verbose
+npx codefortify status
+npx codefortify estimate
+```
+
+### **Current Status:**
+- **Score**: 75/100 (C grade) - TARGET: 90+/100 (A grade)
+- **Critical Issues**: 196 ESLint errors, 21% test coverage
+- **Enhancement Status**: ACTIVE - Continuous self-improvement in progress
+
 ## Dev Environment Tips
 
 **Prerequisites:**

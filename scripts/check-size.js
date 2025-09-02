@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Package Size Monitoring Script
- * 
+ *
  * Checks if package size exceeds recommended limits
  */
 
@@ -17,7 +17,7 @@ const projectRoot = path.join(__dirname, '..');
 // Size limits (in bytes)
 const LIMITS = {
   src: 500 * 1024,      // 500 KB
-  bin: 100 * 1024,      // 100 KB  
+  bin: 100 * 1024,      // 100 KB
   tests: 1000 * 1024,   // 1 MB
   templates: 50 * 1024, // 50 KB
   total: 2 * 1024 * 1024 // 2 MB total
@@ -29,63 +29,63 @@ async function checkPackageSize() {
   try {
     const sizes = await calculateSizes();
     const totalSize = Object.values(sizes).reduce((sum, size) => sum + size, 0);
-    
+
     console.log(chalk.cyan('📊 Size Report'));
     console.log('─'.repeat(40));
-    
+
     let hasWarnings = false;
-    
+
     // Check individual directories
     Object.entries(sizes).forEach(([dir, size]) => {
       const limit = LIMITS[dir];
-      const sizeKB = (size / 1024).toFixed(1);
-      const limitKB = (limit / 1024).toFixed(0);
-      const percentage = ((size / limit) * 100).toFixed(1);
-      
-      let status = '✅';
-      let color = 'green';
-      
+      const _sizeKB = (size / 1024).toFixed(1);
+      const _limitKB = (limit / 1024).toFixed(0);
+      const _percentage = ((size / limit) * 100).toFixed(1);
+
+      let _status = '✅';
+      let _color = 'green';
+
       if (size > limit) {
-        status = '❌';
-        color = 'red';
+        _status = '❌';
+        _color = 'red';
         hasWarnings = true;
       } else if (size > limit * 0.8) {
-        status = '⚠️';
-        color = 'yellow';
+        _status = '⚠️';
+        _color = 'yellow';
         hasWarnings = true;
       }
-      
+
       console.log(
-        `\${status} \${dir.padEnd(12)} \${chalk[color](sizeKB + ' KB')} / \${limitKB} KB (\${percentage}%)`
+        '${status} ${dir.padEnd(12)} ${chalk[color](_sizeKB + \' KB\')} / ${_limitKB} KB (${_percentage}%)'
       );
     });
-    
+
     // Check total size
-    const totalKB = (totalSize / 1024).toFixed(1);
-    const totalLimitKB = (LIMITS.total / 1024).toFixed(0);
-    const totalPercentage = ((totalSize / LIMITS.total) * 100).toFixed(1);
-    
+    const _totalKB = (totalSize / 1024).toFixed(1);
+    const _totalLimitKB = (LIMITS.total / 1024).toFixed(0);
+    const _totalPercentage = ((totalSize / LIMITS.total) * 100).toFixed(1);
+
     console.log('─'.repeat(40));
-    
-    let totalStatus = '✅';
-    let totalColor = 'green';
-    
+
+    let _totalStatus = '✅';
+    let _totalColor = 'green';
+
     if (totalSize > LIMITS.total) {
-      totalStatus = '❌';
-      totalColor = 'red';
+      _totalStatus = '❌';
+      _totalColor = 'red';
       hasWarnings = true;
     } else if (totalSize > LIMITS.total * 0.8) {
-      totalStatus = '⚠️';
-      totalColor = 'yellow';
+      _totalStatus = '⚠️';
+      _totalColor = 'yellow';
       hasWarnings = true;
     }
-    
+
     console.log(
-      `\${totalStatus} Total Size    \${chalk[totalColor](totalKB + ' KB')} / \${totalLimitKB} KB (\${totalPercentage}%)`
+      '${totalStatus} Total Size    ${chalk[totalColor](totalKB + \' KB\')} / ${totalLimitKB} KB (${totalPercentage}%)'
     );
-    
+
     console.log();
-    
+
     if (hasWarnings) {
       console.log(chalk.yellow('⚠️  Size Warnings Detected'));
       console.log();
@@ -95,14 +95,14 @@ async function checkPackageSize() {
       console.log('• Use dynamic imports for optional features');
       console.log('• Compress large static content');
       console.log();
-      
+
       // Exit with warning code
       process.exit(1);
     } else {
       console.log(chalk.green('✅ All size checks passed!'));
       console.log(chalk.gray('Package size is within recommended limits.'));
     }
-    
+
   } catch (error) {
     console.error(chalk.red('❌ Size check failed:'), error.message);
     process.exit(1);
@@ -112,7 +112,7 @@ async function checkPackageSize() {
 async function calculateSizes() {
   const sizes = {};
   const directories = ['src', 'bin', 'tests', 'templates'];
-  
+
   for (const dir of directories) {
     const dirPath = path.join(projectRoot, dir);
     try {
@@ -121,19 +121,19 @@ async function calculateSizes() {
       sizes[dir] = 0;
     }
   }
-  
+
   return sizes;
 }
 
 async function getDirectorySize(dirPath) {
   let totalSize = 0;
-  
+
   try {
     const items = await fs.readdir(dirPath, { withFileTypes: true });
-    
+
     for (const item of items) {
       const itemPath = path.join(dirPath, item.name);
-      
+
       if (item.isDirectory()) {
         totalSize += await getDirectorySize(itemPath);
       } else {
@@ -144,11 +144,11 @@ async function getDirectorySize(dirPath) {
   } catch (error) {
     return 0;
   }
-  
+
   return totalSize;
 }
 
 // Run the size check
-if (import.meta.url === `file://\${process.argv[1]}`) {
+if (import.meta.url === 'file://${process.argv[1]}') {
   checkPackageSize().catch(console.error);
 }

@@ -1,5 +1,12 @@
 # CodeFortify - Revolutionary AI-Powered Code Enhancement
 
+## 🎯 Core Mission: AI Assistant Efficiency
+
+**CodeFortify's primary goal is to help AI assistants (like Cursor) write code that is:**
+- ⚡ **Faster**: Reduce iteration cycles and debugging time
+- 💰 **Cheaper**: Minimize compute costs through fewer retries and corrections  
+- ✅ **Correct**: Achieve high-quality code in one pass
+
 A revolutionary AI-powered code strengthening and security enhancement tool featuring **autonomous continuous improvement** through specialized AI agents. CodeFortify combines Context7 MCP integration with self-improving code analysis that gets better with every use.
 
 ## 🚀 Revolutionary Features

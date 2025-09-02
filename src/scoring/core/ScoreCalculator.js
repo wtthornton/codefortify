@@ -5,7 +5,7 @@
 export class ScoreCalculator {
   constructor(config) {
     this.config = config;
-    
+
     // Category weights (total: 100 points)
     this.categoryWeights = {
       structure: 20,      // Code Structure & Architecture
@@ -27,11 +27,21 @@ export class ScoreCalculator {
     const scores = {};
     let totalScore = 0;
     let totalWeight = 0;
-    
+
     // Calculate scores for each category
     for (const [category, weight] of Object.entries(this.categoryWeights)) {
-      const result = analysisResults[category];
-      
+      const result = analysisResults[category];      /**
+   * Performs the specified operation
+   * @param {any} result && !result.error
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} result && !result.error
+   * @returns {any} The operation result
+   */
+
+
       if (result && !result.error) {
         scores[category] = {
           score: result.score || 0,
@@ -41,7 +51,7 @@ export class ScoreCalculator {
           issues: result.issues || [],
           recommendations: result.recommendations || []
         };
-        
+
         totalScore += scores[category].weightedScore;
         totalWeight += weight;
       } else {
@@ -55,10 +65,10 @@ export class ScoreCalculator {
         };
       }
     }
-    
+
     // Calculate overall score
     const overallScore = totalWeight > 0 ? (totalScore / totalWeight) * 100 : 0;
-    
+
     return {
       overall: {
         score: Math.round(overallScore * 100) / 100,
@@ -75,11 +85,59 @@ export class ScoreCalculator {
    * @param {number} score - Score (0-100)
    * @returns {string} Letter grade
    */
-  getGrade(score) {
-    if (score >= 90) return 'A';
-    if (score >= 80) return 'B';
-    if (score >= 70) return 'C';
-    if (score >= 60) return 'D';
+  getGrade(score) {  /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 90) {
+      return 'A';
+    }    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 80) {
+      return 'B';
+    }    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 70) {
+      return 'C';
+    }    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 60) {
+      return 'D';
+    }
     return 'F';
   }
 
@@ -88,11 +146,59 @@ export class ScoreCalculator {
    * @param {number} score - Score (0-100)
    * @returns {string} Performance level
    */
-  getPerformanceLevel(score) {
-    if (score >= 90) return 'Excellent';
-    if (score >= 80) return 'Good';
-    if (score >= 70) return 'Fair';
-    if (score >= 60) return 'Poor';
+  getPerformanceLevel(score) {  /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 90) {
+      return 'Excellent';
+    }    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 80) {
+      return 'Good';
+    }    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 70) {
+      return 'Fair';
+    }    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 60) {
+      return 'Poor';
+    }
     return 'Critical';
   }
 
@@ -102,18 +208,18 @@ export class ScoreCalculator {
    * @param {number} overallScore - Overall score
    * @returns {Object} Summary information
    */
-  generateSummary(scores, overallScore) {
+  generateSummary(scores, _overallScore) {
     const totalIssues = Object.values(scores).reduce((sum, category) => sum + category.issues.length, 0);
     const totalRecommendations = Object.values(scores).reduce((sum, category) => sum + category.recommendations.length, 0);
-    
+
     const worstCategory = Object.entries(scores).reduce((worst, [name, data]) => {
       return data.score < worst.score ? { name, score: data.score } : worst;
     }, { name: 'none', score: 100 });
-    
+
     const bestCategory = Object.entries(scores).reduce((best, [name, data]) => {
       return data.score > best.score ? { name, score: data.score } : best;
     }, { name: 'none', score: 0 });
-    
+
     return {
       totalIssues,
       totalRecommendations,

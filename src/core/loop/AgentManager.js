@@ -8,6 +8,36 @@ import { AnalysisAgent } from '../../agents/AnalysisAgent.js';
 import { ImprovementAgent } from '../../agents/ImprovementAgent.js';
 import { VisualTestingAgent } from '../../agents/VisualTestingAgent.js';
 
+/**
+
+
+ * AgentManager class implementation
+
+
+ *
+
+
+ * Provides functionality for agentmanager operations
+
+
+ */
+
+
+/**
+
+
+ * AgentManager class implementation
+
+
+ *
+
+
+ * Provides functionality for agentmanager operations
+
+
+ */
+
+
 export class AgentManager {
   constructor(config) {
     this.config = config;
@@ -26,7 +56,17 @@ export class AgentManager {
       improvement: new ImprovementAgent(this.config)
     };
 
-    // Add visual testing agent if enabled
+    // Add visual testing agent if enabled    /**
+   * Performs the specified operation
+   * @param {Object} this.config.visualTesting ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.config.visualTesting ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.config.visualTesting !== false) {
       agents.visualTesting = new VisualTestingAgent(this.config);
     }
@@ -74,11 +114,21 @@ export class AgentManager {
    * @param {Object} codeChanges - Code changes to test
    * @returns {Promise<Object>} Visual testing results
    */
-  async runVisualTesting(codeChanges) {
+  async runVisualTesting(codeChanges) {  /**
+   * Performs the specified operation
+   * @param {boolean} !this.agents.visualTesting
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} !this.agents.visualTesting
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (!this.agents.visualTesting) {
       return { skipped: true, reason: 'Visual testing not enabled' };
     }
-    
+
     return await this.agents.visualTesting.test(codeChanges);
   }
 
@@ -88,14 +138,14 @@ export class AgentManager {
    */
   getAgentStatuses() {
     const statuses = {};
-    
+
     for (const [name, agent] of Object.entries(this.agents)) {
       statuses[name] = {
         available: !!agent,
         status: agent?.getStatus?.() || 'unknown'
       };
     }
-    
+
     return statuses;
   }
 
@@ -103,12 +153,22 @@ export class AgentManager {
    * Shutdown all agents
    */
   async shutdown() {
-    for (const [name, agent] of Object.entries(this.agents)) {
+    for (const [name, agent] of Object.entries(this.agents)) {      /**
+   * Performs the specified operation
+   * @param {any} agent && typeof agent.shutdown - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} agent && typeof agent.shutdown - Optional parameter
+   * @returns {any} The operation result
+   */
+
       if (agent && typeof agent.shutdown === 'function') {
         try {
           await agent.shutdown();
         } catch (error) {
-          console.error(`Error shutting down agent ${name}:`, error.message);
+          // ERROR: `Error shutting down agent ${name}:`, error.message
         }
       }
     }

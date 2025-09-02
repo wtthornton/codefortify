@@ -60,7 +60,7 @@ describe('Context7 Enhancement System Integration', () => {
     } catch (error) {
       // Ignore cleanup errors
     }
-    
+
     try {
       await fs.rm(testProjectDir, { recursive: true, force: true });
     } catch (error) {
@@ -232,7 +232,7 @@ describe('Context7 Enhancement System Integration', () => {
       // Phase 1: Initial analysis and learning
       const initialContext = await contextAnalyzer.analyzeProjectContext(testProjectDir);
       const codeFiles = await getCodeFiles(testProjectDir);
-      
+
       for (const file of codeFiles) {
         const codeContext = {
           filePath: file.path,
@@ -673,21 +673,21 @@ export class Module${i}Class {
   async function getCodeFiles(projectDir) {
     const files = [];
     const srcDir = path.join(projectDir, 'src');
-    
+
     try {
       const entries = await fs.readdir(srcDir, { withFileTypes: true });
-      
+
       for (const entry of entries) {
         if (entry.isFile()) {
           const filePath = path.join(srcDir, entry.name);
           const content = await fs.readFile(filePath, 'utf8');
           const extension = path.extname(entry.name);
-          
+
           let language = 'javascript';
-          if (extension === '.jsx') language = 'jsx';
-          else if (extension === '.ts') language = 'typescript';
-          else if (extension === '.tsx') language = 'tsx';
-          
+          if (extension === '.jsx') {language = 'jsx';}
+          else if (extension === '.ts') {language = 'typescript';}
+          else if (extension === '.tsx') {language = 'tsx';}
+
           files.push({
             path: filePath,
             content,
@@ -698,7 +698,7 @@ export class Module${i}Class {
     } catch (error) {
       // Handle directory read errors
     }
-    
+
     return files;
   }
 });

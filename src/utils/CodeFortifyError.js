@@ -5,14 +5,24 @@
 export class CodeFortifyError extends Error {
   constructor(message, code = 'CODEFORTIFY_ERROR', context = {}, originalError = null) {
     super(message);
-    
+
     this.name = 'CodeFortifyError';
     this.code = code;
     this.context = context;
     this.originalError = originalError;
     this.timestamp = new Date().toISOString();
-    
-    // Maintain proper stack trace
+
+    // Maintain proper stack trace    /**
+   * Performs the specified operation
+   * @param {any} Error.captureStackTrace
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} Error.captureStackTrace
+   * @returns {any} The operation result
+   */
+
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, CodeFortifyError);
     }

@@ -1,3 +1,4 @@
+import { performance } from 'perf_hooks';
 /**
  * Dependency Analyzer for Context7
  * Analyzes project dependencies and their context
@@ -11,6 +12,36 @@
 
 import { fileUtils } from '../utils/fileUtils.js';
 import path from 'path';
+
+/**
+
+
+ * DependencyAnalyzer class implementation
+
+
+ *
+
+
+ * Provides functionality for dependencyanalyzer operations
+
+
+ */
+
+
+/**
+
+
+ * DependencyAnalyzer class implementation
+
+
+ *
+
+
+ * Provides functionality for dependencyanalyzer operations
+
+
+ */
+
 
 export class DependencyAnalyzer {
   constructor(config = {}) {
@@ -34,8 +65,7 @@ export class DependencyAnalyzer {
    */
   async analyzeDependencyContext(projectRoot) {
     try {
-      console.log(`📦 Analyzing dependency context in: ${projectRoot}`);
-
+      // LOG: `📦 Analyzing dependency context in: ${projectRoot}`
       const analysis = {
         dependencies: await this.analyzeDependencies(projectRoot),
         versions: await this.analyzeVersions(projectRoot),
@@ -48,11 +78,11 @@ export class DependencyAnalyzer {
 
       analysis.recommendations = await this.generateDependencyRecommendations(analysis);
 
-      console.log(`✅ Dependency analysis completed for: ${projectRoot}`);
+      // LOG: `✅ Dependency analysis completed for: ${projectRoot}`
       return analysis;
 
     } catch (error) {
-      console.error(`❌ Error analyzing dependency context: ${error.message}`);
+      // ERROR: `❌ Error analyzing dependency context: ${error.message}`
       return {
         dependencies: {},
         versions: {},
@@ -93,7 +123,7 @@ export class DependencyAnalyzer {
         dependencies.size = this.estimateBundleSize(dependencies.production);
       }
     } catch (error) {
-      console.error(`Error analyzing dependencies: ${error.message}`);
+      // ERROR: `Error analyzing dependencies: ${error.message}`
     }
 
     return dependencies;
@@ -121,7 +151,17 @@ export class DependencyAnalyzer {
         const packageContent = await fileUtils.readFile(packageJsonPath);
         const packageData = JSON.parse(packageContent);
 
-        // Check for Node.js version requirement
+        // Check for Node.js version requirement        /**
+   * Performs the specified operation
+   * @param {any} packageData.engines?.node
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} packageData.engines?.node
+   * @returns {any} The operation result
+   */
+
         if (packageData.engines?.node) {
           versions.node = packageData.engines.node;
         }
@@ -133,7 +173,7 @@ export class DependencyAnalyzer {
             versions.ranges.push({ name, version, type: 'caret' });
           } else if (version.startsWith('~')) {
             versions.ranges.push({ name, version, type: 'tilde' });
-          } else if (version.match(/^\d+\.\d+\.\d+$/)) {
+          } else if (version.match(/^\d+.\d+.\d+$/)) {
             versions.pinned.push({ name, version, type: 'exact' });
           } else if (version.includes('latest')) {
             versions.latest.push({ name, version, type: 'latest' });
@@ -142,7 +182,17 @@ export class DependencyAnalyzer {
       }
 
       // Check for lock files
-      const lockFiles = ['package-lock.json', 'yarn.lock', 'pnpm-lock.yaml'];
+      const lockFiles = ['package-lock.json', 'yarn.lock', 'pnpm-lock.yaml'];      /**
+   * Performs the specified operation
+   * @param {any} const lockFile of lockFiles
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const lockFile of lockFiles
+   * @returns {any} The operation result
+   */
+
       for (const lockFile of lockFiles) {
         const lockPath = path.join(projectRoot, lockFile);
         if (await fileUtils.fileExists(lockPath)) {
@@ -152,7 +202,7 @@ export class DependencyAnalyzer {
       }
 
     } catch (error) {
-      console.error(`Error analyzing versions: ${error.message}`);
+      // ERROR: `Error analyzing versions: ${error.message}`
     }
 
     return versions;
@@ -177,13 +227,33 @@ export class DependencyAnalyzer {
         const packageContent = await fileUtils.readFile(packageJsonPath);
         const packageData = JSON.parse(packageContent);
 
-        // Check for peer dependencies
+        // Check for peer dependencies        /**
+   * Performs the specified operation
+   * @param {any} packageData.peerDependencies
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} packageData.peerDependencies
+   * @returns {any} The operation result
+   */
+
         if (packageData.peerDependencies) {
           compatibility.peerDependencies = Object.entries(packageData.peerDependencies)
             .map(([name, version]) => ({ name, version }));
         }
 
-        // Check for engine requirements
+        // Check for engine requirements        /**
+   * Performs the specified operation
+   * @param {any} packageData.engines
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} packageData.engines
+   * @returns {any} The operation result
+   */
+
         if (packageData.engines) {
           compatibility.engines = Object.entries(packageData.engines)
             .map(([name, version]) => ({ name, version }));
@@ -193,7 +263,17 @@ export class DependencyAnalyzer {
         const allDeps = { ...packageData.dependencies, ...packageData.devDependencies };
         compatibility.conflicts = this.detectVersionConflicts(allDeps);
 
-        // Determine overall compatibility
+        // Determine overall compatibility        /**
+   * Performs the specified operation
+   * @param {any} compatibility.conflicts.length - Optional parameter
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} compatibility.conflicts.length - Optional parameter
+   * @returns {any} The operation result
+   */
+
         if (compatibility.conflicts.length === 0 && compatibility.peerDependencies.length === 0) {
           compatibility.compatibility = 'high';
         } else if (compatibility.conflicts.length < 3) {
@@ -203,7 +283,7 @@ export class DependencyAnalyzer {
         }
       }
     } catch (error) {
-      console.error(`Error analyzing compatibility: ${error.message}`);
+      // ERROR: `Error analyzing compatibility: ${error.message}`
     }
 
     return compatibility;
@@ -230,7 +310,7 @@ export class DependencyAnalyzer {
           const auditData = JSON.parse(auditContent);
           security.vulnerabilities = auditData.vulnerabilities || [];
         } catch (error) {
-          console.error(`Error reading audit results: ${error.message}`);
+          // ERROR: `Error reading audit results: ${error.message}`
         }
       }
 
@@ -242,11 +322,21 @@ export class DependencyAnalyzer {
           const outdatedData = JSON.parse(outdatedContent);
           security.outdated = outdatedData.outdated || [];
         } catch (error) {
-          console.error(`Error reading outdated dependencies: ${error.message}`);
+          // ERROR: `Error reading outdated dependencies: ${error.message}`
         }
       }
 
-      // Determine security level
+      // Determine security level      /**
+   * Performs the specified operation
+   * @param {any} security.vulnerabilities.length - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} security.vulnerabilities.length - Optional parameter
+   * @returns {any} The operation result
+   */
+
       if (security.vulnerabilities.length === 0 && security.outdated.length < 5) {
         security.security = 'high';
       } else if (security.vulnerabilities.length < 3 && security.outdated.length < 10) {
@@ -256,7 +346,7 @@ export class DependencyAnalyzer {
       }
 
     } catch (error) {
-      console.error(`Error analyzing security: ${error.message}`);
+      // ERROR: `Error analyzing security: ${error.message}`
     }
 
     return security;
@@ -283,9 +373,39 @@ export class DependencyAnalyzer {
 
         const deps = packageData.dependencies || {};
 
-        // Check for performance optimization libraries
-        if (deps['web-vitals']) {performance.optimization.push('web-vitals');}
-        if (deps['lighthouse']) {performance.optimization.push('lighthouse');}
+        // Check for performance optimization libraries        /**
+   * Performs the specified operation
+   * @param {any} deps['web-vitals']
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} deps['web-vitals']
+   * @returns {any} The operation result
+   */
+
+        if (deps['web-vitals']) {performance.optimization.push('web-vitals');}        /**
+   * Performs the specified operation
+   * @param {any} deps['lighthouse']
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} deps['lighthouse']
+   * @returns {any} The operation result
+   */
+
+        if (deps['lighthouse']) {performance.optimization.push('lighthouse');}        /**
+   * Performs the specified operation
+   * @param {any} deps['bundle-analyzer']
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} deps['bundle-analyzer']
+   * @returns {any} The operation result
+   */
+
         if (deps['bundle-analyzer']) {performance.optimization.push('bundle-analyzer');}
 
         // Estimate bundle size
@@ -294,7 +414,17 @@ export class DependencyAnalyzer {
         // Estimate load time impact
         performance.loadTime = this.estimateLoadTime(deps);
 
-        // Determine performance level
+        // Determine performance level        /**
+   * Performs the specified operation
+   * @param {any} performance.optimization.length > 2 && performance.bundleSize - Optional parameter
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} performance.optimization.length > 2 && performance.bundleSize - Optional parameter
+   * @returns {any} The operation result
+   */
+
         if (performance.optimization.length > 2 && performance.bundleSize === 'small') {
           performance.performance = 'high';
         } else if (performance.optimization.length > 0 && performance.bundleSize !== 'large') {
@@ -304,7 +434,7 @@ export class DependencyAnalyzer {
         }
       }
     } catch (error) {
-      console.error(`Error analyzing performance: ${error.message}`);
+      // ERROR: `Error analyzing performance: ${error.message}`
     }
 
     return performance;
@@ -345,7 +475,17 @@ export class DependencyAnalyzer {
               categorized = true;
               break;
             }
-          }
+          }          /**
+   * Performs the specified operation
+   * @param {any} !categorized
+   * @returns {any} The operation result
+   */
+          /**
+   * Performs the specified operation
+   * @param {any} !categorized
+   * @returns {any} The operation result
+   */
+
 
           if (!categorized) {
             categories.other.push({ name, version });
@@ -353,37 +493,107 @@ export class DependencyAnalyzer {
         }
       }
     } catch (error) {
-      console.error(`Error categorizing dependencies: ${error.message}`);
+      // ERROR: `Error categorizing dependencies: ${error.message}`
     }
 
     return categories;
   }
 
-  // Private methods
+  // Private methods  /**
+   * Performs the specified operation
+   * @param {any} dependencies
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} dependencies
+   * @returns {any} The operation result
+   */
+
 
   estimateBundleSize(dependencies) {
     const largeLibs = ['react', 'vue', 'angular', 'lodash', 'moment', 'jquery'];
     const mediumLibs = ['express', 'axios', 'uuid', 'crypto'];
 
     const hasLargeLibs = largeLibs.some(lib => dependencies[lib]);
-    const hasMediumLibs = mediumLibs.some(lib => dependencies[lib]);
+    const hasMediumLibs = mediumLibs.some(lib => dependencies[lib]);    /**
+   * Performs the specified operation
+   * @param {boolean} hasLargeLibs
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} hasLargeLibs
+   * @returns {any} The operation result
+   */
 
-    if (hasLargeLibs) {return 'large';}
+
+    if (hasLargeLibs) {return 'large';}    /**
+   * Performs the specified operation
+   * @param {boolean} hasMediumLibs
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} hasMediumLibs
+   * @returns {any} The operation result
+   */
+
     if (hasMediumLibs) {return 'medium';}
     return 'small';
-  }
+  }  /**
+   * Loads data from source
+   * @param {any} dependencies
+   * @returns {any} The operation result
+   */
+  /**
+   * Loads data from source
+   * @param {any} dependencies
+   * @returns {any} The operation result
+   */
+
 
   estimateLoadTime(dependencies) {
     const slowLibs = ['react', 'vue', 'angular', 'lodash', 'moment'];
     const fastLibs = ['axios', 'uuid', 'crypto'];
 
     const hasSlowLibs = slowLibs.some(lib => dependencies[lib]);
-    const hasFastLibs = fastLibs.some(lib => dependencies[lib]);
+    const hasFastLibs = fastLibs.some(lib => dependencies[lib]);    /**
+   * Performs the specified operation
+   * @param {boolean} hasSlowLibs
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} hasSlowLibs
+   * @returns {any} The operation result
+   */
 
-    if (hasSlowLibs) {return 'slow';}
+
+    if (hasSlowLibs) {return 'slow';}    /**
+   * Performs the specified operation
+   * @param {boolean} hasFastLibs
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} hasFastLibs
+   * @returns {any} The operation result
+   */
+
     if (hasFastLibs) {return 'fast';}
     return 'medium';
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} dependencies
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} dependencies
+   * @returns {any} The operation result
+   */
+
 
   detectVersionConflicts(dependencies) {
     const conflicts = [];
@@ -404,12 +614,32 @@ export class DependencyAnalyzer {
     }
 
     return conflicts;
-  }
+  }  /**
+   * Generates new data
+   * @param {boolean} analysis
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Generates new data
+   * @param {boolean} analysis
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async generateDependencyRecommendations(analysis) {
     const recommendations = [];
 
-    // Security recommendations
+    // Security recommendations    /**
+   * Performs the specified operation
+   * @param {boolean} analysis.security.security - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} analysis.security.security - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (analysis.security.security === 'low') {
       recommendations.push({
         type: 'security',
@@ -419,7 +649,17 @@ export class DependencyAnalyzer {
       });
     }
 
-    // Compatibility recommendations
+    // Compatibility recommendations    /**
+   * Performs the specified operation
+   * @param {boolean} analysis.compatibility.compatibility - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} analysis.compatibility.compatibility - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (analysis.compatibility.compatibility === 'low') {
       recommendations.push({
         type: 'compatibility',
@@ -429,7 +669,17 @@ export class DependencyAnalyzer {
       });
     }
 
-    // Performance recommendations
+    // Performance recommendations    /**
+   * Performs the specified operation
+   * @param {boolean} analysis.performance.performance - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} analysis.performance.performance - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (analysis.performance.performance === 'low') {
       recommendations.push({
         type: 'performance',
@@ -439,7 +689,17 @@ export class DependencyAnalyzer {
       });
     }
 
-    // Version recommendations
+    // Version recommendations    /**
+   * Performs the specified operation
+   * @param {boolean} analysis.versions.outdated.length > 5
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} analysis.versions.outdated.length > 5
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (analysis.versions.outdated.length > 5) {
       recommendations.push({
         type: 'versions',

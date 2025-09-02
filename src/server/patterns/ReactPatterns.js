@@ -2,7 +2,15 @@
  * ReactPatterns - React-specific code patterns
  */
 
-export class ReactPatterns {
+export class ReactPatterns {  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
   static getComponentPattern() {
     return `// Context7 React Component Pattern
 import React from 'react';
@@ -19,7 +27,17 @@ export const ExampleComponent: React.FC<ExampleComponentProps> = ({ title, data 
     queryKey: ['example', title],
     queryFn: () => fetchExampleData(title),
     enabled: !!title,
-  });
+  });  /**
+   * Performs the specified operation
+   * @param {boolean} isLoading
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @param {boolean} isLoading
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   if (isLoading) {
     return (
@@ -27,7 +45,17 @@ export const ExampleComponent: React.FC<ExampleComponentProps> = ({ title, data 
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
       </div>
     );
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} error
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} error
+   * @returns {any} The operation result
+   */
+
 
   if (error) {
     return (
@@ -55,7 +83,15 @@ async function fetchExampleData(title: string): Promise<any[]> {
   // Implementation here
   return [];
 }`;
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   static getHookPattern() {
     return `// Context7 React Hook Pattern
@@ -84,7 +120,17 @@ export const useExample = (initialValue: string) => {
     }
   }, []);
 
-  useEffect(() => {
+  useEffect(() => {  /**
+   * Performs the specified operation
+   * @param {any} initialValue
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} initialValue
+   * @returns {any} The operation result
+   */
+
     if (initialValue) {
       fetchData(initialValue);
     }
@@ -97,7 +143,15 @@ export const useExample = (initialValue: string) => {
     refetch: fetchData,
   };
 };`;
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   static getTestPattern() {
     return `// Context7 React Test Pattern

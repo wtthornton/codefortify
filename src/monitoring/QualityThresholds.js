@@ -156,7 +156,17 @@ export class QualityThresholds {
   getRecommendedThresholds(context) {
     const recommendations = { ...this.defaultThresholds };
 
-    // Adjust based on project type
+    // Adjust based on project type    /**
+   * Performs the specified operation
+   * @param {any} context.project?.type - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} context.project?.type - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (context.project?.type === 'react') {
       recommendations.complexity = 12;
       recommendations.maintainability = 75;
@@ -171,14 +181,34 @@ export class QualityThresholds {
       recommendations.readability = 85;
     }
 
-    // Adjust based on team size
+    // Adjust based on team size    /**
+   * Performs the specified operation
+   * @param {any} context.team?.size > 10
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} context.team?.size > 10
+   * @returns {any} The operation result
+   */
+
     if (context.team?.size > 10) {
       recommendations.maintainability += 5;
       recommendations.readability += 5;
       recommendations.testability += 5;
     }
 
-    // Adjust based on project maturity
+    // Adjust based on project maturity    /**
+   * Performs the specified operation
+   * @param {any} context.project?.maturity - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} context.project?.maturity - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (context.project?.maturity === 'production') {
       recommendations.security += 10;
       recommendations.performance += 5;
@@ -211,7 +241,17 @@ export class QualityThresholds {
     };
 
     for (const [metric, recommended] of Object.entries(recommendations)) {
-      const current = this.thresholds[metric];
+      const current = this.thresholds[metric];      /**
+   * Performs the specified operation
+   * @param {any} current - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} current - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
       if (current === recommended) {
         comparison.matches.push({ metric, value: current });
@@ -289,7 +329,17 @@ export class QualityThresholds {
    * @returns {Object} Import result
    */
   importConfiguration(configuration) {
-    try {
+    try {      /**
+   * Performs the specified operation
+   * @param {Object} !configuration || !configuration.thresholds
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} !configuration || !configuration.thresholds
+   * @returns {any} The operation result
+   */
+
       if (!configuration || !configuration.thresholds) {
         throw new Error('Invalid configuration format');
       }

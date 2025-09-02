@@ -23,7 +23,35 @@ export class ErrorHandler {
   }
 
   /**
-   * Handle and log errors consistently
+   * Sanitize error for safe logging (removes sensitive information)
+   * @param {Error|Object} error - Error to sanitize
+   * @returns {Object} Sanitized error safe for logging
+   */
+  static sanitizeError(error) {
+    const sensitivePatterns = [
+      /password/gi,
+      /secret/gi,
+      /token/gi,
+      /key/gi,
+      /credential/gi,
+      /auth/gi
+    ];
+
+    const sanitizedMessage = error.message || error.toString();
+    const containsSensitive = sensitivePatterns.some(pattern => pattern.test(sanitizedMessage));
+
+    return {
+      message: containsSensitive ? 'Operation failed (sensitive data redacted)' : sanitizedMessage,
+      code: error.code || 'UNKNOWN_ERROR',
+      timestamp: new Date().toISOString(),
+      context: 'error-context-sanitized',
+      // Never include full stack traces in production
+      stack: process.env.NODE_ENV === 'development' ? error.stack : 'stack-trace-redacted'
+    };
+  }
+
+  /**
+   * Handle and log errors consistently with security considerations
    * @param {Error|Object} error - Error to handle
    * @param {string} context - Context where error occurred
    * @param {Object} additionalInfo - Additional information
@@ -72,7 +100,17 @@ export class ErrorHandler {
    */
   static handleFileSystemError(error, operation, path) {
     let code = 'FILE_SYSTEM_ERROR';
-    let message = error.message;
+    let message = error.message;    /**
+   * Performs the specified operation
+   * @param {any} error.code - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} error.code - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
     if (error.code === 'ENOENT') {
       code = 'FILE_NOT_FOUND';
@@ -101,7 +139,17 @@ export class ErrorHandler {
    */
   static handleNetworkError(error, operation, url) {
     let code = 'NETWORK_ERROR';
-    let message = error.message;
+    let message = error.message;    /**
+   * Performs the specified operation
+   * @param {any} error.code - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} error.code - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
     if (error.code === 'ECONNREFUSED') {
       code = 'CONNECTION_REFUSED';
@@ -153,7 +201,7 @@ export class ErrorHandler {
       'ENETUNREACH'
     ];
 
-    return retryableCodes.includes(error.code) || 
+    return retryableCodes.includes(error.code) ||
            error.message?.includes('timeout') ||
            error.message?.includes('network');
   }
@@ -165,7 +213,7 @@ export class ErrorHandler {
    */
   static getUserFriendlyMessage(error) {
     const code = error.code || 'UNKNOWN_ERROR';
-    
+
     const friendlyMessages = {
       'FILE_NOT_FOUND': 'The requested file could not be found.',
       'PERMISSION_DENIED': 'You do not have permission to access this resource.',

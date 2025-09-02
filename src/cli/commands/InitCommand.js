@@ -12,17 +12,57 @@ import path from 'path';
 import { ProjectTypeDetector } from '../../scoring/core/ProjectTypeDetector.js';
 import { TemplateManager } from '../../TemplateManager.js';
 
+/**
+
+
+ * InitCommand class implementation
+
+
+ *
+
+
+ * Provides functionality for initcommand operations
+
+
+ */
+
+
+/**
+
+
+ * InitCommand class implementation
+
+
+ *
+
+
+ * Provides functionality for initcommand operations
+
+
+ */
+
+
 export class InitCommand {
   constructor(globalConfig, packageRoot) {
     this.globalConfig = globalConfig;
     this.packageRoot = packageRoot;
-    
+
     // Initialize template manager
     this.templateManager = new TemplateManager({
       projectRoot: this.globalConfig.projectRoot,
       templatesPath: path.join(this.packageRoot, 'templates')
     });
-  }
+  }  /**
+   * Executes the operation
+   * @param {Object} options
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Executes the operation
+   * @param {Object} options
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async execute(options) {
     console.log(chalk.bold.blue('🚀 Initializing CodeFortify Project'));
@@ -42,31 +82,93 @@ export class InitCommand {
       this.displayNextSteps(projectType);
 
     } catch (error) {
-      console.error(chalk.red('\n❌ Initialization failed:'), error.message);
+      console.error(chalk.red('\n❌ Initialization failed:'), error.message);      /**
+   * Performs the specified operation
+   * @param {Object} this.globalConfig.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.globalConfig.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.globalConfig.verbose) {
         console.error(error.stack);
       }
       process.exit(1);
     }
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} specifiedType
+   * @param {Object} options - Optional parameter
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} specifiedType
+   * @param {Object} options - Optional parameter
+   * @returns {Promise} Promise that resolves with the result
+   */
 
-  async determineProjectType(specifiedType, options = {}) {
+
+  async determineProjectType(specifiedType, options = {}) {  /**
+   * Performs the specified operation
+   * @param {any} specifiedType
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} specifiedType
+   * @returns {any} The operation result
+   */
+
     if (specifiedType) {
       return this.validateProjectType(specifiedType);
     }
 
     // Use enhanced auto-detection with confidence scoring
-    const detected = await this.detectProjectTypeWithConfidence();
+    const detected = await this.detectProjectTypeWithConfidence();    /**
+   * Performs the specified operation
+   * @param {Object} options.auto
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} options.auto
+   * @returns {any} The operation result
+   */
+
 
     if (options.auto) {
-      // Auto mode - require high confidence or fail
+      // Auto mode - require high confidence or fail      /**
+   * Performs the specified operation
+   * @param {number} detected.type && detected.confidence > - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {number} detected.type && detected.confidence > - Optional parameter
+   * @returns {any} The operation result
+   */
+
       if (detected.type && detected.confidence >= 0.8) {
         console.log(chalk.green(`✓ Auto-detected: ${chalk.cyan(detected.type)} (${Math.round(detected.confidence * 100)}% confidence)`));
         return detected.type;
       } else {
         throw new Error(`Auto-detection failed. Detected: ${detected.type || 'unknown'} with ${Math.round((detected.confidence || 0) * 100)}% confidence. Use --type to specify manually or remove --auto flag.`);
       }
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {number} detected.type && detected.confidence > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {number} detected.type && detected.confidence > - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
     if (detected.type && detected.confidence >= 0.8) {
       // High confidence - auto-select with notice
@@ -79,7 +181,17 @@ export class InitCommand {
         name: 'confirmType',
         message: `Detected ${chalk.cyan(detected.type)} project (${Math.round(detected.confidence * 100)}% confidence). Is this correct?`,
         default: true
-      }]);
+      }]);      /**
+   * Performs the specified operation
+   * @param {any} confirmType
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} confirmType
+   * @returns {any} The operation result
+   */
+
 
       if (confirmType) {
         return detected.type;
@@ -117,9 +229,29 @@ export class InitCommand {
       { name: '⚡ CLI Tool/Utility', value: 'cli-tool' }
     ];
 
-    // If we have a detected type with low confidence, move it to the top
+    // If we have a detected type with low confidence, move it to the top    /**
+   * Performs the specified operation
+   * @param {number} detected.type && detected.confidence > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {number} detected.type && detected.confidence > 0
+   * @returns {any} The operation result
+   */
+
     if (detected.type && detected.confidence > 0) {
-      const detectedChoice = choices.find(c => c.value === detected.type);
+      const detectedChoice = choices.find(c => c.value === detected.type);      /**
+   * Performs the specified operation
+   * @param {any} detectedChoice
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} detectedChoice
+   * @returns {any} The operation result
+   */
+
       if (detectedChoice) {
         choices.splice(choices.indexOf(detectedChoice), 1);
         detectedChoice.name += chalk.gray(` (detected with ${Math.round(detected.confidence * 100)}% confidence)`);
@@ -135,7 +267,17 @@ export class InitCommand {
     }]);
 
     return projectType;
-  }
+  }  /**
+   * Validates input data
+   * @param {any} type
+   * @returns {any} The operation result
+   */
+  /**
+   * Validates input data
+   * @param {any} type
+   * @returns {any} The operation result
+   */
+
 
   validateProjectType(type) {
     const validTypes = [
@@ -156,11 +298,29 @@ export class InitCommand {
       throw new Error(`Invalid project type: ${type}. Valid options: ${validTypes.join(', ')}`);
     }
     return type;
-  }
+  }  /**
+   * Performs the specified operation
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async detectProjectTypeWithConfidence() {
     const detector = new ProjectTypeDetector(this.globalConfig.projectRoot);
-    const detectedType = detector.detectProjectType();
+    const detectedType = detector.detectProjectType();    /**
+   * Performs the specified operation
+   * @param {any} !detectedType || detectedType - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !detectedType || detectedType - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
     if (!detectedType || detectedType === 'javascript') {
       return { type: detectedType, confidence: 0.3 };
@@ -170,7 +330,19 @@ export class InitCommand {
     const confidence = await this.calculateDetectionConfidence(detectedType, detector);
 
     return { type: detectedType, confidence };
-  }
+  }  /**
+   * Calculates the result
+   * @param {any} type
+   * @param {any} detector
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Calculates the result
+   * @param {any} type
+   * @param {any} detector
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async calculateDetectionConfidence(type, detector) {
     let confidence = 0.5; // Base confidence
@@ -216,17 +388,47 @@ export class InitCommand {
         };
 
         const indicators = strongIndicators[type] || [];
-        const matchingDeps = indicators.filter(dep => allDeps[dep]);
+        const matchingDeps = indicators.filter(dep => allDeps[dep]);        /**
+   * Performs the specified operation
+   * @param {any} matchingDeps.length > 0
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} matchingDeps.length > 0
+   * @returns {any} The operation result
+   */
+
 
         if (matchingDeps.length > 0) {
           confidence += 0.3 * (matchingDeps.length / indicators.length);
         }
 
-        // Package.json structure indicators
+        // Package.json structure indicators        /**
+   * Performs the specified operation
+   * @param {any} type - Optional parameter
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} type - Optional parameter
+   * @returns {any} The operation result
+   */
+
         if (type === 'cli-tool' && packageJson.bin) {confidence += 0.2;}
         if (type === 'node-api' && packageJson.main && packageJson.main.includes('server')) {confidence += 0.1;}
         if ((type === 'react-webapp' || type === 'vue-webapp' || type === 'next-app') && packageJson.scripts?.start) {confidence += 0.1;}
-        if (type === 'next-app' && packageJson.scripts?.build && packageJson.scripts.build.includes('next')) {confidence += 0.2;}
+        if (type === 'next-app' && packageJson.scripts?.build && packageJson.scripts.build.includes('next')) {confidence += 0.2;}        /**
+   * Performs the specified operation
+   * @param {any} type - Optional parameter
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} type - Optional parameter
+   * @returns {any} The operation result
+   */
+
         if (type === 'mobile-react-native' && packageJson.scripts?.android) {confidence += 0.1;}
         if (type === 'desktop-electron' && packageJson.main && packageJson.main.includes('electron')) {confidence += 0.2;}
       }
@@ -259,7 +461,17 @@ export class InitCommand {
         'python': detector.hasPythonFiles(),
         'mcp-server': detector.hasMCPServerFiles(),
         'cli-tool': detector.hasCLIFiles()
-      };
+      };      /**
+   * Performs the specified operation
+   * @param {any} fileIndicators[type]
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} fileIndicators[type]
+   * @returns {any} The operation result
+   */
+
 
       if (fileIndicators[type]) {
         confidence += 0.2;
@@ -272,13 +484,31 @@ export class InitCommand {
       console.warn('Could not calculate detection confidence:', error.message);
       return 0.5;
     }
-  }
+  }  /**
+   * Performs the specified operation
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async detectProjectType() {
     // Legacy method - kept for backwards compatibility
     const result = await this.detectProjectTypeWithConfidence();
     return result.type;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {Object} options - Optional parameter
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @param {Object} options - Optional parameter
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async gatherProjectMetadata(options = {}) {
     const packageJsonPath = path.join(this.globalConfig.projectRoot, 'package.json');
@@ -288,7 +518,17 @@ export class InitCommand {
       existingPackage = await fs.readJson(packageJsonPath);
     }
 
-    // In auto mode, use sensible defaults without prompting
+    // In auto mode, use sensible defaults without prompting    /**
+   * Performs the specified operation
+   * @param {Object} options.auto
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} options.auto
+   * @returns {any} The operation result
+   */
+
     if (options.auto) {
       return {
         name: existingPackage.name || path.basename(this.globalConfig.projectRoot),
@@ -297,7 +537,17 @@ export class InitCommand {
       };
     }
 
-    const questions = [];
+    const questions = [];    /**
+   * Performs the specified operation
+   * @param {boolean} !existingPackage.name
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} !existingPackage.name
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (!existingPackage.name) {
       questions.push({
@@ -307,7 +557,17 @@ export class InitCommand {
         default: path.basename(this.globalConfig.projectRoot),
         validate: input => input.length > 0 ? true : 'Project name is required'
       });
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {boolean} !existingPackage.description
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} !existingPackage.description
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (!existingPackage.description) {
       questions.push({
@@ -325,19 +585,53 @@ export class InitCommand {
       description: existingPackage.description || answers.description,
       version: existingPackage.version || '1.0.0'
     };
-  }
+  }  /**
+   * Creates a new resource
+   * @param {any} projectType
+   * @param {any} metadata
+   * @param {Object} options
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Creates a new resource
+   * @param {any} projectType
+   * @param {any} metadata
+   * @param {Object} options
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async createProjectFiles(projectType, metadata, options) {
     const spinner = ora('Creating project files...').start();
 
     try {
       // Create context7.config.js
-      await this.createConfig(projectType, metadata, options);
+      await this.createConfig(projectType, metadata, options);      /**
+   * Performs the specified operation
+   * @param {Object} !options.noMcp
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} !options.noMcp
+   * @returns {any} The operation result
+   */
+
 
       if (!options.noMcp) {
         // Create MCP server
         await this.createMCPServer(projectType);
-      }
+      }      /**
+   * Performs the specified operation
+   * @param {Object} !options.noAgentOs
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} !options.noAgentOs
+   * @returns {any} The operation result
+   */
+
 
       if (!options.noAgentOs) {
         // Create AGENTS.md
@@ -359,7 +653,21 @@ export class InitCommand {
       spinner.fail('Failed to create project files');
       throw error;
     }
-  }
+  }  /**
+   * Creates a new resource
+   * @param {any} projectType
+   * @param {any} metadata
+   * @param {Object} options - Optional parameter
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Creates a new resource
+   * @param {any} projectType
+   * @param {any} metadata
+   * @param {Object} options - Optional parameter
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async createConfig(projectType, metadata, options = {}) {
     const configPath = path.join(this.globalConfig.projectRoot, 'codefortify.config.js');
@@ -370,7 +678,17 @@ export class InitCommand {
         name: 'overwrite',
         message: 'codefortify.config.js already exists. Overwrite?',
         default: false
-      }]);
+      }]);      /**
+   * Performs the specified operation
+   * @param {any} !overwrite
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} !overwrite
+   * @returns {any} The operation result
+   */
+
 
       if (!overwrite) {return;}
     }
@@ -378,7 +696,19 @@ export class InitCommand {
     const config = this.generateConfig(projectType, metadata);
     await fs.writeFile(configPath, config);
     console.log(chalk.green('✓ Created codefortify.config.js'));
-  }
+  }  /**
+   * Generates new data
+   * @param {any} projectType
+   * @param {any} metadata
+   * @returns {any} The created resource
+   */
+  /**
+   * Generates new data
+   * @param {any} projectType
+   * @param {any} metadata
+   * @returns {any} The created resource
+   */
+
 
   generateConfig(projectType, metadata) {
     return `/**
@@ -442,7 +772,17 @@ export default {
   }
 };
 `;
-  }
+  }  /**
+   * Creates a new resource
+   * @param {any} projectType
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Creates a new resource
+   * @param {any} projectType
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async createMCPServer(projectType) {
     const serverPath = path.join(this.globalConfig.projectRoot, 'src', 'mcp-server.js');
@@ -455,7 +795,17 @@ export default {
     const serverCode = this.generateMCPServer(projectType);
     await fs.writeFile(serverPath, serverCode);
     console.log(chalk.green('✓ Created src/mcp-server.js'));
-  }
+  }  /**
+   * Generates new data
+   * @param {any} projectType
+   * @returns {any} The created resource
+   */
+  /**
+   * Generates new data
+   * @param {any} projectType
+   * @returns {any} The created resource
+   */
+
 
   generateMCPServer(projectType) {
     return `/**
@@ -476,7 +826,19 @@ server.start();
 
 export default server;
 `;
-  }
+  }  /**
+   * Creates a new resource
+   * @param {any} projectType
+   * @param {any} metadata
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Creates a new resource
+   * @param {any} projectType
+   * @param {any} metadata
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async createAgentsFile(projectType, metadata) {
     const agentsPath = path.join(this.globalConfig.projectRoot, 'AGENTS.md');
@@ -486,7 +848,19 @@ export default server;
     const agentsContent = this.generateAgentsFile(projectType, metadata);
     await fs.writeFile(agentsPath, agentsContent);
     console.log(chalk.green('✓ Created AGENTS.md'));
-  }
+  }  /**
+   * Generates new data
+   * @param {any} projectType
+   * @param {any} metadata
+   * @returns {any} The created resource
+   */
+  /**
+   * Generates new data
+   * @param {any} projectType
+   * @param {any} metadata
+   * @returns {any} The created resource
+   */
+
 
   generateAgentsFile(projectType, metadata) {
     return `# Agent Configuration
@@ -534,7 +908,21 @@ This project uses Context7 MCP for real-time access to:
 
 Agents should leverage MCP resources for consistent, high-quality development.
 `;
-  }
+  }  /**
+   * Creates a new resource
+   * @param {any} projectType
+   * @param {any} metadata
+   * @param {any} force
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Creates a new resource
+   * @param {any} projectType
+   * @param {any} metadata
+   * @param {any} force
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async createClaudeFile(projectType, metadata, force) {
     const claudePath = path.join(this.globalConfig.projectRoot, 'CLAUDE.md');
@@ -560,7 +948,19 @@ Agents should leverage MCP resources for consistent, high-quality development.
 
     await fs.writeFile(claudePath, claudeContent);
     console.log(chalk.green('✓ Created/updated CLAUDE.md'));
-  }
+  }  /**
+   * Generates new data
+   * @param {any} projectType
+   * @param {any} metadata
+   * @returns {any} The created resource
+   */
+  /**
+   * Generates new data
+   * @param {any} projectType
+   * @param {any} metadata
+   * @returns {any} The created resource
+   */
+
 
   generateGenericClaudeFile(projectType, metadata) {
     return `# CLAUDE.md
@@ -621,7 +1021,17 @@ context7 score       # Analyze project quality
 context7 test-mcp    # Test MCP server functionality
 \`\`\`
 `;
-  }
+  }  /**
+   * Updates existing data
+   * @param {any} metadata
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Updates existing data
+   * @param {any} metadata
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async updatePackageJson(metadata) {
     const packageJsonPath = path.join(this.globalConfig.projectRoot, 'package.json');
@@ -644,39 +1054,81 @@ context7 test-mcp    # Test MCP server functionality
 
     await fs.writeJSON(packageJsonPath, packageJson, { spaces: 2 });
     console.log(chalk.green('✓ Updated package.json with CodeFortify scripts'));
-  }
+  }  /**
+   * Adds an item
+   * @param {any} projectType
+   * @param {Object} options
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Adds an item
+   * @param {any} projectType
+   * @param {Object} options
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async addTemplateStandards(projectType, options) {
     try {
       // Check if template exists for this project type
       const templates = await this.templateManager.discoverTemplates();
-      const template = templates.find(t => t.name === projectType);
-      
+      const template = templates.find(t => t.name === projectType);      /**
+   * Performs the specified operation
+   * @param {any} template
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} template
+   * @returns {any} The operation result
+   */
+
+
       if (template) {
         console.log(chalk.green(`✓ Adding standards from ${projectType} template`));
-        
+
         // Get template standards
         const resolvedTemplate = await this.templateManager.resolveTemplate(projectType);
-        
+
         // Create .codefortify directory
         const codefortifyPath = path.join(this.globalConfig.projectRoot, '.codefortify');
         await fs.ensureDir(codefortifyPath);
         await fs.ensureDir(path.join(codefortifyPath, 'standards'));
-        
+
         // Copy standards
-        for (const [standardName, content] of Object.entries(resolvedTemplate)) {
+        for (const [standardName, content] of Object.entries(resolvedTemplate)) {          /**
+   * Performs the specified operation
+   * @param {any} standardName ! - Optional parameter
+   * @returns {string} The operation result
+   */
+          /**
+   * Performs the specified operation
+   * @param {any} standardName ! - Optional parameter
+   * @returns {string} The operation result
+   */
+
           if (standardName !== 'template' && typeof content === 'string') {
             const filePath = path.join(codefortifyPath, 'standards', `${standardName}.md`);
             await fs.writeFile(filePath, content);
           }
         }
-        
+
         console.log(chalk.green('✓ Template standards added successfully'));
       }
     } catch (error) {
       console.warn(chalk.yellow('⚠ Could not add template standards:'), error.message);
     }
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} projectType
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} projectType
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   displayNextSteps(projectType) {
     console.log(chalk.bold('\n🎯 Next Steps:'));
@@ -696,7 +1148,17 @@ context7 test-mcp    # Test MCP server functionality
     console.log(`   ${chalk.gray('$')} codefortify score --detailed`);
     console.log(`   ${chalk.gray('$')} codefortify score --format html --open`);
 
-    console.log(`\n4. ${chalk.cyan('Start developing:')}`);
+    console.log(`\n4. ${chalk.cyan('Start developing:')}`);    /**
+   * Performs the specified operation
+   * @param {any} projectType - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} projectType - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (projectType === 'react-webapp') {
       console.log(`   ${chalk.gray('$')} npm start`);
     } else if (projectType === 'vue-webapp') {

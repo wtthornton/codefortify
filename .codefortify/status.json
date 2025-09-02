@@ -1,153 +1,33 @@
 {
-  "sessionId": "status_1733182600000_live",
-  "lastSaved": "2025-09-02T00:16:40.000Z",
+  "sessionId": "status_1756829676043_sd66ex5ab",
+  "lastSaved": "2025-09-02T16:14:36.066Z",
   "globalStatus": {
-    "phase": "stopped",
+    "phase": "idle",
     "progress": 0,
-    "message": "All background agents stopped",
-    "category": "analysis",
-    "operation": "quality_scoring",
-    "stage": "complete",
-    "startTime": "2025-09-02T00:14:40.000Z",
-    "lastUpdate": "2025-09-02T00:16:40.000Z",
-    "estimatedCompletion": "2025-09-02T00:16:40.000Z",
-    "elapsedTime": 120000,
-    "estimatedRemainingTime": 0,
-    "metadata": {
-      "projectType": "mcp-server",
-      "analysisMode": "comprehensive"
-    },
+    "message": "",
+    "category": null,
+    "operation": null,
+    "stage": null,
+    "startTime": "2025-09-02T16:14:36.043Z",
+    "lastUpdate": "2025-09-02T16:14:36.043Z",
+    "estimatedCompletion": null,
+    "elapsedTime": 23,
+    "estimatedRemainingTime": null,
+    "metadata": {},
     "errors": [],
-    "warnings": [
-      "ESLint analysis failed",
-      "Coverage analysis failed"
-    ]
+    "warnings": []
   },
   "score": {
-    "currentScore": 75,
-    "previousScore": 75,
-    "targetScore": 95,
+    "currentScore": 0,
+    "previousScore": 0,
+    "targetScore": 100,
     "scoreChange": 0,
-    "progressToTarget": 75,
-    "categoryScores": {
-      "structure": {
-        "score": 93,
-        "maxScore": 100,
-        "trend": "stable"
-      },
-      "quality": {
-        "score": 57,
-        "maxScore": 100,
-        "trend": "stable"
-      },
-      "performance": {
-        "score": 70,
-        "maxScore": 100,
-        "trend": "stable"
-      },
-      "testing": {
-        "score": 60,
-        "maxScore": 100,
-        "trend": "stable"
-      },
-      "security": {
-        "score": 81,
-        "maxScore": 100,
-        "trend": "stable"
-      },
-      "developerExperience": {
-        "score": 85,
-        "maxScore": 100,
-        "trend": "stable"
-      },
-      "completeness": {
-        "score": 100,
-        "maxScore": 100,
-        "trend": "stable"
-      }
-    },
+    "progressToTarget": 0,
+    "categoryScores": {},
     "trend": "stable",
-    "lastCalculation": "2025-09-02T00:16:40.000Z",
-    "historyCount": 4
+    "lastCalculation": null,
+    "historyCount": 0
   },
-  "agents": {
-    "security": {
-      "id": "security_agent",
-      "status": "completed",
-      "progress": 100,
-      "lastActivity": "2025-09-02T00:16:40.000Z",
-      "findings": [
-        "3 hardcoded secrets detected"
-      ],
-      "recommendations": [
-        "Remove hardcoded secrets"
-      ]
-    },
-    "quality": {
-      "id": "quality_agent",
-      "status": "completed",
-      "progress": 100,
-      "lastActivity": "2025-09-02T00:16:40.000Z",
-      "findings": [
-        "ESLint configuration needed"
-      ],
-      "recommendations": [
-        "Configure ESLint and Prettier"
-      ]
-    },
-    "structure": {
-      "id": "structure_agent",
-      "status": "completed",
-      "progress": 100,
-      "lastActivity": "2025-09-02T00:16:40.000Z",
-      "findings": [
-        "Good architecture patterns detected"
-      ],
-      "recommendations": [
-        "Improve separation of concerns"
-      ]
-    },
-    "testing": {
-      "id": "testing_agent",
-      "status": "completed",
-      "progress": 100,
-      "lastActivity": "2025-09-02T00:16:40.000Z",
-      "findings": [
-        "Low test coverage (60%)"
-      ],
-      "recommendations": [
-        "Increase test coverage to 80%+"
-      ]
-    }
-  },
-  "operationHistory": [
-    {
-      "type": "analysis_start",
-      "operation": "quality_scoring",
-      "category": "comprehensive",
-      "message": "Starting comprehensive quality analysis",
-      "timestamp": "2025-09-02T00:14:40.000Z"
-    },
-    {
-      "type": "agent_progress",
-      "operation": "security_scan",
-      "category": "security",
-      "message": "Security agent found 3 potential issues",
-      "timestamp": "2025-09-02T00:15:10.000Z"
-    },
-    {
-      "type": "agent_progress",
-      "operation": "quality_analysis",
-      "category": "quality",
-      "message": "Quality agent analyzing code maintainability",
-      "timestamp": "2025-09-02T00:15:40.000Z"
-    },
-    {
-      "type": "analysis_complete",
-      "operation": "quality_scoring",
-      "category": "comprehensive",
-      "message": "Analysis complete - Score: 75/100",
-      "timestamp": "2025-09-02T00:16:40.000Z"
-    }
-  ]
+  "agents": {},
+  "operationHistory": []
 }

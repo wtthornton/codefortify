@@ -1,3 +1,4 @@
+/* eslint-env browser */
 // CodeFortify User Guide Interactive Features
 class UserGuide {
   constructor() {
@@ -33,7 +34,7 @@ class UserGuide {
     // Highlight current section in sidebar
     const sections = document.querySelectorAll('h2[id]');
     const sidebarLinks = document.querySelectorAll('.sidebar a[href^="#"]');
-    
+
     window.addEventListener('scroll', () => {
       let current = '';
       sections.forEach(section => {
@@ -90,7 +91,7 @@ class UserGuide {
     const input = container.querySelector('.terminal-input');
     const output = container.querySelector('.terminal-output');
 
-    if (!terminal || !input || !output) return;
+    if (!terminal || !input || !output) {return;}
 
     const commands = {
       'codefortify --help': {
@@ -198,7 +199,7 @@ Enhancement complete! Starting next cycle...`,
     const scoreDisplay = container.querySelector('.score-display');
     const improveBtn = container.querySelector('.improve-btn');
 
-    if (!scoreDisplay || !improveBtn) return;
+    if (!scoreDisplay || !improveBtn) {return;}
 
     let currentScore = 74;
     const targetScore = 90;
@@ -206,7 +207,7 @@ Enhancement complete! Starting next cycle...`,
     improveBtn.addEventListener('click', () => {
       const improvement = Math.min(5, targetScore - currentScore);
       currentScore += improvement;
-      
+
       scoreDisplay.innerHTML = `
         <div class="score-number">${currentScore}/100</div>
         <div class="score-grade">${this.getGrade(currentScore)}</div>
@@ -290,13 +291,13 @@ Enhancement complete! Starting next cycle...`,
 
     // Highlight strings
     highlighted = highlighted.replace(strings, '<span class="string">$&</span>');
-    
+
     // Highlight comments
     highlighted = highlighted.replace(comments, '<span class="comment">$&</span>');
-    
+
     // Highlight numbers
     highlighted = highlighted.replace(numbers, '<span class="number">$&</span>');
-    
+
     // Highlight keywords
     keywords.forEach(keyword => {
       const regex = new RegExp(`\\b${keyword}\\b`, 'g');
@@ -310,7 +311,7 @@ Enhancement complete! Starting next cycle...`,
     const searchInput = document.querySelector('.search-input');
     const searchResults = document.querySelector('.search-results');
 
-    if (!searchInput || !searchResults) return;
+    if (!searchInput || !searchResults) {return;}
 
     const searchableContent = Array.from(document.querySelectorAll('h2, h3, p')).map(el => ({
       element: el,
@@ -320,14 +321,14 @@ Enhancement complete! Starting next cycle...`,
 
     searchInput.addEventListener('input', (e) => {
       const query = e.target.value.toLowerCase();
-      
+
       if (query.length < 2) {
         searchResults.innerHTML = '';
         searchResults.style.display = 'none';
         return;
       }
 
-      const matches = searchableContent.filter(item => 
+      const matches = searchableContent.filter(item =>
         item.text.includes(query)
       );
 
@@ -358,11 +359,11 @@ Enhancement complete! Starting next cycle...`,
   }
 
   getGrade(score) {
-    if (score >= 90) return 'A+';
-    if (score >= 80) return 'A';
-    if (score >= 70) return 'B';
-    if (score >= 60) return 'C';
-    if (score >= 50) return 'D';
+    if (score >= 90) {return 'A+';}
+    if (score >= 80) {return 'A';}
+    if (score >= 70) {return 'B';}
+    if (score >= 60) {return 'C';}
+    if (score >= 50) {return 'D';}
     return 'F';
   }
 }

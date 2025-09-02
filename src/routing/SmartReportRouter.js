@@ -22,6 +22,36 @@ import { SinglePackageStrategy } from './routingStrategies/SinglePackageStrategy
 import { WorkspaceStrategy } from './routingStrategies/WorkspaceStrategy.js';
 import { CustomStrategy } from './routingStrategies/CustomStrategy.js';
 
+/**
+
+
+ * SmartReportRouter class implementation
+
+
+ *
+
+
+ * Provides functionality for smartreportrouter operations
+
+
+ */
+
+
+/**
+
+
+ * SmartReportRouter class implementation
+
+
+ *
+
+
+ * Provides functionality for smartreportrouter operations
+
+
+ */
+
+
 export class SmartReportRouter {
   /**
    * Create a new SmartReportRouter instance
@@ -73,43 +103,73 @@ export class SmartReportRouter {
     } = options;
 
     try {
-      // Detect project structure if using auto strategy
+      // Detect project structure if using auto strategy      /**
+   * Performs the specified operation
+   * @param {Object} this.config.strategy - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.strategy - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.config.strategy === 'auto') {
         await this.detectProjectStructure();
       }
 
       // Get the appropriate strategy
       const strategy = this.getStrategy();
-      
+
       // Generate filename if not provided
       const finalFilename = filename || this.generateFilename(format, includeTimestamp, timestamp);
-      
+
       // Get the base path from strategy
       const basePath = await strategy.getBasePath(format);
-      
+
       // Create directory structure if needed
       await this.ensureDirectoryExists(basePath);
-      
+
       // Combine base path with filename
-      const fullPath = path.join(basePath, finalFilename);
-      
+      const fullPath = path.join(basePath, finalFilename);      /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
+
       if (this.config.verbose) {
-        console.log(`📁 Smart routing: ${format} report → ${fullPath}`);
-        console.log(`   Strategy: ${strategy.constructor.name}`);
-        console.log(`   Project type: ${this.projectType || 'unknown'}`);
+        // LOG: `📁 Smart routing: ${format} report → ${fullPath}`
+        // LOG: `   Strategy: ${strategy.constructor.name}`
+        // LOG: `   Project type: ${this.projectType || unknown}`
       }
-      
+
       return fullPath;
-      
+
     } catch (error) {
       // Fallback to simple current directory routing
-      const fallbackPath = this.getFallbackPath(format, filename, includeTimestamp, timestamp);
-      
+      const fallbackPath = this.getFallbackPath(format, filename, includeTimestamp, timestamp);      /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
+
       if (this.config.verbose) {
-        console.warn(`⚠️  Smart routing failed, using fallback: ${fallbackPath}`);
-        console.warn(`   Error: ${error.message}`);
+        // WARN: `⚠️  Smart routing failed, using fallback: ${fallbackPath}`
+        // WARN: `   Error: ${error.message}`
       }
-      
+
       return fallbackPath;
     }
   }
@@ -120,11 +180,21 @@ export class SmartReportRouter {
    * @param {string} format - Report format
    * @returns {Promise<string>} Base directory path
    */
-  async getBaseDirectory(format) {
+  async getBaseDirectory(format) {  /**
+   * Performs the specified operation
+   * @param {Object} this.config.strategy - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.config.strategy - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.config.strategy === 'auto') {
       await this.detectProjectStructure();
     }
-    
+
     const strategy = this.getStrategy();
     return await strategy.getBasePath(format);
   }
@@ -134,7 +204,17 @@ export class SmartReportRouter {
    *
    * @returns {Promise<void>}
    */
-  async detectProjectStructure() {
+  async detectProjectStructure() {  /**
+   * Performs the specified operation
+   * @param {boolean} this.detectedStrategy
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.detectedStrategy
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.detectedStrategy) {
       return; // Already detected
     }
@@ -157,14 +237,24 @@ export class SmartReportRouter {
       // Default to single package
       this.detectedStrategy = 'single';
       this.projectType = 'single-package';
-      
+
     } catch (error) {
       // Fallback to single package on detection failure
       this.detectedStrategy = 'single';
-      this.projectType = 'single-package';
-      
+      this.projectType = 'single-package';      /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
+
       if (this.config.verbose) {
-        console.warn(`⚠️  Project structure detection failed: ${error.message}`);
+        // WARN: `⚠️  Project structure detection failed: ${error.message}`
       }
     }
   }
@@ -188,7 +278,17 @@ export class SmartReportRouter {
       () => this.hasYarnWorkspaces(),
       // Multiple package.json files
       () => this.hasMultiplePackages()
-    ];
+    ];    /**
+   * Performs the specified operation
+   * @param {any} const indicator of indicators
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const indicator of indicators
+   * @returns {any} The operation result
+   */
+
 
     for (const indicator of indicators) {
       try {
@@ -215,7 +315,17 @@ export class SmartReportRouter {
       'pnpm-workspace.yml',
       'yarn.lock', // Often indicates yarn workspace
       'package-lock.json' // npm workspaces
-    ];
+    ];    /**
+   * Performs the specified operation
+   * @param {any} const file of workspaceFiles
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const file of workspaceFiles
+   * @returns {any} The operation result
+   */
+
 
     for (const file of workspaceFiles) {
       if (await this.fileExists(file)) {
@@ -261,7 +371,17 @@ export class SmartReportRouter {
    */
   async hasMultiplePackages() {
     try {
-      const packageJson = await this.readPackageJson();
+      const packageJson = await this.readPackageJson();      /**
+   * Performs the specified operation
+   * @param {any} packageJson?.workspaces
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} packageJson?.workspaces
+   * @returns {any} The operation result
+   */
+
       if (packageJson?.workspaces) {
         // Count actual workspace packages
         const workspacePackages = await this.findWorkspacePackages(packageJson.workspaces);
@@ -280,8 +400,18 @@ export class SmartReportRouter {
    * @returns {Promise<string[]>} Array of package directories
    */
   async findWorkspacePackages(workspacePatterns) {
-    const packages = [];
-    
+    const packages = [];    /**
+   * Performs the specified operation
+   * @param {any} const pattern of workspacePatterns
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const pattern of workspacePatterns
+   * @returns {any} The operation result
+   */
+
+
     for (const pattern of workspacePatterns) {
       try {
         const matches = await this.glob(pattern);
@@ -290,7 +420,7 @@ export class SmartReportRouter {
         // Skip invalid patterns
       }
     }
-    
+
     return packages;
   }
 
@@ -301,12 +431,22 @@ export class SmartReportRouter {
    */
   getStrategy() {
     const strategyName = this.config.strategy === 'auto' ? this.detectedStrategy : this.config.strategy;
-    const strategy = this.strategies[strategyName];
-    
+    const strategy = this.strategies[strategyName];    /**
+   * Performs the specified operation
+   * @param {any} !strategy
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !strategy
+   * @returns {any} The operation result
+   */
+
+
     if (!strategy) {
       throw new Error(`Unknown routing strategy: ${strategyName}`);
     }
-    
+
     return strategy;
   }
 
@@ -320,13 +460,23 @@ export class SmartReportRouter {
    */
   generateFilename(format, includeTimestamp = true, timestamp = null) {
     const baseName = 'context7-quality-report';
-    const ext = format === 'markdown' ? 'md' : format;
-    
+    const ext = format === 'markdown' ? 'md' : format;    /**
+   * Performs the specified operation
+   * @param {any} includeTimestamp
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} includeTimestamp
+   * @returns {any} The operation result
+   */
+
+
     if (includeTimestamp) {
       const ts = timestamp || new Date().toISOString().slice(0, 16).replace(/[:.]/g, '-');
       return `${baseName}-${ts}.${ext}`;
     }
-    
+
     return `${baseName}.${ext}`;
   }
 
@@ -372,7 +522,17 @@ export class SmartReportRouter {
     };
   }
 
-  // Utility methods
+  // Utility methods  /**
+   * Performs the specified operation
+   * @param {string} filePath
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @param {string} filePath
+   * @returns {Promise} Promise that resolves with the result
+   */
+
   async fileExists(filePath) {
     try {
       await fs.access(path.resolve(this.config.projectRoot, filePath));
@@ -380,7 +540,15 @@ export class SmartReportRouter {
     } catch {
       return false;
     }
-  }
+  }  /**
+   * Reads data from file
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Reads data from file
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async readPackageJson() {
     try {
@@ -389,7 +557,17 @@ export class SmartReportRouter {
     } catch {
       return null;
     }
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} pattern
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} pattern
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async glob(pattern) {
     // Simple glob implementation for workspace patterns

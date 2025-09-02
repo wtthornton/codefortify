@@ -14,6 +14,36 @@ import { ProjectTypeDetector } from '../scoring/core/ProjectTypeDetector.js';
 import { existsSync, readFileSync } from 'fs';
 import path from 'path';
 
+/**
+
+
+ * PromptEnhancer class implementation
+
+
+ *
+
+
+ * Provides functionality for promptenhancer operations
+
+
+ */
+
+
+/**
+
+
+ * PromptEnhancer class implementation
+
+
+ *
+
+
+ * Provides functionality for promptenhancer operations
+
+
+ */
+
+
 export class PromptEnhancer {
   constructor(config = {}) {
     this.config = {
@@ -133,7 +163,17 @@ export class PromptEnhancer {
       relevanceScore: 0
     };
 
-    // Get Context7 documentation for detected technologies
+    // Get Context7 documentation for detected technologies    /**
+   * Performs the specified operation
+   * @param {boolean} const tech of promptAnalysis.technologies
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} const tech of promptAnalysis.technologies
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     for (const tech of promptAnalysis.technologies) {
       const docs = await this.getContext7Docs(tech, promptAnalysis.intent);
       if (docs && this.calculateRelevance(docs, promptAnalysis) > this.config.contextRelevanceThreshold) {
@@ -167,32 +207,92 @@ export class PromptEnhancer {
     let confidence = 0.8; // Base confidence
     const suggestions = [];
 
-    // Only add context if it's highly relevant
+    // Only add context if it's highly relevant    /**
+   * Performs the specified operation
+   * @param {Object} relevantContext.relevanceScore > this.config.contextRelevanceThreshold
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} relevantContext.relevanceScore > this.config.contextRelevanceThreshold
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (relevantContext.relevanceScore > this.config.contextRelevanceThreshold) {
 
-      // Add project context (minimal)
+      // Add project context (minimal)      /**
+   * Performs the specified operation
+   * @param {boolean} analysis.scope - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} analysis.scope - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (analysis.scope === 'project-wide') {
         sections.push(`Project Context: ${analysis.technologies.join(', ')} application`);
         confidence += 0.1;
       }
 
       // Add relevant documentation (filtered)
-      const docContext = this.buildDocumentationContext(relevantContext.documentation, analysis);
+      const docContext = this.buildDocumentationContext(relevantContext.documentation, analysis);      /**
+   * Performs the specified operation
+   * @param {any} docContext
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} docContext
+   * @returns {any} The operation result
+   */
+
       if (docContext) {
         sections.push(docContext);
         confidence += 0.15;
       }
 
       // Add relevant patterns (if requested or beneficial)
-      const patternContext = this.buildPatternContext(relevantContext.patterns, analysis);
+      const patternContext = this.buildPatternContext(relevantContext.patterns, analysis);      /**
+   * Performs the specified operation
+   * @param {any} patternContext
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} patternContext
+   * @returns {any} The operation result
+   */
+
       if (patternContext) {
         sections.push(patternContext);
         confidence += 0.1;
       }
 
-      // Add examples (only if complex request)
+      // Add examples (only if complex request)      /**
+   * Performs the specified operation
+   * @param {boolean} analysis.complexity > 0.7 && relevantContext.examples.length > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} analysis.complexity > 0.7 && relevantContext.examples.length > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (analysis.complexity > 0.7 && relevantContext.examples.length > 0) {
-        const exampleContext = this.buildExampleContext(relevantContext.examples, analysis);
+        const exampleContext = this.buildExampleContext(relevantContext.examples, analysis);        /**
+   * Performs the specified operation
+   * @param {any} exampleContext
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} exampleContext
+   * @returns {any} The operation result
+   */
+
         if (exampleContext) {
           sections.push(exampleContext);
           confidence += 0.05;
@@ -205,7 +305,17 @@ export class PromptEnhancer {
       ? `${sections.join('\n\n')}\n\nTask: ${originalPrompt}`
       : originalPrompt;
 
-    // Add suggestions for further improvement
+    // Add suggestions for further improvement    /**
+   * Performs the specified operation
+   * @param {boolean} analysis.contextNeeded.length > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} analysis.contextNeeded.length > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (analysis.contextNeeded.length > 0) {
       suggestions.push(...analysis.contextNeeded.map(need => `Consider providing ${need} for better results`));
     }
@@ -230,11 +340,31 @@ export class PromptEnhancer {
 
     try {
       // Use ResourceManager to get Context7 documentation
-      const docs = await this.resourceManager.getVersionSpecificDocs(technology);
+      const docs = await this.resourceManager.getVersionSpecificDocs(technology);      /**
+   * Performs the specified operation
+   * @param {any} docs
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} docs
+   * @returns {any} The operation result
+   */
+
 
       if (docs) {
         // Filter docs based on intent
-        const filteredDocs = this.filterDocsByIntent(docs, intent);
+        const filteredDocs = this.filterDocsByIntent(docs, intent);        /**
+   * Performs the specified operation
+   * @param {Object} this.config.cacheContext
+   * @returns {boolean} True if successful, false otherwise
+   */
+        /**
+   * Performs the specified operation
+   * @param {Object} this.config.cacheContext
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
         if (this.config.cacheContext) {
           this.contextCache.set(cacheKey, filteredDocs);
@@ -413,21 +543,63 @@ export class PromptEnhancer {
   estimateTokens(text) {
     // Rough token estimation (1 token ≈ 4 characters)
     return Math.ceil(text.length / 4);
-  }
+  }  /**
+   * Calculates the result
+   * @param {any} docs
+   * @param {boolean} analysis
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Calculates the result
+   * @param {any} docs
+   * @param {boolean} analysis
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   calculateRelevance(docs, analysis) {
     // Simplified relevance calculation
-    let relevance = 0.5;
+    let relevance = 0.5;    /**
+   * Performs the specified operation
+   * @param {any} docs.content
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} docs.content
+   * @returns {any} The operation result
+   */
+
 
     if (docs.content) {
-      // Check for intent matches
+      // Check for intent matches      /**
+   * Performs the specified operation
+   * @param {boolean} const intent of analysis.intent
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} const intent of analysis.intent
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       for (const intent of analysis.intent) {
         if (docs.content.toLowerCase().includes(intent)) {
           relevance += 0.1;
         }
       }
 
-      // Check for technology matches
+      // Check for technology matches      /**
+   * Performs the specified operation
+   * @param {boolean} const tech of analysis.technologies
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} const tech of analysis.technologies
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       for (const tech of analysis.technologies) {
         if (docs.content.toLowerCase().includes(tech)) {
           relevance += 0.15;
@@ -436,7 +608,19 @@ export class PromptEnhancer {
     }
 
     return Math.min(relevance, 1.0);
-  }
+  }  /**
+   * Calculates the result
+   * @param {any} context
+   * @param {boolean} analysis
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Calculates the result
+   * @param {any} context
+   * @param {boolean} analysis
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   calculateOverallRelevance(context, analysis) {
     let relevance = 0;
@@ -450,7 +634,17 @@ export class PromptEnhancer {
     if (Object.keys(context.patterns).length > 0) {
       relevance += 0.3;
       factors++;
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {any} context.examples.length > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} context.examples.length > 0
+   * @returns {any} The operation result
+   */
+
 
     if (context.examples.length > 0) {
       relevance += 0.2;
@@ -458,49 +652,229 @@ export class PromptEnhancer {
     }
 
     return factors > 0 ? relevance / factors : 0;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} documentation
+   * @param {boolean} analysis
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} documentation
+   * @param {boolean} analysis
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   buildDocumentationContext(documentation, analysis) {
     if (Object.keys(documentation).length === 0) {return null;}
 
     const sections = [];
-    for (const [tech, docs] of Object.entries(documentation)) {
+    for (const [tech, docs] of Object.entries(documentation)) {      /**
+   * Performs the specified operation
+   * @param {any} docs.summary
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} docs.summary
+   * @returns {any} The operation result
+   */
+
       if (docs.summary) {
         sections.push(`${tech}: ${docs.summary}`);
       }
     }
 
     return sections.length > 0 ? `Relevant Documentation:\n${sections.join('\n')}` : null;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} patterns
+   * @param {boolean} analysis
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} patterns
+   * @param {boolean} analysis
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   buildPatternContext(patterns, analysis) {
     if (Object.keys(patterns).length === 0) {return null;}
 
     const sections = [];
-    for (const [type, pattern] of Object.entries(patterns)) {
+    for (const [type, pattern] of Object.entries(patterns)) {      /**
+   * Performs the specified operation
+   * @param {any} pattern.template
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} pattern.template
+   * @returns {any} The operation result
+   */
+
       if (pattern.template) {
         sections.push(`${type} pattern: ${pattern.description || 'Available'}`);
       }
     }
 
     return sections.length > 0 ? `Recommended Patterns:\n${sections.join('\n')}` : null;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} examples
+   * @param {boolean} analysis
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} examples
+   * @param {boolean} analysis
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   buildExampleContext(examples, analysis) {
     return examples.length > 0 ? `Related Examples: ${examples.length} examples available` : null;
   }
 
-  // Simplified helper method implementations
-  async analyzeProjectStructure() { return { files: 0, structure: 'standard' }; }
-  async analyzeDependencies() { return { count: 0, main: [] }; }
-  async identifyProjectPatterns() { return []; }
-  determineScope(prompt) { return prompt.length > 100 ? 'project-wide' : 'local'; }
-  assessUrgency(prompt) { return /urgent|asap|quickly/.test(prompt.toLowerCase()) ? 'high' : 'normal'; }
-  async determineContextNeeds(analysis, context) { return []; }
-  filterDocsByIntent(docs, intent) { return docs; }
-  getFallbackDocs(technology, intent) { return { summary: `${technology} documentation` }; }
-  filterPatternsByRelevance(patterns, analysis) { return patterns; }
-  extractCodeReferences(prompt) { return []; }
-  identifyRequestedPatterns(prompt) { return []; }
+  // Simplified helper method implementations  /**
+   * Analyzes the provided data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @returns {Promise} Promise that resolves with the result
+   */
+
+  async analyzeProjectStructure() { return { files: 0, structure: 'standard' }; }  /**
+   * Analyzes the provided data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @returns {Promise} Promise that resolves with the result
+   */
+
+  async analyzeDependencies() { return { count: 0, main: [] }; }  /**
+   * Performs the specified operation
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @returns {Promise} Promise that resolves with the result
+   */
+
+  async identifyProjectPatterns() { return []; }  /**
+   * Performs the specified operation
+   * @param {any} prompt
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} prompt
+   * @returns {any} The operation result
+   */
+
+  determineScope(prompt) { return prompt.length > 100 ? 'project-wide' : 'local'; }  /**
+   * Performs the specified operation
+   * @param {any} prompt
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} prompt
+   * @returns {any} The operation result
+   */
+
+  assessUrgency(prompt) { return /urgent|asap|quickly/.test(prompt.toLowerCase()) ? 'high' : 'normal'; }  /**
+   * Performs the specified operation
+   * @param {boolean} analysis
+   * @param {any} context
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @param {boolean} analysis
+   * @param {any} context
+   * @returns {Promise} Promise that resolves with the result
+   */
+
+  async determineContextNeeds(analysis, context) { return []; }  /**
+   * Performs the specified operation
+   * @param {any} docs
+   * @param {any} intent
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} docs
+   * @param {any} intent
+   * @returns {any} The operation result
+   */
+
+  filterDocsByIntent(docs, intent) { return docs; }  /**
+   * Retrieves data
+   * @param {any} technology
+   * @param {any} intent
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @param {any} technology
+   * @param {any} intent
+   * @returns {string} The retrieved data
+   */
+
+  getFallbackDocs(technology, intent) { return { summary: `${technology} documentation` }; }  /**
+   * Performs the specified operation
+   * @param {any} patterns
+   * @param {boolean} analysis
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} patterns
+   * @param {boolean} analysis
+   * @returns {boolean} True if successful, false otherwise
+   */
+
+  filterPatternsByRelevance(patterns, analysis) { return patterns; }  /**
+   * Performs the specified operation
+   * @param {any} prompt
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} prompt
+   * @returns {any} The operation result
+   */
+
+  extractCodeReferences(prompt) { return []; }  /**
+   * Performs the specified operation
+   * @param {any} prompt
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} prompt
+   * @returns {any} The operation result
+   */
+
+  identifyRequestedPatterns(prompt) { return []; }  /**
+   * Retrieves data
+   * @param {boolean} analysis
+   * @param {any} context
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Retrieves data
+   * @param {boolean} analysis
+   * @param {any} context
+   * @returns {Promise} Promise that resolves with the result
+   */
+
   async getRelevantExamples(analysis, context) { return []; }
 }

@@ -70,7 +70,17 @@ export class ImprovementAgent {
   async identifyImprovementOpportunities(reviewResult, analysisResult) {
     const opportunities = [];
 
-    // From review issues
+    // From review issues    /**
+   * Performs the specified operation
+   * @param {boolean} reviewResult.issues
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} reviewResult.issues
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (reviewResult.issues) {
       reviewResult.issues.forEach(issue => {
         opportunities.push({
@@ -88,7 +98,17 @@ export class ImprovementAgent {
       });
     }
 
-    // From review recommendations
+    // From review recommendations    /**
+   * Performs the specified operation
+   * @param {any} reviewResult.recommendations
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} reviewResult.recommendations
+   * @returns {any} The operation result
+   */
+
     if (reviewResult.recommendations) {
       reviewResult.recommendations.forEach(rec => {
         opportunities.push({
@@ -104,9 +124,29 @@ export class ImprovementAgent {
       });
     }
 
-    // From analysis insights
+    // From analysis insights    /**
+   * Performs the specified operation
+   * @param {boolean} analysisResult.insights
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} analysisResult.insights
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (analysisResult.insights) {
-      analysisResult.insights.forEach(insight => {
+      analysisResult.insights.forEach(insight => {        /**
+   * Performs the specified operation
+   * @param {any} insight.actionable
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} insight.actionable
+   * @returns {any} The operation result
+   */
+
         if (insight.actionable) {
           opportunities.push({
             source: 'analysis-insight',
@@ -122,7 +162,17 @@ export class ImprovementAgent {
       });
     }
 
-    // From analysis recommendations
+    // From analysis recommendations    /**
+   * Performs the specified operation
+   * @param {boolean} analysisResult.recommendations
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} analysisResult.recommendations
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (analysisResult.recommendations) {
       analysisResult.recommendations.forEach(rec => {
         opportunities.push({
@@ -138,7 +188,17 @@ export class ImprovementAgent {
       });
     }
 
-    // From technical debt analysis
+    // From technical debt analysis    /**
+   * Performs the specified operation
+   * @param {boolean} analysisResult.technicalDebt?.recommendations
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} analysisResult.technicalDebt?.recommendations
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (analysisResult.technicalDebt?.recommendations) {
       analysisResult.technicalDebt.recommendations.forEach(rec => {
         opportunities.push({
@@ -180,11 +240,31 @@ export class ImprovementAgent {
   async applyImprovements(code, opportunities) {
     let improvedCode = code;
     const fixes = [];
-    const patterns = [];
+    const patterns = [];    /**
+   * Performs the specified operation
+   * @param {any} const opportunity of opportunities
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const opportunity of opportunities
+   * @returns {any} The operation result
+   */
+
 
     for (const opportunity of opportunities) {
       try {
-        const fix = await this.applyImprovement(improvedCode, opportunity);
+        const fix = await this.applyImprovement(improvedCode, opportunity);        /**
+   * Performs the specified operation
+   * @param {any} fix.success
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} fix.success
+   * @returns {any} The operation result
+   */
+
 
         if (fix.success) {
           improvedCode = fix.code;
@@ -200,7 +280,17 @@ export class ImprovementAgent {
             source: opportunity.source
           });
 
-          // Track patterns for learning
+          // Track patterns for learning          /**
+   * Performs the specified operation
+   * @param {any} fix.pattern
+   * @returns {any} The operation result
+   */
+          /**
+   * Performs the specified operation
+   * @param {any} fix.pattern
+   * @returns {any} The operation result
+   */
+
           if (fix.pattern) {
             patterns.push({
               type: opportunity.type,
@@ -244,7 +334,17 @@ export class ImprovementAgent {
    * Apply a single improvement
    */
   async applyImprovement(code, opportunity) {
-    const strategy = this.improvementStrategies[opportunity.type];
+    const strategy = this.improvementStrategies[opportunity.type];    /**
+   * Performs the specified operation
+   * @param {any} !strategy
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !strategy
+   * @returns {any} The operation result
+   */
+
 
     if (!strategy) {
       return {
@@ -282,7 +382,17 @@ export class ImprovementAgent {
     let linesAffected = 0;
 
     try {
-      const issue = opportunity.originalIssue;
+      const issue = opportunity.originalIssue;      /**
+   * Performs the specified operation
+   * @param {boolean} issue.type - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} issue.type - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
       if (issue.type === 'security') {
         return await this.applySecurityFix(code, opportunity);
@@ -292,7 +402,17 @@ export class ImprovementAgent {
         return await this.applyQualityFix(code, opportunity);
       }
 
-      // Generic issue fixes
+      // Generic issue fixes      /**
+   * Performs the specified operation
+   * @param {boolean} issue.fix && typeof code - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} issue.fix && typeof code - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (issue.fix && typeof code === 'string') {
         // Apply specific fix if provided
         if (issue.description.includes('syntax errors')) {
@@ -331,14 +451,34 @@ export class ImprovementAgent {
   async applyEnhancement(code, opportunity) {
     let improvedCode = code;
     const changes = [];
-    let linesAffected = 0;
+    let linesAffected = 0;    /**
+   * Performs the specified operation
+   * @param {any} typeof code ! - Optional parameter
+   * @returns {string} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} typeof code ! - Optional parameter
+   * @returns {string} The operation result
+   */
+
 
     if (typeof code !== 'string') {
       return { success: false, error: 'Cannot enhance non-string code', code };
     }
 
     try {
-      // Apply enhancements based on category
+      // Apply enhancements based on category      /**
+   * Performs the specified operation
+   * @param {any} opportunity.category - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} opportunity.category - Optional parameter
+   * @returns {any} The operation result
+   */
+
       if (opportunity.category === 'Code Quality') {
         // Modern JavaScript improvements
         if (improvedCode.includes('var ')) {
@@ -351,7 +491,17 @@ export class ImprovementAgent {
         if (improvedCode !== code && !changes.includes('strict equality')) {
           changes.push('Applied strict equality');
         }
-      }
+      }      /**
+   * Performs the specified operation
+   * @param {any} opportunity.category - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} opportunity.category - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
       if (opportunity.category === 'Performance') {
         // Cache DOM queries
@@ -394,7 +544,17 @@ export class ImprovementAgent {
 
     try {
       if (insight.type === 'patterns' && insight.title.includes('Anti-patterns')) {
-        // Fix common anti-patterns
+        // Fix common anti-patterns        /**
+   * Performs the specified operation
+   * @param {any} typeof code - Optional parameter
+   * @returns {string} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} typeof code - Optional parameter
+   * @returns {string} The operation result
+   */
+
         if (typeof code === 'string') {
           // Fix callback hell with async/await
           if (code.includes('.then(') && code.match(/\.then\(/g)?.length >= 3) {
@@ -431,7 +591,17 @@ export class ImprovementAgent {
   /**
    * Apply optimization improvements
    */
-  async applyOptimization(code, opportunity) {
+  async applyOptimization(code, opportunity) {  /**
+   * Performs the specified operation
+   * @param {any} typeof code ! - Optional parameter
+   * @returns {string} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} typeof code ! - Optional parameter
+   * @returns {string} The operation result
+   */
+
     if (typeof code !== 'string') {
       return { success: false, error: 'Cannot optimize non-string code', code };
     }
@@ -440,7 +610,17 @@ export class ImprovementAgent {
     const changes = [];
 
     try {
-      // Performance optimizations
+      // Performance optimizations      /**
+   * Performs the specified operation
+   * @param {any} opportunity.category - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} opportunity.category - Optional parameter
+   * @returns {any} The operation result
+   */
+
       if (opportunity.category === 'Performance') {
         // Optimize array operations
         if (code.includes('for') && code.includes('.length')) {
@@ -479,7 +659,17 @@ export class ImprovementAgent {
   /**
    * Apply technical debt fixes
    */
-  async applyDebtFix(code, opportunity) {
+  async applyDebtFix(code, opportunity) {  /**
+   * Performs the specified operation
+   * @param {any} typeof code ! - Optional parameter
+   * @returns {string} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} typeof code ! - Optional parameter
+   * @returns {string} The operation result
+   */
+
     if (typeof code !== 'string') {
       return { success: false, error: 'Cannot fix debt in non-string code', code };
     }
@@ -524,7 +714,17 @@ export class ImprovementAgent {
   /**
    * Apply security fixes
    */
-  async applySecurityFix(code, _opportunity) {
+  async applySecurityFix(code, _opportunity) {  /**
+   * Performs the specified operation
+   * @param {any} typeof code ! - Optional parameter
+   * @returns {string} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} typeof code ! - Optional parameter
+   * @returns {string} The operation result
+   */
+
     if (typeof code !== 'string') {
       return { success: false, error: 'Cannot fix security issues in non-string code', code };
     }
@@ -578,7 +778,17 @@ export class ImprovementAgent {
   /**
    * Apply performance fixes
    */
-  async applyPerformanceFix(code, _opportunity) {
+  async applyPerformanceFix(code, _opportunity) {  /**
+   * Performs the specified operation
+   * @param {any} typeof code ! - Optional parameter
+   * @returns {string} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} typeof code ! - Optional parameter
+   * @returns {string} The operation result
+   */
+
     if (typeof code !== 'string') {
       return { success: false, error: 'Cannot fix performance issues in non-string code', code };
     }
@@ -590,7 +800,7 @@ export class ImprovementAgent {
       // Cache DOM queries
       if (code.includes('document.getElementById') || code.includes('querySelector')) {
         improvedCode = improvedCode.replace(
-          /(document\.(?:getElementById|querySelector)\([^)]+\))/g,
+          /(document.(?:getElementById|querySelector)\([^)]+\))/g,
           '// PERFORMANCE FIX: Consider caching this DOM query\nconst cachedElement = $1'
         );
         changes.push('Added DOM query caching suggestions');
@@ -626,7 +836,17 @@ export class ImprovementAgent {
   /**
    * Apply code quality fixes
    */
-  async applyQualityFix(code, _opportunity) {
+  async applyQualityFix(code, _opportunity) {  /**
+   * Performs the specified operation
+   * @param {any} typeof code ! - Optional parameter
+   * @returns {string} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} typeof code ! - Optional parameter
+   * @returns {string} The operation result
+   */
+
     if (typeof code !== 'string') {
       return { success: false, error: 'Cannot fix quality issues in non-string code', code };
     }
@@ -650,7 +870,7 @@ export class ImprovementAgent {
       // Fix console statements
       if (code.includes('console.')) {
         improvedCode = improvedCode.replace(
-          /console\.(log|error|warn|info)\(/g,
+          /console.(log|error|warn|info)\(/g,
           '// QUALITY FIX: Replace with proper logging\n// logger.$1('
         );
         changes.push('Marked console statements for proper logging replacement');
@@ -687,7 +907,17 @@ export class ImprovementAgent {
     };
 
     try {
-      // Basic syntax validation
+      // Basic syntax validation      /**
+   * Performs the specified operation
+   * @param {any} typeof improvedCode - Optional parameter
+   * @returns {string} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} typeof improvedCode - Optional parameter
+   * @returns {string} The operation result
+   */
+
       if (typeof improvedCode === 'string' && typeof originalCode === 'string') {
         // Check for balanced braces and parentheses
         const originalBraces = (originalCode.match(/[{}]/g) || []).length;
@@ -715,7 +945,17 @@ export class ImprovementAgent {
         }
 
         // Assess regression risk
-        const changeRatio = Math.abs(improvedCode.length - originalCode.length) / originalCode.length;
+        const changeRatio = Math.abs(improvedCode.length - originalCode.length) / originalCode.length;        /**
+   * Performs the specified operation
+   * @param {any} changeRatio > 0.5
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} changeRatio > 0.5
+   * @returns {any} The operation result
+   */
+
         if (changeRatio > 0.5) {
           validation.regressionRisk = 'high';
         } else if (changeRatio > 0.2) {
@@ -739,23 +979,73 @@ export class ImprovementAgent {
   mapSeverityToPriority(severity) {
     const mapping = { critical: 5, major: 4, minor: 2 };
     return mapping[severity] || 3;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} priority
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} priority
+   * @returns {any} The operation result
+   */
+
 
   mapPriorityToNumber(priority) {
     const mapping = { high: 5, medium: 3, low: 1 };
     return mapping[priority] || 3;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} level
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} level
+   * @returns {any} The operation result
+   */
+
 
   mapLevelToPriority(level) {
     const mapping = { critical: 5, warning: 4, info: 2, success: 1 };
     return mapping[level] || 3;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} impact
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} impact
+   * @returns {any} The operation result
+   */
 
-  mapImpactToNumber(impact) {
+
+  mapImpactToNumber(impact) {  /**
+   * Performs the specified operation
+   * @param {any} typeof impact - Optional parameter
+   * @returns {number} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} typeof impact - Optional parameter
+   * @returns {number} The operation result
+   */
+
     if (typeof impact === 'number') {return impact;}
     const mapping = { critical: 5, high: 4, medium: 3, low: 2 };
     return mapping[impact] || 3;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {boolean} issue
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @param {boolean} issue
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   estimateEffort(issue) {
     const effortMap = {
@@ -769,16 +1059,48 @@ export class ImprovementAgent {
       'error-handling': 2
     };
     return effortMap[issue.type] || 2;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} original
+   * @param {any} improved
+   * @returns {number} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} original
+   * @param {any} improved
+   * @returns {number} The operation result
+   */
 
-  countChangedLines(original, improved) {
+
+  countChangedLines(original, improved) {  /**
+   * Performs the specified operation
+   * @param {any} typeof original ! - Optional parameter
+   * @returns {string} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} typeof original ! - Optional parameter
+   * @returns {string} The operation result
+   */
+
     if (typeof original !== 'string' || typeof improved !== 'string') {return 0;}
 
     const originalLines = original.split('\n');
     const improvedLines = improved.split('\n');
     const maxLines = Math.max(originalLines.length, improvedLines.length);
 
-    let changedLines = 0;
+    let changedLines = 0;    /**
+   * Performs the specified operation
+   * @param {any} let i - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} let i - Optional parameter
+   * @returns {any} The operation result
+   */
+
     for (let i = 0; i < maxLines; i++) {
       if ((originalLines[i] || '') !== (improvedLines[i] || '')) {
         changedLines++;
@@ -786,7 +1108,17 @@ export class ImprovementAgent {
     }
 
     return changedLines;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} code
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} code
+   * @returns {any} The operation result
+   */
+
 
   fixCommonSyntaxErrors(code) {
     let fixed = code;
@@ -798,7 +1130,17 @@ export class ImprovementAgent {
     fixed = fixed.replace(/=\s*([a-zA-Z_]\w*)\s*(?=[,\]};\n])/g, '="$1"');
 
     return fixed;
-  }
+  }  /**
+   * Adds an item
+   * @param {any} code
+   * @returns {any} The operation result
+   */
+  /**
+   * Adds an item
+   * @param {any} code
+   * @returns {any} The operation result
+   */
+
 
   addBasicErrorHandling(code) {
     // Add try-catch around async operations

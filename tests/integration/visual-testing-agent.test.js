@@ -78,7 +78,7 @@ describe('Visual Testing Agent Integration', () => {
     try {
       await fs.rm(tempDir, { recursive: true, force: true });
     } catch (error) {
-      console.warn('Failed to cleanup temp directory:', error.message);
+      // WARN: Failed to cleanup temp directory:, error.message
     }
   });
 

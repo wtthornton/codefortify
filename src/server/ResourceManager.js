@@ -8,16 +8,54 @@
 import fs from 'fs/promises';
 import path from 'path';
 
+/**
+
+
+ * ResourceManager class implementation
+
+
+ *
+
+
+ * Provides functionality for resourcemanager operations
+
+
+ */
+
+
+/**
+
+
+ * ResourceManager class implementation
+
+
+ *
+
+
+ * Provides functionality for resourcemanager operations
+
+
+ */
+
+
 export class ResourceManager {
   constructor(config) {
     this.config = config;
     this.projectRoot = config.projectRoot;
     this.codefortifyPath = config.codefortifyPath || '.codefortify';
-  }
+  }  /**
+   * Performs the specified operation
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async listResources() {
     try {
-      console.error('ResourceManager: Listing resources...');
+      // ERROR: ResourceManager: Listing resources...
       const resources = [
         {
           uri: 'context7://standards/tech-stack',
@@ -66,7 +104,17 @@ export class ResourceManager {
       // Add project-specific resources if they exist
       try {
         const customResourcesPath = path.join(this.projectRoot, this.codefortifyPath, 'resources');
-        const customResources = await fs.readdir(customResourcesPath);
+        const customResources = await fs.readdir(customResourcesPath);        /**
+   * Performs the specified operation
+   * @param {any} const resource of customResources
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} const resource of customResources
+   * @returns {any} The operation result
+   */
+
 
         for (const resource of customResources) {
           if (resource.endsWith('.md')) {
@@ -83,19 +131,39 @@ export class ResourceManager {
       // No custom resources directory
       }
 
-      console.error('ResourceManager: Resources listed successfully');
+      // ERROR: ResourceManager: Resources listed successfully
       return { resources };
     } catch (error) {
-      console.error('ResourceManager: Resource listing failed:', error.message);
+      // ERROR: ResourceManager: Resource listing failed:, error.message
       throw new Error(`Resource listing failed: ${error.message}`);
     }
-  }
+  }  /**
+   * Reads data from file
+   * @param {any} uri
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Reads data from file
+   * @param {any} uri
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async readResource(uri) {
     try {
-      console.error(`ResourceManager: Reading resource ${uri}`);
+      // ERROR: `ResourceManager: Reading resource ${uri}`
       let filePath;
-      let mimeType = 'text/markdown';
+      let mimeType = 'text/markdown';      /**
+   * Performs the specified operation
+   * @param {any} uri
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} uri
+   * @returns {any} The operation result
+   */
+
 
       switch (uri) {
       case 'context7://standards/tech-stack':
@@ -130,7 +198,17 @@ export class ResourceManager {
         }
       }
 
-      let content;
+      let content;      /**
+   * Performs the specified operation
+   * @param {any} uri - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} uri - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
       if (uri === 'context7://patterns/component-patterns') {
         // Generate patterns dynamically based on project type
@@ -139,7 +217,7 @@ export class ResourceManager {
         content = await fs.readFile(filePath, 'utf-8');
       }
 
-      console.error('ResourceManager: Resource read successfully');
+      // ERROR: ResourceManager: Resource read successfully
       return {
         contents: [
           {
@@ -150,10 +228,18 @@ export class ResourceManager {
         ]
       };
     } catch (error) {
-      console.error(`ResourceManager: Resource read failed for ${uri}:`, error.message);
+      // ERROR: `ResourceManager: Resource read failed for ${uri}:`, error.message
       throw new Error(`Failed to read resource ${uri}: ${error.message}`);
     }
-  }
+  }  /**
+   * Performs the specified operation
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async findPatternFile() {
     // Look for pattern files in common locations
@@ -162,7 +248,17 @@ export class ResourceManager {
       path.join(this.projectRoot, 'examples', 'patterns.tsx'),
       path.join(this.projectRoot, 'patterns', 'components.tsx'),
       path.join(this.projectRoot, this.codefortifyPath, 'patterns', 'components.tsx')
-    ];
+    ];    /**
+   * Performs the specified operation
+   * @param {string} const filePath of possiblePaths
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {string} const filePath of possiblePaths
+   * @returns {any} The operation result
+   */
+
 
     for (const filePath of possiblePaths) {
       try {
@@ -175,22 +271,39 @@ export class ResourceManager {
 
     // If no pattern file found, we'll generate one
     return null;
-  }
+  }  /**
+   * Generates new data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Generates new data
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async generatePatternsContent() {
     try {
-      console.error('ResourceManager: Generating patterns content...');
-
+      // ERROR: ResourceManager: Generating patterns content...
       // Try to read existing pattern file first
-      const patternFile = await this.findPatternFile();
+      const patternFile = await this.findPatternFile();      /**
+   * Performs the specified operation
+   * @param {any} patternFile
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} patternFile
+   * @returns {any} The operation result
+   */
+
 
       if (patternFile) {
         try {
           const content = await fs.readFile(patternFile, 'utf-8');
-          console.error('ResourceManager: Using existing pattern file');
+          // ERROR: ResourceManager: Using existing pattern file
           return content;
         } catch (error) {
-          console.error('ResourceManager: Failed to read existing pattern file, generating new patterns');
+          // ERROR: ResourceManager: Failed to read existing pattern file, generating new patterns
         }
       }
 
@@ -198,10 +311,10 @@ export class ResourceManager {
       const { PatternProvider } = await import('./PatternProvider.js');
       const provider = new PatternProvider(this.config);
       const patterns = await provider.generatePatterns();
-      console.error('ResourceManager: Patterns generated successfully');
+      // ERROR: ResourceManager: Patterns generated successfully
       return patterns;
     } catch (error) {
-      console.error('ResourceManager: Pattern content generation failed:', error.message);
+      // ERROR: ResourceManager: Pattern content generation failed:, error.message
       throw new Error(`Pattern content generation failed: ${error.message}`);
     }
   }

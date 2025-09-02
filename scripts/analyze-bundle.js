@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Bundle Analysis Script for Context7 MCP Package
- * 
+ *
  * Analyzes package size, dependencies, and performance metrics
  */
 
@@ -25,13 +25,13 @@ async function analyzeBundle() {
 
     // Analyze package size
     await analyzePackageSize();
-    
+
     // Analyze dependencies
     await analyzeDependencies(packageJson);
-    
+
     // Analyze source files
     await analyzeSourceFiles();
-    
+
     // Performance recommendations
     await provideRecommendations();
 
@@ -46,20 +46,20 @@ async function analyzePackageSize() {
   console.log('─'.repeat(40));
 
   const sizes = await calculateDirectorySizes();
-  
+
   Object.entries(sizes).forEach(([dir, size]) => {
     const sizeKB = (size / 1024).toFixed(1);
     const color = size > 100000 ? 'red' : size > 50000 ? 'yellow' : 'green';
     console.log(`${dir.padEnd(20)} ${chalk[color](sizeKB + ' KB')}`);
   });
-  
+
   console.log();
 }
 
 async function calculateDirectorySizes() {
   const sizes = {};
   const directories = ['src', 'bin', 'tests', 'templates'];
-  
+
   for (const dir of directories) {
     const dirPath = path.join(projectRoot, dir);
     try {
@@ -68,19 +68,19 @@ async function calculateDirectorySizes() {
       sizes[dir] = 0;
     }
   }
-  
+
   return sizes;
 }
 
 async function getDirectorySize(dirPath) {
   let totalSize = 0;
-  
+
   try {
     const items = await fs.readdir(dirPath, { withFileTypes: true });
-    
+
     for (const item of items) {
       const itemPath = path.join(dirPath, item.name);
-      
+
       if (item.isDirectory()) {
         totalSize += await getDirectorySize(itemPath);
       } else {
@@ -92,7 +92,7 @@ async function getDirectorySize(dirPath) {
     // Directory doesn't exist or is inaccessible
     return 0;
   }
-  
+
   return totalSize;
 }
 
@@ -101,12 +101,12 @@ async function analyzeDependencies(packageJson) {
   console.log('─'.repeat(40));
 
   const prodDeps = Object.keys(packageJson.dependencies || {});
-  const devDeps = Object.keys(packageJson.devDependencies || {});
-  
-  console.log(`Production dependencies: \${chalk.green(prodDeps.length)}`);
-  console.log(`Development dependencies: \${chalk.blue(devDeps.length)}`);
-  console.log(`Total dependencies: \${chalk.yellow(prodDeps.length + devDeps.length)}`);
-  
+  const _devDeps = Object.keys(packageJson.devDependencies || {});
+
+  console.log('Production dependencies: ${chalk.green(prodDeps.length)}');
+  console.log('Development dependencies: ${chalk.blue(_devDeps.length)}');
+  console.log('Total dependencies: ${chalk.yellow(prodDeps.length + _devDeps.length)}');
+
   // Heavy dependencies check
   const heavyDeps = [
     '@modelcontextprotocol/sdk',
@@ -115,15 +115,15 @@ async function analyzeDependencies(packageJson) {
     'chalk',
     'ora'
   ];
-  
+
   console.log();
   console.log(chalk.cyan('🏋️  Heavy Dependencies:'));
   prodDeps.forEach(dep => {
     if (heavyDeps.includes(dep)) {
-      console.log(`  ⚠️  \${dep} - Consider lazy loading`);
+      console.log('  ⚠️  ${dep} - Consider lazy loading');
     }
   });
-  
+
   console.log();
 }
 
@@ -133,19 +133,19 @@ async function analyzeSourceFiles() {
 
   const srcPath = path.join(projectRoot, 'src');
   const fileStats = await getFileStatistics(srcPath);
-  
-  console.log(`Total files: \${chalk.green(fileStats.totalFiles)}`);
-  console.log(`Total lines: \${chalk.green(fileStats.totalLines.toLocaleString())}`);
-  console.log(`Average file size: \${chalk.yellow((fileStats.totalLines / fileStats.totalFiles).toFixed(0))} lines`);
-  
+
+  console.log('Total files: ${chalk.green(fileStats.totalFiles)}');
+  console.log('Total lines: ${chalk.green(fileStats.totalLines.toLocaleString())}');
+  console.log('Average file size: ${chalk.yellow((fileStats.totalLines / fileStats.totalFiles).toFixed(0))} lines');
+
   // Large files
   console.log();
   console.log(chalk.cyan('📄 Large Files (>500 lines):'));
   fileStats.largeFiles.forEach(file => {
-    const color = file.lines > 1000 ? 'red' : 'yellow';
-    console.log(`  \${chalk[color]('📄')} \${file.name} (\${file.lines} lines)`);
+    const _color = file.lines > 1000 ? 'red' : 'yellow';
+    console.log('  ${chalk[_color](\'📄\')} ${file.name} (${file.lines} lines)');
   });
-  
+
   console.log();
 }
 
@@ -153,22 +153,22 @@ async function getFileStatistics(dirPath) {
   let totalFiles = 0;
   let totalLines = 0;
   const largeFiles = [];
-  
+
   async function processDirectory(currentPath) {
     const items = await fs.readdir(currentPath, { withFileTypes: true });
-    
+
     for (const item of items) {
       const itemPath = path.join(currentPath, item.name);
-      
+
       if (item.isDirectory()) {
         await processDirectory(itemPath);
       } else if (item.name.endsWith('.js') || item.name.endsWith('.ts')) {
         totalFiles++;
-        
+
         const content = await fs.readFile(itemPath, 'utf-8');
         const lines = content.split('\\n').length;
         totalLines += lines;
-        
+
         if (lines > 500) {
           largeFiles.push({
             name: path.relative(dirPath, itemPath),
@@ -178,9 +178,9 @@ async function getFileStatistics(dirPath) {
       }
     }
   }
-  
+
   await processDirectory(dirPath);
-  
+
   return {
     totalFiles,
     totalLines,
@@ -198,17 +198,17 @@ async function provideRecommendations() {
     '⚡ Implement lazy loading for scoring analyzers',
     '🗜️  Use compression for large pattern templates',
     '🚀 Add tree-shaking optimization for unused exports',
-    '📊 Monitor bundle size in CI/CD pipeline',
+    '📊 Monitor bundle size in CI/CD pipeline'
   ];
 
-  recommendations.forEach(rec => console.log(`  \${rec}`));
-  
+  recommendations.forEach(_rec => console.log('  ${_rec}'));
+
   console.log();
   console.log(chalk.green('✅ Bundle analysis complete!'));
   console.log(chalk.gray('💡 Run `npm run size-check` for size monitoring'));
 }
 
 // Run the analysis
-if (import.meta.url === `file://\${process.argv[1]}`) {
+if (import.meta.url === 'file://${process.argv[1]}') {
   analyzeBundle().catch(console.error);
 }

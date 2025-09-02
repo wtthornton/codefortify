@@ -13,6 +13,36 @@ import { PromptEnhancer } from '../../enhancement/PromptEnhancer.js';
 import { existsSync, readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
 import path from 'path';
 
+/**
+
+
+ * EnhanceCommand class implementation
+
+
+ *
+
+
+ * Provides functionality for enhancecommand operations
+
+
+ */
+
+
+/**
+
+
+ * EnhanceCommand class implementation
+
+
+ *
+
+
+ * Provides functionality for enhancecommand operations
+
+
+ */
+
+
 export class EnhanceCommand {
   constructor(globalConfig) {
     this.globalConfig = globalConfig;
@@ -56,18 +86,48 @@ export class EnhanceCommand {
 
       spinner.succeed('Enhancement system initialized');
 
-      // Set up event handlers for real-time feedback
+      // Set up event handlers for real-time feedback      /**
+   * Performs the specified operation
+   * @param {Object} enhanceConfig.verbose
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} enhanceConfig.verbose
+   * @returns {any} The operation result
+   */
+
       if (enhanceConfig.verbose) {
         this.setupEventHandlers(loopController, patternLearner, promptEnhancer);
       }
 
       // Process the input
-      let processingInput;
+      let processingInput;      /**
+   * Performs the specified operation
+   * @param {any} input
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} input
+   * @returns {any} The operation result
+   */
+
       if (input) {
         processingInput = await this.prepareInput(input, enhanceConfig);
       } else {
         processingInput = await this.detectProjectInput(enhanceConfig);
-      }
+      }      /**
+   * Performs the specified operation
+   * @param {any} !processingInput
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} !processingInput
+   * @returns {any} The operation result
+   */
+
 
       if (!processingInput) {
         console.log(chalk.red('❌ No code to enhance. Provide a file path, directory, or code string.'));
@@ -82,12 +142,32 @@ export class EnhanceCommand {
       // Display results
       await this.displayResults(result, enhanceConfig);
 
-      // Save results if requested
+      // Save results if requested      /**
+   * Performs the specified operation
+   * @param {Object} enhanceConfig.output
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} enhanceConfig.output
+   * @returns {any} The operation result
+   */
+
       if (enhanceConfig.output) {
         await this.saveResults(result, enhanceConfig.output, enhanceConfig.outputFormat);
       }
 
-      // Display learning statistics
+      // Display learning statistics      /**
+   * Performs the specified operation
+   * @param {Object} enhanceConfig.verbose
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} enhanceConfig.verbose
+   * @returns {any} The operation result
+   */
+
       if (enhanceConfig.verbose) {
         await this.displayLearningStats(patternLearner, promptEnhancer);
       }
@@ -101,7 +181,17 @@ export class EnhanceCommand {
       };
 
     } catch (error) {
-      console.log(chalk.red(`❌ Enhancement failed: ${error.message}`));
+      console.log(chalk.red(`❌ Enhancement failed: ${error.message}`));      /**
+   * Performs the specified operation
+   * @param {Object} enhanceConfig.verbose
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} enhanceConfig.verbose
+   * @returns {any} The operation result
+   */
+
 
       if (enhanceConfig.verbose) {
         console.log(chalk.gray(error.stack));
@@ -140,7 +230,17 @@ export class EnhanceCommand {
       }
     }
 
-    // If input is raw code
+    // If input is raw code    /**
+   * Performs the specified operation
+   * @param {any} typeof input - Optional parameter
+   * @returns {string} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} typeof input - Optional parameter
+   * @returns {string} The operation result
+   */
+
     if (typeof input === 'string' && input.length > 0) {
       return {
         type: 'code',
@@ -166,7 +266,17 @@ export class EnhanceCommand {
       'src/App.tsx',
       'index.js',
       'app.js'
-    ];
+    ];    /**
+   * Performs the specified operation
+   * @param {number} const candidate of candidateFiles
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {number} const candidate of candidateFiles
+   * @returns {any} The operation result
+   */
+
 
     for (const candidate of candidateFiles) {
       const filePath = path.join(config.projectRoot, candidate);
@@ -210,7 +320,17 @@ export class EnhanceCommand {
       loopController._currentSpinner = spinner;
     });
 
-    loopController.on('step:complete', (data) => {
+    loopController.on('step:complete', (data) => {      /**
+   * Performs the specified operation
+   * @param {any} loopController._currentSpinner
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} loopController._currentSpinner
+   * @returns {any} The operation result
+   */
+
       if (loopController._currentSpinner) {
         const extra = data.score ? ` (Score: ${data.score})` :
           data.insights ? ` (${data.insights} insights)` :
@@ -232,13 +352,33 @@ export class EnhanceCommand {
     });
 
     // Pattern learning events
-    patternLearner.on('patterns:learned', (data) => {
+    patternLearner.on('patterns:learned', (data) => {      /**
+   * Performs the specified operation
+   * @param {number} data.count > 0
+   * @returns {number} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {number} data.count > 0
+   * @returns {number} The operation result
+   */
+
       if (data.count > 0) {
         console.log(chalk.magenta(`🧠 Learned ${data.count} new patterns from ${data.improvement}`));
       }
     });
 
-    patternLearner.on('patterns:applied', (data) => {
+    patternLearner.on('patterns:applied', (data) => {      /**
+   * Performs the specified operation
+   * @param {number} data.count > 0
+   * @returns {number} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {number} data.count > 0
+   * @returns {number} The operation result
+   */
+
       if (data.count > 0) {
         console.log(chalk.blue(`🔧 Applied ${data.count} learned patterns (${Math.round(data.effectiveness * 100)}% effective)`));
       }
@@ -281,7 +421,17 @@ export class EnhanceCommand {
     console.log(`${chalk.bold('Average/Iteration:')} ${Math.round(result.summary.averageIterationTime)}ms`);
     console.log(`${chalk.bold('Target Achieved:')} ${result.summary.targetAchieved ? chalk.green('✅ Yes') : chalk.yellow('⚠️  No')}`);
 
-    // Progression
+    // Progression    /**
+   * Performs the specified operation
+   * @param {any} result.progression && result.progression.length > 1
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} result.progression && result.progression.length > 1
+   * @returns {any} The operation result
+   */
+
     if (result.progression && result.progression.length > 1) {
       console.log(chalk.cyan('\n📈 Score Progression'));
       result.progression.forEach((iteration, index) => {
@@ -291,19 +441,49 @@ export class EnhanceCommand {
       });
     }
 
-    // Patterns learned
+    // Patterns learned    /**
+   * Performs the specified operation
+   * @param {any} result.patterns && result.patterns.length > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} result.patterns && result.patterns.length > 0
+   * @returns {any} The operation result
+   */
+
     if (result.patterns && result.patterns.length > 0) {
       console.log(chalk.cyan('\n🧠 Patterns Learned'));
       result.patterns.slice(0, 5).forEach(pattern => {
         console.log(`  • ${pattern.description} (${Math.round(pattern.effectiveness * 100)}% effective)`);
-      });
+      });      /**
+   * Performs the specified operation
+   * @param {any} result.patterns.length > 5
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} result.patterns.length > 5
+   * @returns {any} The operation result
+   */
+
 
       if (result.patterns.length > 5) {
         console.log(chalk.gray(`  ... and ${result.patterns.length - 5} more patterns`));
       }
     }
 
-    // Recommendations
+    // Recommendations    /**
+   * Performs the specified operation
+   * @param {any} result.recommendations && result.recommendations.length > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} result.recommendations && result.recommendations.length > 0
+   * @returns {any} The operation result
+   */
+
     if (result.recommendations && result.recommendations.length > 0) {
       console.log(chalk.cyan('\n💡 Recommendations'));
       result.recommendations.slice(0, 3).forEach(rec => {
@@ -313,13 +493,43 @@ export class EnhanceCommand {
       });
     }
 
-    // Metrics
+    // Metrics    /**
+   * Performs the specified operation
+   * @param {Object} result.metrics && config.verbose
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} result.metrics && config.verbose
+   * @returns {any} The operation result
+   */
+
     if (result.metrics && config.verbose) {
-      console.log(chalk.cyan('\n📊 Detailed Metrics'));
+      console.log(chalk.cyan('\n📊 Detailed Metrics'));      /**
+   * Performs the specified operation
+   * @param {any} result.metrics.tokens
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} result.metrics.tokens
+   * @returns {any} The operation result
+   */
+
       if (result.metrics.tokens) {
         console.log(`  Token Reduction: ${Math.round(result.metrics.tokens.reduction)}%`);
         console.log(`  Tokens Saved: ${result.metrics.tokens.saved}`);
-      }
+      }      /**
+   * Performs the specified operation
+   * @param {any} result.metrics.roi
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} result.metrics.roi
+   * @returns {any} The operation result
+   */
+
       if (result.metrics.roi) {
         console.log(`  Time Saved: ${result.metrics.roi.timeSaved} hours`);
         console.log(`  Cost Saved: $${result.metrics.roi.costSaved.toFixed(2)}`);
@@ -334,7 +544,17 @@ export class EnhanceCommand {
     const spinner = ora(`Saving results to ${outputPath}...`).start();
 
     try {
-      let output;
+      let output;      /**
+   * Performs the specified operation
+   * @param {any} format
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} format
+   * @returns {any} The operation result
+   */
+
 
       switch (format) {
       case 'json':
@@ -371,14 +591,34 @@ export class EnhanceCommand {
     console.log(`${chalk.bold('Patterns Learned:')} ${patternStats.totalPatterns}`);
     console.log(`${chalk.bold('Success Rate:')} ${Math.round(patternStats.successRate * 100)}%`);
     console.log(`${chalk.bold('Prompt Enhancements:')} ${enhancementStats.totalEnhancements}`);
-    console.log(`${chalk.bold('Avg Token Reduction:')} ${Math.round(enhancementStats.averageReduction)}%`);
+    console.log(`${chalk.bold('Avg Token Reduction:')} ${Math.round(enhancementStats.averageReduction)}%`);    /**
+   * Performs the specified operation
+   * @param {any} enhancementStats.projectedSavings
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} enhancementStats.projectedSavings
+   * @returns {any} The operation result
+   */
+
 
     if (enhancementStats.projectedSavings) {
       console.log(chalk.cyan('\n💰 Projected Monthly Savings'));
       console.log(`  Tokens: ${enhancementStats.projectedSavings.tokensPerMonth}`);
       console.log(`  Cost: $${enhancementStats.projectedSavings.costPerMonth.toFixed(2)}`);
       console.log(`  Time: ${enhancementStats.projectedSavings.timePerMonth.toFixed(1)} hours`);
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {any} patternStats.topPatterns && patternStats.topPatterns.length > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} patternStats.topPatterns && patternStats.topPatterns.length > 0
+   * @returns {any} The operation result
+   */
+
 
     if (patternStats.topPatterns && patternStats.topPatterns.length > 0) {
       console.log(chalk.cyan('\n🏆 Top Performing Patterns'));
@@ -475,7 +715,17 @@ export class EnhanceCommand {
 - **Duration:** ${result.summary.totalDuration}ms
 - **Target Achieved:** ${result.summary.targetAchieved ? '✅ Yes' : '⚠️ No'}
 
-`;
+`;    /**
+   * Performs the specified operation
+   * @param {any} result.progression
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} result.progression
+   * @returns {any} The operation result
+   */
+
 
     if (result.progression) {
       markdown += `## 📈 Score Progression
@@ -487,7 +737,17 @@ export class EnhanceCommand {
         markdown += `| ${iter.iteration} | ${iter.score} | ${iter.improvements?.length || 0} |\n`;
       });
       markdown += '\n';
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {any} result.patterns?.length
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} result.patterns?.length
+   * @returns {any} The operation result
+   */
+
 
     if (result.patterns?.length) {
       markdown += `## 🧠 Patterns Learned
@@ -513,7 +773,17 @@ export class EnhanceCommand {
     const files = [];
 
     try {
-      const items = readdirSync(dir);
+      const items = readdirSync(dir);      /**
+   * Performs the specified operation
+   * @param {Array} const item of items
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {Array} const item of items
+   * @returns {any} The operation result
+   */
+
 
       for (const item of items) {
         const fullPath = path.join(dir, item);

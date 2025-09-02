@@ -54,11 +54,21 @@ export class GenericFormat {
    */
   extractRecommendations(results) {
     const recommendations = [];
-    
+
     // Extract from failed gates
     results.gates
       .filter(gate => !gate.passed)
-      .forEach(gate => {
+      .forEach(gate => {        /**
+   * Performs the specified operation
+   * @param {any} gate.details.suggestions && gate.details.suggestions.length > 0
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} gate.details.suggestions && gate.details.suggestions.length > 0
+   * @returns {any} The operation result
+   */
+
         if (gate.details.suggestions && gate.details.suggestions.length > 0) {
           gate.details.suggestions.forEach(suggestion => {
             recommendations.push({
@@ -71,11 +81,21 @@ export class GenericFormat {
           });
         }
       });
-    
+
     // Extract from warning gates
     results.gates
       .filter(gate => gate.warning)
-      .forEach(gate => {
+      .forEach(gate => {        /**
+   * Performs the specified operation
+   * @param {any} gate.details.suggestions && gate.details.suggestions.length > 0
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} gate.details.suggestions && gate.details.suggestions.length > 0
+   * @returns {any} The operation result
+   */
+
         if (gate.details.suggestions && gate.details.suggestions.length > 0) {
           gate.details.suggestions.forEach(suggestion => {
             recommendations.push({
@@ -88,7 +108,7 @@ export class GenericFormat {
           });
         }
       });
-    
+
     return recommendations;
   }
 

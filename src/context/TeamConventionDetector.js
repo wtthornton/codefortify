@@ -1,7 +1,7 @@
 /**
  * Team Convention Detector for Context7
  * Detects team-specific coding conventions and patterns
- * 
+ *
  * Features:
  * - Team naming conventions
  * - Code organization patterns
@@ -13,6 +13,36 @@
 import { fileUtils } from '../utils/fileUtils.js';
 import path from 'path';
 
+/**
+
+
+ * TeamConventionDetector class implementation
+
+
+ *
+
+
+ * Provides functionality for teamconventiondetector operations
+
+
+ */
+
+
+/**
+
+
+ * TeamConventionDetector class implementation
+
+
+ *
+
+
+ * Provides functionality for teamconventiondetector operations
+
+
+ */
+
+
 export class TeamConventionDetector {
   constructor(config = {}) {
     this.config = config;
@@ -22,7 +52,7 @@ export class TeamConventionDetector {
         functions: ['camelCase', 'snake_case', 'PascalCase'],
         classes: ['PascalCase', 'camelCase'],
         constants: ['UPPER_SNAKE_CASE', 'camelCase'],
-        files: ['camelCase', 'PascalCase', 'kebab-case', 'snake_case']
+        files: ['camelCase', 'PascalCase', 'kebabCase', 'snake_case']
       },
       organization: {
         folderStructure: ['feature-based', 'layer-based', 'type-based'],
@@ -44,8 +74,7 @@ export class TeamConventionDetector {
    */
   async detectTeamConventions(projectRoot) {
     try {
-      console.log(`👥 Detecting team conventions in: ${projectRoot}`);
-      
+      // LOG: `👥 Detecting team conventions in: ${projectRoot}`
       const conventions = {
         naming: await this.detectNamingConventions(projectRoot),
         organization: await this.detectOrganizationPatterns(projectRoot),
@@ -57,16 +86,16 @@ export class TeamConventionDetector {
       };
 
       const recommendations = await this.generateConventionRecommendations(conventions);
-      
-      console.log(`✅ Team convention detection completed for: ${projectRoot}`);
+
+      // LOG: `✅ Team convention detection completed for: ${projectRoot}`
       return {
         ...conventions,
         recommendations,
         overallScore: this.calculateOverallConventionScore(conventions)
       };
-      
+
     } catch (error) {
-      console.error(`❌ Error detecting team conventions: ${error.message}`);
+      // ERROR: `❌ Error detecting team conventions: ${error.message}`
       return {
         naming: {},
         organization: {},
@@ -88,7 +117,7 @@ export class TeamConventionDetector {
    */
   async detectNamingConventions(projectRoot) {
     const codeSamples = await this.extractCodeSamples(projectRoot);
-    
+
     return {
       variables: this.analyzeVariableNaming(codeSamples),
       functions: this.analyzeFunctionNaming(codeSamples),
@@ -174,15 +203,35 @@ export class TeamConventionDetector {
     };
   }
 
-  // Private methods
+  // Private methods  /**
+   * Performs the specified operation
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async extractCodeSamples(projectRoot) {
     const samples = [];
-    
+
     try {
       const jsFiles = await fileUtils.getFilesByExtension(projectRoot, ['.js', '.jsx', '.ts', '.tsx']);
-      const filesToAnalyze = jsFiles.slice(0, 15); // Limit for performance
-      
+      const filesToAnalyze = jsFiles.slice(0, 15); // Limit for performance      /**
+   * Performs the specified operation
+   * @param {any} const file of filesToAnalyze
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const file of filesToAnalyze
+   * @returns {any} The operation result
+   */
+
+
       for (const file of filesToAnalyze) {
         try {
           const content = await fileUtils.readFile(file);
@@ -193,22 +242,52 @@ export class TeamConventionDetector {
             directory: path.dirname(file)
           });
         } catch (error) {
-          console.error(`Error reading file ${file}: ${error.message}`);
+          // ERROR: `Error reading file ${file}: ${error.message}`
         }
       }
     } catch (error) {
-      console.error(`Error extracting code samples: ${error.message}`);
+      // ERROR: `Error extracting code samples: ${error.message}`
     }
 
     return samples;
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} codeSamples
+   * @returns {any} The operation result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} codeSamples
+   * @returns {any} The operation result
+   */
+
 
   analyzeVariableNaming(codeSamples) {
-    const patterns = { camelCase: 0, snake_case: 0, PascalCase: 0, other: 0 };
-    
+    const patterns = { camelCase: 0, snake_case: 0, PascalCase: 0, other: 0 };    /**
+   * Performs the specified operation
+   * @param {any} const sample of codeSamples
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const sample of codeSamples
+   * @returns {any} The operation result
+   */
+
+
     for (const sample of codeSamples) {
-      const variableMatches = sample.content.match(/(?:let|const|var)\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g) || [];
-      
+      const variableMatches = sample.content.match(/(?:let|const|var)\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g) || [];      /**
+   * Performs the specified operation
+   * @param {any} const match of variableMatches
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const match of variableMatches
+   * @returns {any} The operation result
+   */
+
+
       for (const match of variableMatches) {
         const variable = match.split(/\s+/)[1];
         if (/^[a-z][a-zA-Z0-9]*$/.test(variable)) {
@@ -222,23 +301,53 @@ export class TeamConventionDetector {
         }
       }
     }
-    
+
     return patterns;
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} codeSamples
+   * @returns {any} The operation result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} codeSamples
+   * @returns {any} The operation result
+   */
+
 
   analyzeFunctionNaming(codeSamples) {
-    const patterns = { camelCase: 0, snake_case: 0, PascalCase: 0, other: 0 };
-    
+    const patterns = { camelCase: 0, snake_case: 0, PascalCase: 0, other: 0 };    /**
+   * Performs the specified operation
+   * @param {any} const sample of codeSamples
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const sample of codeSamples
+   * @returns {any} The operation result
+   */
+
+
     for (const sample of codeSamples) {
       const functionMatches = sample.content.match(/function\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g) || [];
       const arrowFunctionMatches = sample.content.match(/(?:const|let|var)\s+([a-zA-Z_$][a-zA-Z0-9_$]*)\s*=\s*\(/g) || [];
-      
-      const allMatches = [...functionMatches, ...arrowFunctionMatches];
-      
+
+      const allMatches = [...functionMatches, ...arrowFunctionMatches];      /**
+   * Performs the specified operation
+   * @param {any} const match of allMatches
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const match of allMatches
+   * @returns {any} The operation result
+   */
+
+
       for (const match of allMatches) {
         const funcName = match.split(/\s+/)[1] || match.match(/([a-zA-Z_$][a-zA-Z0-9_$]*)/)?.[1];
-        if (!funcName) continue;
-        
+        if (!funcName) {continue;}
+
         if (/^[a-z][a-zA-Z0-9]*$/.test(funcName)) {
           patterns.camelCase++;
         } else if (/^[a-z][a-z0-9_]*$/.test(funcName)) {
@@ -250,16 +359,46 @@ export class TeamConventionDetector {
         }
       }
     }
-    
+
     return patterns;
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} codeSamples
+   * @returns {any} The operation result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} codeSamples
+   * @returns {any} The operation result
+   */
+
 
   analyzeClassNaming(codeSamples) {
-    const patterns = { PascalCase: 0, camelCase: 0, other: 0 };
-    
+    const patterns = { PascalCase: 0, camelCase: 0, other: 0 };    /**
+   * Performs the specified operation
+   * @param {any} const sample of codeSamples
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const sample of codeSamples
+   * @returns {any} The operation result
+   */
+
+
     for (const sample of codeSamples) {
-      const classMatches = sample.content.match(/class\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g) || [];
-      
+      const classMatches = sample.content.match(/class\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g) || [];      /**
+   * Performs the specified operation
+   * @param {any} const match of classMatches
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const match of classMatches
+   * @returns {any} The operation result
+   */
+
+
       for (const match of classMatches) {
         const className = match.split(/\s+/)[1];
         if (/^[A-Z][a-zA-Z0-9]*$/.test(className)) {
@@ -271,16 +410,46 @@ export class TeamConventionDetector {
         }
       }
     }
-    
+
     return patterns;
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} codeSamples
+   * @returns {any} The operation result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} codeSamples
+   * @returns {any} The operation result
+   */
+
 
   analyzeConstantNaming(codeSamples) {
-    const patterns = { UPPER_SNAKE_CASE: 0, camelCase: 0, other: 0 };
-    
+    const patterns = { UPPER_SNAKE_CASE: 0, camelCase: 0, other: 0 };    /**
+   * Performs the specified operation
+   * @param {any} const sample of codeSamples
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const sample of codeSamples
+   * @returns {any} The operation result
+   */
+
+
     for (const sample of codeSamples) {
-      const constMatches = sample.content.match(/const\s+([A-Z_][A-Z0-9_]*)/g) || [];
-      
+      const constMatches = sample.content.match(/const\s+([A-Z_][A-Z0-9_]*)/g) || [];      /**
+   * Performs the specified operation
+   * @param {any} const match of constMatches
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const match of constMatches
+   * @returns {any} The operation result
+   */
+
+
       for (const match of constMatches) {
         const constName = match.split(/\s+/)[1];
         if (/^[A-Z][A-Z0-9_]*$/.test(constName)) {
@@ -292,45 +461,85 @@ export class TeamConventionDetector {
         }
       }
     }
-    
+
     return patterns;
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} codeSamples
+   * @returns {any} The operation result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} codeSamples
+   * @returns {any} The operation result
+   */
+
 
   analyzeFileNaming(codeSamples) {
-    const patterns = { camelCase: 0, PascalCase: 0, kebab-case: 0, snake_case: 0, other: 0 };
-    
+    const patterns = { camelCase: 0, PascalCase: 0, kebabCase: 0, snake_case: 0, other: 0 };    /**
+   * Performs the specified operation
+   * @param {any} const sample of codeSamples
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const sample of codeSamples
+   * @returns {any} The operation result
+   */
+
+
     for (const sample of codeSamples) {
       const fileName = path.basename(sample.file, path.extname(sample.file));
-      
+
       if (/^[a-z][a-zA-Z0-9]*$/.test(fileName)) {
         patterns.camelCase++;
       } else if (/^[A-Z][a-zA-Z0-9]*$/.test(fileName)) {
         patterns.PascalCase++;
       } else if (fileName.includes('-')) {
-        patterns['kebab-case']++;
+        patterns.kebabCase++;
       } else if (fileName.includes('_')) {
         patterns.snake_case++;
       } else {
         patterns.other++;
       }
     }
-    
+
     return patterns;
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} codeSamples
+   * @returns {any} The operation result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} codeSamples
+   * @returns {any} The operation result
+   */
+
 
   analyzeDirectoryNaming(codeSamples) {
-    const patterns = { camelCase: 0, kebab-case: 0, snake_case: 0, other: 0 };
-    const directories = new Set();
-    
+    const patterns = { camelCase: 0, kebabCase: 0, snake_case: 0, other: 0 };
+    const directories = new Set();    /**
+   * Performs the specified operation
+   * @param {any} const sample of codeSamples
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const sample of codeSamples
+   * @returns {any} The operation result
+   */
+
+
     for (const sample of codeSamples) {
       const dirName = path.basename(sample.directory);
       if (dirName && !directories.has(dirName)) {
         directories.add(dirName);
-        
+
         if (/^[a-z][a-zA-Z0-9]*$/.test(dirName)) {
           patterns.camelCase++;
         } else if (dirName.includes('-')) {
-          patterns['kebab-case']++;
+          patterns.kebabCase++;
         } else if (dirName.includes('_')) {
           patterns.snake_case++;
         } else {
@@ -338,33 +547,53 @@ export class TeamConventionDetector {
         }
       }
     }
-    
+
     return patterns;
-  }
+  }  /**
+   * Calculates the result
+   * @param {any} codeSamples
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Calculates the result
+   * @param {any} codeSamples
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   calculateNamingConsistency(codeSamples) {
     const variablePatterns = this.analyzeVariableNaming(codeSamples);
     const functionPatterns = this.analyzeFunctionNaming(codeSamples);
     const classPatterns = this.analyzeClassNaming(codeSamples);
-    
+
     const totalVariables = Object.values(variablePatterns).reduce((a, b) => a + b, 0);
     const totalFunctions = Object.values(functionPatterns).reduce((a, b) => a + b, 0);
     const totalClasses = Object.values(classPatterns).reduce((a, b) => a + b, 0);
-    
-    const variableConsistency = totalVariables > 0 ? 
+
+    const variableConsistency = totalVariables > 0 ?
       Math.max(...Object.values(variablePatterns)) / totalVariables : 0;
-    const functionConsistency = totalFunctions > 0 ? 
+    const functionConsistency = totalFunctions > 0 ?
       Math.max(...Object.values(functionPatterns)) / totalFunctions : 0;
-    const classConsistency = totalClasses > 0 ? 
+    const classConsistency = totalClasses > 0 ?
       Math.max(...Object.values(classPatterns)) / totalClasses : 0;
-    
+
     return {
       variables: variableConsistency,
       functions: functionConsistency,
       classes: classConsistency,
       overall: (variableConsistency + functionConsistency + classConsistency) / 3
     };
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async analyzeFolderStructure(projectRoot) {
     try {
@@ -375,46 +604,86 @@ export class TeamConventionDetector {
         typeBased: 0,
         mixed: 0
       };
-      
+
       // Analyze folder structure patterns
       const folders = this.extractFolderNames(structure);
-      
+
       // Check for feature-based structure
       if (folders.some(f => f.includes('feature') || f.includes('component'))) {
         patterns.featureBased++;
       }
-      
+
       // Check for layer-based structure
       if (folders.some(f => f.includes('layer') || f.includes('service'))) {
         patterns.layerBased++;
       }
-      
+
       // Check for type-based structure
       if (folders.some(f => f.includes('type') || f.includes('model'))) {
         patterns.typeBased++;
       }
-      
+
       return patterns;
     } catch (error) {
       return { featureBased: 0, layerBased: 0, typeBased: 0, mixed: 0 };
     }
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async analyzeImportOrder(projectRoot) {
     const codeSamples = await this.extractCodeSamples(projectRoot);
-    const importPatterns = { externalFirst: 0, internalFirst: 0, alphabetical: 0, mixed: 0 };
-    
+    const importPatterns = { externalFirst: 0, internalFirst: 0, alphabetical: 0, mixed: 0 };    /**
+   * Performs the specified operation
+   * @param {any} const sample of codeSamples
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const sample of codeSamples
+   * @returns {any} The operation result
+   */
+
+
     for (const sample of codeSamples) {
-      const imports = sample.content.match(/import\s+.*from\s+['"]([^'"]+)['"]/g) || [];
-      
+      const imports = sample.content.match(/import\s+.*from\s+['"]([^'"]+)['"]/g) || [];      /**
+   * Performs the specified operation
+   * @param {any} imports.length > 1
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} imports.length > 1
+   * @returns {any} The operation result
+   */
+
+
       if (imports.length > 1) {
-        const externalImports = imports.filter(imp => 
+        const externalImports = imports.filter(imp =>
           !imp.includes('./') && !imp.includes('../')
         );
-        const internalImports = imports.filter(imp => 
+        const internalImports = imports.filter(imp =>
           imp.includes('./') || imp.includes('../')
-        );
-        
+        );        /**
+   * Performs the specified operation
+   * @param {any} externalImports.length > 0 && internalImports.length > 0
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} externalImports.length > 0 && internalImports.length > 0
+   * @returns {any} The operation result
+   */
+
+
         if (externalImports.length > 0 && internalImports.length > 0) {
           const firstImport = imports[0];
           if (firstImport.includes('./') || firstImport.includes('../')) {
@@ -425,18 +694,48 @@ export class TeamConventionDetector {
         }
       }
     }
-    
+
     return importPatterns;
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async analyzeExportStyle(projectRoot) {
     const codeSamples = await this.extractCodeSamples(projectRoot);
-    const exportPatterns = { namedExports: 0, defaultExports: 0, mixed: 0 };
-    
+    const exportPatterns = { namedExports: 0, defaultExports: 0, mixed: 0 };    /**
+   * Performs the specified operation
+   * @param {any} const sample of codeSamples
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const sample of codeSamples
+   * @returns {any} The operation result
+   */
+
+
     for (const sample of codeSamples) {
       const namedExports = (sample.content.match(/export\s+(?:const|let|var|function|class)/g) || []).length;
-      const defaultExports = (sample.content.match(/export\s+default/g) || []).length;
-      
+      const defaultExports = (sample.content.match(/export\s+default/g) || []).length;      /**
+   * Performs the specified operation
+   * @param {any} namedExports > 0 && defaultExports > 0
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} namedExports > 0 && defaultExports > 0
+   * @returns {any} The operation result
+   */
+
+
       if (namedExports > 0 && defaultExports > 0) {
         exportPatterns.mixed++;
       } else if (namedExports > 0) {
@@ -445,9 +744,19 @@ export class TeamConventionDetector {
         exportPatterns.defaultExports++;
       }
     }
-    
+
     return exportPatterns;
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async analyzeFileGrouping(projectRoot) {
     // Analyze how files are grouped in directories
@@ -457,7 +766,17 @@ export class TeamConventionDetector {
       byLayer: 0,
       mixed: 0
     };
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async analyzeModuleOrganization(projectRoot) {
     // Analyze module organization patterns
@@ -467,7 +786,17 @@ export class TeamConventionDetector {
       sharedModules: 0,
       mixed: 0
     };
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async analyzeReadmeQuality(projectRoot) {
     try {
@@ -485,11 +814,21 @@ export class TeamConventionDetector {
         };
       }
     } catch (error) {
-      console.error(`Error analyzing README: ${error.message}`);
+      // ERROR: `Error analyzing README: ${error.message}`
     }
-    
+
     return { exists: false, quality: 0 };
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async analyzeCodeComments(projectRoot) {
     const codeSamples = await this.extractCodeSamples(projectRoot);
@@ -499,12 +838,32 @@ export class TeamConventionDetector {
       jsdocComments: 0,
       inlineComments: 0,
       blockComments: 0
-    };
-    
+    };    /**
+   * Performs the specified operation
+   * @param {any} const sample of codeSamples
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const sample of codeSamples
+   * @returns {any} The operation result
+   */
+
+
     for (const sample of codeSamples) {
       const lines = sample.content.split('\n');
-      commentStats.totalLines += lines.length;
-      
+      commentStats.totalLines += lines.length;      /**
+   * Performs the specified operation
+   * @param {any} const line of lines
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const line of lines
+   * @returns {any} The operation result
+   */
+
+
       for (const line of lines) {
         const trimmed = line.trim();
         if (trimmed.startsWith('//')) {
@@ -519,13 +878,23 @@ export class TeamConventionDetector {
         }
       }
     }
-    
+
     return {
       ...commentStats,
-      commentRatio: commentStats.totalLines > 0 ? 
+      commentRatio: commentStats.totalLines > 0 ?
         commentStats.commentLines / commentStats.totalLines : 0
     };
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async analyzeApiDocumentation(projectRoot) {
     // Check for API documentation files
@@ -534,7 +903,7 @@ export class TeamConventionDetector {
       format: 'none',
       coverage: 0
     };
-    
+
     try {
       const docsPath = path.join(projectRoot, 'docs');
       if (await fileUtils.directoryExists(docsPath)) {
@@ -544,9 +913,19 @@ export class TeamConventionDetector {
     } catch (error) {
       // Ignore errors
     }
-    
+
     return apiDocs;
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async analyzeInlineDocumentation(projectRoot) {
     const codeSamples = await this.extractCodeSamples(projectRoot);
@@ -555,17 +934,37 @@ export class TeamConventionDetector {
       totalFunctions: 0,
       classesWithDocs: 0,
       totalClasses: 0
-    };
-    
+    };    /**
+   * Performs the specified operation
+   * @param {any} const sample of codeSamples
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const sample of codeSamples
+   * @returns {any} The operation result
+   */
+
+
     for (const sample of codeSamples) {
       const functions = sample.content.match(/function\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g) || [];
       const classes = sample.content.match(/class\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g) || [];
-      
+
       docStats.totalFunctions += functions.length;
       docStats.totalClasses += classes.length;
-      
+
       // Check for JSDoc comments before functions/classes
-      const lines = sample.content.split('\n');
+      const lines = sample.content.split('\n');      /**
+   * Performs the specified operation
+   * @param {any} let i - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} let i - Optional parameter
+   * @returns {any} The operation result
+   */
+
       for (let i = 0; i < lines.length; i++) {
         if (lines[i].includes('function') && i > 0 && lines[i-1].trim().startsWith('/**')) {
           docStats.functionsWithDocs++;
@@ -575,15 +974,25 @@ export class TeamConventionDetector {
         }
       }
     }
-    
+
     return {
       ...docStats,
-      functionDocRatio: docStats.totalFunctions > 0 ? 
+      functionDocRatio: docStats.totalFunctions > 0 ?
         docStats.functionsWithDocs / docStats.totalFunctions : 0,
-      classDocRatio: docStats.totalClasses > 0 ? 
+      classDocRatio: docStats.totalClasses > 0 ?
         docStats.classesWithDocs / docStats.totalClasses : 0
     };
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async analyzeChangelog(projectRoot) {
     try {
@@ -599,34 +1008,214 @@ export class TeamConventionDetector {
         };
       }
     } catch (error) {
-      console.error(`Error analyzing CHANGELOG: ${error.message}`);
+      // ERROR: `Error analyzing CHANGELOG: ${error.message}`
     }
-    
+
     return { exists: false, quality: 0 };
   }
 
-  // Placeholder methods for additional analysis
-  async analyzeTestStructure(projectRoot) { return {}; }
-  async analyzeTestNaming(projectRoot) { return {}; }
-  async analyzeTestCoverage(projectRoot) { return {}; }
-  async analyzeTestTypes(projectRoot) { return {}; }
-  async analyzeMockingConventions(projectRoot) { return {}; }
-  async analyzeCommitMessages(projectRoot) { return {}; }
-  async analyzeBranchingStrategy(projectRoot) { return {}; }
-  async analyzeGitignore(projectRoot) { return {}; }
-  async analyzeGitHooks(projectRoot) { return {}; }
-  async analyzeLintingSetup(projectRoot) { return {}; }
-  async analyzeFormattingSetup(projectRoot) { return {}; }
-  async analyzeTypeChecking(projectRoot) { return {}; }
-  async analyzeSecurityStandards(projectRoot) { return {}; }
-  async analyzePerformanceStandards(projectRoot) { return {}; }
-  async analyzeConventionConsistency(projectRoot) { return {}; }
+  // Placeholder methods for additional analysis  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
+  async analyzeTestStructure(projectRoot) { return {}; }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
+  async analyzeTestNaming(projectRoot) { return {}; }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
+  async analyzeTestCoverage(projectRoot) { return {}; }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
+  async analyzeTestTypes(projectRoot) { return {}; }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
+  async analyzeMockingConventions(projectRoot) { return {}; }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
+  async analyzeCommitMessages(projectRoot) { return {}; }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
+  async analyzeBranchingStrategy(projectRoot) { return {}; }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
+  async analyzeGitignore(projectRoot) { return {}; }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
+  async analyzeGitHooks(projectRoot) { return {}; }  /**
+   * Sets configuration
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Sets configuration
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
+  async analyzeLintingSetup(projectRoot) { return {}; }  /**
+   * Sets configuration
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Sets configuration
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
+  async analyzeFormattingSetup(projectRoot) { return {}; }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
+  async analyzeTypeChecking(projectRoot) { return {}; }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
+  async analyzeSecurityStandards(projectRoot) { return {}; }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
+  async analyzePerformanceStandards(projectRoot) { return {}; }  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} projectRoot
+   * @returns {Promise} Promise that resolves with the result
+   */
+
+  async analyzeConventionConsistency(projectRoot) { return {}; }  /**
+   * Performs the specified operation
+   * @param {any} structure
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} structure
+   * @returns {any} The operation result
+   */
+
 
   extractFolderNames(structure) {
     const folders = [];
-    const extract = (node, path = '') => {
+    const extract = (node, path = '') => {      /**
+   * Performs the specified operation
+   * @param {any} node.type - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} node.type - Optional parameter
+   * @returns {any} The operation result
+   */
+
       if (node.type === 'directory') {
-        folders.push(path + node.name);
+        folders.push(path + node.name);        /**
+   * Performs the specified operation
+   * @param {any} node.children
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} node.children
+   * @returns {any} The operation result
+   */
+
         if (node.children) {
           node.children.forEach(child => extract(child, path + node.name + '/'));
         }
@@ -634,31 +1223,71 @@ export class TeamConventionDetector {
     };
     extract(structure);
     return folders;
-  }
+  }  /**
+   * Reads data from file
+   * @param {any} content
+   * @returns {any} The operation result
+   */
+  /**
+   * Reads data from file
+   * @param {any} content
+   * @returns {any} The operation result
+   */
+
 
   assessReadmeQuality(content) {
     let score = 0;
-    if (content.length > 500) score += 1;
-    if (content.includes('##')) score += 1;
-    if (content.includes('```')) score += 1;
-    if (content.includes('install')) score += 1;
-    if (content.includes('usage')) score += 1;
+    if (content.length > 500) {score += 1;}
+    if (content.includes('##')) {score += 1;}
+    if (content.includes('```')) {score += 1;}
+    if (content.includes('install')) {score += 1;}
+    if (content.includes('usage')) {score += 1;}
     return score / 5;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} content
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} content
+   * @returns {any} The operation result
+   */
+
 
   assessChangelogQuality(content) {
     let score = 0;
-    if (content.length > 200) score += 1;
-    if (content.includes('## [') || content.includes('### [')) score += 1;
-    if (content.includes('Added') || content.includes('Changed')) score += 1;
-    if (content.includes('Fixed') || content.includes('Removed')) score += 1;
+    if (content.length > 200) {score += 1;}
+    if (content.includes('## [') || content.includes('### [')) {score += 1;}
+    if (content.includes('Added') || content.includes('Changed')) {score += 1;}
+    if (content.includes('Fixed') || content.includes('Removed')) {score += 1;}
     return score / 4;
-  }
+  }  /**
+   * Generates new data
+   * @param {any} conventions
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Generates new data
+   * @param {any} conventions
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async generateConventionRecommendations(conventions) {
     const recommendations = [];
-    
-    // Naming convention recommendations
+
+    // Naming convention recommendations    /**
+   * Performs the specified operation
+   * @param {boolean} conventions.naming.consistency.overall < 0.8
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} conventions.naming.consistency.overall < 0.8
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (conventions.naming.consistency.overall < 0.8) {
       recommendations.push({
         type: 'naming',
@@ -667,8 +1296,18 @@ export class TeamConventionDetector {
         suggestion: 'Establish and document consistent naming conventions for the team'
       });
     }
-    
-    // Documentation recommendations
+
+    // Documentation recommendations    /**
+   * Performs the specified operation
+   * @param {any} conventions.documentation.readme.quality < 0.6
+   * @returns {string} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} conventions.documentation.readme.quality < 0.6
+   * @returns {string} The operation result
+   */
+
     if (conventions.documentation.readme.quality < 0.6) {
       recommendations.push({
         type: 'documentation',
@@ -677,21 +1316,51 @@ export class TeamConventionDetector {
         suggestion: 'Enhance README with installation, usage, and API documentation'
       });
     }
-    
+
     return recommendations;
-  }
+  }  /**
+   * Calculates the result
+   * @param {any} conventions
+   * @returns {number} The calculated result
+   */
+  /**
+   * Calculates the result
+   * @param {any} conventions
+   * @returns {number} The calculated result
+   */
+
 
   calculateOverallConventionScore(conventions) {
-    const scores = [];
-    
+    const scores = [];    /**
+   * Performs the specified operation
+   * @param {boolean} conventions.naming.consistency.overall
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} conventions.naming.consistency.overall
+   * @returns {boolean} True if successful, false otherwise
+   */
+
+
     if (conventions.naming.consistency.overall) {
       scores.push(conventions.naming.consistency.overall);
-    }
-    
+    }    /**
+   * Performs the specified operation
+   * @param {any} conventions.documentation.readme.quality
+   * @returns {string} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} conventions.documentation.readme.quality
+   * @returns {string} The operation result
+   */
+
+
     if (conventions.documentation.readme.quality) {
       scores.push(conventions.documentation.readme.quality);
     }
-    
+
     return scores.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores.length : 0;
   }
 }

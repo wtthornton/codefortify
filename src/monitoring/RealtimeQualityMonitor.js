@@ -15,6 +15,36 @@ import { SuggestionGenerator } from './SuggestionGenerator.js';
 import { fileUtils } from '../utils/fileUtils.js';
 import path from 'path';
 
+/**
+
+
+ * RealtimeQualityMonitor class implementation
+
+
+ *
+
+
+ * Provides functionality for realtimequalitymonitor operations
+
+
+ */
+
+
+/**
+
+
+ * RealtimeQualityMonitor class implementation
+
+
+ *
+
+
+ * Provides functionality for realtimequalitymonitor operations
+
+
+ */
+
+
 export class RealtimeQualityMonitor {
   constructor(config = {}) {
     this.config = {
@@ -68,11 +98,11 @@ export class RealtimeQualityMonitor {
 
       this.monitoringSessions.set(sessionId, session);
 
-      console.log(`🔍 Started monitoring: ${filePath} (Session: ${sessionId})`);
+      // LOG: `🔍 Started monitoring: ${filePath} (Session: ${sessionId})`
       return sessionId;
 
     } catch (error) {
-      console.error(`❌ Error starting monitoring: ${error.message}`);
+      // ERROR: `❌ Error starting monitoring: ${error.message}`
       throw error;
     }
   }
@@ -84,7 +114,17 @@ export class RealtimeQualityMonitor {
    */
   async stopMonitoring(sessionId) {
     try {
-      const session = this.monitoringSessions.get(sessionId);
+      const session = this.monitoringSessions.get(sessionId);      /**
+   * Performs the specified operation
+   * @param {any} !session
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} !session
+   * @returns {any} The operation result
+   */
+
       if (!session) {
         throw new Error(`Session ${sessionId} not found`);
       }
@@ -92,11 +132,11 @@ export class RealtimeQualityMonitor {
       session.isActive = false;
       session.endTime = new Date();
 
-      console.log(`⏹️ Stopped monitoring session: ${sessionId}`);
+      // LOG: `⏹️ Stopped monitoring session: ${sessionId}`
       return true;
 
     } catch (error) {
-      console.error(`❌ Error stopping monitoring: ${error.message}`);
+      // ERROR: `❌ Error stopping monitoring: ${error.message}`
       return false;
     }
   }
@@ -109,10 +149,30 @@ export class RealtimeQualityMonitor {
    */
   async monitorCodeQuality(code, sessionId) {
     try {
-      const session = this.monitoringSessions.get(sessionId);
+      const session = this.monitoringSessions.get(sessionId);      /**
+   * Performs the specified operation
+   * @param {any} !session
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} !session
+   * @returns {any} The operation result
+   */
+
       if (!session) {
         throw new Error(`Session ${sessionId} not found`);
-      }
+      }      /**
+   * Performs the specified operation
+   * @param {boolean} !session.isActive
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} !session.isActive
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
       if (!session.isActive) {
         throw new Error(`Session ${sessionId} is not active`);
@@ -151,7 +211,7 @@ export class RealtimeQualityMonitor {
       };
 
     } catch (error) {
-      console.error(`❌ Error monitoring code quality: ${error.message}`);
+      // ERROR: `❌ Error monitoring code quality: ${error.message}`
       throw error;
     }
   }
@@ -163,7 +223,17 @@ export class RealtimeQualityMonitor {
    */
   async getQualityStatus(sessionId) {
     try {
-      const session = this.monitoringSessions.get(sessionId);
+      const session = this.monitoringSessions.get(sessionId);      /**
+   * Performs the specified operation
+   * @param {any} !session
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} !session
+   * @returns {any} The operation result
+   */
+
       if (!session) {
         throw new Error(`Session ${sessionId} not found`);
       }
@@ -181,7 +251,7 @@ export class RealtimeQualityMonitor {
       };
 
     } catch (error) {
-      console.error(`❌ Error getting quality status: ${error.message}`);
+      // ERROR: `❌ Error getting quality status: ${error.message}`
       throw error;
     }
   }
@@ -198,7 +268,7 @@ export class RealtimeQualityMonitor {
       return history.slice(-limit);
 
     } catch (error) {
-      console.error(`❌ Error getting quality history: ${error.message}`);
+      // ERROR: `❌ Error getting quality history: ${error.message}`
       return [];
     }
   }
@@ -209,9 +279,31 @@ export class RealtimeQualityMonitor {
    */
   async getActiveSessions() {
     try {
-      const activeSessions = [];
+      const activeSessions = [];      /**
+   * Performs the specified operation
+   * @param {number} const [sessionId
+   * @param {boolean} session] of this.monitoringSessions
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {number} const [sessionId
+   * @param {boolean} session] of this.monitoringSessions
+   * @returns {boolean} True if successful, false otherwise
+   */
 
-      for (const [sessionId, session] of this.monitoringSessions) {
+
+      for (const [sessionId, session] of this.monitoringSessions) {        /**
+   * Performs the specified operation
+   * @param {boolean} session.isActive
+   * @returns {boolean} True if successful, false otherwise
+   */
+        /**
+   * Performs the specified operation
+   * @param {boolean} session.isActive
+   * @returns {boolean} True if successful, false otherwise
+   */
+
         if (session.isActive) {
           activeSessions.push({
             sessionId,
@@ -226,7 +318,7 @@ export class RealtimeQualityMonitor {
       return activeSessions;
 
     } catch (error) {
-      console.error(`❌ Error getting active sessions: ${error.message}`);
+      // ERROR: `❌ Error getting active sessions: ${error.message}`
       return [];
     }
   }
@@ -252,7 +344,17 @@ export class RealtimeQualityMonitor {
   removeEventListener(event, listener) {
     if (this.eventListeners.has(event)) {
       const listeners = this.eventListeners.get(event);
-      const index = listeners.indexOf(listener);
+      const index = listeners.indexOf(listener);      /**
+   * Performs the specified operation
+   * @param {number} index > -1
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {number} index > -1
+   * @returns {any} The operation result
+   */
+
       if (index > -1) {
         listeners.splice(index, 1);
       }
@@ -281,9 +383,31 @@ export class RealtimeQualityMonitor {
       };
 
       let totalQuality = 0;
-      let analysisCount = 0;
+      let analysisCount = 0;      /**
+   * Performs the specified operation
+   * @param {number} const [sessionId
+   * @param {boolean} session] of this.monitoringSessions
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {number} const [sessionId
+   * @param {boolean} session] of this.monitoringSessions
+   * @returns {boolean} True if successful, false otherwise
+   */
 
-      for (const [sessionId, session] of this.monitoringSessions) {
+
+      for (const [sessionId, session] of this.monitoringSessions) {        /**
+   * Performs the specified operation
+   * @param {boolean} session.isActive
+   * @returns {boolean} True if successful, false otherwise
+   */
+        /**
+   * Performs the specified operation
+   * @param {boolean} session.isActive
+   * @returns {boolean} True if successful, false otherwise
+   */
+
         if (session.isActive) {
           stats.activeSessions++;
         }
@@ -293,7 +417,17 @@ export class RealtimeQualityMonitor {
           totalQuality += overall;
           analysisCount++;
 
-          // Categorize quality
+          // Categorize quality          /**
+   * Performs the specified operation
+   * @param {any} overall > - Optional parameter
+   * @returns {any} The operation result
+   */
+          /**
+   * Performs the specified operation
+   * @param {any} overall > - Optional parameter
+   * @returns {any} The operation result
+   */
+
           if (overall >= 90) {
             stats.qualityDistribution.excellent++;
           } else if (overall >= 75) {
@@ -304,12 +438,32 @@ export class RealtimeQualityMonitor {
             stats.qualityDistribution.poor++;
           }
 
-          // Count common issues
+          // Count common issues          /**
+   * Performs the specified operation
+   * @param {boolean} const issue of session.issues
+   * @returns {boolean} True if successful, false otherwise
+   */
+          /**
+   * Performs the specified operation
+   * @param {boolean} const issue of session.issues
+   * @returns {boolean} True if successful, false otherwise
+   */
+
           for (const issue of session.issues) {
             stats.commonIssues[issue.type] = (stats.commonIssues[issue.type] || 0) + 1;
           }
 
-          // Count top suggestions
+          // Count top suggestions          /**
+   * Performs the specified operation
+   * @param {any} const suggestion of session.suggestions
+   * @returns {any} The operation result
+   */
+          /**
+   * Performs the specified operation
+   * @param {any} const suggestion of session.suggestions
+   * @returns {any} The operation result
+   */
+
           for (const suggestion of session.suggestions) {
             stats.topSuggestions[suggestion.type] = (stats.topSuggestions[suggestion.type] || 0) + 1;
           }
@@ -322,7 +476,7 @@ export class RealtimeQualityMonitor {
       return stats;
 
     } catch (error) {
-      console.error(`❌ Error getting monitoring stats: ${error.message}`);
+      // ERROR: `❌ Error getting monitoring stats: ${error.message}`
       return {
         error: error.message
       };
@@ -340,19 +494,63 @@ export class RealtimeQualityMonitor {
       let cleanedSessions = 0;
       let cleanedHistory = 0;
 
-      // Clean up old sessions
-      for (const [sessionId, session] of this.monitoringSessions) {
+      // Clean up old sessions      /**
+   * Performs the specified operation
+   * @param {number} const [sessionId
+   * @param {boolean} session] of this.monitoringSessions
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {number} const [sessionId
+   * @param {boolean} session] of this.monitoringSessions
+   * @returns {boolean} True if successful, false otherwise
+   */
+
+      for (const [sessionId, session] of this.monitoringSessions) {        /**
+   * Performs the specified operation
+   * @param {boolean} !session.isActive && session.endTime && session.endTime < cutoffDate
+   * @returns {boolean} True if successful, false otherwise
+   */
+        /**
+   * Performs the specified operation
+   * @param {boolean} !session.isActive && session.endTime && session.endTime < cutoffDate
+   * @returns {boolean} True if successful, false otherwise
+   */
+
         if (!session.isActive && session.endTime && session.endTime < cutoffDate) {
           this.monitoringSessions.delete(sessionId);
           cleanedSessions++;
         }
       }
 
-      // Clean up old history
+      // Clean up old history      /**
+   * Performs the specified operation
+   * @param {number} const [sessionId
+   * @param {boolean} history] of this.qualityHistory
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {number} const [sessionId
+   * @param {boolean} history] of this.qualityHistory
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       for (const [sessionId, history] of this.qualityHistory) {
         const filteredHistory = history.filter(entry =>
           new Date(entry.timestamp) > cutoffDate
-        );
+        );        /**
+   * Performs the specified operation
+   * @param {boolean} filteredHistory.length ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+        /**
+   * Performs the specified operation
+   * @param {boolean} filteredHistory.length ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
         if (filteredHistory.length !== history.length) {
           this.qualityHistory.set(sessionId, filteredHistory);
@@ -367,7 +565,7 @@ export class RealtimeQualityMonitor {
       };
 
     } catch (error) {
-      console.error(`❌ Error cleaning up old data: ${error.message}`);
+      // ERROR: `❌ Error cleaning up old data: ${error.message}`
       return {
         success: false,
         error: error.message
@@ -375,12 +573,34 @@ export class RealtimeQualityMonitor {
     }
   }
 
-  // Private methods
+  // Private methods  /**
+   * Performs the specified operation
+   * @param {any} metrics
+   * @param {any} context
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} metrics
+   * @param {any} context
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async identifyQualityIssues(metrics, context) {
     const issues = [];
 
-    // Check complexity
+    // Check complexity    /**
+   * Performs the specified operation
+   * @param {boolean} metrics.complexity > this.qualityThresholds.complexity
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} metrics.complexity > this.qualityThresholds.complexity
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (metrics.complexity > this.qualityThresholds.complexity) {
       issues.push({
         type: 'complexity',
@@ -391,7 +611,17 @@ export class RealtimeQualityMonitor {
       });
     }
 
-    // Check maintainability
+    // Check maintainability    /**
+   * Performs the specified operation
+   * @param {boolean} metrics.maintainability < this.qualityThresholds.maintainability
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} metrics.maintainability < this.qualityThresholds.maintainability
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (metrics.maintainability < this.qualityThresholds.maintainability) {
       issues.push({
         type: 'maintainability',
@@ -402,7 +632,17 @@ export class RealtimeQualityMonitor {
       });
     }
 
-    // Check security
+    // Check security    /**
+   * Performs the specified operation
+   * @param {boolean} metrics.security < this.qualityThresholds.security
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} metrics.security < this.qualityThresholds.security
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (metrics.security < this.qualityThresholds.security) {
       issues.push({
         type: 'security',
@@ -413,7 +653,17 @@ export class RealtimeQualityMonitor {
       });
     }
 
-    // Check performance
+    // Check performance    /**
+   * Performs the specified operation
+   * @param {boolean} metrics.performance < this.qualityThresholds.performance
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} metrics.performance < this.qualityThresholds.performance
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (metrics.performance < this.qualityThresholds.performance) {
       issues.push({
         type: 'performance',
@@ -424,7 +674,17 @@ export class RealtimeQualityMonitor {
       });
     }
 
-    // Check readability
+    // Check readability    /**
+   * Performs the specified operation
+   * @param {boolean} metrics.readability < this.qualityThresholds.readability
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} metrics.readability < this.qualityThresholds.readability
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (metrics.readability < this.qualityThresholds.readability) {
       issues.push({
         type: 'readability',
@@ -435,7 +695,17 @@ export class RealtimeQualityMonitor {
       });
     }
 
-    // Check testability
+    // Check testability    /**
+   * Performs the specified operation
+   * @param {boolean} metrics.testability < this.qualityThresholds.testability
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} metrics.testability < this.qualityThresholds.testability
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (metrics.testability < this.qualityThresholds.testability) {
       issues.push({
         type: 'testability',
@@ -447,7 +717,17 @@ export class RealtimeQualityMonitor {
     }
 
     return issues;
-  }
+  }  /**
+   * Calculates the result
+   * @param {any} metrics
+   * @returns {number} The calculated result
+   */
+  /**
+   * Calculates the result
+   * @param {any} metrics
+   * @returns {number} The calculated result
+   */
+
 
   calculateOverallScore(metrics) {
     if (!metrics || Object.keys(metrics).length === 0) {
@@ -466,7 +746,17 @@ export class RealtimeQualityMonitor {
     let weightedSum = 0;
     let totalWeight = 0;
 
-    for (const [metric, value] of Object.entries(metrics)) {
+    for (const [metric, value] of Object.entries(metrics)) {      /**
+   * Performs the specified operation
+   * @param {any} weights[metric] && typeof value - Optional parameter
+   * @returns {number} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} weights[metric] && typeof value - Optional parameter
+   * @returns {number} The operation result
+   */
+
       if (weights[metric] && typeof value === 'number') {
         // Normalize complexity (lower is better)
         const normalizedValue = metric === 'complexity' ?
@@ -478,7 +768,23 @@ export class RealtimeQualityMonitor {
     }
 
     return totalWeight > 0 ? Math.round(weightedSum / totalWeight) : 0;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {number} sessionId
+   * @param {any} metrics
+   * @param {boolean} issues
+   * @param {any} suggestions
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @param {number} sessionId
+   * @param {any} metrics
+   * @param {boolean} issues
+   * @param {any} suggestions
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   storeQualityHistory(sessionId, metrics, issues, suggestions) {
     if (!this.qualityHistory.has(sessionId)) {
@@ -495,14 +801,46 @@ export class RealtimeQualityMonitor {
     });
 
     // Keep only recent history to prevent memory issues
-    const maxHistorySize = 100;
+    const maxHistorySize = 100;    /**
+   * Performs the specified operation
+   * @param {boolean} history.length > maxHistorySize
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} history.length > maxHistorySize
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (history.length > maxHistorySize) {
       history.splice(0, history.length - maxHistorySize);
     }
-  }
+  }  /**
+   * Updates existing data
+   * @param {number} sessionId
+   * @param {any} data
+   * @returns {any} The operation result
+   */
+  /**
+   * Updates existing data
+   * @param {number} sessionId
+   * @param {any} data
+   * @returns {any} The operation result
+   */
+
 
   emitQualityUpdate(sessionId, data) {
-    const listeners = this.eventListeners.get('quality:update') || [];
+    const listeners = this.eventListeners.get('quality:update') || [];    /**
+   * Performs the specified operation
+   * @param {boolean} const listener of listeners
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} const listener of listeners
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     for (const listener of listeners) {
       try {
@@ -511,10 +849,18 @@ export class RealtimeQualityMonitor {
           ...data
         });
       } catch (error) {
-        console.error(`❌ Error in quality update listener: ${error.message}`);
+        // ERROR: `❌ Error in quality update listener: ${error.message}`
       }
     }
-  }
+  }  /**
+   * Generates new data
+   * @returns {any} The created resource
+   */
+  /**
+   * Generates new data
+   * @returns {any} The created resource
+   */
+
 
   generateSessionId() {
     return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;

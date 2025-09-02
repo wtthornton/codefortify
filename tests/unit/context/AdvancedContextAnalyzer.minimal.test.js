@@ -41,16 +41,16 @@ describe('AdvancedContextAnalyzer Minimal Test', () => {
   it('should import AdvancedContextAnalyzer without syntax errors', async () => {
     // This test will fail if there are syntax errors in the import
     const { AdvancedContextAnalyzer } = await import('../../../src/context/AdvancedContextAnalyzer.js');
-    
+
     expect(AdvancedContextAnalyzer).toBeDefined();
     expect(typeof AdvancedContextAnalyzer).toBe('function');
   });
 
   it('should create AdvancedContextAnalyzer instance', async () => {
     const { AdvancedContextAnalyzer } = await import('../../../src/context/AdvancedContextAnalyzer.js');
-    
+
     const analyzer = new AdvancedContextAnalyzer();
-    
+
     expect(analyzer).toBeDefined();
     expect(analyzer.config).toBeDefined();
     expect(analyzer.analyzerCache).toBeInstanceOf(Map);

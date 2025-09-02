@@ -9,6 +9,36 @@ import fs from 'fs/promises';
 import path from 'path';
 import { AnalyzerErrorHandler, AnalyzerError, ErrorTypes, ErrorSeverity } from '../core/AnalyzerErrorHandler.js';
 
+/**
+
+
+ * BaseAnalyzer class implementation
+
+
+ *
+
+
+ * Provides functionality for baseanalyzer operations
+
+
+ */
+
+
+/**
+
+
+ * BaseAnalyzer class implementation
+
+
+ *
+
+
+ * Provides functionality for baseanalyzer operations
+
+
+ */
+
+
 export class BaseAnalyzer {
   constructor(config) {
     this.config = {
@@ -26,8 +56,8 @@ export class BaseAnalyzer {
     this.errorHandler = new AnalyzerErrorHandler({
       verbose: this.config.verbose,
       logErrors: true,
-      maxRetries: 2,
-      retryDelay: 500
+      maxRetries: 1,
+      retryDelay: 100
     });
 
     // Results structure
@@ -43,14 +73,32 @@ export class BaseAnalyzer {
       warnings: [],
       recoveries: []
     };
-  }
+  }  /**
+   * Analyzes the provided data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async analyze() {
     const startTime = Date.now();
 
-    try {
+    try {      /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.config.verbose) {
-        console.log(`   Analyzing ${this.categoryName}...`);
+        // LOG: `   Analyzing ${this.categoryName}...`
       }
 
       // Reset error handler for this analysis
@@ -70,15 +118,27 @@ export class BaseAnalyzer {
       this.results.warnings = allIssues.warnings;
       this.results.errorSummary = errorSummary;
 
-      this.results.analysisTime = Date.now() - startTime;
+      this.results.analysisTime = Date.now() - startTime;      /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
       if (this.config.verbose) {
-        console.log(`   ${this.categoryName}: ${this.results.score}/${this.results.maxScore} (${this.results.grade}) - ${this.results.analysisTime}ms`);
+        // LOG: `   ${this.categoryName}: ${this.results.score}/${this.results.maxScore} (${this.results.grade}) - ${this.results.analysisTime}ms`
       }
 
       return this.results;
 
-    } catch (error) {
+    }
+
+    catch (error) {
       // Handle critical analysis failure
       const handlingResult = await this.errorHandler.handleError(
         error,
@@ -110,7 +170,9 @@ export class BaseAnalyzer {
     try {
       // Call the actual analysis implementation
       await this.runAnalysis();
-    } catch (error) {
+    }
+
+    catch (error) {
       // Handle non-critical errors that don't prevent analysis completion
       const handlingResult = await this.errorHandler.handleError(
         error,
@@ -120,14 +182,34 @@ export class BaseAnalyzer {
           method: 'runAnalysis'
         },
         this.categoryName
-      );
+      );      /**
+   * Performs the specified operation
+   * @param {any} !handlingResult.canContinue
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} !handlingResult.canContinue
+   * @returns {any} The operation result
+   */
+
 
       if (!handlingResult.canContinue) {
         // Re-throw if cannot continue
         throw error;
       }
 
-      // Log recovery if successful
+      // Log recovery if successful      /**
+   * Performs the specified operation
+   * @param {any} handlingResult.recovery.recovered
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} handlingResult.recovery.recovered
+   * @returns {any} The operation result
+   */
+
       if (handlingResult.recovery.recovered) {
         this.results.recoveries.push({
           error: error.message,
@@ -138,32 +220,194 @@ export class BaseAnalyzer {
     }
   }
 
-  // Template method - must be implemented by subclasses
+  // Template method - must be implemented by subclasses  /**
+   * Runs the specified task
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Runs the specified task
+   * @returns {Promise} Promise that resolves with the result
+   */
+
   async runAnalysis() {
     throw new Error('runAnalysis() must be implemented by subclass');
-  }
+  }  /**
+   * Calculates the result
+   * @param {any} percentage
+   * @returns {number} The calculated result
+   */
+  /**
+   * Calculates the result
+   * @param {any} percentage
+   * @returns {number} The calculated result
+   */
 
-  calculateGrade(percentage) {
-    if (percentage >= 0.97) {return 'A+';}
-    if (percentage >= 0.93) {return 'A';}
-    if (percentage >= 0.90) {return 'A-';}
-    if (percentage >= 0.87) {return 'B+';}
-    if (percentage >= 0.83) {return 'B';}
-    if (percentage >= 0.80) {return 'B-';}
-    if (percentage >= 0.77) {return 'C+';}
-    if (percentage >= 0.73) {return 'C';}
-    if (percentage >= 0.70) {return 'C-';}
-    if (percentage >= 0.67) {return 'D+';}
-    if (percentage >= 0.65) {return 'D';}
+
+  calculateGrade(percentage) {  /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 0.97) {return 'A+';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 0.93) {return 'A';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 0.90) {return 'A-';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 0.87) {return 'B+';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 0.83) {return 'B';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 0.80) {return 'B-';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 0.77) {return 'C+';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 0.73) {return 'C';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 0.70) {return 'C-';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 0.67) {return 'D+';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 0.65) {return 'D';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (percentage >= 0.60) {return 'D-';}
     return 'F';
-  }
+  }  /**
+   * Adds an item
+   * @param {any} points
+   * @param {any} maxPoints
+   * @param {any} reason - Optional parameter
+   * @returns {any} The operation result
+   */
+  /**
+   * Adds an item
+   * @param {any} points
+   * @param {any} maxPoints
+   * @param {any} reason - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
   addScore(points, maxPoints, reason = '') {
-    this.results.score += points;
+    this.results.score += points;    /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose && reason
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose && reason
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (this.config.verbose && reason) {
-      console.log(`     +${points}/${maxPoints} - ${reason}`);
+      // LOG: `     +${points}/${maxPoints} - ${reason}`
     }
   }
 
@@ -171,13 +415,33 @@ export class BaseAnalyzer {
    * Add issue with optional error handling context
    */
   addIssue(issue, suggestion = null, errorContext = {}) {
-    this.results.issues.push(issue);
+    this.results.issues.push(issue);    /**
+   * Performs the specified operation
+   * @param {any} suggestion
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} suggestion
+   * @returns {any} The operation result
+   */
+
 
     if (suggestion) {
       this.results.suggestions.push(suggestion);
     }
 
-    // If this is an error-related issue, log it
+    // If this is an error-related issue, log it    /**
+   * Performs the specified operation
+   * @param {any} errorContext.error
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} errorContext.error
+   * @returns {any} The operation result
+   */
+
     if (errorContext.error) {
       const analyzerError = new AnalyzerError(
         issue,
@@ -189,54 +453,100 @@ export class BaseAnalyzer {
 
       this.errorHandler.handleError(analyzerError, errorContext, this.categoryName);
     }
-  }
+  }  /**
+   * Sets configuration
+   * @param {any} key
+   * @param {any} value
+   * @returns {any} The operation result
+   */
+  /**
+   * Sets configuration
+   * @param {any} key
+   * @param {any} value
+   * @returns {any} The operation result
+   */
+
 
   setDetail(key, value) {
     this.results.details[key] = value;
   }
 
-  // Enhanced utility methods with error handling
+  // Enhanced utility methods with error handling  /**
+   * Performs the specified operation
+   * @param {string} filePath
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @param {string} filePath
+   * @returns {Promise} Promise that resolves with the result
+   */
+
   async fileExists(filePath) {
-    return await this.errorHandler.executeWithRetry(async () => {
+    try {
       await fs.access(path.resolve(this.config.projectRoot, filePath));
       return true;
-    }, { file: filePath, operation: 'fileExists' }).catch(() => false);
+    }
+
+    catch {
+      return false;
+    }
   }
 
   /**
    * Safely read a file with error handling and recovery
    */
   async safeFileRead(filePath, options = {}) {
-    const context = { file: filePath, operation: 'readFile' };
-
-    return await this.errorHandler.executeWithRetry(async () => {
+    try {
       const fullPath = path.resolve(this.config.projectRoot, filePath);
       return await fs.readFile(fullPath, options.encoding || 'utf8');
-    }, context).catch(async (error) => {
-      // Try recovery strategies
-      const handlingResult = await this.errorHandler.handleError(
-        error,
-        { ...context, alternativePaths: options.alternatives },
-        this.categoryName
-      );
+    }
 
-      if (handlingResult.recovery.recovered && handlingResult.recovery.result) {
-        // Try alternative path
-        return await fs.readFile(handlingResult.recovery.result, options.encoding || 'utf8');
+    catch (error) {
+      // Try alternative paths if provided      /**
+   * Performs the specified operation
+   * @param {Object} options.alternatives
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} options.alternatives
+   * @returns {any} The operation result
+   */
+
+      if (options.alternatives) {        /**
+   * Performs the specified operation
+   * @param {Object} const altPath of options.alternatives
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {Object} const altPath of options.alternatives
+   * @returns {any} The operation result
+   */
+
+        for (const altPath of options.alternatives) {
+          try {
+            const fullAltPath = path.resolve(this.config.projectRoot, altPath);
+            return await fs.readFile(fullAltPath, options.encoding || 'utf8');
+          }
+
+          catch {
+            // Continue to next alternative
+          }
+        }
       }
 
       // Return default or empty content for graceful degradation
       return options.defaultContent || '';
-    });
+    }
   }
 
   /**
    * Safely execute shell commands with error handling
    */
   async safeCommandExecution(command, options = {}) {
-    const context = { command, operation: 'shellCommand' };
-
-    return await this.errorHandler.executeWithRetry(async () => {
+    try {
       const { exec } = await import('child_process');
       const { promisify } = await import('util');
       const execAsync = promisify(exec);
@@ -248,21 +558,16 @@ export class BaseAnalyzer {
       });
 
       return { stdout: stdout.trim(), stderr: stderr.trim(), success: true };
-    }, context).catch(async (error) => {
-      const handlingResult = await this.errorHandler.handleError(
-        error,
-        { ...context, tool: options.tool },
-        this.categoryName
-      );
+    }
 
+    catch (error) {
       return {
         stdout: '',
         stderr: error.message,
         success: false,
-        error: error.message,
-        recovery: handlingResult.recovery
+        error: error.message
       };
-    });
+    }
   }
 
   /**
@@ -271,7 +576,9 @@ export class BaseAnalyzer {
   async safeJsonParse(content, context = {}) {
     try {
       return JSON.parse(content);
-    } catch (error) {
+    }
+
+    catch (error) {
       const handlingResult = await this.errorHandler.handleError(
         new AnalyzerError(
           `JSON parse error: ${error.message}`,
@@ -286,42 +593,108 @@ export class BaseAnalyzer {
 
       return context.defaultValue || {};
     }
-  }
+  }  /**
+   * Reads data from file
+   * @param {string} filePath
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Reads data from file
+   * @param {string} filePath
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async readFile(filePath) {
     try {
       const fullPath = path.resolve(this.config.projectRoot, filePath);
       return await fs.readFile(fullPath, 'utf-8');
-    } catch (error) {
+    }
+
+    catch (error) {
       throw new Error(`Could not read file ${filePath}: ${error.message}`);
     }
-  }
+  }  /**
+   * Reads data from file
+   * @param {string} filePath
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Reads data from file
+   * @param {string} filePath
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async readJsonFile(filePath) {
     try {
       const content = await this.readFile(filePath);
       return JSON.parse(content);
-    } catch (error) {
+    }
+
+    catch (error) {
       throw new Error(`Could not parse JSON file ${filePath}: ${error.message}`);
     }
-  }
+  }  /**
+   * Reads data from file
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Reads data from file
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async readPackageJson() {
     try {
       return await this.readJsonFile('package.json');
-    } catch (error) {
+    }
+
+    catch (error) {
       return null;
     }
-  }
+  }  /**
+   * Retrieves data
+   * @param {string} dirPath
+   * @param {Object} options - Optional parameter
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Retrieves data
+   * @param {string} dirPath
+   * @param {Object} options - Optional parameter
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async getDirectoryContents(dirPath, options = {}) {
     try {
       const fullPath = path.resolve(this.config.projectRoot, dirPath);
-      const contents = await fs.readdir(fullPath, { withFileTypes: true });
+      const contents = await fs.readdir(fullPath, { withFileTypes: true });      /**
+   * Performs the specified operation
+   * @param {Object} options.filesOnly
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} options.filesOnly
+   * @returns {any} The operation result
+   */
+
 
       if (options.filesOnly) {
         return contents.filter(item => item.isFile()).map(item => item.name);
-      }
+      }      /**
+   * Performs the specified operation
+   * @param {Object} options.dirsOnly
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} options.dirsOnly
+   * @returns {any} The operation result
+   */
+
 
       if (options.dirsOnly) {
         return contents.filter(item => item.isDirectory()).map(item => item.name);
@@ -332,10 +705,26 @@ export class BaseAnalyzer {
         isFile: item.isFile(),
         isDirectory: item.isDirectory()
       }));
-    } catch (error) {
+    }
+
+    catch (error) {
       return [];
     }
-  }
+  }  /**
+   * Retrieves data
+   * @param {string} dirPath - Optional parameter
+   * @param {any} extensions - Optional parameter
+   * @param {any} excludeDirs - Optional parameter
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Retrieves data
+   * @param {string} dirPath - Optional parameter
+   * @param {any} extensions - Optional parameter
+   * @param {any} excludeDirs - Optional parameter
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async getAllFiles(dirPath = '', extensions = null, excludeDirs = []) {
     const files = [];
@@ -345,7 +734,17 @@ export class BaseAnalyzer {
     const scanDirectory = async (currentPath) => {
       try {
         const fullPath = path.resolve(this.config.projectRoot, currentPath);
-        const contents = await fs.readdir(fullPath, { withFileTypes: true });
+        const contents = await fs.readdir(fullPath, { withFileTypes: true });        /**
+   * Performs the specified operation
+   * @param {any} const item of contents
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} const item of contents
+   * @returns {any} The operation result
+   */
+
 
         for (const item of contents) {
           const itemPath = path.join(currentPath, item.name);
@@ -354,20 +753,34 @@ export class BaseAnalyzer {
             if (!allExcludeDirs.includes(item.name)) {
               await scanDirectory(itemPath);
             }
-          } else if (item.isFile()) {
+          }
+
+          else if (item.isFile()) {
             if (!extensions || extensions.includes(path.extname(item.name))) {
               files.push(itemPath);
             }
           }
         }
-      } catch (error) {
+      }
+
+      catch (error) {
         // Ignore directory read errors
       }
     };
 
     await scanDirectory(dirPath);
     return files;
-  }
+  }  /**
+   * Retrieves data
+   * @param {string} filePath
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Retrieves data
+   * @param {string} filePath
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async getFileStats(filePath) {
     try {
@@ -382,27 +795,69 @@ export class BaseAnalyzer {
         lastModified: stats.mtime,
         isEmpty: content.trim().length === 0
       };
-    } catch (error) {
+    }
+
+    catch (error) {
       return null;
     }
   }
 
-  // Common scoring patterns
+  // Common scoring patterns  /**
+   * Performs the specified operation
+   * @param {Array} items
+   * @param {any} scorePerItem
+   * @param {any} description - Optional parameter
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {Array} items
+   * @param {any} scorePerItem
+   * @param {any} description - Optional parameter
+   * @returns {any} The operation result
+   */
+
   scoreByPresence(items, scorePerItem, description = '') {
     let totalScore = 0;
     const maxPossible = items.length * scorePerItem;
 
-    items.forEach(item => {
+    items.forEach(item => {      /**
+   * Performs the specified operation
+   * @param {boolean} item.exists
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} item.exists
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (item.exists) {
         totalScore += scorePerItem;
         this.addScore(scorePerItem, scorePerItem, `${description}: ${item.name}`);
-      } else {
+      }
+
+      else {
         this.addIssue(`Missing ${item.name}`, `Add ${item.name} to improve score`);
       }
     });
 
     return { score: totalScore, maxScore: maxPossible };
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {Array} items
+   * @param {any} maxScorePerItem
+   * @param {any} description - Optional parameter
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {Array} items
+   * @param {any} maxScorePerItem
+   * @param {any} description - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
   scoreByQuality(items, maxScorePerItem, description = '') {
     let totalScore = 0;
@@ -410,13 +865,27 @@ export class BaseAnalyzer {
 
     items.forEach(item => {
       const quality = Math.min(item.quality || 0, maxScorePerItem);
-      totalScore += quality;
+      totalScore += quality;      /**
+   * Performs the specified operation
+   * @param {any} quality - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} quality - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
       if (quality === maxScorePerItem) {
         this.addScore(quality, maxScorePerItem, `${description}: ${item.name} (excellent)`);
-      } else if (quality > maxScorePerItem * 0.5) {
+      }
+
+      else if (quality > maxScorePerItem * 0.5) {
         this.addScore(quality, maxScorePerItem, `${description}: ${item.name} (good)`);
-      } else {
+      }
+
+      else {
         this.addScore(quality, maxScorePerItem, `${description}: ${item.name} (needs improvement)`);
         this.addIssue(`${item.name} quality could be improved`, item.suggestion || `Improve ${item.name}`);
       }
@@ -425,31 +894,98 @@ export class BaseAnalyzer {
     return { score: totalScore, maxScore: maxPossible };
   }
 
-  // Pattern matching utilities
-  containsPattern(content, patterns) {
+  // Pattern matching utilities  /**
+   * Performs the specified operation
+   * @param {any} content
+   * @param {any} patterns
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} content
+   * @param {any} patterns
+   * @returns {any} The operation result
+   */
+
+  containsPattern(content, patterns) {  /**
+   * Performs the specified operation
+   * @param {any} typeof patterns - Optional parameter
+   * @returns {string} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} typeof patterns - Optional parameter
+   * @returns {string} The operation result
+   */
+
     if (typeof patterns === 'string') {
       patterns = [patterns];
     }
 
-    return patterns.some(pattern => {
+    return patterns.some(pattern => {      /**
+   * Performs the specified operation
+   * @param {any} pattern instanceof RegExp
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} pattern instanceof RegExp
+   * @returns {any} The operation result
+   */
+
       if (pattern instanceof RegExp) {
         return pattern.test(content);
       }
+
       return content.includes(pattern);
     });
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} content
+   * @param {any} patterns
+   * @returns {number} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} content
+   * @param {any} patterns
+   * @returns {number} The operation result
+   */
 
-  countPatterns(content, patterns) {
+
+  countPatterns(content, patterns) {  /**
+   * Performs the specified operation
+   * @param {any} typeof patterns - Optional parameter
+   * @returns {string} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} typeof patterns - Optional parameter
+   * @returns {string} The operation result
+   */
+
     if (typeof patterns === 'string') {
       patterns = [patterns];
     }
 
     let count = 0;
-    patterns.forEach(pattern => {
+    patterns.forEach(pattern => {      /**
+   * Performs the specified operation
+   * @param {any} pattern instanceof RegExp
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} pattern instanceof RegExp
+   * @returns {any} The operation result
+   */
+
       if (pattern instanceof RegExp) {
         const matches = content.match(pattern);
         count += matches ? matches.length : 0;
-      } else {
+      }
+
+      else {
         const matches = content.split(pattern).length - 1;
         count += matches;
       }
@@ -458,22 +994,62 @@ export class BaseAnalyzer {
     return count;
   }
 
-  // Project type specific utilities
+  // Project type specific utilities  /**
+   * Performs the specified operation
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @returns {boolean} True if successful, false otherwise
+   */
+
   isReactProject() {
     return this.config.projectType === 'react-webapp';
-  }
+  }  /**
+   * Performs the specified operation
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   isVueProject() {
     return this.config.projectType === 'vue-webapp';
-  }
+  }  /**
+   * Performs the specified operation
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   isSvelteProject() {
     return this.config.projectType === 'svelte-webapp';
-  }
+  }  /**
+   * Performs the specified operation
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   isNodeProject() {
     return this.config.projectType === 'node-api';
-  }
+  }  /**
+   * Performs the specified operation
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   isJavaScriptProject() {
     return this.config.projectType === 'javascript';

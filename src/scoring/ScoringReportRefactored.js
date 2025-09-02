@@ -15,6 +15,36 @@ import { JSONReportGenerator } from './report/JSONReportGenerator.js';
 
 const execAsync = promisify(exec);
 
+/**
+
+
+ * ScoringReport class implementation
+
+
+ *
+
+
+ * Provides functionality for scoringreport operations
+
+
+ */
+
+
+/**
+
+
+ * ScoringReport class implementation
+
+
+ *
+
+
+ * Provides functionality for scoringreport operations
+
+
+ */
+
+
 export class ScoringReport {
   constructor(config = {}) {
     this.config = config;
@@ -87,7 +117,17 @@ export class ScoringReport {
    */
   async openInBrowser(filePath) {
     const platform = process.platform;
-    let command;
+    let command;    /**
+   * Performs the specified operation
+   * @param {any} platform - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} platform - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
     if (platform === 'darwin') {
       command = `open "${filePath}"`;
@@ -99,9 +139,9 @@ export class ScoringReport {
 
     try {
       await execAsync(command);
-      console.log(`🌐 Report opened in browser: ${filePath}`);
+      // LOG: `🌐 Report opened in browser: ${filePath}`
     } catch (error) {
-      console.error('Failed to open browser:', error.message);
+      // ERROR: Failed to open browser:, error.message
     }
   }
 
@@ -110,9 +150,39 @@ export class ScoringReport {
    * @param {number} percentage - Score percentage
    * @returns {string} Performance level
    */
-  getPerformanceLevel(percentage) {
-    if (percentage >= 90) {return 'excellent';}
-    if (percentage >= 70) {return 'good';}
+  getPerformanceLevel(percentage) {  /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 90) {return 'excellent';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 70) {return 'good';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (percentage >= 50) {return 'warning';}
     return 'poor';
   }
@@ -122,11 +192,61 @@ export class ScoringReport {
    * @param {number} percentage - Score percentage
    * @returns {string} Description text
    */
-  getScoreDescription(percentage) {
-    if (percentage >= 95) {return 'Outstanding project quality! This codebase demonstrates excellence across all categories.';}
-    if (percentage >= 85) {return 'Very good project quality with strong fundamentals and minor areas for improvement.';}
-    if (percentage >= 70) {return 'Good quality with solid foundation. Some improvements recommended for production readiness.';}
-    if (percentage >= 60) {return 'Acceptable quality but significant improvements needed in several areas.';}
+  getScoreDescription(percentage) {  /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 95) {return 'Outstanding project quality! This codebase demonstrates excellence across all categories.';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 85) {return 'Very good project quality with strong fundamentals and minor areas for improvement.';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 70) {return 'Good quality with solid foundation. Some improvements recommended for production readiness.';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 60) {return 'Acceptable quality but significant improvements needed in several areas.';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (percentage >= 50) {return 'Below average quality. Major improvements required across multiple categories.';}
     return 'Poor quality. Significant refactoring and improvements needed before production use.';
   }

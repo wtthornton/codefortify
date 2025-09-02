@@ -12,12 +12,50 @@
 import { BaseAnalyzer } from './BaseAnalyzer.js';
 import { execSync } from 'child_process';
 
+/**
+
+
+ * SecurityAnalyzer class implementation
+
+
+ *
+
+
+ * Provides functionality for securityanalyzer operations
+
+
+ */
+
+
+/**
+
+
+ * SecurityAnalyzer class implementation
+
+
+ *
+
+
+ * Provides functionality for securityanalyzer operations
+
+
+ */
+
+
 export class SecurityAnalyzer extends BaseAnalyzer {
   constructor(config) {
     super(config);
     this.categoryName = 'Security & Error Handling';
     this.description = 'Dependency security, secrets management, error handling, and input validation';
-  }
+  }  /**
+   * Runs the specified task
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Runs the specified task
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async runAnalysis() {
     this.results.score = 0;
@@ -28,48 +66,102 @@ export class SecurityAnalyzer extends BaseAnalyzer {
     await this.analyzeSecretsManagement(); // 4pts
     await this.analyzeErrorHandling(); // 3pts
     await this.analyzeInputValidation(); // 2pts
-  }
+  }  /**
+   * Analyzes the provided data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async analyzeDependencyVulnerabilities() {
-    let _score = 0;
-    const _maxScore = 6;
+    let score = 0;
+    const maxScore = 6;
 
-    const packageJson = await this.readPackageJson();
+    const packageJson = await this.readPackageJson();    /**
+   * Performs the specified operation
+   * @param {any} !packageJson
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !packageJson
+   * @returns {any} The operation result
+   */
+
     if (!packageJson) {
       this.addIssue('No package.json found', 'Cannot analyze dependencies for vulnerabilities');
       return;
     }
 
     const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };
-    const depsCount = Object.keys(deps).length;
+    const depsCount = Object.keys(deps).length;    /**
+   * Performs the specified operation
+   * @param {number} depsCount - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {number} depsCount - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
     if (depsCount === 0) {
-      _score += 3;
+      score += 3;
       this.addScore(3, 6, 'No external dependencies (no vulnerability risk)');
       return;
     }
 
     // PHASE 1 UPGRADE: Use npm audit for real vulnerability scanning
-    const auditResult = await this.runNpmAudit();
+    const auditResult = await this.runNpmAudit();    /**
+   * Performs the specified operation
+   * @param {any} auditResult.success
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} auditResult.success
+   * @returns {any} The operation result
+   */
+
     if (auditResult.success) {
       const vulnData = auditResult.data;
       const totalVulns = vulnData.metadata?.vulnerabilities?.total || 0;
       const highVulns = vulnData.metadata?.vulnerabilities?.high || 0;
       const criticalVulns = vulnData.metadata?.vulnerabilities?.critical || 0;
 
-      // Score based on actual vulnerability scan results
+      // Score based on actual vulnerability scan results      /**
+   * Performs the specified operation
+   * @param {any} totalVulns - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} totalVulns - Optional parameter
+   * @returns {any} The operation result
+   */
+
       if (totalVulns === 0) {
-        _score += 4;
+        score += 4;
         this.addScore(4, 4, 'No vulnerabilities found in dependencies (npm audit)');
-      } else if (criticalVulns === 0 && highVulns === 0) {
-        _score += 3;
+      }
+
+      else if (criticalVulns === 0 && highVulns === 0) {
+        score += 3;
         this.addScore(3, 4, `Only low/moderate vulnerabilities found (${totalVulns} total)`);
-      } else if (criticalVulns === 0) {
-        _score += 2;
+      }
+
+      else if (criticalVulns === 0) {
+        score += 2;
         this.addScore(2, 4, `High vulnerabilities found (${highVulns} high, ${totalVulns} total)`);
         this.addIssue(`${highVulns} high severity vulnerabilities`, 'Run npm audit fix to resolve security issues');
-      } else {
-        _score += 1;
+      }
+
+      else {
+        score += 1;
         this.addScore(1, 4, `Critical vulnerabilities detected (${criticalVulns} critical, ${totalVulns} total)`);
         this.addIssue(`${criticalVulns} critical vulnerabilities`, 'Immediately run npm audit fix - critical security risk');
       }
@@ -81,30 +173,56 @@ export class SecurityAnalyzer extends BaseAnalyzer {
         moderate: vulnData.metadata?.vulnerabilities?.moderate || 0,
         low: vulnData.metadata?.vulnerabilities?.low || 0
       });
-    } else {
+    }
+
+    else {
       // Graceful degradation: Fallback to pattern matching with helpful guidance
       this.addScore(2, 4, 'npm audit unavailable - using pattern analysis (install npm for better accuracy)');
       this.addIssue('npm audit not available', 'For accurate vulnerability scanning, ensure npm is installed and project has package.json');
-      await this.fallbackVulnerabilityAnalysis(deps, _score);
+      await this.fallbackVulnerabilityAnalysis(deps, score);
     }
 
     // Check for outdated package indicators (2pts remaining)
     const hasPackageLock = await this.fileExists('package-lock.json') ||
                           await this.fileExists('yarn.lock') ||
-                          await this.fileExists('pnpm-lock.yaml');
+                          await this.fileExists('pnpm-lock.yaml');    /**
+   * Performs the specified operation
+   * @param {boolean} hasPackageLock
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} hasPackageLock
+   * @returns {any} The operation result
+   */
+
 
     if (hasPackageLock) {
-      _score += 1;
+      score += 1;
       this.addScore(1, 1, 'Lock file present (prevents dependency confusion)');
-    } else {
+    }
+
+    else {
       this.addIssue('No lock file found', 'Add package-lock.json to prevent dependency confusion attacks');
     }
 
-    // Check for audit script
+    // Check for audit script    /**
+   * Performs the specified operation
+   * @param {any} packageJson.scripts && packageJson.scripts.audit
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} packageJson.scripts && packageJson.scripts.audit
+   * @returns {any} The operation result
+   */
+
     if (packageJson.scripts && packageJson.scripts.audit) {
-      _score += 1;
+      score += 1;
       this.addScore(1, 1, 'Audit script configured');
-    } else {
+    }
+
+    else {
       this.addIssue('No audit script in package.json', 'Add "audit": "npm audit" script for vulnerability checking');
     }
 
@@ -127,13 +245,27 @@ export class SecurityAnalyzer extends BaseAnalyzer {
 
       const auditData = JSON.parse(output);
       return { success: true, data: auditData };
-    } catch (error) {
-      // npm audit returns non-zero exit code when vulnerabilities found
+    }
+
+    catch (error) {
+      // npm audit returns non-zero exit code when vulnerabilities found      /**
+   * Performs the specified operation
+   * @param {any} error.stdout
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} error.stdout
+   * @returns {any} The operation result
+   */
+
       if (error.stdout) {
         try {
           const auditData = JSON.parse(error.stdout);
           return { success: true, data: auditData };
-        } catch (parseError) {
+        }
+
+        catch (parseError) {
           return { success: false, error: 'Failed to parse npm audit output' };
         }
       }
@@ -155,7 +287,17 @@ export class SecurityAnalyzer extends BaseAnalyzer {
       'dompurify', 'xss', 'csrf'
     ];
 
-    const hasSecurityPackages = securityPackages.some(pkg => deps[pkg]);
+    const hasSecurityPackages = securityPackages.some(pkg => deps[pkg]);    /**
+   * Performs the specified operation
+   * @param {boolean} hasSecurityPackages
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} hasSecurityPackages
+   * @returns {any} The operation result
+   */
+
     if (hasSecurityPackages) {
       this.addScore(1, 1, 'Security-focused packages detected');
     }
@@ -166,17 +308,37 @@ export class SecurityAnalyzer extends BaseAnalyzer {
       'safer-eval'
     ];
 
-    const hasProblematicPackages = problematicPackages.some(pkg => deps[pkg]);
+    const hasProblematicPackages = problematicPackages.some(pkg => deps[pkg]);    /**
+   * Performs the specified operation
+   * @param {boolean} hasProblematicPackages
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} hasProblematicPackages
+   * @returns {any} The operation result
+   */
+
     if (hasProblematicPackages) {
       this.addIssue('Potentially unsafe packages detected', 'Review usage of eval-like packages');
-    } else {
+    }
+
+    else {
       this.addScore(1, 1, 'No obviously unsafe packages detected');
     }
-  }
+  }  /**
+   * Analyzes the provided data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async analyzeSecretsManagement() {
-    let _score = 0;
-    const _maxScore = 4;
+    let score = 0;
+    const maxScore = 4;
 
     const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx', '.json', '.env']);
     const _secretsFound = 0;
@@ -185,23 +347,47 @@ export class SecurityAnalyzer extends BaseAnalyzer {
 
     // Check for .env file and .gitignore
     const hasEnvFile = await this.fileExists('.env') || await this.fileExists('.env.example');
-    const hasGitignore = await this.fileExists('.gitignore');
+    const hasGitignore = await this.fileExists('.gitignore');    /**
+   * Performs the specified operation
+   * @param {boolean} hasEnvFile
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} hasEnvFile
+   * @returns {any} The operation result
+   */
+
 
     if (hasEnvFile) {
-      _score += 1;
+      score += 1;
       this.addScore(1, 1, 'Environment file detected');
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {boolean} hasGitignore
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} hasGitignore
+   * @returns {any} The operation result
+   */
+
 
     if (hasGitignore) {
       try {
         const gitignoreContent = await this.readFile('.gitignore');
         if (gitignoreContent.includes('.env') || gitignoreContent.includes('*.env')) {
-          _score += 1;
+          score += 1;
           this.addScore(1, 1, 'Environment files ignored in git');
-        } else if (hasEnvFile) {
+        }
+
+        else if (hasEnvFile) {
           this.addIssue('.env file not in .gitignore', 'Add .env to .gitignore to prevent secret exposure');
         }
-      } catch (error) {
+      }
+
+      catch (error) {
         // Skip if can't read .gitignore
       }
     }
@@ -211,7 +397,17 @@ export class SecurityAnalyzer extends BaseAnalyzer {
         const content = await this.readFile(file);
 
         // Look for environment variable usage (good practice)
-        const envMatches = content.match(/process\.env\./g);
+        const envMatches = content.match(/process\.env./g);        /**
+   * Performs the specified operation
+   * @param {any} envMatches
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} envMatches
+   * @returns {any} The operation result
+   */
+
         if (envMatches) {
           envUsage += envMatches.length;
         }
@@ -226,33 +422,71 @@ export class SecurityAnalyzer extends BaseAnalyzer {
           /-----BEGIN\s+(RSA\s+)?PRIVATE\s+KEY-----/,
           /['"]\w*[Aa][Pp][Ii][Kk][Ee][Yy]\w*['"]\s*[:=]\s*['"]\w{20,}/,
           /[0-9a-f]{32,}/g // Long hex strings that might be keys
-        ];
+        ];        /**
+   * Performs the specified operation
+   * @param {any} const pattern of secretPatterns
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} const pattern of secretPatterns
+   * @returns {any} The operation result
+   */
+
 
         for (const pattern of secretPatterns) {
-          const matches = content.match(pattern);
+          const matches = content.match(pattern);          /**
+   * Performs the specified operation
+   * @param {any} matches
+   * @returns {any} The operation result
+   */
+          /**
+   * Performs the specified operation
+   * @param {any} matches
+   * @returns {any} The operation result
+   */
+
           if (matches) {
             hardcodedSecrets += matches.length;
           }
         }
 
-      } catch (error) {
+      }
+
+      catch (error) {
         // Skip files that can't be read
       }
     }
 
-    // Score based on environment variable usage vs hardcoded secrets
+    // Score based on environment variable usage vs hardcoded secrets    /**
+   * Performs the specified operation
+   * @param {any} envUsage > 0 && hardcodedSecrets - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} envUsage > 0 && hardcodedSecrets - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (envUsage > 0 && hardcodedSecrets === 0) {
-      _score += 2;
+      score += 2;
       this.addScore(2, 2, `Good secrets management (${envUsage} env vars, no hardcoded secrets)`);
-    } else if (envUsage > 0 && hardcodedSecrets > 0) {
-      _score += 1;
+    }
+
+    else if (envUsage > 0 && hardcodedSecrets > 0) {
+      score += 1;
       this.addScore(1, 2, 'Mixed secrets management approach');
       this.addIssue('Potential hardcoded secrets detected', 'Move secrets to environment variables');
-    } else if (hardcodedSecrets > 0) {
+    }
+
+    else if (hardcodedSecrets > 0) {
       this.addIssue('Hardcoded secrets detected', 'Never commit secrets to code - use environment variables');
-    } else if (envUsage === 0) {
+    }
+
+    else if (envUsage === 0) {
       // No environment usage might be fine for simple projects
-      _score += 1;
+      score += 1;
       this.addScore(1, 2, 'No obvious secrets management (might be appropriate for this project)');
     }
 
@@ -265,8 +499,8 @@ export class SecurityAnalyzer extends BaseAnalyzer {
    * PHASE 1: Enhanced error context analysis for AI debugging and security
    */
   async analyzeErrorHandling() {
-    let _score = 0;
-    const _maxScore = 3;
+    let score = 0;
+    const maxScore = 3;
 
     const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx']);
     let tryCatchBlocks = 0;
@@ -285,7 +519,17 @@ export class SecurityAnalyzer extends BaseAnalyzer {
         const content = await this.readFile(file);
 
         // Count try-catch blocks
-        const tryCatchMatches = content.match(/try\s*{[\s\S]*?catch\s*\(/g);
+        const tryCatchMatches = content.match(/try\s*{[\s\S]*?catch\s*\(/g);        /**
+   * Performs the specified operation
+   * @param {any} tryCatchMatches
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} tryCatchMatches
+   * @returns {any} The operation result
+   */
+
         if (tryCatchMatches) {
           tryCatchBlocks += tryCatchMatches.length;
         }
@@ -327,74 +571,176 @@ export class SecurityAnalyzer extends BaseAnalyzer {
           errorExposureRisk++;
         }
 
-      } catch (error) {
+      }
+
+      catch (error) {
         // Skip files that can't be read
       }
     }
 
-    // Score for try-catch usage (1.5pts)
+    // Score for try-catch usage (1.5pts)    /**
+   * Performs the specified operation
+   * @param {any} tryCatchBlocks > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} tryCatchBlocks > 0
+   * @returns {any} The operation result
+   */
+
     if (tryCatchBlocks > 0) {
       const catchScore = Math.min(tryCatchBlocks / 5, 1.5);
-      _score += catchScore;
+      score += catchScore;
       this.addScore(catchScore, 1.5, `Error handling blocks found (${tryCatchBlocks})`);
-    } else if (files.length > 5) {
+    }
+
+    else if (files.length > 5) {
       this.addIssue('Limited error handling detected', 'Add try-catch blocks for error-prone operations');
     }
 
     // Score for structured error handling (0.75pts)
     const structuredRatio = files.length > 0 ? structuredErrors / Math.min(files.length, 25) : 0;
-    const structuredScore = Math.min(structuredRatio * 0.75, 0.75);
+    const structuredScore = Math.min(structuredRatio * 0.75, 0.75);    /**
+   * Performs the specified operation
+   * @param {any} structuredScore > 0.3
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} structuredScore > 0.3
+   * @returns {any} The operation result
+   */
+
     if (structuredScore > 0.3) {
-      _score += structuredScore;
+      score += structuredScore;
       this.addScore(structuredScore, 0.75, `Structured error handling (${Math.round(structuredRatio * 100)}% of files)`);
-    } else {
+    }
+
+    else {
       this.addIssue('Limited structured error handling', 'Use consistent error object structures with context');
     }
 
     // Score for contextual error information (0.75pts)
     const contextualRatio = files.length > 0 ? contextualErrors / Math.min(files.length, 25) : 0;
-    const contextualScore = Math.min(contextualRatio * 0.75, 0.75);
+    const contextualScore = Math.min(contextualRatio * 0.75, 0.75);    /**
+   * Performs the specified operation
+   * @param {any} contextualScore > 0.3
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} contextualScore > 0.3
+   * @returns {any} The operation result
+   */
+
     if (contextualScore > 0.3) {
-      _score += contextualScore;
+      score += contextualScore;
       this.addScore(contextualScore, 0.75, `Contextual error handling (${Math.round(contextualRatio * 100)}% of files)`);
-    } else if (contextualErrors > 0) {
-      _score += contextualScore;
+    }
+
+    else if (contextualErrors > 0) {
+      score += contextualScore;
       this.addScore(contextualScore, 0.75, 'Some contextual error handling found');
       this.addIssue('Limited error context', 'Add more contextual information to error handling for better debugging');
-    } else {
+    }
+
+    else {
       this.addIssue('No contextual error handling', 'Add phase, step, and debug context to error handling');
     }
 
     // Bonus points for advanced error patterns
-    let bonusScore = 0;
+    let bonusScore = 0;    /**
+   * Performs the specified operation
+   * @param {any} gracefulDegradation > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} gracefulDegradation > 0
+   * @returns {any} The operation result
+   */
+
     if (gracefulDegradation > 0) {
       bonusScore += 0.2;
       this.addScore(0.2, 0.2, `Graceful degradation patterns found (${gracefulDegradation} files)`);
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {number} aiDebuggingContext > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {number} aiDebuggingContext > 0
+   * @returns {any} The operation result
+   */
+
 
     if (aiDebuggingContext > 0) {
       bonusScore += 0.3;
       this.addScore(0.3, 0.3, `AI debugging context patterns found (${aiDebuggingContext} files)`);
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {any} errorBoundariesFound > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} errorBoundariesFound > 0
+   * @returns {any} The operation result
+   */
+
 
     if (errorBoundariesFound > 0) {
       bonusScore += 0.2;
       this.addScore(0.2, 0.2, `Error boundaries implemented (${errorBoundariesFound} components)`);
     }
 
-    _score += Math.min(bonusScore, 0.5); // Cap bonus at 0.5pts
+    score += Math.min(bonusScore, 0.5); // Cap bonus at 0.5pts
 
-    // Deduct for potential information exposure
+    // Deduct for potential information exposure    /**
+   * Performs the specified operation
+   * @param {boolean} errorExposureRisk > 3
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} errorExposureRisk > 3
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (errorExposureRisk > 3) {
       this.addIssue('High error information exposure risk', 'Avoid logging sensitive error details - implement structured logging');
-    } else if (errorExposureRisk > 0) {
+    }
+
+    else if (errorExposureRisk > 0) {
       this.addIssue('Some error information exposure detected', 'Review error logging for sensitive information leaks');
     }
 
-    // Add specific recommendations based on analysis
+    // Add specific recommendations based on analysis    /**
+   * Performs the specified operation
+   * @param {any} structuredErrors - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} structuredErrors - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (structuredErrors === 0 && files.length > 5) {
       this.addIssue('No structured error handling found', 'Implement error classes with phase, step, and context information');
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {number} aiDebuggingContext - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {number} aiDebuggingContext - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
     if (aiDebuggingContext === 0 && contextualErrors < files.length * 0.3) {
       this.addIssue('Limited AI debugging context', 'Add error context with debugContext, suggestedFix, and commonIssues');
@@ -502,11 +848,19 @@ export class SecurityAnalyzer extends BaseAnalyzer {
     ];
 
     return exposurePatterns.some(pattern => pattern.test(content));
-  }
+  }  /**
+   * Analyzes the provided data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async analyzeInputValidation() {
-    let _score = 0;
-    const _maxScore = 2;
+    let score = 0;
+    const maxScore = 2;
 
     const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx']);
     let validationPatterns = 0;
@@ -518,13 +872,33 @@ export class SecurityAnalyzer extends BaseAnalyzer {
     ];
 
     // Check for validation libraries in package.json
-    const packageJson = await this.readPackageJson();
+    const packageJson = await this.readPackageJson();    /**
+   * Performs the specified operation
+   * @param {any} packageJson
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} packageJson
+   * @returns {any} The operation result
+   */
+
     if (packageJson) {
       const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };
-      const hasValidationLib = validationLibraries.some(lib => deps[lib]);
+      const hasValidationLib = validationLibraries.some(lib => deps[lib]);      /**
+   * Performs the specified operation
+   * @param {number} hasValidationLib
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {number} hasValidationLib
+   * @returns {any} The operation result
+   */
+
 
       if (hasValidationLib) {
-        _score += 1;
+        score += 1;
         this.addScore(1, 1, 'Input validation library detected');
       }
     }
@@ -537,7 +911,17 @@ export class SecurityAnalyzer extends BaseAnalyzer {
         const validationKeywords = [
           'validate', 'sanitize', 'escape', 'filter', 'trim',
           'typeof', 'instanceof', 'isArray', 'isString', 'isNumber'
-        ];
+        ];        /**
+   * Performs the specified operation
+   * @param {number} const keyword of validationKeywords
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {number} const keyword of validationKeywords
+   * @returns {any} The operation result
+   */
+
 
         for (const keyword of validationKeywords) {
           if (content.includes(keyword)) {
@@ -552,17 +936,31 @@ export class SecurityAnalyzer extends BaseAnalyzer {
           sanitizationUsage++;
         }
 
-      } catch (error) {
+      }
+
+      catch (error) {
         // Skip files that can't be read
       }
     }
 
-    // Score for validation patterns
+    // Score for validation patterns    /**
+   * Performs the specified operation
+   * @param {number} validationPatterns > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {number} validationPatterns > 0
+   * @returns {any} The operation result
+   */
+
     if (validationPatterns > 0) {
       const validationScore = Math.min(validationPatterns / 5, 1); // Up to 1 point
-      _score += validationScore;
+      score += validationScore;
       this.addScore(validationScore, 1, `Input validation patterns found (${validationPatterns} files)`);
-    } else if (files.length > 5) {
+    }
+
+    else if (files.length > 5) {
       this.addIssue('No input validation patterns detected', 'Add input validation for user data');
     }
 

@@ -2,7 +2,15 @@
  * VuePatterns - Vue-specific code patterns
  */
 
-export class VuePatterns {
+export class VuePatterns {  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
   static getComponentPattern() {
     return `<!-- Context7 Vue Component Pattern -->
 <template>
@@ -44,7 +52,15 @@ async function fetchExampleData(title: string): Promise<any[]> {
   return response.json();
 }
 </script>`;
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   static getComposablePattern() {
     return `// Context7 Vue Composable Pattern
@@ -84,7 +100,15 @@ export function useExample(initialValue: string) {
     refetch: fetchData,
   };
 }`;
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   static getTestPattern() {
     return `// Context7 Vue Test Pattern

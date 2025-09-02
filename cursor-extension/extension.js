@@ -1,3 +1,5 @@
+/* eslint-env node */
+/* global require, module */
 /**
  * CodeFortify Cursor Extension
  * Integrates the unified status dashboard into Cursor's bottom panel
@@ -7,124 +9,123 @@ const vscode = require('vscode');
 const path = require('path');
 const fs = require('fs');
 
-let statusPanel;
 let statusBarItem;
 let updateTimer;
 
 function activate(context) {
-    console.log('CodeFortify extension activated');
+  console.log('CodeFortify extension activated');
 
-    // Create status bar item
-    statusBarItem = vscode.window.createStatusBarItem(
-        vscode.StatusBarAlignment.Left, 
-        100
-    );
-    statusBarItem.command = 'codefortify.openDashboard';
-    context.subscriptions.push(statusBarItem);
+  // Create status bar item
+  statusBarItem = vscode.window.createStatusBarItem(
+    vscode.StatusBarAlignment.Left,
+    100
+  );
+  statusBarItem.command = 'codefortify.openDashboard';
+  context.subscriptions.push(statusBarItem);
 
-    // Register commands
-    const openDashboard = vscode.commands.registerCommand('codefortify.openDashboard', () => {
-        showDashboardPanel(context);
-    });
+  // Register commands
+  const openDashboard = vscode.commands.registerCommand('codefortify.openDashboard', () => {
+    showDashboardPanel(context);
+  });
 
-    const toggleMonitoring = vscode.commands.registerCommand('codefortify.toggleMonitoring', () => {
-        toggleStatusMonitoring();
-    });
+  const toggleMonitoring = vscode.commands.registerCommand('codefortify.toggleMonitoring', () => {
+    toggleStatusMonitoring();
+  });
 
-    context.subscriptions.push(openDashboard, toggleMonitoring);
+  context.subscriptions.push(openDashboard, toggleMonitoring);
 
-    // Start monitoring
-    startStatusMonitoring();
-    statusBarItem.show();
+  // Start monitoring
+  startStatusMonitoring();
+  statusBarItem.show();
 }
 
 function startStatusMonitoring() {
-    updateTimer = setInterval(async () => {
-        await updateStatusBar();
-    }, 2000); // Update every 2 seconds
+  updateTimer = setInterval(async () => {
+    await updateStatusBar();
+  }, 2000); // Update every 2 seconds
 
-    // Initial update
-    updateStatusBar();
+  // Initial update
+  updateStatusBar();
 }
 
 function stopStatusMonitoring() {
-    if (updateTimer) {
-        clearInterval(updateTimer);
-        updateTimer = null;
-    }
+  if (updateTimer) {
+    clearInterval(updateTimer);
+    updateTimer = null;
+  }
 }
 
 function toggleStatusMonitoring() {
-    if (updateTimer) {
-        stopStatusMonitoring();
-        statusBarItem.text = '🚀 CodeFortify (Paused)';
-        vscode.window.showInformationMessage('CodeFortify monitoring paused');
-    } else {
-        startStatusMonitoring();
-        vscode.window.showInformationMessage('CodeFortify monitoring resumed');
-    }
+  if (updateTimer) {
+    stopStatusMonitoring();
+    statusBarItem.text = '🚀 CodeFortify (Paused)';
+    vscode.window.showInformationMessage('CodeFortify monitoring paused');
+  } else {
+    startStatusMonitoring();
+    vscode.window.showInformationMessage('CodeFortify monitoring resumed');
+  }
 }
 
 async function updateStatusBar() {
-    try {
-        const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
-        if (!workspaceFolder) {
-            statusBarItem.text = '🚀 CodeFortify';
-            return;
-        }
-
-        const statusPath = path.join(workspaceFolder.uri.fsPath, '.codefortify', 'status.json');
-        
-        if (!fs.existsSync(statusPath)) {
-            statusBarItem.text = '🚀 CodeFortify (Inactive)';
-            statusBarItem.tooltip = 'Run `codefortify enhance` to start background agents';
-            statusBarItem.backgroundColor = new vscode.ThemeColor('statusBarItem.warningBackground');
-            return;
-        }
-
-        const statusData = JSON.parse(fs.readFileSync(statusPath, 'utf8'));
-        const status = statusData.globalStatus || {};
-        const score = statusData.score || {};
-        
-        // MONITORING MODE: Show score without autonomous progress
-        const currentScore = score.currentScore || score.totalScore || 0;
-        const mode = statusData.mode || 'monitoring';
-        const changeCount = statusData.changeCount || 0;
-
-        // Update status bar for monitoring mode
-        if (mode === 'monitoring') {
-            statusBarItem.text = `📊 CF Monitor: ${currentScore}/100 | ${changeCount} changes`;
-        } else {
-            // Legacy autonomous mode (disabled)
-            const runtime = Math.round((status.elapsedTime || 0) / 1000 / 60);
-            const progress = status.progress || 0;
-            statusBarItem.text = `🚀 ${currentScore}/100 │ ${runtime}min │ ${progress}%`;
-        }
-        
-        // Color coding based on score
-        if (currentScore >= 80) {
-            statusBarItem.backgroundColor = new vscode.ThemeColor('statusBarItem.prominentBackground');
-        } else if (currentScore >= 70) {
-            statusBarItem.backgroundColor = new vscode.ThemeColor('statusBarItem.warningBackground');
-        } else {
-            statusBarItem.backgroundColor = new vscode.ThemeColor('statusBarItem.errorBackground');
-        }
-
-        // Enhanced tooltip
-        statusBarItem.tooltip = createDetailedTooltip(statusData);
-
-    } catch (error) {
-        statusBarItem.text = '🚀 CodeFortify (Error)';
-        statusBarItem.tooltip = `Error reading status: ${error.message}`;
-        statusBarItem.backgroundColor = new vscode.ThemeColor('statusBarItem.errorBackground');
+  try {
+    const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+    if (!workspaceFolder) {
+      statusBarItem.text = '🚀 CodeFortify';
+      return;
     }
+
+    const statusPath = path.join(workspaceFolder.uri.fsPath, '.codefortify', 'status.json');
+
+    if (!fs.existsSync(statusPath)) {
+      statusBarItem.text = '🚀 CodeFortify (Inactive)';
+      statusBarItem.tooltip = 'Run `codefortify enhance` to start background agents';
+      statusBarItem.backgroundColor = new vscode.ThemeColor('statusBarItem.warningBackground');
+      return;
+    }
+
+    const statusData = JSON.parse(fs.readFileSync(statusPath, 'utf8'));
+    const status = statusData.globalStatus || {};
+    const score = statusData.score || {};
+
+    // MONITORING MODE: Show score without autonomous progress
+    const currentScore = score.currentScore || score.totalScore || 0;
+    const mode = statusData.mode || 'monitoring';
+    const changeCount = statusData.changeCount || 0;
+
+    // Update status bar for monitoring mode
+    if (mode === 'monitoring') {
+      statusBarItem.text = `📊 CF Monitor: ${currentScore}/100 | ${changeCount} changes`;
+    } else {
+      // Legacy autonomous mode (disabled)
+      const runtime = Math.round((status.elapsedTime || 0) / 1000 / 60);
+      const progress = status.progress || 0;
+      statusBarItem.text = `🚀 ${currentScore}/100 │ ${runtime}min │ ${progress}%`;
+    }
+
+    // Color coding based on score
+    if (currentScore >= 80) {
+      statusBarItem.backgroundColor = new vscode.ThemeColor('statusBarItem.prominentBackground');
+    } else if (currentScore >= 70) {
+      statusBarItem.backgroundColor = new vscode.ThemeColor('statusBarItem.warningBackground');
+    } else {
+      statusBarItem.backgroundColor = new vscode.ThemeColor('statusBarItem.errorBackground');
+    }
+
+    // Enhanced tooltip
+    statusBarItem.tooltip = createDetailedTooltip(statusData);
+
+  } catch (error) {
+    statusBarItem.text = '🚀 CodeFortify (Error)';
+    statusBarItem.tooltip = `Error reading status: ${error.message}`;
+    statusBarItem.backgroundColor = new vscode.ThemeColor('statusBarItem.errorBackground');
+  }
 }
 
 function createDetailedTooltip(statusData) {
-    const status = statusData.globalStatus;
-    const score = statusData.score;
-    
-    return new vscode.MarkdownString(`
+  const status = statusData.globalStatus;
+  const score = statusData.score;
+
+  return new vscode.MarkdownString(`
 ### 🚀 CodeFortify Dashboard
 
 **Overall Score:** ${score.currentScore || 73}/100  
@@ -149,64 +150,64 @@ function createDetailedTooltip(statusData) {
 }
 
 function showDashboardPanel(context) {
-    // Create and show dashboard webview
-    const panel = vscode.window.createWebviewPanel(
-        'codefortifyDashboard',
-        'CodeFortify Dashboard',
-        vscode.ViewColumn.Beside,
-        {
-            enableScripts: true,
-            localResourceRoots: [
-                vscode.Uri.file(path.join(context.extensionPath, 'webview'))
-            ]
-        }
-    );
+  // Create and show dashboard webview
+  const panel = vscode.window.createWebviewPanel(
+    'codefortifyDashboard',
+    'CodeFortify Dashboard',
+    vscode.ViewColumn.Beside,
+    {
+      enableScripts: true,
+      localResourceRoots: [
+        vscode.Uri.file(path.join(context.extensionPath, 'webview'))
+      ]
+    }
+  );
 
-    // Set webview content
-    panel.webview.html = getDashboardHTML();
+  // Set webview content
+  panel.webview.html = getDashboardHTML();
 
-    // Handle messages from webview
-    panel.webview.onDidReceiveMessage(
-        message => {
-            switch (message.command) {
-                case 'pause':
-                    toggleStatusMonitoring();
-                    break;
-                case 'settings':
-                    vscode.commands.executeCommand('workbench.action.openSettings', 'codefortify');
-                    break;
-                case 'report':
-                    vscode.commands.executeCommand('codefortify.generateReport');
-                    break;
-            }
-        },
-        undefined,
-        context.subscriptions
-    );
+  // Handle messages from webview
+  panel.webview.onDidReceiveMessage(
+    message => {
+      switch (message.command) {
+      case 'pause':
+        toggleStatusMonitoring();
+        break;
+      case 'settings':
+        vscode.commands.executeCommand('workbench.action.openSettings', 'codefortify');
+        break;
+      case 'report':
+        vscode.commands.executeCommand('codefortify.generateReport');
+        break;
+      }
+    },
+    undefined,
+    context.subscriptions
+  );
 
-    // Update webview periodically
-    const updateWebview = async () => {
-        const statusData = await getCurrentStatusData();
-        if (statusData) {
-            panel.webview.postMessage({
-                command: 'update',
-                data: statusData
-            });
-        }
-    };
+  // Update webview periodically
+  const updateWebview = async () => {
+    const statusData = await getCurrentStatusData();
+    if (statusData) {
+      panel.webview.postMessage({
+        command: 'update',
+        data: statusData
+      });
+    }
+  };
 
-    const webviewTimer = setInterval(updateWebview, 2000);
-    
-    // Initial update
-    setTimeout(updateWebview, 500);
-    
-    panel.onDidDispose(() => {
-        clearInterval(webviewTimer);
-    }, null, context.subscriptions);
+  const webviewTimer = setInterval(updateWebview, 2000);
+
+  // Initial update
+  setTimeout(updateWebview, 500);
+
+  panel.onDidDispose(() => {
+    clearInterval(webviewTimer);
+  }, null, context.subscriptions);
 }
 
 function getDashboardHTML() {
-    return `
+  return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -614,48 +615,48 @@ function getDashboardHTML() {
 }
 
 async function getCurrentStatusData() {
-    try {
-        const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
-        if (!workspaceFolder) {
-            return null;
-        }
-
-        const statusPath = path.join(workspaceFolder.uri.fsPath, '.codefortify', 'status.json');
-        
-        if (!fs.existsSync(statusPath)) {
-            return null;
-        }
-
-        const statusData = JSON.parse(fs.readFileSync(statusPath, 'utf8'));
-        
-        // Transform the data for the dashboard
-        return {
-            score: statusData.score?.currentScore || 74,
-            globalStatus: statusData.globalStatus || {},
-            categories: statusData.score?.categoryScores || {},
-            agents: Object.entries(statusData.agents || {}).map(([key, agent]) => ({
-                name: key,
-                progress: agent.progress || 100,
-                active: agent.status === 'completed' || agent.status === 'running'
-            })),
-            activities: statusData.operationHistory?.slice(-5).reverse().map(op => 
-                `${new Date(op.timestamp).toLocaleTimeString()} ${op.message}`
-            ) || []
-        };
-    } catch (error) {
-        console.error('Failed to read status data:', error);
-        return null;
+  try {
+    const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+    if (!workspaceFolder) {
+      return null;
     }
+
+    const statusPath = path.join(workspaceFolder.uri.fsPath, '.codefortify', 'status.json');
+
+    if (!fs.existsSync(statusPath)) {
+      return null;
+    }
+
+    const statusData = JSON.parse(fs.readFileSync(statusPath, 'utf8'));
+
+    // Transform the data for the dashboard
+    return {
+      score: statusData.score?.currentScore || 74,
+      globalStatus: statusData.globalStatus || {},
+      categories: statusData.score?.categoryScores || {},
+      agents: Object.entries(statusData.agents || {}).map(([key, agent]) => ({
+        name: key,
+        progress: agent.progress || 100,
+        active: agent.status === 'completed' || agent.status === 'running'
+      })),
+      activities: statusData.operationHistory?.slice(-5).reverse().map(op =>
+        `${new Date(op.timestamp).toLocaleTimeString()} ${op.message}`
+      ) || []
+    };
+  } catch (error) {
+    console.error('Failed to read status data:', error);
+    return null;
+  }
 }
 
 function deactivate() {
-    stopStatusMonitoring();
-    if (statusBarItem) {
-        statusBarItem.dispose();
-    }
+  stopStatusMonitoring();
+  if (statusBarItem) {
+    statusBarItem.dispose();
+  }
 }
 
 module.exports = {
-    activate,
-    deactivate
+  activate,
+  deactivate
 };

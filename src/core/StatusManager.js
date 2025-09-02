@@ -17,6 +17,36 @@ import {
   OPERATION_TYPES
 } from './StatusTypes.js';
 
+/**
+
+
+ * StatusManager class implementation
+
+
+ *
+
+
+ * Provides functionality for statusmanager operations
+
+
+ */
+
+
+/**
+
+
+ * StatusManager class implementation
+
+
+ *
+
+
+ * Provides functionality for statusmanager operations
+
+
+ */
+
+
 export class StatusManager extends EventEmitter {
   constructor(config = {}) {
     super();
@@ -38,7 +68,17 @@ export class StatusManager extends EventEmitter {
     this.startTime = new Date();
     this.saveTimer = null;
 
-    // Initialize persistence
+    // Initialize persistence    /**
+   * Performs the specified operation
+   * @param {Object} this.config.persistenceEnabled
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.config.persistenceEnabled
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.config.persistenceEnabled) {
       this.initializePersistence();
     }
@@ -56,7 +96,17 @@ export class StatusManager extends EventEmitter {
       // Load existing status if available
       await this.loadStatus();
 
-      // Start auto-save timer
+      // Start auto-save timer      /**
+   * Performs the specified operation
+   * @param {Object} this.config.autoSave
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.autoSave
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.config.autoSave) {
         this.startAutoSave();
       }
@@ -84,7 +134,17 @@ export class StatusManager extends EventEmitter {
       }
     });
 
-    // Save if persistence is enabled
+    // Save if persistence is enabled    /**
+   * Performs the specified operation
+   * @param {Object} this.config.persistenceEnabled && !this.config.autoSave
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.config.persistenceEnabled && !this.config.autoSave
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.config.persistenceEnabled && !this.config.autoSave) {
       this.saveStatus();
     }
@@ -192,7 +252,17 @@ export class StatusManager extends EventEmitter {
    * Update agent status
    */
   updateAgentStatus(agentId, updates) {
-    const agent = this.agentStatuses.get(agentId);
+    const agent = this.agentStatuses.get(agentId);    /**
+   * Performs the specified operation
+   * @param {any} !agent
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !agent
+   * @returns {any} The operation result
+   */
+
     if (!agent) {
       throw new Error(`Agent ${agentId} not found`);
     }
@@ -212,7 +282,17 @@ export class StatusManager extends EventEmitter {
    * Start agent
    */
   startAgent(agentId, message = '') {
-    const agent = this.agentStatuses.get(agentId);
+    const agent = this.agentStatuses.get(agentId);    /**
+   * Performs the specified operation
+   * @param {any} !agent
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !agent
+   * @returns {any} The operation result
+   */
+
     if (!agent) {
       throw new Error(`Agent ${agentId} not found`);
     }
@@ -230,7 +310,17 @@ export class StatusManager extends EventEmitter {
    * Update agent progress
    */
   updateAgentProgress(agentId, progress, message = '') {
-    const agent = this.agentStatuses.get(agentId);
+    const agent = this.agentStatuses.get(agentId);    /**
+   * Performs the specified operation
+   * @param {any} !agent
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !agent
+   * @returns {any} The operation result
+   */
+
     if (!agent) {
       throw new Error(`Agent ${agentId} not found`);
     }
@@ -249,7 +339,17 @@ export class StatusManager extends EventEmitter {
    * Complete agent
    */
   completeAgent(agentId, results = null, message = '') {
-    const agent = this.agentStatuses.get(agentId);
+    const agent = this.agentStatuses.get(agentId);    /**
+   * Performs the specified operation
+   * @param {any} !agent
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !agent
+   * @returns {any} The operation result
+   */
+
     if (!agent) {
       throw new Error(`Agent ${agentId} not found`);
     }
@@ -267,7 +367,17 @@ export class StatusManager extends EventEmitter {
    * Fail agent
    */
   failAgent(agentId, error, message = '') {
-    const agent = this.agentStatuses.get(agentId);
+    const agent = this.agentStatuses.get(agentId);    /**
+   * Performs the specified operation
+   * @param {any} !agent
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !agent
+   * @returns {any} The operation result
+   */
+
     if (!agent) {
       throw new Error(`Agent ${agentId} not found`);
     }
@@ -296,7 +406,17 @@ export class StatusManager extends EventEmitter {
     });
 
     // Update global status if score changed significantly
-    const scoreChange = Math.abs(newScore - previousScore);
+    const scoreChange = Math.abs(newScore - previousScore);    /**
+   * Performs the specified operation
+   * @param {any} scoreChange > 1
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} scoreChange > 1
+   * @returns {any} The operation result
+   */
+
     if (scoreChange > 1) {
       this.updateStatus({
         message: `Score ${newScore > previousScore ? 'improved' : 'decreased'}: ${newScore.toFixed(1)}`
@@ -337,7 +457,19 @@ export class StatusManager extends EventEmitter {
    * Get agent statuses
    */
   getAgentStatuses() {
-    const statuses = {};
+    const statuses = {};    /**
+   * Performs the specified operation
+   * @param {number} const [agentId
+   * @param {boolean} agent] of this.agentStatuses
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {number} const [agentId
+   * @param {boolean} agent] of this.agentStatuses
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     for (const [agentId, agent] of this.agentStatuses) {
       statuses[agentId] = agent.toJSON();
     }
@@ -362,7 +494,17 @@ export class StatusManager extends EventEmitter {
   addToHistory(entry) {
     this.operationHistory.push(entry);
 
-    // Maintain history size limit
+    // Maintain history size limit    /**
+   * Performs the specified operation
+   * @param {Object} this.operationHistory.length > this.config.historySize
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.operationHistory.length > this.config.historySize
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.operationHistory.length > this.config.historySize) {
       this.operationHistory = this.operationHistory.slice(-this.config.historySize);
     }
@@ -377,19 +519,49 @@ export class StatusManager extends EventEmitter {
       const data = await fs.readFile(statusPath, 'utf-8');
       const savedStatus = JSON.parse(data);
 
-      // Restore score status
+      // Restore score status      /**
+   * Performs the specified operation
+   * @param {any} savedStatus.score
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} savedStatus.score
+   * @returns {any} The operation result
+   */
+
       if (savedStatus.score) {
         Object.assign(this.scoreStatus, savedStatus.score);
       }
 
-      // Restore operation history
+      // Restore operation history      /**
+   * Performs the specified operation
+   * @param {boolean} savedStatus.operationHistory
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} savedStatus.operationHistory
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (savedStatus.operationHistory) {
         this.operationHistory = savedStatus.operationHistory;
       }
 
       this.emit('status:loaded', { file: statusPath });
     } catch (error) {
-      // File doesn't exist or is corrupted - not an error for new installations
+      // File doesn't exist or is corrupted - not an error for new installations      /**
+   * Performs the specified operation
+   * @param {any} error.code ! - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} error.code ! - Optional parameter
+   * @returns {any} The operation result
+   */
+
       if (error.code !== 'ENOENT') {
         this.emit('error', new Error(`Failed to load status: ${error.message}`));
       }
@@ -399,7 +571,17 @@ export class StatusManager extends EventEmitter {
   /**
    * Save status to file
    */
-  async saveStatus() {
+  async saveStatus() {  /**
+   * Performs the specified operation
+   * @param {Object} !this.config.persistenceEnabled
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} !this.config.persistenceEnabled
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (!this.config.persistenceEnabled) {return;}
 
     try {
@@ -424,7 +606,17 @@ export class StatusManager extends EventEmitter {
   /**
    * Start auto-save timer
    */
-  startAutoSave() {
+  startAutoSave() {  /**
+   * Performs the specified operation
+   * @param {boolean} this.saveTimer
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.saveTimer
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.saveTimer) {
       clearInterval(this.saveTimer);
     }
@@ -437,7 +629,17 @@ export class StatusManager extends EventEmitter {
   /**
    * Stop auto-save timer
    */
-  stopAutoSave() {
+  stopAutoSave() {  /**
+   * Performs the specified operation
+   * @param {boolean} this.saveTimer
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.saveTimer
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.saveTimer) {
       clearInterval(this.saveTimer);
       this.saveTimer = null;
@@ -455,7 +657,17 @@ export class StatusManager extends EventEmitter {
    * Cleanup and save before shutdown
    */
   async shutdown() {
-    this.stopAutoSave();
+    this.stopAutoSave();    /**
+   * Performs the specified operation
+   * @param {Object} this.config.persistenceEnabled
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.config.persistenceEnabled
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (this.config.persistenceEnabled) {
       await this.saveStatus();

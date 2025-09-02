@@ -9,7 +9,8 @@
     "./claude-commands": "./src/claude-commands/index.js"
   },
   "bin": {
-    "codefortify": "bin/codefortify.js"
+    "codefortify": "bin/codefortify.js",
+    "codefortify-simple": "bin/codefortify-simplified.js"
   },
   "scripts": {
     "dev": "node src/server/CodeFortifyMCPServer.js",
@@ -67,7 +68,13 @@
     "context7:test-mcp": "context7 test-mcp",
     "realtime:start": "node bin/codefortify-realtime.js start",
     "realtime:status": "node bin/codefortify-realtime.js status",
-    "realtime:test": "node bin/codefortify-realtime.js test-connection"
+    "realtime:test": "node bin/codefortify-realtime.js test-connection",
+    "simple": "node bin/codefortify-simplified.js",
+    "simple:setup": "node bin/codefortify-simplified.js setup",
+    "simple:analyze": "node bin/codefortify-simplified.js analyze",
+    "simple:enhance": "node bin/codefortify-simplified.js enhance",
+    "simple:monitor": "node bin/codefortify-simplified.js monitor",
+    "simple:tools": "node bin/codefortify-simplified.js tools"
   },
   "keywords": [
     "codefortify",
@@ -105,6 +112,7 @@
     "pixelmatch": "^7.1.0",
     "playwright": "^1.55.0",
     "pngjs": "^7.0.0",
+    "prom-client": "^15.1.3",
     "ws": "^8.18.3"
   },
   "devDependencies": {

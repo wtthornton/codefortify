@@ -75,10 +75,30 @@ export const ANALYSIS_STEPS = {
 /**
  * Base event schema validation
  */
-export class EventSchema {
+export class EventSchema {  /**
+   * Validates input data
+   * @param {any} event
+   * @returns {any} The operation result
+   */
+  /**
+   * Validates input data
+   * @param {any} event
+   * @returns {any} The operation result
+   */
+
   static validate(event) {
     const required = ['type', 'timestamp', 'session_id'];
-    const missing = required.filter(field => !event[field]);
+    const missing = required.filter(field => !event[field]);    /**
+   * Performs the specified operation
+   * @param {boolean} missing.length > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} missing.length > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (missing.length > 0) {
       throw new Error(`Missing required fields: ${missing.join(', ')}`);
@@ -89,7 +109,21 @@ export class EventSchema {
     }
 
     return true;
-  }
+  }  /**
+   * Creates a new resource
+   * @param {any} type
+   * @param {any} data - Optional parameter
+   * @param {Object} options - Optional parameter
+   * @returns {any} The created resource
+   */
+  /**
+   * Creates a new resource
+   * @param {any} type
+   * @param {any} data - Optional parameter
+   * @param {Object} options - Optional parameter
+   * @returns {any} The created resource
+   */
+
 
   static create(type, data = {}, options = {}) {
     const event = {
@@ -99,15 +133,45 @@ export class EventSchema {
       data: {
         ...data
       }
-    };
+    };    /**
+   * Performs the specified operation
+   * @param {Object} options.priority
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} options.priority
+   * @returns {any} The operation result
+   */
+
 
     if (options.priority) {
       event.priority = options.priority;
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {Object} options.source
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} options.source
+   * @returns {any} The operation result
+   */
+
 
     if (options.source) {
       event.source = options.source;
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {Object} options.target
+   * @returns {string} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} options.target
+   * @returns {string} The operation result
+   */
+
 
     if (options.target) {
       event.target = options.target;
@@ -121,13 +185,41 @@ export class EventSchema {
 /**
  * Specialized event creators for common event types
  */
-export class EventCreators {
+export class EventCreators {  /**
+   * Performs the specified operation
+   * @param {any} step
+   * @param {number} sessionId
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} step
+   * @param {number} sessionId
+   * @returns {boolean} True if successful, false otherwise
+   */
+
   static analysisStart(step, sessionId) {
     return EventSchema.create(EVENT_TYPES.ANALYSIS_START, {
       step,
       message: `Starting ${step} analysis...`
     }, { sessionId, priority: PRIORITY_LEVELS.MEDIUM });
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} step
+   * @param {any} progress
+   * @param {any} message
+   * @param {number} sessionId
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} step
+   * @param {any} progress
+   * @param {any} message
+   * @param {number} sessionId
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   static analysisProgress(step, progress, message, sessionId) {
     return EventSchema.create(EVENT_TYPES.ANALYSIS_PROGRESS, {
@@ -135,7 +227,21 @@ export class EventCreators {
       progress,
       message
     }, { sessionId, priority: PRIORITY_LEVELS.LOW });
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} step
+   * @param {any} results
+   * @param {number} sessionId
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} step
+   * @param {any} results
+   * @param {number} sessionId
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   static analysisComplete(step, results, sessionId) {
     return EventSchema.create(EVENT_TYPES.ANALYSIS_COMPLETE, {
@@ -143,7 +249,23 @@ export class EventCreators {
       results,
       message: `${step} analysis complete`
     }, { sessionId, priority: PRIORITY_LEVELS.MEDIUM });
-  }
+  }  /**
+   * Updates existing data
+   * @param {any} newScore
+   * @param {any} previousScore
+   * @param {any} changes
+   * @param {number} sessionId
+   * @returns {any} The operation result
+   */
+  /**
+   * Updates existing data
+   * @param {any} newScore
+   * @param {any} previousScore
+   * @param {any} changes
+   * @param {number} sessionId
+   * @returns {any} The operation result
+   */
+
 
   static scoreUpdate(newScore, previousScore, changes, sessionId) {
     const improvement = newScore > previousScore;
@@ -159,7 +281,23 @@ export class EventCreators {
       sessionId,
       priority: improvement ? PRIORITY_LEVELS.HIGH : PRIORITY_LEVELS.MEDIUM
     });
-  }
+  }  /**
+   * Updates existing data
+   * @param {boolean} phase
+   * @param {any} progress
+   * @param {any} message
+   * @param {number} sessionId
+   * @returns {any} The operation result
+   */
+  /**
+   * Updates existing data
+   * @param {boolean} phase
+   * @param {any} progress
+   * @param {any} message
+   * @param {number} sessionId
+   * @returns {any} The operation result
+   */
+
 
   static statusUpdate(phase, progress, message, sessionId) {
     return EventSchema.create(EVENT_TYPES.STATUS_UPDATE, {
@@ -168,7 +306,21 @@ export class EventCreators {
       message,
       timestamp: new Date().toISOString()
     }, { sessionId, priority: PRIORITY_LEVELS.LOW });
-  }
+  }  /**
+   * Generates new data
+   * @param {any} recommendations
+   * @param {any} category
+   * @param {number} sessionId
+   * @returns {any} The operation result
+   */
+  /**
+   * Generates new data
+   * @param {any} recommendations
+   * @param {any} category
+   * @param {number} sessionId
+   * @returns {any} The operation result
+   */
+
 
   static recommendationGenerated(recommendations, category, sessionId) {
     return EventSchema.create(EVENT_TYPES.RECOMMENDATION_GENERATED, {
@@ -177,7 +329,21 @@ export class EventCreators {
       count: recommendations.length,
       message: `${recommendations.length} new recommendations available`
     }, { sessionId, priority: PRIORITY_LEVELS.MEDIUM });
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} error
+   * @param {any} context
+   * @param {number} sessionId
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} error
+   * @param {any} context
+   * @param {number} sessionId
+   * @returns {any} The operation result
+   */
+
 
   static errorOccurred(error, context, sessionId) {
     return EventSchema.create(EVENT_TYPES.ERROR_OCCURRED, {
@@ -186,7 +352,25 @@ export class EventCreators {
       context,
       message: `Error: ${error.message}`
     }, { sessionId, priority: PRIORITY_LEVELS.CRITICAL });
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {number} agentId
+   * @param {any} status
+   * @param {any} progress
+   * @param {any} message
+   * @param {number} sessionId
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {number} agentId
+   * @param {any} status
+   * @param {any} progress
+   * @param {any} message
+   * @param {number} sessionId
+   * @returns {any} The operation result
+   */
+
 
   static agentStatus(agentId, status, progress, message, sessionId) {
     return EventSchema.create(EVENT_TYPES.AGENT_STATUS, {
@@ -201,7 +385,19 @@ export class EventCreators {
 /**
  * Event filtering utilities
  */
-export class EventFilters {
+export class EventFilters {  /**
+   * Performs the specified operation
+   * @param {any} events
+   * @param {any} minPriority
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} events
+   * @param {any} minPriority
+   * @returns {any} The operation result
+   */
+
   static byPriority(events, minPriority) {
     const priorities = [
       PRIORITY_LEVELS.LOW,
@@ -210,7 +406,17 @@ export class EventFilters {
       PRIORITY_LEVELS.CRITICAL
     ];
 
-    const minIndex = priorities.indexOf(minPriority);
+    const minIndex = priorities.indexOf(minPriority);    /**
+   * Performs the specified operation
+   * @param {number} minIndex - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {number} minIndex - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (minIndex === -1) {return events;}
 
     return events.filter(event => {
@@ -218,11 +424,37 @@ export class EventFilters {
       const eventIndex = priorities.indexOf(eventPriority);
       return eventIndex >= minIndex;
     });
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} events
+   * @param {any} ...types
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} events
+   * @param {any} ...types
+   * @returns {any} The operation result
+   */
+
 
   static byType(events, ...types) {
     return events.filter(event => types.includes(event.type));
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} events
+   * @param {any} startTime
+   * @param {any} endTime
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} events
+   * @param {any} startTime
+   * @param {any} endTime
+   * @returns {any} The operation result
+   */
+
 
   static byTimeRange(events, startTime, endTime) {
     const start = new Date(startTime);
@@ -232,7 +464,19 @@ export class EventFilters {
       const eventTime = new Date(event.timestamp);
       return eventTime >= start && eventTime <= end;
     });
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} events
+   * @param {number} sessionId
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} events
+   * @param {number} sessionId
+   * @returns {any} The operation result
+   */
+
 
   static bySessionId(events, sessionId) {
     return events.filter(event => event.session_id === sessionId);

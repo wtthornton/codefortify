@@ -8,11 +8,19 @@
 export class ToolManager {
   constructor(config) {
     this.config = config;
-  }
+  }  /**
+   * Performs the specified operation
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async listTools() {
     try {
-      console.error('ToolManager: Listing tools...');
+      // ERROR: ToolManager: Listing tools...
       const result = {
         tools: [
           {
@@ -85,23 +93,54 @@ export class ToolManager {
           }
         ]
       };
-      console.error('ToolManager: Tools listed successfully');
+      // ERROR: ToolManager: Tools listed successfully
       return result;
     } catch (error) {
-      console.error('ToolManager: Tool listing failed:', error.message);
+      // ERROR: ToolManager: Tool listing failed:, error.message
       throw new Error(`Tool listing failed: ${error.message}`);
     }
-  }
+  }  /**
+   * Executes the operation
+   * @param {any} name
+   * @param {any} args
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Executes the operation
+   * @param {any} name
+   * @param {any} args
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async executeTool(name, args) {
     try {
-      console.error(`ToolManager: Executing tool ${name}`);
-
+      // ERROR: `ToolManager: Executing tool ${name}`
+      /**
+   * Performs the specified operation
+   * @param {any} !args
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} !args
+   * @returns {any} The operation result
+   */
       if (!args) {
         args = {};
       }
 
-      let result;
+      let result;      /**
+   * Performs the specified operation
+   * @param {any} name
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} name
+   * @returns {any} The operation result
+   */
+
       switch (name) {
       case 'validate_context7_compliance':
         result = await this.validateContext7Compliance(args);
@@ -122,17 +161,37 @@ export class ToolManager {
         throw new Error(`Unknown tool: ${name}`);
       }
 
-      console.error('ToolManager: Tool executed successfully');
+      // ERROR: ToolManager: Tool executed successfully
       return result;
     } catch (error) {
-      console.error(`ToolManager: Tool execution failed for ${name}:`, error.message);
+      // ERROR: `ToolManager: Tool execution failed for ${name}:`, error.message
       throw new Error(`Tool execution failed for ${name}: ${error.message}`);
     }
-  }
+  }  /**
+   * Validates input data
+   * @param {any} args
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Validates input data
+   * @param {any} args
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async validateContext7Compliance(args) {
     try {
-      const { code, language, component_type } = args;
+      const { code, language, component_type } = args;      /**
+   * Performs the specified operation
+   * @param {any} !code
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} !code
+   * @returns {any} The operation result
+   */
+
 
       if (!code) {
         throw new Error('Code parameter is required');
@@ -144,7 +203,17 @@ export class ToolManager {
       // Get project-specific validation rules
       const validationRules = this.getValidationRules();
 
-      // Basic validation rules based on Context7 standards
+      // Basic validation rules based on Context7 standards      /**
+   * Performs the specified operation
+   * @param {any} language - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} language - Optional parameter
+   * @returns {any} The operation result
+   */
+
       if (language === 'typescript' || language === 'javascript') {
         await this.validateJavaScriptCode(code, component_type, issues, suggestions, validationRules);
       }
@@ -170,7 +239,25 @@ export class ToolManager {
     } catch (error) {
       throw new Error(`Context7 compliance validation failed: ${error.message}`);
     }
-  }
+  }  /**
+   * Validates input data
+   * @param {any} code
+   * @param {any} component_type
+   * @param {boolean} issues
+   * @param {any} suggestions
+   * @param {any} _rules
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Validates input data
+   * @param {any} code
+   * @param {any} component_type
+   * @param {boolean} issues
+   * @param {any} suggestions
+   * @param {any} _rules
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async validateJavaScriptCode(code, component_type, issues, suggestions, _rules) {
     // React/Component validation
@@ -209,7 +296,23 @@ export class ToolManager {
       issues.push('Avoid using "any" type, use specific types instead');
       suggestions.push('Define proper TypeScript interfaces for type safety');
     }
-  }
+  }  /**
+   * Validates input data
+   * @param {any} code
+   * @param {boolean} issues
+   * @param {any} suggestions
+   * @param {any} _rules
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Validates input data
+   * @param {any} code
+   * @param {boolean} issues
+   * @param {any} suggestions
+   * @param {any} _rules
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async validateStylingCode(code, issues, suggestions, _rules) {
     // Tailwind CSS validation
@@ -224,7 +327,15 @@ export class ToolManager {
     if (code.includes('sm:') && !code.includes('md:')) {
       suggestions.push('Consider adding tablet (md:) breakpoints for better responsive design');
     }
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   getValidationRules() {
     return {
@@ -233,7 +344,15 @@ export class ToolManager {
       mobileFirst: this.config.validation?.mobileFirst ?? true,
       ...this.config.validation
     };
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   getAppliedStandards() {
     const standards = ['Context7 patterns', 'Code documentation'];
@@ -246,11 +365,31 @@ export class ToolManager {
     }
 
     return standards;
-  }
+  }  /**
+   * Retrieves data
+   * @param {any} args
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Retrieves data
+   * @param {any} args
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async getPatternExamples(args) {
     try {
-      const { pattern_type, framework = this.config.projectType } = args;
+      const { pattern_type, framework = this.config.projectType } = args;      /**
+   * Performs the specified operation
+   * @param {any} !pattern_type
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} !pattern_type
+   * @returns {any} The operation result
+   */
+
 
       if (!pattern_type) {
         throw new Error('Pattern type parameter is required');
@@ -271,7 +410,17 @@ export class ToolManager {
     } catch (error) {
       throw new Error(`Pattern example retrieval failed: ${error.message}`);
     }
-  }
+  }  /**
+   * Checks the condition
+   * @param {any} args
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Checks the condition
+   * @param {any} args
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async checkNamingConventions(args) {
     try {
@@ -283,7 +432,17 @@ export class ToolManager {
 
       const results = names.map(name => {
         const issues = [];
-        const suggestions = [];
+        const suggestions = [];        /**
+   * Performs the specified operation
+   * @param {any} context
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} context
+   * @returns {any} The operation result
+   */
+
 
         switch (context) {
         case 'component':
@@ -293,7 +452,7 @@ export class ToolManager {
           }
           if (!name.endsWith('.tsx') && name.includes('.')) {
             issues.push('React components should use .tsx extension');
-            suggestions.push(`Rename to: ${name.replace(/\.[^.]*$/, '.tsx')}`);
+            suggestions.push(`Rename to: ${name.replace(/.[^.]*$/, '.tsx')}`);
           }
           break;
 
@@ -315,7 +474,17 @@ export class ToolManager {
 
           // Check for project-specific naming conventions
           {
-            const conventions = this.config.validation?.namingConventions;
+            const conventions = this.config.validation?.namingConventions;            /**
+   * Performs the specified operation
+   * @param {any} conventions?.files - Optional parameter
+   * @returns {any} The operation result
+   */
+            /**
+   * Performs the specified operation
+   * @param {any} conventions?.files - Optional parameter
+   * @returns {any} The operation result
+   */
+
             if (conventions?.files === 'kebab-case') {
               const basename = name.split('.')[0]; // Remove extension for validation
               if (!basename.match(/^[a-z][a-z0-9-]*$/)) {
@@ -346,11 +515,31 @@ export class ToolManager {
     } catch (error) {
       throw new Error(`Naming convention check failed: ${error.message}`);
     }
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} args
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} args
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async suggestImprovements(args) {
     try {
-      const { code, file_path, focus_area } = args;
+      const { code, file_path, focus_area } = args;      /**
+   * Performs the specified operation
+   * @param {any} !code
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} !code
+   * @returns {any} The operation result
+   */
+
 
       if (!code) {
         throw new Error('Code parameter is required');
@@ -358,7 +547,17 @@ export class ToolManager {
 
       const suggestions = [];
 
-      // Performance suggestions
+      // Performance suggestions      /**
+   * Performs the specified operation
+   * @param {any} focus_area - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} focus_area - Optional parameter
+   * @returns {any} The operation result
+   */
+
       if (focus_area === 'performance' || !focus_area) {
         if (code.includes('useEffect') && code.includes('[]')) {
           suggestions.push({
@@ -377,7 +576,17 @@ export class ToolManager {
         }
       }
 
-      // Accessibility suggestions
+      // Accessibility suggestions      /**
+   * Performs the specified operation
+   * @param {any} focus_area - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} focus_area - Optional parameter
+   * @returns {any} The operation result
+   */
+
       if (focus_area === 'accessibility' || !focus_area) {
         if (code.includes('<button') && !code.includes('aria-label')) {
           suggestions.push({
@@ -427,11 +636,31 @@ export class ToolManager {
     } catch (error) {
       throw new Error(`Improvement suggestions failed: ${error.message}`);
     }
-  }
+  }  /**
+   * Generates new data
+   * @param {any} args
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Generates new data
+   * @param {any} args
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async generateComponentScaffold(args) {
     try {
-      const { component_name, component_type, framework = this.config.projectType, props = [] } = args;
+      const { component_name, component_type, framework = this.config.projectType, props = [] } = args;      /**
+   * Performs the specified operation
+   * @param {any} !component_name || !component_type
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} !component_name || !component_type
+   * @returns {any} The operation result
+   */
+
 
       if (!component_name || !component_type) {
         throw new Error('Component name and type are required');

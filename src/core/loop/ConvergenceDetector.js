@@ -16,19 +16,29 @@ export class ConvergenceDetector {
    * @param {Array} scoreHistory - History of scores from iterations
    * @returns {boolean} True if converged
    */
-  hasConverged(scoreHistory) {
+  hasConverged(scoreHistory) {  /**
+   * Performs the specified operation
+   * @param {Object} scoreHistory.length < this.config.convergenceThreshold
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} scoreHistory.length < this.config.convergenceThreshold
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (scoreHistory.length < this.config.convergenceThreshold) {
       return false;
     }
 
     // Get the last N scores
     const recentScores = scoreHistory.slice(-this.config.convergenceThreshold);
-    
+
     // Check if all recent scores are within minImprovement of each other
     const maxScore = Math.max(...recentScores);
     const minScore = Math.min(...recentScores);
     const improvement = maxScore - minScore;
-    
+
     return improvement < this.config.minImprovement;
   }
 
@@ -37,7 +47,17 @@ export class ConvergenceDetector {
    * @param {Array} scoreHistory - History of scores from iterations
    * @returns {Object} Convergence analysis
    */
-  getConvergenceAnalysis(scoreHistory) {
+  getConvergenceAnalysis(scoreHistory) {  /**
+   * Performs the specified operation
+   * @param {boolean} scoreHistory.length < 2
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} scoreHistory.length < 2
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (scoreHistory.length < 2) {
       return {
         converged: false,
@@ -51,15 +71,25 @@ export class ConvergenceDetector {
     const maxScore = Math.max(...recentScores);
     const minScore = Math.min(...recentScores);
     const improvement = maxScore - minScore;
-    
+
     // Calculate trend
     const firstHalf = scoreHistory.slice(0, Math.floor(scoreHistory.length / 2));
     const secondHalf = scoreHistory.slice(Math.floor(scoreHistory.length / 2));
-    
+
     const firstAvg = firstHalf.reduce((sum, score) => sum + score, 0) / firstHalf.length;
     const secondAvg = secondHalf.reduce((sum, score) => sum + score, 0) / secondHalf.length;
-    
-    let trend = 'stable';
+
+    let trend = 'stable';    /**
+   * Performs the specified operation
+   * @param {Object} secondAvg > firstAvg + this.config.minImprovement
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} secondAvg > firstAvg + this.config.minImprovement
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (secondAvg > firstAvg + this.config.minImprovement) {
       trend = 'improving';
     } else if (secondAvg < firstAvg - this.config.minImprovement) {
@@ -81,12 +111,32 @@ export class ConvergenceDetector {
    * @param {Array} scoreHistory - History of scores from iterations
    * @returns {number} Average improvement per iteration
    */
-  calculateAverageImprovement(scoreHistory) {
+  calculateAverageImprovement(scoreHistory) {  /**
+   * Performs the specified operation
+   * @param {boolean} scoreHistory.length < 2
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} scoreHistory.length < 2
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (scoreHistory.length < 2) {
       return 0;
     }
 
-    let totalImprovement = 0;
+    let totalImprovement = 0;    /**
+   * Performs the specified operation
+   * @param {any} let i - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} let i - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     for (let i = 1; i < scoreHistory.length; i++) {
       totalImprovement += scoreHistory[i] - scoreHistory[i - 1];
     }

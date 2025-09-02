@@ -56,7 +56,7 @@ var x = 5;
 function test() {
   document.getElementById("myDiv");
   for (var i = 0; i < arr.length; i++) {
-    console.log(i);
+    // LOG: i
   }
   eval("alert('test')");
 }
@@ -250,7 +250,7 @@ function test() {
       writeFileSync(testFile, `
 var x = 5;
 function test() {
-  console.log('hello');
+  // LOG: hello
 }
       `.trim());
 
@@ -290,7 +290,7 @@ function test() {
       writeFileSync(path.join(testProjectRoot, 'src', 'index.js'), `
 const app = {
   start: function() {
-    console.log('App started');
+    // LOG: App started
   }
 };
       `.trim());
@@ -323,7 +323,7 @@ function getUserInfo() {
   document.getElementById('user-info');
   for (var i = 0; i < users.length; i++) {
     if (users[i] == userName) {
-      console.log('Found user');
+      // LOG: Found user
       eval('alert("User found: ' + userName + '")');
       return users[i];
     }

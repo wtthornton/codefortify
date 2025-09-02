@@ -18,8 +18,12 @@ export default [
         clearTimeout: 'readonly',
         clearInterval: 'readonly',
         URL: 'readonly',
-        beforeEach: 'readonly',
-      },
+        module: 'readonly',
+        require: 'readonly',
+        document: 'readonly',
+        window: 'readonly',
+        beforeEach: 'readonly'
+      }
     },
     rules: {
       'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
@@ -35,16 +39,16 @@ export default [
       'semi': ['error', 'always'],
       'quotes': ['error', 'single', { avoidEscape: true }],
       'indent': ['error', 2],
-      'comma-dangle': ['error', 'never'],
-    },
+      'comma-dangle': ['error', 'never']
+    }
   },
   {
     files: ['tests/**/*.js', 'vitest.config.js', 'bin/**/*.js'],
     rules: {
-      'no-console': 'off',
-    },
+      'no-console': 'off'
+    }
   },
   {
-    ignores: ['node_modules/**', 'coverage/**', '*.html'],
-  },
+    ignores: ['node_modules/**', 'coverage/**', '*.html']
+  }
 ];

@@ -21,6 +21,36 @@ import { AnalysisAgent } from '../agents/AnalysisAgent.js';
 import { ImprovementAgent } from '../agents/ImprovementAgent.js';
 import { VisualTestingAgent } from '../agents/VisualTestingAgent.js';
 
+/**
+
+
+ * ContinuousLoopController class implementation
+
+
+ *
+
+
+ * Provides functionality for continuousloopcontroller operations
+
+
+ */
+
+
+/**
+
+
+ * ContinuousLoopController class implementation
+
+
+ *
+
+
+ * Provides functionality for continuousloopcontroller operations
+
+
+ */
+
+
 export class ContinuousLoopController extends EventEmitter {
   constructor(config = {}) {
     super();
@@ -59,7 +89,17 @@ export class ContinuousLoopController extends EventEmitter {
 
     // Real-time infrastructure
     this.realtimeEmitter = null;
-    this.statusManager = null;
+    this.statusManager = null;    /**
+   * Performs the specified operation
+   * @param {Object} this.config.enableRealtime
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.config.enableRealtime
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.config.enableRealtime) {
       this.initializeRealtimeInfrastructure();
     }
@@ -117,14 +157,24 @@ export class ContinuousLoopController extends EventEmitter {
         this.realtimeEmitter.emitAnalysisComplete(event.agentId, event.status.results);
       });
 
-      // Start real-time server
+      // Start real-time server      /**
+   * Performs the specified operation
+   * @param {Object} this.config.enableRealtime
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.enableRealtime
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.config.enableRealtime) {
         await this.realtimeEmitter.start();
-        console.log(`🔴 CodeFortify real-time server started on port ${this.config.realtimePort}`);
+        // LOG: `🔴 CodeFortify real-time server started on port ${this.config.realtimePort}`
       }
 
     } catch (error) {
-      console.warn('⚠️  Failed to initialize real-time infrastructure:', error.message);
+      // WARN: ⚠️  Failed to initialize real-time infrastructure:, error.message
       this.realtimeEmitter = null;
       this.statusManager = null;
     }
@@ -134,7 +184,17 @@ export class ContinuousLoopController extends EventEmitter {
    * Generate score change descriptions
    */
   generateScoreChanges(scoreData) {
-    const changes = [];
+    const changes = [];    /**
+   * Performs the specified operation
+   * @param {any} scoreData.categoryScores && scoreData.previousCategoryScores
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} scoreData.categoryScores && scoreData.previousCategoryScores
+   * @returns {any} The operation result
+   */
+
 
     if (scoreData.categoryScores && scoreData.previousCategoryScores) {
       Object.keys(scoreData.categoryScores).forEach(category => {
@@ -161,7 +221,17 @@ export class ContinuousLoopController extends EventEmitter {
   async processCode(input, options = {}) {
     this.emit('loop:start', { input: typeof input === 'string' ? input.length : input });
 
-    // Update real-time status
+    // Update real-time status    /**
+   * Performs the specified operation
+   * @param {boolean} this.statusManager
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.statusManager
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.statusManager) {
       this.statusManager.setOperation('enhancement', null, 'Starting continuous improvement cycle');
     }
@@ -195,13 +265,33 @@ export class ContinuousLoopController extends EventEmitter {
           // Track iteration in history
           this.iterationHistory.push(iterationResult);
 
-          // Update best result if improved
+          // Update best result if improved          /**
+   * Performs the specified operation
+   * @param {any} iterationResult.score > bestScore
+   * @returns {any} The operation result
+   */
+          /**
+   * Performs the specified operation
+   * @param {any} iterationResult.score > bestScore
+   * @returns {any} The operation result
+   */
+
           if (iterationResult.score > bestScore) {
             bestCode = iterationResult.code;
             bestScore = iterationResult.score;
             this.convergenceCount = 0; // Reset convergence counter
 
-            // Update real-time score
+            // Update real-time score            /**
+   * Performs the specified operation
+   * @param {boolean} this.statusManager
+   * @returns {boolean} True if successful, false otherwise
+   */
+            /**
+   * Performs the specified operation
+   * @param {boolean} this.statusManager
+   * @returns {boolean} True if successful, false otherwise
+   */
+
             if (this.statusManager) {
               this.statusManager.updateScore(bestScore);
             }
@@ -248,11 +338,31 @@ export class ContinuousLoopController extends EventEmitter {
     const iterationStart = Date.now();
 
     // MONITORING MODE: Skip enhancement if in monitoring-only mode
-    let enhanced = code;
-    
+    let enhanced = code;    /**
+   * Performs the specified operation
+   * @param {Object} !this.config.monitoringOnly && this.config.executeEnhancements
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} !this.config.monitoringOnly && this.config.executeEnhancements
+   * @returns {boolean} True if successful, false otherwise
+   */
+
+
     if (!this.config.monitoringOnly && this.config.executeEnhancements) {
       // Step 1: Enhancement - improve code quality (DISABLED BY DEFAULT)
-      this.emit('step:start', { step: 'enhance', iteration: this.currentIteration });
+      this.emit('step:start', { step: 'enhance', iteration: this.currentIteration });      /**
+   * Performs the specified operation
+   * @param {boolean} this.statusManager
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} this.statusManager
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.statusManager) {
         this.statusManager.updateStatus({
           phase: 'enhancing',
@@ -264,7 +374,17 @@ export class ContinuousLoopController extends EventEmitter {
       enhanced = await this.agents.enhancement.enhance(code);
     } else {
       // MONITORING ONLY: Analyze without modifying
-      this.emit('step:start', { step: 'analyze', iteration: this.currentIteration });
+      this.emit('step:start', { step: 'analyze', iteration: this.currentIteration });      /**
+   * Performs the specified operation
+   * @param {boolean} this.statusManager
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} this.statusManager
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.statusManager) {
         this.statusManager.updateStatus({
           phase: 'analyzing',
@@ -277,7 +397,17 @@ export class ContinuousLoopController extends EventEmitter {
     this.emit('step:complete', { step: 'enhance', duration: Date.now() - iterationStart });
 
     // Step 2: Review - validate and score improvements
-    this.emit('step:start', { step: 'review', iteration: this.currentIteration });
+    this.emit('step:start', { step: 'review', iteration: this.currentIteration });    /**
+   * Performs the specified operation
+   * @param {boolean} this.statusManager
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.statusManager
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.statusManager) {
       this.statusManager.updateStatus({
         phase: 'analyzing',
@@ -290,7 +420,17 @@ export class ContinuousLoopController extends EventEmitter {
     this.emit('step:complete', { step: 'review', score: review.score });
 
     // Step 3: Analysis - deep metrics and insights
-    this.emit('step:start', { step: 'analysis', iteration: this.currentIteration });
+    this.emit('step:start', { step: 'analysis', iteration: this.currentIteration });    /**
+   * Performs the specified operation
+   * @param {boolean} this.statusManager
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.statusManager
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.statusManager) {
       this.statusManager.updateStatus({
         phase: 'analyzing',
@@ -303,9 +443,29 @@ export class ContinuousLoopController extends EventEmitter {
     this.emit('step:complete', { step: 'analysis', insights: analysis.insights?.length || 0 });
 
     // Step 3.5: Visual Testing - UI/UX validation (optional)
-    let visualResults = null;
+    let visualResults = null;    /**
+   * Performs the specified operation
+   * @param {boolean} this.agents.visualTesting
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.agents.visualTesting
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.agents.visualTesting) {
-      this.emit('step:start', { step: 'visual-testing', iteration: this.currentIteration });
+      this.emit('step:start', { step: 'visual-testing', iteration: this.currentIteration });      /**
+   * Performs the specified operation
+   * @param {boolean} this.statusManager
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} this.statusManager
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.statusManager) {
         this.statusManager.updateStatus({
           phase: 'testing',
@@ -322,20 +482,60 @@ export class ContinuousLoopController extends EventEmitter {
           accessibility: visualResults.summary?.accessibilityViolations || 0
         });
       } catch (error) {
-        this.emit('step:error', { step: 'visual-testing', error: error.message });
+        this.emit('step:error', { step: 'visual-testing', error: error.message });        /**
+   * Performs the specified operation
+   * @param {boolean} this.statusManager
+   * @returns {boolean} True if successful, false otherwise
+   */
+        /**
+   * Performs the specified operation
+   * @param {boolean} this.statusManager
+   * @returns {boolean} True if successful, false otherwise
+   */
+
         if (this.statusManager) {
           this.statusManager.addWarning(`Visual testing failed: ${error.message}`);
-        }
+        }        /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+        /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
         if (this.config.verbose) {
-          console.warn('⚠️  Visual testing failed:', error.message);
+          // WARN: ⚠️  Visual testing failed:, error.message
         }
       }
     }
 
     // Step 4: Improvement - targeted fixes based on feedback
-    let improved = enhanced;
+    let improved = enhanced;    /**
+   * Performs the specified operation
+   * @param {Object} review.score < this.config.targetScore && review.issues?.length > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} review.score < this.config.targetScore && review.issues?.length > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (review.score < this.config.targetScore && review.issues?.length > 0) {
-      this.emit('step:start', { step: 'improve', iteration: this.currentIteration });
+      this.emit('step:start', { step: 'improve', iteration: this.currentIteration });      /**
+   * Performs the specified operation
+   * @param {boolean} this.statusManager
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} this.statusManager
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.statusManager) {
         this.statusManager.updateStatus({
           phase: 'enhancing',
@@ -348,7 +548,17 @@ export class ContinuousLoopController extends EventEmitter {
       this.emit('step:complete', { step: 'improve', fixes: improved.fixes?.length || 0 });
     }
 
-    // Mark iteration complete
+    // Mark iteration complete    /**
+   * Performs the specified operation
+   * @param {boolean} this.statusManager
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.statusManager
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.statusManager) {
       this.statusManager.updateStatus({
         phase: 'complete',
@@ -377,17 +587,47 @@ export class ContinuousLoopController extends EventEmitter {
    * Determines if the loop should continue based on score and convergence
    */
   shouldContinue(currentScore) {
-    // Stop if target reached
+    // Stop if target reached  /**
+   * Performs the specified operation
+   * @param {any} currentScore > - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} currentScore > - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (currentScore >= this.config.targetScore) {
       return false;
     }
 
-    // Stop if max iterations reached
+    // Stop if max iterations reached    /**
+   * Performs the specified operation
+   * @param {boolean} this.currentIteration > - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.currentIteration > - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.currentIteration >= this.config.maxIterations) {
       return false;
     }
 
-    // Stop if no improvement for several iterations (convergence)
+    // Stop if no improvement for several iterations (convergence)    /**
+   * Performs the specified operation
+   * @param {number} this.convergenceCount > - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {number} this.convergenceCount > - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.convergenceCount >= this.config.convergenceThreshold) {
       return false;
     }
@@ -398,7 +638,17 @@ export class ContinuousLoopController extends EventEmitter {
   /**
    * Prepares input code for processing
    */
-  async prepareInput(input) {
+  async prepareInput(input) {  /**
+   * Performs the specified operation
+   * @param {any} typeof input - Optional parameter
+   * @returns {string} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} typeof input - Optional parameter
+   * @returns {string} The operation result
+   */
+
     if (typeof input === 'string') {
       // Direct code string
       return input;
@@ -453,12 +703,42 @@ export class ContinuousLoopController extends EventEmitter {
    * Extract patterns learned during processing for future use
    */
   async extractLearnedPatterns() {
-    const patterns = [];
+    const patterns = [];    /**
+   * Performs the specified operation
+   * @param {boolean} const iteration of this.iterationHistory
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} const iteration of this.iterationHistory
+   * @returns {boolean} True if successful, false otherwise
+   */
 
-    for (const iteration of this.iterationHistory) {
+
+    for (const iteration of this.iterationHistory) {      /**
+   * Performs the specified operation
+   * @param {any} iteration.enhanced?.patterns
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} iteration.enhanced?.patterns
+   * @returns {any} The operation result
+   */
+
       if (iteration.enhanced?.patterns) {
         patterns.push(...iteration.enhanced.patterns);
-      }
+      }      /**
+   * Performs the specified operation
+   * @param {any} iteration.improved?.patterns
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} iteration.improved?.patterns
+   * @returns {any} The operation result
+   */
+
       if (iteration.improved?.patterns) {
         patterns.push(...iteration.improved.patterns);
       }
@@ -466,7 +746,17 @@ export class ContinuousLoopController extends EventEmitter {
 
     // Deduplicate and rank by effectiveness
     const uniquePatterns = patterns.reduce((acc, pattern) => {
-      const key = pattern.type + pattern.description;
+      const key = pattern.type + pattern.description;      /**
+   * Performs the specified operation
+   * @param {any} !acc[key] || acc[key].effectiveness < pattern.effectiveness
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} !acc[key] || acc[key].effectiveness < pattern.effectiveness
+   * @returns {any} The operation result
+   */
+
       if (!acc[key] || acc[key].effectiveness < pattern.effectiveness) {
         acc[key] = pattern;
       }
@@ -480,7 +770,17 @@ export class ContinuousLoopController extends EventEmitter {
    * Generate recommendations for further improvement
    */
   generateRecommendations() {
-    const recommendations = [];
+    const recommendations = [];    /**
+   * Performs the specified operation
+   * @param {boolean} this.iterationHistory.length - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.iterationHistory.length - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (this.iterationHistory.length === 0) {
       return recommendations;
@@ -488,7 +788,17 @@ export class ContinuousLoopController extends EventEmitter {
 
     const finalIteration = this.iterationHistory[this.iterationHistory.length - 1];
 
-    // Recommend areas still needing improvement
+    // Recommend areas still needing improvement    /**
+   * Performs the specified operation
+   * @param {boolean} finalIteration.review?.issues
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} finalIteration.review?.issues
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (finalIteration.review?.issues) {
       finalIteration.review.issues.forEach(issue => {
         recommendations.push({
@@ -501,7 +811,17 @@ export class ContinuousLoopController extends EventEmitter {
       });
     }
 
-    // Recommend process improvements
+    // Recommend process improvements    /**
+   * Performs the specified operation
+   * @param {boolean} this.currentIteration > - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.currentIteration > - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.currentIteration >= this.config.maxIterations) {
       recommendations.push({
         type: 'process',
@@ -517,38 +837,48 @@ export class ContinuousLoopController extends EventEmitter {
   /**
    * Setup event handlers for logging and monitoring
    */
-  setupEventHandlers() {
+  setupEventHandlers() {  /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.config.verbose) {
       this.on('loop:start', (data) => {
-        console.log('🔄 Starting continuous improvement loop...');
+        // LOG: 🔄 Starting continuous improvement loop...
       });
 
       this.on('iteration:start', (data) => {
-        console.log(`\n📍 Iteration ${data.iteration} (Score: ${data.currentScore}/${data.targetScore})`);
+        // LOG: `\n📍 Iteration ${data.iteration} (Score: ${data.currentScore}/${data.targetScore})`
       });
 
       this.on('step:start', (data) => {
-        console.log(`  ▶️  ${data.step}...`);
+        // LOG: `  ▶️  ${data.step}...`
       });
 
       this.on('step:complete', (data) => {
         const extra = data.score ? ` (Score: ${data.score})` :
           data.insights ? ` (${data.insights} insights)` :
             data.fixes ? ` (${data.fixes} fixes)` : '';
-        console.log(`  ✅ ${data.step} complete${extra}`);
+        // LOG: `  ✅ ${data.step} complete${extra}`
       });
 
       this.on('improvement:found', (data) => {
-        console.log(`🎯 Score improved: ${data.previousScore} → ${data.newScore} (+${data.improvement})`);
+        // LOG: `🎯 Score improved: ${data.previousScore} → ${data.newScore} (+${data.improvement})`
       });
 
       this.on('iteration:complete', (data) => {
-        console.log(`✨ Iteration ${data.iteration} complete - Score: ${data.score} (${data.duration}ms)`);
+        // LOG: `✨ Iteration ${data.iteration} complete - Score: ${data.score} (${data.duration}ms)`
       });
 
       this.on('loop:complete', (data) => {
-        console.log(`\n🏁 Loop complete! Final score: ${data.summary.finalScore}/${this.config.targetScore}`);
-        console.log(`📊 ${data.summary.iterations} iterations, ${data.summary.totalDuration}ms total`);
+        // LOG: `\n🏁 Loop complete! Final score: ${data.summary.finalScore}/${this.config.targetScore}`
+        // LOG: `📊 ${data.summary.iterations} iterations, ${data.summary.totalDuration}ms total`
       });
     }
   }

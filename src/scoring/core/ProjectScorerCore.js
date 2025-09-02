@@ -1,12 +1,43 @@
 /**
  * ProjectScorerCore - Core functionality for project scoring
- * 
+ *
  * This class handles the core scoring logic and orchestrates analyzers
  */
 
+import path from 'path';
 import { ProjectTypeDetector } from './ProjectTypeDetector.js';
 import { AnalyzerOrchestrator } from './AnalyzerOrchestrator.js';
 import { ScoreCalculator } from './ScoreCalculator.js';
+
+/**
+
+
+ * ProjectScorerCore class implementation
+
+
+ *
+
+
+ * Provides functionality for projectscorercore operations
+
+
+ */
+
+
+/**
+
+
+ * ProjectScorerCore class implementation
+
+
+ *
+
+
+ * Provides functionality for projectscorercore operations
+
+
+ */
+
 
 export class ProjectScorerCore {
   constructor(config = {}) {

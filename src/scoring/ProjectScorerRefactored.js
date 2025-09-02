@@ -82,7 +82,17 @@ export class ProjectScorer {
       enableBundleAnalysis: this.config.enableBundleAnalysis !== false
     });
 
-    // Detect project type if not specified
+    // Detect project type if not specified    /**
+   * Performs the specified operation
+   * @param {Object} !config.projectType || config.projectType - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} !config.projectType || config.projectType - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (!config.projectType || config.projectType === 'javascript') {
       this.config.projectType = this.typeDetector.detectProjectType();
     }
@@ -91,7 +101,17 @@ export class ProjectScorer {
     this.analyzers = this.initializeAnalyzers();
     this.reportGenerator = new ScoringReport(this.config);
     this.recommendationEngine = new RecommendationEngine(this.config);
-  }
+  }  /**
+   * Initialize the component
+   * @param {Object} config
+   * @returns {any} The operation result
+   */
+  /**
+   * Initialize the component
+   * @param {Object} config
+   * @returns {any} The operation result
+   */
+
 
   initializeConfig(config) {
     return {
@@ -102,7 +122,15 @@ export class ProjectScorer {
       categories: config.categories || ['all'],
       ...config
     };
-  }
+  }  /**
+   * Initialize the component
+   * @returns {any} The operation result
+   */
+  /**
+   * Initialize the component
+   * @returns {any} The operation result
+   */
+
 
   initializeAnalyzers() {
     const baseConfig = {
@@ -150,16 +178,25 @@ export class ProjectScorer {
     this.performanceMonitor.recordMemoryUsage('start');
 
     try {
-      console.log(`🎯 Analyzing ${this.config.projectName} project quality...`);
-      console.log('══════════════════════════════════════════════════════════');
-
+      // LOG: `🎯 Analyzing ${this.config.projectName} project quality...`
+      // LOG: ══════════════════════════════════════════════════════════
       // Check tool availability with timing
       const toolTiming = this.performanceMonitor.startTiming('tool_availability_check');
       const toolStatus = await this.toolChecker.checkToolAvailability();
       this.performanceMonitor.endTiming('tool_availability_check');
 
       // Determine categories to analyze
-      const categoriesToAnalyze = this.determineCategoriesToAnalyze(categories);
+      const categoriesToAnalyze = this.determineCategoriesToAnalyze(categories);      /**
+   * Performs the specified operation
+   * @param {any} categoriesToAnalyze.length - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} categoriesToAnalyze.length - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
       if (categoriesToAnalyze.length === 0) {
         throw new Error('No valid categories specified for analysis');
@@ -184,7 +221,17 @@ export class ProjectScorer {
       this.resultsProcessor.processAnalyzerResults(analyzerResults, results);
       this.performanceMonitor.endTiming('results_processing');
 
-      // Bundle analysis (if enabled)
+      // Bundle analysis (if enabled)      /**
+   * Performs the specified operation
+   * @param {Object} this.config.enableBundleAnalysis || options.bundleAnalysis
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.enableBundleAnalysis || options.bundleAnalysis
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.config.enableBundleAnalysis || options.bundleAnalysis) {
         const bundleTiming = this.performanceMonitor.startTiming('bundle_analysis');
         const bundleInfo = await this.performanceMonitor.analyzeBundleSize();
@@ -205,12 +252,32 @@ export class ProjectScorer {
       results.performance = performanceSummary;
 
       // Validate results
-      const validation = this.resultsProcessor.validateResults(results);
+      const validation = this.resultsProcessor.validateResults(results);      /**
+   * Performs the specified operation
+   * @param {number} !validation.isValid
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {number} !validation.isValid
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (!validation.isValid) {
-        console.warn('Warning: Results validation failed:', validation.errors);
+        // WARN: Warning: Results validation failed:, validation.errors
       }
 
-      // Log performance summary if verbose
+      // Log performance summary if verbose      /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.config.verbose) {
         this.logPerformanceSummary(performanceSummary);
       }
@@ -218,13 +285,33 @@ export class ProjectScorer {
       return results;
 
     } catch (error) {
-      console.error(`❌ Scoring failed: ${error.message}`);
+      // ERROR: `❌ Scoring failed: ${error.message}`
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
       if (this.config.verbose) {
-        console.error(error.stack);
+        // ERROR: error.stack
       }
       throw error;
     }
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} categories
+   * @returns {any} The operation result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} categories
+   * @returns {any} The operation result
+   */
+
 
   determineCategoriesToAnalyze(categories) {
     if (categories.includes('all')) {
@@ -232,29 +319,70 @@ export class ProjectScorer {
     }
 
     const validCategories = categories.filter(cat => this.analyzers[cat]);
-    const invalid = categories.filter(cat => !this.analyzers[cat] && cat !== 'all');
+    const invalid = categories.filter(cat => !this.analyzers[cat] && cat !== 'all');    /**
+   * Performs the specified operation
+   * @param {number} invalid.length > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {number} invalid.length > 0
+   * @returns {any} The operation result
+   */
+
 
     if (invalid.length > 0) {
-      console.warn(`Warning: Invalid categories ignored: ${invalid.join(', ')}`);
+      // WARN: `Warning: Invalid categories ignored: ${invalid.join(, )}`
     }
 
     return validCategories;
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} categories
+   * @param {any} detailed
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} categories
+   * @param {any} detailed
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async runAnalyzers(categories, detailed) {
-    const results = {};
+    const results = {};    /**
+   * Performs the specified operation
+   * @param {any} const category of categories
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const category of categories
+   * @returns {any} The operation result
+   */
+
 
     for (const category of categories) {
-      const analyzer = this.analyzers[category];
+      const analyzer = this.analyzers[category];      /**
+   * Performs the specified operation
+   * @param {any} !analyzer
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} !analyzer
+   * @returns {any} The operation result
+   */
+
 
       if (!analyzer) {
-        console.warn(`Warning: No analyzer found for category: ${category}`);
+        // WARN: `Warning: No analyzer found for category: ${category}`
         continue;
       }
 
       try {
-        console.log(`📊 Analyzing ${analyzer.categoryName || category}...`);
-
+        // LOG: `📊 Analyzing ${analyzer.categoryName || category}...`
         // Performance monitoring for individual analyzer
         const analyzerTiming = this.performanceMonitor.startTiming(`analyzer_${category}`);
         const result = await analyzer.analyze();
@@ -267,15 +395,24 @@ export class ProjectScorer {
         results[category] = {
           ...result,
           timestamp: new Date().toISOString()
-        };
+        };        /**
+   * Performs the specified operation
+   * @param {any} detailed
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} detailed
+   * @returns {any} The operation result
+   */
+
 
         if (detailed) {
-          console.log(`✓ ${analyzer.categoryName || category} completed in ${analysisTime}ms`);
+          // LOG: `✓ ${analyzer.categoryName || category} completed in ${analysisTime}ms`
         }
 
       } catch (error) {
-        console.error(`❌ Analysis failed for ${category}: ${error.message}`);
-
+        // ERROR: `❌ Analysis failed for ${category}: ${error.message}`
         results[category] = {
           categoryName: analyzer.categoryName || category,
           score: 0,
@@ -288,7 +425,15 @@ export class ProjectScorer {
     }
 
     return results;
-  }
+  }  /**
+   * Retrieves data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Retrieves data
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async getProjectVersion() {
     try {
@@ -438,15 +583,95 @@ export class ProjectScorer {
    */
   identifyTestingTools(dependencies = {}, devDependencies = {}) {
     const allDeps = { ...dependencies, ...devDependencies };
-    const tools = [];
+    const tools = [];    /**
+   * Performs the specified operation
+   * @param {any} allDeps.jest
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} allDeps.jest
+   * @returns {any} The operation result
+   */
 
-    if (allDeps.jest) {tools.push('Jest');}
-    if (allDeps.vitest) {tools.push('Vitest');}
-    if (allDeps.mocha) {tools.push('Mocha');}
-    if (allDeps.jasmine) {tools.push('Jasmine');}
-    if (allDeps.cypress) {tools.push('Cypress');}
-    if (allDeps.playwright) {tools.push('Playwright');}
-    if (allDeps['@testing-library/react']) {tools.push('React Testing Library');}
+
+    if (allDeps.jest) {tools.push('Jest');}    /**
+   * Performs the specified operation
+   * @param {any} allDeps.vitest
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} allDeps.vitest
+   * @returns {any} The operation result
+   */
+
+    if (allDeps.vitest) {tools.push('Vitest');}    /**
+   * Performs the specified operation
+   * @param {any} allDeps.mocha
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} allDeps.mocha
+   * @returns {any} The operation result
+   */
+
+    if (allDeps.mocha) {tools.push('Mocha');}    /**
+   * Performs the specified operation
+   * @param {any} allDeps.jasmine
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} allDeps.jasmine
+   * @returns {any} The operation result
+   */
+
+    if (allDeps.jasmine) {tools.push('Jasmine');}    /**
+   * Performs the specified operation
+   * @param {any} allDeps.cypress
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} allDeps.cypress
+   * @returns {any} The operation result
+   */
+
+    if (allDeps.cypress) {tools.push('Cypress');}    /**
+   * Performs the specified operation
+   * @param {any} allDeps.playwright
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} allDeps.playwright
+   * @returns {any} The operation result
+   */
+
+    if (allDeps.playwright) {tools.push('Playwright');}    /**
+   * Performs the specified operation
+   * @param {any} allDeps['@testing-library/react']
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} allDeps['@testing-library/react']
+   * @returns {any} The operation result
+   */
+
+    if (allDeps['@testing-library/react']) {tools.push('React Testing Library');}    /**
+   * Performs the specified operation
+   * @param {any} allDeps['@testing-library/vue']
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} allDeps['@testing-library/vue']
+   * @returns {any} The operation result
+   */
+
     if (allDeps['@testing-library/vue']) {tools.push('Vue Testing Library');}
 
     return tools;
@@ -468,15 +693,95 @@ export class ProjectScorer {
    */
   identifyBuildTools(dependencies = {}, devDependencies = {}) {
     const allDeps = { ...dependencies, ...devDependencies };
-    const tools = [];
+    const tools = [];    /**
+   * Performs the specified operation
+   * @param {any} allDeps.webpack
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} allDeps.webpack
+   * @returns {any} The operation result
+   */
 
-    if (allDeps.webpack) {tools.push('Webpack');}
-    if (allDeps.vite) {tools.push('Vite');}
-    if (allDeps.rollup) {tools.push('Rollup');}
-    if (allDeps.parcel) {tools.push('Parcel');}
-    if (allDeps.typescript) {tools.push('TypeScript');}
-    if (allDeps.babel || allDeps['@babel/core']) {tools.push('Babel');}
-    if (allDeps.esbuild) {tools.push('ESBuild');}
+
+    if (allDeps.webpack) {tools.push('Webpack');}    /**
+   * Performs the specified operation
+   * @param {any} allDeps.vite
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} allDeps.vite
+   * @returns {any} The operation result
+   */
+
+    if (allDeps.vite) {tools.push('Vite');}    /**
+   * Performs the specified operation
+   * @param {any} allDeps.rollup
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} allDeps.rollup
+   * @returns {any} The operation result
+   */
+
+    if (allDeps.rollup) {tools.push('Rollup');}    /**
+   * Performs the specified operation
+   * @param {any} allDeps.parcel
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} allDeps.parcel
+   * @returns {any} The operation result
+   */
+
+    if (allDeps.parcel) {tools.push('Parcel');}    /**
+   * Performs the specified operation
+   * @param {any} allDeps.typescript
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} allDeps.typescript
+   * @returns {any} The operation result
+   */
+
+    if (allDeps.typescript) {tools.push('TypeScript');}    /**
+   * Performs the specified operation
+   * @param {any} allDeps.babel || allDeps['@babel/core']
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} allDeps.babel || allDeps['@babel/core']
+   * @returns {any} The operation result
+   */
+
+    if (allDeps.babel || allDeps['@babel/core']) {tools.push('Babel');}    /**
+   * Performs the specified operation
+   * @param {any} allDeps.esbuild
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} allDeps.esbuild
+   * @returns {any} The operation result
+   */
+
+    if (allDeps.esbuild) {tools.push('ESBuild');}    /**
+   * Performs the specified operation
+   * @param {any} allDeps.swc
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} allDeps.swc
+   * @returns {any} The operation result
+   */
+
     if (allDeps.swc) {tools.push('SWC');}
 
     return tools;
@@ -486,30 +791,59 @@ export class ProjectScorer {
    * Log performance summary to console
    */
   logPerformanceSummary(summary) {
-    console.log('\n📊 Performance Summary:');
-    console.log(`⏱️  Total duration: ${summary.totalDuration}ms`);
-    console.log(`💾 Peak memory usage: ${summary.memory.peak}MB`);
-    console.log(`🔧 Operations completed: ${summary.operationCount}`);
-
+    // LOG: \n📊 Performance Summary:
+    // LOG: `⏱️  Total duration: ${summary.totalDuration}ms`
+    // LOG: `💾 Peak memory usage: ${summary.memory.peak}MB`
+    // LOG: `🔧 Operations completed: ${summary.operationCount}`
+  /**
+   * Performs the specified operation
+   * @param {any} summary.slowestOperations.length > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} summary.slowestOperations.length > 0
+   * @returns {any} The operation result
+   */
     if (summary.slowestOperations.length > 0) {
-      console.log('\n⚡ Slowest operations:');
+      // LOG: \n⚡ Slowest operations:
       summary.slowestOperations.forEach((op, i) => {
-        console.log(`   ${i + 1}. ${op.name}: ${op.duration}ms (${op.percentage}%)`);
+        // LOG: `   ${i + 1}. ${op.name}: ${op.duration}ms (${op.percentage}%)`
       });
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {any} summary.bundle
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} summary.bundle
+   * @returns {any} The operation result
+   */
+
 
     if (summary.bundle) {
-      console.log('\n📦 Bundle analysis:');
-      console.log(`   Source files: ${summary.bundle.sourceSize}`);
-      console.log(`   Dependencies: ${summary.bundle.nodeModulesSize}`);
-      console.log(`   Total packages: ${summary.bundle.totalPackages}`);
+      // LOG: \n📦 Bundle analysis:
+      // LOG: `   Source files: ${summary.bundle.sourceSize}`
+      // LOG: `   Dependencies: ${summary.bundle.nodeModulesSize}`
+      // LOG: `   Total packages: ${summary.bundle.totalPackages}`
     }
   }
 
   /**
    * Cleanup performance monitor resources
    */
-  cleanup() {
+  cleanup() {  /**
+   * Performs the specified operation
+   * @param {boolean} this.performanceMonitor
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.performanceMonitor
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.performanceMonitor) {
       this.performanceMonitor.cleanup();
     }

@@ -7,6 +7,36 @@
 import { EventEmitter } from 'events';
 import { EventSchema, PRIORITY_LEVELS } from './EventTypes.js';
 
+/**
+
+
+ * MessageQueue class implementation
+
+
+ *
+
+
+ * Provides functionality for messagequeue operations
+
+
+ */
+
+
+/**
+
+
+ * MessageQueue class implementation
+
+
+ *
+
+
+ * Provides functionality for messagequeue operations
+
+
+ */
+
+
 export class MessageQueue extends EventEmitter {
   constructor(config = {}) {
     super();
@@ -49,7 +79,17 @@ export class MessageQueue extends EventEmitter {
       // Validate message
       EventSchema.validate(message);
 
-      // Check queue size limit
+      // Check queue size limit      /**
+   * Performs the specified operation
+   * @param {boolean} this.queue.length > - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} this.queue.length > - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.queue.length >= this.config.maxSize) {
         this.dropOldestLowPriorityMessage();
       }
@@ -86,7 +126,17 @@ export class MessageQueue extends EventEmitter {
       // Update stats
       this.stats.totalQueued++;
 
-      // Update deduplication cache
+      // Update deduplication cache      /**
+   * Performs the specified operation
+   * @param {Object} this.config.deduplicationEnabled
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.deduplicationEnabled
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.config.deduplicationEnabled) {
         this.updateDeduplicationCache(message);
       }
@@ -106,7 +156,17 @@ export class MessageQueue extends EventEmitter {
   /**
    * Process messages from queue
    */
-  async processQueue() {
+  async processQueue() {  /**
+   * Performs the specified operation
+   * @param {boolean} this.processing || this.queue.length - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.processing || this.queue.length - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.processing || this.queue.length === 0) {
       return;
     }
@@ -115,7 +175,17 @@ export class MessageQueue extends EventEmitter {
     const startTime = Date.now();
 
     try {
-      const batch = this.getBatchForProcessing();
+      const batch = this.getBatchForProcessing();      /**
+   * Performs the specified operation
+   * @param {any} batch.length - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} batch.length - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
       if (batch.length === 0) {
         this.processing = false;
@@ -126,10 +196,30 @@ export class MessageQueue extends EventEmitter {
       const promises = batch.map(entry => this.processMessage(entry));
       const results = await Promise.allSettled(promises);
 
-      // Handle results
+      // Handle results      /**
+   * Performs the specified operation
+   * @param {any} let i - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} let i - Optional parameter
+   * @returns {any} The operation result
+   */
+
       for (let i = 0; i < results.length; i++) {
         const result = results[i];
-        const entry = batch[i];
+        const entry = batch[i];        /**
+   * Performs the specified operation
+   * @param {any} result.status - Optional parameter
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} result.status - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
         if (result.status === 'fulfilled' && result.value) {
           // Message processed successfully
@@ -151,7 +241,17 @@ export class MessageQueue extends EventEmitter {
     } finally {
       this.processing = false;
 
-      // Continue processing if there are more messages
+      // Continue processing if there are more messages      /**
+   * Performs the specified operation
+   * @param {boolean} this.queue.length > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} this.queue.length > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.queue.length > 0) {
         setTimeout(() => this.processQueue(), this.config.processInterval);
       }
@@ -190,9 +290,29 @@ export class MessageQueue extends EventEmitter {
     const weight = this.config.priorityWeights[entry.priority] || 0;
 
     // Find insertion point
-    let insertIndex = 0;
+    let insertIndex = 0;    /**
+   * Performs the specified operation
+   * @param {any} let i - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} let i - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     for (let i = 0; i < this.queue.length; i++) {
-      const existingWeight = this.config.priorityWeights[this.queue[i].priority] || 0;
+      const existingWeight = this.config.priorityWeights[this.queue[i].priority] || 0;      /**
+   * Performs the specified operation
+   * @param {boolean} weight > existingWeight
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} weight > existingWeight
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (weight > existingWeight) {
         break;
       }
@@ -207,13 +327,33 @@ export class MessageQueue extends EventEmitter {
    */
   isDuplicate(message) {
     const hash = this.getMessageHash(message);
-    const cached = this.deduplicationCache.get(hash);
+    const cached = this.deduplicationCache.get(hash);    /**
+   * Performs the specified operation
+   * @param {any} !cached
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !cached
+   * @returns {any} The operation result
+   */
+
 
     if (!cached) {
       return false;
     }
 
-    const age = Date.now() - cached;
+    const age = Date.now() - cached;    /**
+   * Performs the specified operation
+   * @param {Object} age > this.config.deduplicationWindow
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} age > this.config.deduplicationWindow
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (age > this.config.deduplicationWindow) {
       this.deduplicationCache.delete(hash);
       return false;
@@ -262,7 +402,17 @@ export class MessageQueue extends EventEmitter {
     const timestamps = this.throttleMap.get(clientId);
 
     // Remove old timestamps
-    const recentTimestamps = timestamps.filter(ts => ts > windowStart);
+    const recentTimestamps = timestamps.filter(ts => ts > windowStart);    /**
+   * Performs the specified operation
+   * @param {any} recentTimestamps.length > - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} recentTimestamps.length > - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (recentTimestamps.length >= this.config.maxMessagesPerWindow) {
       return true;
@@ -279,7 +429,17 @@ export class MessageQueue extends EventEmitter {
    * Handle processing failure
    */
   handleProcessingFailure(entry, error) {
-    entry.retries++;
+    entry.retries++;    /**
+   * Performs the specified operation
+   * @param {any} entry.retries > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} entry.retries > - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
     if (entry.retries >= entry.maxRetries) {
       // Max retries reached, drop message
@@ -298,9 +458,29 @@ export class MessageQueue extends EventEmitter {
    * Drop oldest low priority message to make space
    */
   dropOldestLowPriorityMessage() {
-    // Find oldest low priority message
+    // Find oldest low priority message  /**
+   * Performs the specified operation
+   * @param {any} let i - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} let i - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     for (let i = this.queue.length - 1; i >= 0; i--) {
-      const entry = this.queue[i];
+      const entry = this.queue[i];      /**
+   * Performs the specified operation
+   * @param {any} entry.priority - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} entry.priority - Optional parameter
+   * @returns {any} The operation result
+   */
+
       if (entry.priority === PRIORITY_LEVELS.LOW) {
         this.queue.splice(i, 1);
         this.stats.totalDropped++;
@@ -309,7 +489,17 @@ export class MessageQueue extends EventEmitter {
       }
     }
 
-    // If no low priority messages, drop oldest message
+    // If no low priority messages, drop oldest message    /**
+   * Performs the specified operation
+   * @param {boolean} this.queue.length > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.queue.length > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.queue.length > 0) {
       const entry = this.queue.pop();
       this.stats.totalDropped++;
@@ -321,7 +511,17 @@ export class MessageQueue extends EventEmitter {
    * Remove message from queue by ID
    */
   removeFromQueue(messageId) {
-    const index = this.queue.findIndex(entry => entry.id === messageId);
+    const index = this.queue.findIndex(entry => entry.id === messageId);    /**
+   * Performs the specified operation
+   * @param {number} index ! - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {number} index ! - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (index !== -1) {
       this.queue.splice(index, 1);
     }
@@ -330,7 +530,17 @@ export class MessageQueue extends EventEmitter {
   /**
    * Start processing timer
    */
-  startProcessing() {
+  startProcessing() {  /**
+   * Performs the specified operation
+   * @param {boolean} this.processTimer
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.processTimer
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.processTimer) {
       return;
     }
@@ -343,7 +553,17 @@ export class MessageQueue extends EventEmitter {
   /**
    * Stop processing timer
    */
-  stopProcessing() {
+  stopProcessing() {  /**
+   * Performs the specified operation
+   * @param {boolean} this.processTimer
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.processTimer
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.processTimer) {
       clearInterval(this.processTimer);
       this.processTimer = null;
@@ -356,7 +576,17 @@ export class MessageQueue extends EventEmitter {
   cleanupDeduplicationCache() {
     const cutoff = Date.now() - this.config.deduplicationWindow;
 
-    for (const [hash, timestamp] of this.deduplicationCache.entries()) {
+    for (const [hash, timestamp] of this.deduplicationCache.entries()) {      /**
+   * Performs the specified operation
+   * @param {any} timestamp < cutoff
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} timestamp < cutoff
+   * @returns {any} The operation result
+   */
+
       if (timestamp < cutoff) {
         this.deduplicationCache.delete(hash);
       }
@@ -437,7 +667,17 @@ export class MessageQueue extends EventEmitter {
   async shutdown() {
     this.stopProcessing();
 
-    // Process remaining messages
+    // Process remaining messages    /**
+   * Performs the specified operation
+   * @param {boolean} this.queue.length > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.queue.length > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.queue.length > 0) {
       await this.processQueue();
     }

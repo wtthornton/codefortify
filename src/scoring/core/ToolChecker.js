@@ -10,15 +10,63 @@ import chalk from 'chalk';
 
 const execAsync = promisify(exec);
 
+/**
+
+
+ * ToolChecker class implementation
+
+
+ *
+
+
+ * Provides functionality for toolchecker operations
+
+
+ */
+
+
+/**
+
+
+ * ToolChecker class implementation
+
+
+ *
+
+
+ * Provides functionality for toolchecker operations
+
+
+ */
+
+
 export class ToolChecker {
   constructor(verbose = false) {
     this.verbose = verbose;
     this.toolStatus = {};
-  }
+  }  /**
+   * Checks the condition
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Checks the condition
+   * @returns {Promise} Promise that resolves with the result
+   */
 
-  async checkToolAvailability() {
+
+  async checkToolAvailability() {  /**
+   * Performs the specified operation
+   * @param {boolean} this.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.verbose) {
-      console.log(chalk.gray('\n🔧 Checking external tool availability...'));
+      // LOG: chalk.gray(\n🔧 Checking external tool availability...)
     }
 
     const tools = [
@@ -33,19 +81,39 @@ export class ToolChecker {
         try {
           await execAsync(tool.command, { timeout: 5000 });
           this.toolStatus[tool.type] = this.toolStatus[tool.type] || [];
-          this.toolStatus[tool.type].push({ name: tool.name, available: true });
+          this.toolStatus[tool.type].push({ name: tool.name, available: true });          /**
+   * Performs the specified operation
+   * @param {boolean} this.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+          /**
+   * Performs the specified operation
+   * @param {boolean} this.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
           if (this.verbose) {
-            console.log(chalk.green(`  ✓ ${tool.name} available`));
+            // LOG: chalk.green(`  ✓ ${tool.name} available`)
           }
 
           return { tool: tool.name, available: true };
         } catch (error) {
           this.toolStatus[tool.type] = this.toolStatus[tool.type] || [];
-          this.toolStatus[tool.type].push({ name: tool.name, available: false });
+          this.toolStatus[tool.type].push({ name: tool.name, available: false });          /**
+   * Performs the specified operation
+   * @param {boolean} this.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+          /**
+   * Performs the specified operation
+   * @param {boolean} this.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
           if (this.verbose) {
-            console.log(chalk.yellow(`  ⚠ ${tool.name} not available`));
+            // LOG: chalk.yellow(`  ⚠ ${tool.name} not available`)
           }
 
           return { tool: tool.name, available: false };
@@ -53,18 +121,38 @@ export class ToolChecker {
       })
     );
 
-    const unavailable = results.filter(r => !r.available);
+    const unavailable = results.filter(r => !r.available);    /**
+   * Performs the specified operation
+   * @param {boolean} unavailable.length > 0 && this.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} unavailable.length > 0 && this.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (unavailable.length > 0 && this.verbose) {
-      console.log(chalk.yellow('\n📋 Tool Installation Recommendations:'));
+      // LOG: chalk.yellow(\n📋 Tool Installation Recommendations:)
       unavailable.forEach(tool => {
         const guidance = this.getInstallationGuidance(tool.tool);
-        console.log(chalk.gray(`  • ${tool.tool}: ${guidance}`));
+        // LOG: chalk.gray(`  • ${tool.tool}: ${guidance}`)
       });
     }
 
     return this.toolStatus;
-  }
+  }  /**
+   * Retrieves data
+   * @param {any} toolName
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @param {any} toolName
+   * @returns {string} The retrieved data
+   */
+
 
   getInstallationGuidance(toolName) {
     const guidance = {
@@ -75,21 +163,61 @@ export class ToolChecker {
     };
 
     return guidance[toolName] || 'Check official documentation for installation';
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} category
+   * @param {any} toolName
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} category
+   * @param {any} toolName
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   isToolAvailable(category, toolName) {
     return this.toolStatus[category]?.find(tool =>
       tool.name === toolName && tool.available
     ) || false;
-  }
+  }  /**
+   * Retrieves data
+   * @param {any} category
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @param {any} category
+   * @returns {string} The retrieved data
+   */
+
 
   getAvailableTools(category) {
     return this.toolStatus[category]?.filter(tool => tool.available) || [];
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} category
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} category
+   * @returns {any} The operation result
+   */
+
 
   hasAnyTools(category) {
     return this.getAvailableTools(category).length > 0;
-  }
+  }  /**
+   * Checks the condition
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Checks the condition
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async checkNpmAuditAvailability() {
     try {
@@ -98,7 +226,15 @@ export class ToolChecker {
     } catch {
       return false;
     }
-  }
+  }  /**
+   * Checks the condition
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Checks the condition
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async checkESLintAvailability() {
     try {
@@ -107,10 +243,28 @@ export class ToolChecker {
     } catch {
       return false;
     }
-  }
+  }  /**
+   * Retrieves data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Retrieves data
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async checkCoverageToolAvailability() {
-    const tools = ['c8', 'nyc', 'jest'];
+    const tools = ['c8', 'nyc', 'jest'];    /**
+   * Performs the specified operation
+   * @param {any} const tool of tools
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const tool of tools
+   * @returns {any} The operation result
+   */
+
 
     for (const tool of tools) {
       try {
@@ -122,7 +276,15 @@ export class ToolChecker {
     }
 
     return null;
-  }
+  }  /**
+   * Checks the condition
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Checks the condition
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async checkTypeScriptAvailability() {
     try {
@@ -131,7 +293,19 @@ export class ToolChecker {
     } catch {
       return false;
     }
-  }
+  }  /**
+   * Runs the specified task
+   * @param {any} command
+   * @param {any} timeout - Optional parameter
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Runs the specified task
+   * @param {any} command
+   * @param {any} timeout - Optional parameter
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async runToolCommand(command, timeout = 10000) {
     try {
@@ -153,19 +327,59 @@ export class ToolChecker {
         stderr: error.stderr?.trim() || ''
       };
     }
-  }
+  }  /**
+   * Formats the data
+   * @param {any} output
+   * @param {any} maxLines - Optional parameter
+   * @returns {any} The operation result
+   */
+  /**
+   * Formats the data
+   * @param {any} output
+   * @param {any} maxLines - Optional parameter
+   * @returns {any} The operation result
+   */
 
-  formatToolOutput(output, maxLines = 20) {
+
+  formatToolOutput(output, maxLines = 20) {  /**
+   * Performs the specified operation
+   * @param {any} !output
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !output
+   * @returns {any} The operation result
+   */
+
     if (!output) {return '';}
 
-    const lines = output.split('\n');
+    const lines = output.split('\n');    /**
+   * Performs the specified operation
+   * @param {any} lines.length < - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} lines.length < - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (lines.length <= maxLines) {
       return output;
     }
 
     return lines.slice(0, maxLines).join('\n') +
            `\n... (${lines.length - maxLines} more lines)`;
-  }
+  }  /**
+   * Retrieves data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Retrieves data
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async getSystemInfo() {
     const info = {

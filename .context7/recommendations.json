@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastUpdated": "2025-09-02T01:15:00.505Z",
+  "lastUpdated": "2025-09-02T17:25:21.962Z",
   "recommendations": {
     "run_1756663456814_3b4c0yju9": {
       "timestamp": "2025-08-31T18:04:16.814Z",
@@ -6939,13 +6939,5243 @@
           "status": "pending"
         }
       ]
+    },
+    "run_1756776200278_6ewpim2c8": {
+      "timestamp": "2025-09-02T01:23:20.278Z",
+      "score": 75,
+      "recommendations": [
+        {
+          "id": "quality_fix_449_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 449 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 314 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_5_hardcoded_secrets_detected_move_",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 5 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_36_tests_for_174_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (36 tests for 174 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_indent_violations_421_instances_config",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'indent' violations (421 instances)",
+          "action": "Configure and run Prettier for automatic indentation fixing",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_1883_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 1883 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_6_undocumented_classes_add_exampl",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 6 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756776234570_zsgfb5erp": {
+      "timestamp": "2025-09-02T01:23:54.570Z",
+      "score": 75,
+      "recommendations": [
+        {
+          "id": "quality_fix_449_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 449 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 314 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_6_hardcoded_secrets_detected_move_",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 6 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_36_tests_for_174_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (36 tests for 174 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_indent_violations_421_instances_config",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'indent' violations (421 instances)",
+          "action": "Configure and run Prettier for automatic indentation fixing",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_1883_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 1883 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_6_undocumented_classes_add_exampl",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 6 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756776430361_uydu5xksm": {
+      "timestamp": "2025-09-02T01:27:10.361Z",
+      "score": 75,
+      "recommendations": [
+        {
+          "id": "quality_fix_449_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 449 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 314 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_7_hardcoded_secrets_detected_move_",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 7 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_36_tests_for_174_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (36 tests for 174 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_indent_violations_421_instances_config",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'indent' violations (421 instances)",
+          "action": "Configure and run Prettier for automatic indentation fixing",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_1883_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 1883 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_6_undocumented_classes_add_exampl",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 6 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756776483753_39nwmf21f": {
+      "timestamp": "2025-09-02T01:28:03.752Z",
+      "score": 75,
+      "recommendations": [
+        {
+          "id": "quality_fix_449_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 449 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 314 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_8_hardcoded_secrets_detected_move_",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 8 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_36_tests_for_174_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (36 tests for 174 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_indent_violations_421_instances_config",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'indent' violations (421 instances)",
+          "action": "Configure and run Prettier for automatic indentation fixing",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_1883_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 1883 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_6_undocumented_classes_add_exampl",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 6 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756776570126_u9oa8takp": {
+      "timestamp": "2025-09-02T01:29:30.126Z",
+      "score": 75,
+      "recommendations": [
+        {
+          "id": "quality_fix_28_eslint_errors_run_npx_eslint_fix_fi",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 28 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 20 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_9_hardcoded_secrets_detected_move_",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 9 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_36_tests_for_174_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (36 tests for 174 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_1883_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 1883 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_6_undocumented_classes_add_exampl",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 6 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756776728357_0pgstzdrf": {
+      "timestamp": "2025-09-02T01:32:08.356Z",
+      "score": 75,
+      "recommendations": [
+        {
+          "id": "quality_fix_196_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 196 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 137 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_10_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 10 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_36_tests_for_174_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (36 tests for 174 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_91_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (91 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_1883_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 1883 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_6_undocumented_classes_add_exampl",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 6 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756776895885_6168of4b8": {
+      "timestamp": "2025-09-02T01:34:55.885Z",
+      "score": 75,
+      "recommendations": [
+        {
+          "id": "quality_fix_196_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 196 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 137 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_11_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 11 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_36_tests_for_174_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (36 tests for 174 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_91_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (91 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_1883_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 1883 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_6_undocumented_classes_add_exampl",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 6 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756777085097_4eh15shsm": {
+      "timestamp": "2025-09-02T01:38:05.097Z",
+      "score": 75,
+      "recommendations": [
+        {
+          "id": "quality_fix_196_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 196 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 137 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_12_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 12 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_36_tests_for_176_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (36 tests for 176 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_91_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (91 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_1883_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 1883 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_6_undocumented_classes_add_exampl",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 6 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756777279683_dl4w88w4t": {
+      "timestamp": "2025-09-02T01:41:19.683Z",
+      "score": 75,
+      "recommendations": [
+        {
+          "id": "quality_fix_196_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 196 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 137 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_13_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 13 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_36_tests_for_176_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (36 tests for 176 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_91_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (91 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_1883_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 1883 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_6_undocumented_classes_add_exampl",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 6 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756777492414_1fq4q8qpz": {
+      "timestamp": "2025-09-02T01:44:52.414Z",
+      "score": 75,
+      "recommendations": [
+        {
+          "id": "quality_fix_196_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 196 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 137 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_14_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 14 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_36_tests_for_176_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (36 tests for 176 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_91_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (91 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_1883_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 1883 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_6_undocumented_classes_add_exampl",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 6 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756778130162_pjeekb6zj": {
+      "timestamp": "2025-09-02T01:55:30.162Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_196_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 196 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 137 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_15_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 15 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_178_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 178 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_91_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (91 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_1883_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 1883 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_6_undocumented_classes_add_exampl",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 6 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756778314411_6d14y23kx": {
+      "timestamp": "2025-09-02T01:58:34.411Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_196_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 196 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 137 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_16_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 16 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_178_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 178 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_91_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (91 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_1883_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 1883 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_6_undocumented_classes_add_exampl",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 6 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756778442393_p8jrauhs5": {
+      "timestamp": "2025-09-02T02:00:42.393Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_196_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 196 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 137 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_17_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 17 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_178_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 178 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_91_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (91 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_1883_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 1883 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_6_undocumented_classes_add_exampl",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 6 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756778541529_um19z0pzs": {
+      "timestamp": "2025-09-02T02:02:21.529Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_196_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 196 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 137 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_18_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 18 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_178_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 178 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_91_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (91 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_1883_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 1883 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_6_undocumented_classes_add_exampl",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 6 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756778815966_s1lhorjap": {
+      "timestamp": "2025-09-02T02:06:55.965Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_196_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 196 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 137 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_19_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 19 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_178_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 178 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_91_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (91 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_1883_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 1883 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_6_undocumented_classes_add_exampl",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 6 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756778896646_shz4bmg5v": {
+      "timestamp": "2025-09-02T02:08:16.646Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_196_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 196 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 137 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_20_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 20 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_178_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 178 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_91_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (91 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_1883_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 1883 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_6_undocumented_classes_add_exampl",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 6 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756778939953_ixkyl84eq": {
+      "timestamp": "2025-09-02T02:08:59.953Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_196_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 196 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 137 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_21_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 21 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_178_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 178 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_91_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (91 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_4245_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 4245 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_19_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 19 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756779076464_sbn6l0d3i": {
+      "timestamp": "2025-09-02T02:11:16.464Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_196_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 196 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 137 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_22_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 22 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_178_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 178 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_91_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (91 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_4245_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 4245 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_19_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 19 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756779319869_b2ykamti4": {
+      "timestamp": "2025-09-02T02:15:19.869Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_196_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 196 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 137 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_23_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 23 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_179_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 179 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_91_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (91 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3771_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3771 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_18_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 18 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756779423536_xnzn2gxmg": {
+      "timestamp": "2025-09-02T02:17:03.536Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_189_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 189 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 132 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_24_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 24 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_179_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 179 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_84_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (84 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3771_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3771 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_18_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 18 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756779580000_hpwn3uike": {
+      "timestamp": "2025-09-02T02:19:40.000Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_189_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 189 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 132 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_25_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 25 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_179_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 179 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_84_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (84 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3771_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3771 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_18_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 18 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756779739725_694bgt8mo": {
+      "timestamp": "2025-09-02T02:22:19.725Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_189_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 189 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 132 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_26_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 26 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_179_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 179 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_84_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (84 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3771_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3771 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_18_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 18 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756779883299_xa2hgdsfj": {
+      "timestamp": "2025-09-02T02:24:43.299Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_189_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 189 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 132 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_27_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 27 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_179_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 179 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_84_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (84 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3771_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3771 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_18_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 18 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756779930079_xukzdznyt": {
+      "timestamp": "2025-09-02T02:25:30.079Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_189_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 189 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 132 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_28_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 28 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_179_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 179 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_84_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (84 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3771_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3771 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_18_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 18 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756780460690_djdgbb5kh": {
+      "timestamp": "2025-09-02T02:34:20.690Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_811_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 811 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 568 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_29_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 29 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_181_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 181 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_indent_violations_631_instances_config",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'indent' violations (631 instances)",
+          "action": "Configure and run Prettier for automatic indentation fixing",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3396_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3396 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_21_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 21 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756780720342_y93a10rsf": {
+      "timestamp": "2025-09-02T02:38:40.342Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_181_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 181 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 127 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_30_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 30 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_180_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 180 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_87_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (87 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3396_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3396 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_21_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 21 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756780897901_n7celzvss": {
+      "timestamp": "2025-09-02T02:41:37.901Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_708_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 708 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 496 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_31_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 31 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_180_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 180 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_indent_violations_527_instances_config",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'indent' violations (527 instances)",
+          "action": "Configure and run Prettier for automatic indentation fixing",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3396_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3396 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_24_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 24 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756781322678_i2sh7dbgc": {
+      "timestamp": "2025-09-02T02:48:42.678Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_708_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 708 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 496 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_32_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 32 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_180_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 180 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_indent_violations_527_instances_config",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'indent' violations (527 instances)",
+          "action": "Configure and run Prettier for automatic indentation fixing",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3396_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3396 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_24_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 24 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756781713068_d8j3fkkx5": {
+      "timestamp": "2025-09-02T02:55:13.068Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_708_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 708 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 496 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_33_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 33 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_180_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 180 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_indent_violations_527_instances_config",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'indent' violations (527 instances)",
+          "action": "Configure and run Prettier for automatic indentation fixing",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3396_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3396 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_24_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 24 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756820559281_xbqajdls5": {
+      "timestamp": "2025-09-02T13:42:39.281Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_178_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 178 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 125 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_34_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 34 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_180_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 180 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3398_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3398 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_24_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 24 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756820815145_lmynkzf8u": {
+      "timestamp": "2025-09-02T13:46:55.145Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_176_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 176 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 123 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_35_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 35 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_180_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 180 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3398_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3398 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_24_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 24 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756821135841_xmfws678z": {
+      "timestamp": "2025-09-02T13:52:15.841Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_152_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 152 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 106 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_36_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 36 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_37_tests_for_180_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (37 tests for 180 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_53_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (53 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3398_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3398 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_24_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 24 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756821519423_kgt2ipjoc": {
+      "timestamp": "2025-09-02T13:58:39.423Z",
+      "score": 76,
+      "recommendations": [
+        {
+          "id": "quality_fix_221_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 221 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 155 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_37_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 37 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_38_tests_for_182_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (38 tests for 182 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_71_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (71 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3409_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3409 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_24_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 24 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756821886481_8u76ls207": {
+      "timestamp": "2025-09-02T14:04:46.481Z",
+      "score": 74,
+      "recommendations": [
+        {
+          "id": "quality_fix_152_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 152 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 106 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_38_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 38 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_42_tests_for_187_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (42 tests for 187 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_54_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (54 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3185_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3185 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_17_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 17 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756823957555_9b943s7c3": {
+      "timestamp": "2025-09-02T14:39:17.555Z",
+      "score": 74,
+      "recommendations": [
+        {
+          "id": "quality_fix_199_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 199 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 139 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_39_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 39 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_44_tests_for_189_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (44 tests for 189 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_56_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (56 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3186_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3186 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_17_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 17 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756823991322_er6k7obfb": {
+      "timestamp": "2025-09-02T14:39:51.322Z",
+      "score": 74,
+      "recommendations": [
+        {
+          "id": "quality_fix_199_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 199 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 139 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_40_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 40 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_44_tests_for_189_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (44 tests for 189 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_56_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (56 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3186_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3186 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_17_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 17 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756824051915_ukg8bmj3n": {
+      "timestamp": "2025-09-02T14:40:51.915Z",
+      "score": 74,
+      "recommendations": [
+        {
+          "id": "quality_fix_199_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 199 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 139 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_41_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 41 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_44_tests_for_189_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (44 tests for 189 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_56_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (56 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3186_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3186 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_17_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 17 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756824073240_0h94vb9vn": {
+      "timestamp": "2025-09-02T14:41:13.240Z",
+      "score": 74,
+      "recommendations": [
+        {
+          "id": "quality_fix_199_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 199 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 139 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_42_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 42 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_44_tests_for_189_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (44 tests for 189 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_56_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (56 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3186_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3186 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_17_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 17 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756825667402_nvinghey6": {
+      "timestamp": "2025-09-02T15:07:47.402Z",
+      "score": 74,
+      "recommendations": [
+        {
+          "id": "quality_fix_147_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 147 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 103 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_43_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 43 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_44_tests_for_189_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (44 tests for 189 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_56_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (56 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3186_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3186 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_17_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 17 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756826636379_k8vnbqmpw": {
+      "timestamp": "2025-09-02T15:23:56.379Z",
+      "score": 74,
+      "recommendations": [
+        {
+          "id": "quality_fix_115_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 115 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 81 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_44_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 44 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_47_tests_for_192_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (47 tests for 192 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_56_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (56 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3188_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3188 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_17_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 17 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756827027385_h0zkaicog": {
+      "timestamp": "2025-09-02T15:30:27.385Z",
+      "score": 74,
+      "recommendations": [
+        {
+          "id": "quality_fix_115_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 115 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 81 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_45_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 45 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_47_tests_for_192_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (47 tests for 192 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_56_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (56 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3188_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3188 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_17_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 17 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756827515489_c4fd3ah3m": {
+      "timestamp": "2025-09-02T15:38:35.489Z",
+      "score": 74,
+      "recommendations": [
+        {
+          "id": "quality_fix_115_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 115 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 81 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_46_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 46 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_50_tests_for_195_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (50 tests for 195 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_56_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (56 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3188_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3188 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_17_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 17 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756829763022_yu6ow7a5p": {
+      "timestamp": "2025-09-02T16:16:03.022Z",
+      "score": 74,
+      "recommendations": [
+        {
+          "id": "quality_fix_116_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 116 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 81 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_47_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 47 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_50_tests_for_199_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (50 tests for 199 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_57_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (57 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3188_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3188 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_17_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 17 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756830286789_dwd2ws1i6": {
+      "timestamp": "2025-09-02T16:24:46.789Z",
+      "score": 74,
+      "recommendations": [
+        {
+          "id": "quality_fix_116_eslint_errors_run_npx_eslint_fix_f",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 116 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 81 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_48_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 48 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_50_tests_for_200_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (50 tests for 200 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_no_unused_vars_violations_57_instances",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Fix 'no-unused-vars' violations (57 instances)",
+          "action": "Remove unused variables or prefix with underscore if intentional",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_3188_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 3188 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_17_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 17 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756831070479_47puy5eq4": {
+      "timestamp": "2025-09-02T16:37:50.479Z",
+      "score": 74,
+      "recommendations": [
+        {
+          "id": "quality_fix_99_eslint_errors_run_npx_eslint_fix_fi",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 99 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 69 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_49_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 49 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_50_tests_for_212_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (50 tests for 212 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_2988_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 2988 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_16_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 16 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756831357046_1l63q07pf": {
+      "timestamp": "2025-09-02T16:42:37.046Z",
+      "score": 74,
+      "recommendations": [
+        {
+          "id": "quality_fix_99_eslint_errors_run_npx_eslint_fix_fi",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 99 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 69 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_50_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 50 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_50_tests_for_220_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (50 tests for 220 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_2894_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 2894 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_13_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 13 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756831662486_gpmlbptnt": {
+      "timestamp": "2025-09-02T16:47:42.486Z",
+      "score": 74,
+      "recommendations": [
+        {
+          "id": "quality_fix_99_eslint_errors_run_npx_eslint_fix_fi",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 99 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 69 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_51_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 51 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_50_tests_for_220_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (50 tests for 220 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_2894_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 2894 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_13_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 13 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756831734667_33wzlokuf": {
+      "timestamp": "2025-09-02T16:48:54.667Z",
+      "score": 74,
+      "recommendations": [
+        {
+          "id": "quality_fix_99_eslint_errors_run_npx_eslint_fix_fi",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 99 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 69 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_52_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 52 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_50_tests_for_220_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (50 tests for 220 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_2894_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 2894 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_13_undocumented_classes_add_examp",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 13 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756831931651_c41g3trf6": {
+      "timestamp": "2025-09-02T16:52:11.651Z",
+      "score": 74,
+      "recommendations": [
+        {
+          "id": "quality_fix_99_eslint_errors_run_npx_eslint_fix_fi",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 99 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 69 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_53_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 53 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_50_tests_for_224_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (50 tests for 224 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_2736_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 2736 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_9_undocumented_classes_add_exampl",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 9 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756832222119_4n6h0qifz": {
+      "timestamp": "2025-09-02T16:57:02.119Z",
+      "score": 74,
+      "recommendations": [
+        {
+          "id": "quality_fix_99_eslint_errors_run_npx_eslint_fix_fi",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 99 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 69 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_53_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 53 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_50_tests_for_227_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (50 tests for 227 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_2485_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 2485 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_7_undocumented_classes_add_exampl",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 7 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756832594517_wu9mktrth": {
+      "timestamp": "2025-09-02T17:03:14.517Z",
+      "score": 56,
+      "recommendations": [
+        {
+          "id": "general_focus_on_fundamental_quality_improvements_",
+          "category": "general",
+          "priority": "critical",
+          "impact": 5,
+          "suggestion": "Focus on fundamental quality improvements",
+          "action": "Address critical issues first: testing, security, and code quality",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_fix_98_eslint_errors_run_npx_eslint_fix_fi",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 98 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 69 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_53_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 53 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "structure_improve_project_organization_and_file_st",
+          "category": "structure",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Improve project organization and file structure",
+          "action": "Reorganize files into logical directories (components, services, utils, etc.)",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_50_tests_for_232_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (50 tests for 232 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_2501_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 2501 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_7_undocumented_classes_add_exampl",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 7 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756832643366_8dhkntfxh": {
+      "timestamp": "2025-09-02T17:04:03.366Z",
+      "score": 63,
+      "recommendations": [
+        {
+          "id": "quality_fix_98_eslint_errors_run_npx_eslint_fix_fi",
+          "category": "quality",
+          "priority": "critical",
+          "impact": 4,
+          "suggestion": "Fix 98 ESLint errors",
+          "action": "Run: npx eslint --fix . (fixes 69 automatically)",
+          "executable": true,
+          "status": "pending"
+        },
+        {
+          "id": "testing_increase_test_coverage_to_80_install_cover",
+          "category": "testing",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Increase test coverage to 80%+",
+          "action": "Install coverage tool (c8, nyc, jest --coverage) and focus on business logic tests",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_remove_53_hardcoded_secrets_detected_move",
+          "category": "security",
+          "priority": "high",
+          "impact": 4,
+          "suggestion": "Remove 53 hardcoded secrets detected",
+          "action": "Move secrets to .env files and add .env to .gitignore",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "structure_improve_project_organization_and_file_st",
+          "category": "structure",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Improve project organization and file structure",
+          "action": "Reorganize files into logical directories (components, services, utils, etc.)",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_add_more_test_files_50_tests_for_232_sourc",
+          "category": "testing",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Add more test files (50 tests for 232 source files)",
+          "action": "Aim for at least 1 test file per 2-3 source files",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_work_on_remaining_quality_gaps_prioritize_",
+          "category": "general",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Work on remaining quality gaps",
+          "action": "Prioritize categories scoring below 70%",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "context7_implement_context7_standards_for_ai_integ",
+          "category": "context7",
+          "priority": "high",
+          "impact": 3,
+          "suggestion": "Implement Context7 standards for AI integration",
+          "action": "Run: context7 init to set up Context7 integration",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_2501_undocumented_methods_add_par",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 2501 undocumented methods",
+          "action": "Add @param, @returns, @throws to method JSDoc comments",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_document_7_undocumented_classes_add_exampl",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Document 7 undocumented classes",
+          "action": "Add @example, @author, @version tags to class JSDoc",
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "security_improve_error_handling_patterns_add_try_c",
+          "category": "security",
+          "priority": "medium",
+          "impact": 2,
+          "suggestion": "Improve error handling patterns",
+          "action": "Add try-catch blocks, validate inputs, handle edge cases gracefully",
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756832869246_50nqdd9of": {
+      "timestamp": "2025-09-02T17:07:49.246Z",
+      "score": 63,
+      "recommendations": [
+        {
+          "id": "quality_undefined_undefined",
+          "category": "quality",
+          "priority": "high",
+          "impact": 8,
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_undefined_undefined",
+          "category": "testing",
+          "priority": "high",
+          "impact": 8,
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_undefined_undefined",
+          "category": "testing",
+          "priority": "medium",
+          "impact": 6,
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_undefined_undefined",
+          "category": "general",
+          "priority": "medium",
+          "impact": 4,
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_undefined_undefined",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 4,
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756833180830_jqcf95vpr": {
+      "timestamp": "2025-09-02T17:13:00.830Z",
+      "score": 63,
+      "recommendations": [
+        {
+          "id": "quality_undefined_undefined",
+          "category": "quality",
+          "priority": "high",
+          "impact": 8,
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_undefined_undefined",
+          "category": "testing",
+          "priority": "high",
+          "impact": 8,
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_undefined_undefined",
+          "category": "testing",
+          "priority": "medium",
+          "impact": 6,
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_undefined_undefined",
+          "category": "general",
+          "priority": "medium",
+          "impact": 4,
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_undefined_undefined",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 4,
+          "executable": false,
+          "status": "pending"
+        }
+      ]
+    },
+    "run_1756833921962_c9ej0n0wy": {
+      "timestamp": "2025-09-02T17:25:21.961Z",
+      "score": 62,
+      "recommendations": [
+        {
+          "id": "quality_undefined_undefined",
+          "category": "quality",
+          "priority": "high",
+          "impact": 8,
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_undefined_undefined",
+          "category": "testing",
+          "priority": "high",
+          "impact": 8,
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "testing_undefined_undefined",
+          "category": "testing",
+          "priority": "medium",
+          "impact": 6,
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "general_undefined_undefined",
+          "category": "general",
+          "priority": "medium",
+          "impact": 4,
+          "executable": false,
+          "status": "pending"
+        },
+        {
+          "id": "quality_undefined_undefined",
+          "category": "quality",
+          "priority": "medium",
+          "impact": 4,
+          "executable": false,
+          "status": "pending"
+        }
+      ]
     }
   },
   "completedActions": [
     "security_fix_vulnerabilities_npm_audit_fix"
   ],
   "stats": {
-    "totalRecommendations": 10,
+    "totalRecommendations": 5,
     "completedRecommendations": 13,
     "executedActions": 13,
     "lastScoreImprovement": -1

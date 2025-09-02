@@ -45,7 +45,7 @@ export class CodeAnalysisEngine {
       return metrics;
 
     } catch (error) {
-      console.error(`❌ Error analyzing code: ${error.message}`);
+      // ERROR: `❌ Error analyzing code: ${error.message}`
       return {
         complexity: 0,
         maintainability: 0,
@@ -79,10 +79,30 @@ export class CodeAnalysisEngine {
         /&&/g,
         /\|\|/g,
         /\?/g
-      ];
+      ];      /**
+   * Performs the specified operation
+   * @param {any} const pattern of controlFlowPatterns
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const pattern of controlFlowPatterns
+   * @returns {any} The operation result
+   */
+
 
       for (const pattern of controlFlowPatterns) {
-        const matches = code.match(pattern);
+        const matches = code.match(pattern);        /**
+   * Performs the specified operation
+   * @param {any} matches
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} matches
+   * @returns {any} The operation result
+   */
+
         if (matches) {
           complexity += matches.length;
         }
@@ -92,10 +112,30 @@ export class CodeAnalysisEngine {
       const nestedPatterns = [
         /\{/g,
         /\(/g
-      ];
+      ];      /**
+   * Performs the specified operation
+   * @param {any} const pattern of nestedPatterns
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const pattern of nestedPatterns
+   * @returns {any} The operation result
+   */
+
 
       for (const pattern of nestedPatterns) {
-        const matches = code.match(pattern);
+        const matches = code.match(pattern);        /**
+   * Performs the specified operation
+   * @param {any} matches
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} matches
+   * @returns {any} The operation result
+   */
+
         if (matches) {
           complexity += matches.length * 0.5;
         }
@@ -104,7 +144,7 @@ export class CodeAnalysisEngine {
       return Math.round(complexity);
 
     } catch (error) {
-      console.error(`❌ Error calculating complexity: ${error.message}`);
+      // ERROR: `❌ Error calculating complexity: ${error.message}`
       return 0;
     }
   }
@@ -145,7 +185,7 @@ export class CodeAnalysisEngine {
       return Math.max(0, Math.min(100, Math.round(score)));
 
     } catch (error) {
-      console.error(`❌ Error calculating maintainability: ${error.message}`);
+      // ERROR: `❌ Error calculating maintainability: ${error.message}`
       return 0;
     }
   }
@@ -169,10 +209,30 @@ export class CodeAnalysisEngine {
         { pattern: /\.innerHTML\s*=\s*[^;]*\+/, severity: 8, message: 'Potential XSS with string concatenation' },
         { pattern: /localStorage\.setItem\s*\(\s*[^,]*,\s*[^)]*\)/, severity: 5, message: 'Potential data exposure' },
         { pattern: /sessionStorage\.setItem\s*\(\s*[^,]*,\s*[^)]*\)/, severity: 5, message: 'Potential data exposure' }
-      ];
+      ];      /**
+   * Performs the specified operation
+   * @param {boolean} const issue of securityIssues
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} const issue of securityIssues
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
       for (const issue of securityIssues) {
-        const matches = code.match(issue.pattern);
+        const matches = code.match(issue.pattern);        /**
+   * Performs the specified operation
+   * @param {any} matches
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} matches
+   * @returns {any} The operation result
+   */
+
         if (matches) {
           score -= matches.length * issue.severity;
         }
@@ -185,10 +245,30 @@ export class CodeAnalysisEngine {
         { pattern: /helmet/, bonus: 8, message: 'Good use of helmet' },
         { pattern: /cors/, bonus: 5, message: 'Good use of CORS' },
         { pattern: /rate-limit/, bonus: 5, message: 'Good use of rate limiting' }
-      ];
+      ];      /**
+   * Performs the specified operation
+   * @param {any} const good of securityGood
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const good of securityGood
+   * @returns {any} The operation result
+   */
+
 
       for (const good of securityGood) {
-        const matches = code.match(good.pattern);
+        const matches = code.match(good.pattern);        /**
+   * Performs the specified operation
+   * @param {any} matches
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} matches
+   * @returns {any} The operation result
+   */
+
         if (matches) {
           score += matches.length * good.bonus;
         }
@@ -197,7 +277,7 @@ export class CodeAnalysisEngine {
       return Math.max(0, Math.min(100, Math.round(score)));
 
     } catch (error) {
-      console.error(`❌ Error analyzing security: ${error.message}`);
+      // ERROR: `❌ Error analyzing security: ${error.message}`
       return 0;
     }
   }
@@ -219,10 +299,30 @@ export class CodeAnalysisEngine {
         { pattern: /setTimeout\s*\(\s*function/, severity: 2, message: 'Consider arrow functions' },
         { pattern: /import\s+\*\s+as/, severity: 8, message: 'Consider specific imports to reduce bundle size' },
         { pattern: /console\.log/, severity: 1, message: 'Remove console.log in production' }
-      ];
+      ];      /**
+   * Performs the specified operation
+   * @param {boolean} const issue of performanceIssues
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} const issue of performanceIssues
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
       for (const issue of performanceIssues) {
-        const matches = code.match(issue.pattern);
+        const matches = code.match(issue.pattern);        /**
+   * Performs the specified operation
+   * @param {any} matches
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} matches
+   * @returns {any} The operation result
+   */
+
         if (matches) {
           score -= matches.length * issue.severity;
         }
@@ -235,10 +335,30 @@ export class CodeAnalysisEngine {
         { pattern: /useCallback/, bonus: 10, message: 'Good use of useCallback' },
         { pattern: /lazy\s*\(\s*\(\)\s*=>\s*import/, bonus: 15, message: 'Good use of lazy loading' },
         { pattern: /requestAnimationFrame/, bonus: 8, message: 'Good use of requestAnimationFrame' }
-      ];
+      ];      /**
+   * Performs the specified operation
+   * @param {any} const good of performanceGood
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const good of performanceGood
+   * @returns {any} The operation result
+   */
+
 
       for (const good of performanceGood) {
-        const matches = code.match(good.pattern);
+        const matches = code.match(good.pattern);        /**
+   * Performs the specified operation
+   * @param {any} matches
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} matches
+   * @returns {any} The operation result
+   */
+
         if (matches) {
           score += matches.length * good.bonus;
         }
@@ -247,7 +367,7 @@ export class CodeAnalysisEngine {
       return Math.max(0, Math.min(100, Math.round(score)));
 
     } catch (error) {
-      console.error(`❌ Error analyzing performance: ${error.message}`);
+      // ERROR: `❌ Error analyzing performance: ${error.message}`
       return 0;
     }
   }
@@ -291,7 +411,7 @@ export class CodeAnalysisEngine {
       return Math.max(0, Math.min(100, Math.round(score)));
 
     } catch (error) {
-      console.error(`❌ Error analyzing readability: ${error.message}`);
+      // ERROR: `❌ Error analyzing readability: ${error.message}`
       return 0;
     }
   }
@@ -311,12 +431,32 @@ export class CodeAnalysisEngine {
         { pattern: /describe\s*\(/, bonus: 15, message: 'Test structure present' },
         { pattern: /it\s*\(/, bonus: 10, message: 'Test cases present' },
         { pattern: /expect\s*\(/, bonus: 8, message: 'Assertions present' },
-        { pattern: /jest\./, bonus: 5, message: 'Jest testing framework' },
-        { pattern: /vitest\./, bonus: 5, message: 'Vitest testing framework' }
-      ];
+        { pattern: /jest./, bonus: 5, message: 'Jest testing framework' },
+        { pattern: /vitest./, bonus: 5, message: 'Vitest testing framework' }
+      ];      /**
+   * Performs the specified operation
+   * @param {any} const pattern of testablePatterns
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const pattern of testablePatterns
+   * @returns {any} The operation result
+   */
+
 
       for (const pattern of testablePatterns) {
-        const matches = code.match(pattern.pattern);
+        const matches = code.match(pattern.pattern);        /**
+   * Performs the specified operation
+   * @param {any} matches
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} matches
+   * @returns {any} The operation result
+   */
+
         if (matches) {
           score += matches.length * pattern.bonus;
         }
@@ -324,15 +464,35 @@ export class CodeAnalysisEngine {
 
       // Check for hard-to-test patterns
       const hardToTestPatterns = [
-        { pattern: /global\./, severity: 5, message: 'Global variable usage' },
-        { pattern: /window\./, severity: 5, message: 'Window object usage' },
-        { pattern: /document\./, severity: 3, message: 'DOM manipulation' },
-        { pattern: /localStorage\./, severity: 3, message: 'Local storage usage' },
-        { pattern: /sessionStorage\./, severity: 3, message: 'Session storage usage' }
-      ];
+        { pattern: /global./, severity: 5, message: 'Global variable usage' },
+        { pattern: /window./, severity: 5, message: 'Window object usage' },
+        { pattern: /document./, severity: 3, message: 'DOM manipulation' },
+        { pattern: /localStorage./, severity: 3, message: 'Local storage usage' },
+        { pattern: /sessionStorage./, severity: 3, message: 'Session storage usage' }
+      ];      /**
+   * Performs the specified operation
+   * @param {any} const pattern of hardToTestPatterns
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const pattern of hardToTestPatterns
+   * @returns {any} The operation result
+   */
+
 
       for (const pattern of hardToTestPatterns) {
-        const matches = code.match(pattern.pattern);
+        const matches = code.match(pattern.pattern);        /**
+   * Performs the specified operation
+   * @param {any} matches
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} matches
+   * @returns {any} The operation result
+   */
+
         if (matches) {
           score -= matches.length * pattern.severity;
         }
@@ -341,18 +501,48 @@ export class CodeAnalysisEngine {
       return Math.max(0, Math.min(100, Math.round(score)));
 
     } catch (error) {
-      console.error(`❌ Error analyzing testability: ${error.message}`);
+      // ERROR: `❌ Error analyzing testability: ${error.message}`
       return 0;
     }
   }
 
-  // Private methods
+  // Private methods  /**
+   * Calculates the result
+   * @param {any} code
+   * @returns {number} The calculated result
+   */
+  /**
+   * Calculates the result
+   * @param {any} code
+   * @returns {number} The calculated result
+   */
+
 
   calculateMaxNesting(code) {
     let maxNesting = 0;
-    let currentNesting = 0;
+    let currentNesting = 0;    /**
+   * Performs the specified operation
+   * @param {any} const char of code
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const char of code
+   * @returns {any} The operation result
+   */
 
-    for (const char of code) {
+
+    for (const char of code) {      /**
+   * Performs the specified operation
+   * @param {any} char - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} char - Optional parameter
+   * @returns {any} The operation result
+   */
+
       if (char === '{' || char === '(') {
         currentNesting++;
         maxNesting = Math.max(maxNesting, currentNesting);
@@ -362,7 +552,17 @@ export class CodeAnalysisEngine {
     }
 
     return maxNesting;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} code
+   * @returns {number} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} code
+   * @returns {number} The operation result
+   */
+
 
   countMeaningfulVariables(code) {
     const variablePatterns = [
@@ -371,10 +571,30 @@ export class CodeAnalysisEngine {
       /class\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g
     ];
 
-    let meaningfulCount = 0;
+    let meaningfulCount = 0;    /**
+   * Performs the specified operation
+   * @param {any} const pattern of variablePatterns
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const pattern of variablePatterns
+   * @returns {any} The operation result
+   */
+
 
     for (const pattern of variablePatterns) {
-      const matches = code.matchAll(pattern);
+      const matches = code.matchAll(pattern);      /**
+   * Performs the specified operation
+   * @param {any} const match of matches
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const match of matches
+   * @returns {any} The operation result
+   */
+
       for (const match of matches) {
         const name = match[1];
         if (name.length > 2 && this.isMeaningfulName(name)) {
@@ -384,7 +604,17 @@ export class CodeAnalysisEngine {
     }
 
     return meaningfulCount;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} name
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} name
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   isMeaningfulName(name) {
     // Check if the name is meaningful (not just abbreviations)
@@ -396,31 +626,91 @@ export class CodeAnalysisEngine {
     ];
 
     return meaningfulPatterns.some(pattern => pattern.test(name));
-  }
+  }  /**
+   * Checks the condition
+   * @param {any} lines
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Checks the condition
+   * @param {any} lines
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   checkIndentationConsistency(lines) {
-    const indentations = [];
+    const indentations = [];    /**
+   * Performs the specified operation
+   * @param {any} const line of lines
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const line of lines
+   * @returns {any} The operation result
+   */
+
 
     for (const line of lines) {
       if (line.trim()) {
         const leadingSpaces = line.match(/^ */)?.[0].length || 0;
         indentations.push(leadingSpaces);
       }
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {any} indentations.length - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} indentations.length - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
     if (indentations.length === 0) {return 1;}
 
     // Check if all indentations are multiples of a common base
-    const base = Math.min(...indentations.filter(i => i > 0));
+    const base = Math.min(...indentations.filter(i => i > 0));    /**
+   * Performs the specified operation
+   * @param {any} base - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} base - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (base === 0) {return 1;}
 
     const consistent = indentations.every(i => i % base === 0);
     return consistent ? 1 : 0.5;
-  }
+  }  /**
+   * Generates new data
+   * @param {any} code
+   * @returns {any} The created resource
+   */
+  /**
+   * Generates new data
+   * @param {any} code
+   * @returns {any} The created resource
+   */
+
 
   generateCacheKey(code) {
     // Simple hash function for caching
-    let hash = 0;
+    let hash = 0;    /**
+   * Performs the specified operation
+   * @param {any} let i - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} let i - Optional parameter
+   * @returns {any} The operation result
+   */
+
     for (let i = 0; i < code.length; i++) {
       const char = code.charCodeAt(i);
       hash = ((hash << 5) - hash) + char;

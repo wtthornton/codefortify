@@ -8,6 +8,36 @@ import { EventEmitter } from 'events';
 import { WebSocket, WebSocketServer } from 'ws';
 import { EventSchema, EventCreators, EventFilters, EVENT_TYPES, PRIORITY_LEVELS } from './EventTypes.js';
 
+/**
+
+
+ * RealtimeEventEmitter class implementation
+
+
+ *
+
+
+ * Provides functionality for realtimeeventemitter operations
+
+
+ */
+
+
+/**
+
+
+ * RealtimeEventEmitter class implementation
+
+
+ *
+
+
+ * Provides functionality for realtimeeventemitter operations
+
+
+ */
+
+
 export class RealtimeEventEmitter extends EventEmitter {
   constructor(config = {}) {
     super();
@@ -45,7 +75,17 @@ export class RealtimeEventEmitter extends EventEmitter {
   /**
    * Start the WebSocket server
    */
-  async start() {
+  async start() {  /**
+   * Performs the specified operation
+   * @param {boolean} this.isRunning
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.isRunning
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.isRunning) {
       throw new Error('RealtimeEventEmitter is already running');
     }
@@ -58,11 +98,21 @@ export class RealtimeEventEmitter extends EventEmitter {
         });
 
         this.server.on('connection', this.handleConnection.bind(this));
-        this.server.on('error', (error) => {
+        this.server.on('error', (error) => {          /**
+   * Performs the specified operation
+   * @param {any} error.code - Optional parameter
+   * @returns {any} The operation result
+   */
+          /**
+   * Performs the specified operation
+   * @param {any} error.code - Optional parameter
+   * @returns {any} The operation result
+   */
+
           if (error.code === 'EADDRINUSE') {
             // Try next available port
             this.config.port = this.config.port + 1;
-            console.log(`Port ${this.config.port - 1} in use, trying port ${this.config.port}...`);
+            // LOG: `Port ${this.config.port - 1} in use, trying port ${this.config.port}...`
             this.server = new WebSocketServer({
               port: this.config.port,
               maxPayload: 16 * 1024 * 1024
@@ -70,7 +120,7 @@ export class RealtimeEventEmitter extends EventEmitter {
             this.server.on('connection', this.handleConnection.bind(this));
             this.server.on('error', reject);
             this.server.on('listening', () => {
-              console.log(`✅ WebSocket server started on port ${this.config.port}`);
+              // LOG: `✅ WebSocket server started on port ${this.config.port}`
               this.isRunning = true;
               resolve();
             });
@@ -106,7 +156,17 @@ export class RealtimeEventEmitter extends EventEmitter {
   /**
    * Stop the WebSocket server
    */
-  async stop() {
+  async stop() {  /**
+   * Performs the specified operation
+   * @param {boolean} !this.isRunning
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} !this.isRunning
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (!this.isRunning) {return;}
 
     // Send shutdown event
@@ -119,21 +179,63 @@ export class RealtimeEventEmitter extends EventEmitter {
       )
     );
 
-    // Clean up heartbeat
+    // Clean up heartbeat    /**
+   * Performs the specified operation
+   * @param {boolean} this.heartbeatTimer
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.heartbeatTimer
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.heartbeatTimer) {
       clearInterval(this.heartbeatTimer);
       this.heartbeatTimer = null;
     }
 
-    // Close all client connections
-    for (const [clientId, client] of this.clients) {
+    // Close all client connections    /**
+   * Performs the specified operation
+   * @param {number} const [clientId
+   * @param {boolean} client] of this.clients
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {number} const [clientId
+   * @param {boolean} client] of this.clients
+   * @returns {boolean} True if successful, false otherwise
+   */
+
+    for (const [clientId, client] of this.clients) {      /**
+   * Performs the specified operation
+   * @param {any} client.ws.readyState - Optional parameter
+   * @returns {string} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} client.ws.readyState - Optional parameter
+   * @returns {string} The operation result
+   */
+
       if (client.ws.readyState === WebSocket.OPEN) {
         client.ws.close(1000, 'Server shutdown');
       }
     }
 
     // Close server
-    return new Promise((resolve) => {
+    return new Promise((resolve) => {      /**
+   * Performs the specified operation
+   * @param {boolean} this.server
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} this.server
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.server) {
         this.server.close(() => {
           this.isRunning = false;
@@ -161,7 +263,17 @@ export class RealtimeEventEmitter extends EventEmitter {
       isAlive: true
     };
 
-    // Check connection limits
+    // Check connection limits    /**
+   * Performs the specified operation
+   * @param {boolean} this.clients.size > - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.clients.size > - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.clients.size >= this.config.maxConnections) {
       ws.close(1008, 'Too many connections');
       return;
@@ -194,7 +306,17 @@ export class RealtimeEventEmitter extends EventEmitter {
    */
   handleMessage(clientId, data) {
     try {
-      const client = this.clients.get(clientId);
+      const client = this.clients.get(clientId);      /**
+   * Performs the specified operation
+   * @param {any} !client
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} !client
+   * @returns {any} The operation result
+   */
+
       if (!client) {return;}
 
       // Apply rate limiting
@@ -207,7 +329,17 @@ export class RealtimeEventEmitter extends EventEmitter {
         return;
       }
 
-      const message = JSON.parse(data.toString());
+      const message = JSON.parse(data.toString());      /**
+   * Performs the specified operation
+   * @param {any} message.type
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} message.type
+   * @returns {any} The operation result
+   */
+
 
       switch (message.type) {
       case 'subscribe':
@@ -242,7 +374,17 @@ export class RealtimeEventEmitter extends EventEmitter {
    * Handle client disconnection
    */
   handleDisconnect(clientId) {
-    const client = this.clients.get(clientId);
+    const client = this.clients.get(clientId);    /**
+   * Performs the specified operation
+   * @param {any} client
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} client
+   * @returns {any} The operation result
+   */
+
     if (client) {
       this.clients.delete(clientId);
       this.rateLimitMap.delete(clientId);
@@ -262,7 +404,17 @@ export class RealtimeEventEmitter extends EventEmitter {
    * Handle pong responses for heartbeat
    */
   handlePong(clientId) {
-    const client = this.clients.get(clientId);
+    const client = this.clients.get(clientId);    /**
+   * Performs the specified operation
+   * @param {any} client
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} client
+   * @returns {any} The operation result
+   */
+
     if (client) {
       client.isAlive = true;
       client.lastPing = new Date();
@@ -284,7 +436,19 @@ export class RealtimeEventEmitter extends EventEmitter {
     // Add to buffer
     this.addToBuffer(event);
 
-    // Send to all clients
+    // Send to all clients    /**
+   * Performs the specified operation
+   * @param {number} const [clientId
+   * @param {boolean} client] of this.clients
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {number} const [clientId
+   * @param {boolean} client] of this.clients
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     for (const [clientId, client] of this.clients) {
       if (this.shouldSendToClient(clientId, event)) {
         this.sendToClient(clientId, event);
@@ -299,7 +463,17 @@ export class RealtimeEventEmitter extends EventEmitter {
    * Send event to specific client
    */
   sendToClient(clientId, event) {
-    const client = this.clients.get(clientId);
+    const client = this.clients.get(clientId);    /**
+   * Performs the specified operation
+   * @param {any} !client || client.ws.readyState ! - Optional parameter
+   * @returns {string} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !client || client.ws.readyState ! - Optional parameter
+   * @returns {string} The operation result
+   */
+
     if (!client || client.ws.readyState !== WebSocket.OPEN) {
       return false;
     }
@@ -318,7 +492,17 @@ export class RealtimeEventEmitter extends EventEmitter {
    * Check if event should be sent to client based on subscriptions and filters
    */
   shouldSendToClient(clientId, event) {
-    const client = this.clients.get(clientId);
+    const client = this.clients.get(clientId);    /**
+   * Performs the specified operation
+   * @param {any} !client
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !client
+   * @returns {any} The operation result
+   */
+
     if (!client) {return false;}
 
     // Check subscriptions
@@ -327,12 +511,42 @@ export class RealtimeEventEmitter extends EventEmitter {
     }
 
     // Apply filters
-    const filters = client.filters;
+    const filters = client.filters;    /**
+   * Performs the specified operation
+   * @param {any} filters.minPriority
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} filters.minPriority
+   * @returns {any} The operation result
+   */
+
 
     if (filters.minPriority) {
-      const filtered = EventFilters.byPriority([event], filters.minPriority);
+      const filtered = EventFilters.byPriority([event], filters.minPriority);      /**
+   * Performs the specified operation
+   * @param {any} filtered.length - Optional parameter
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} filtered.length - Optional parameter
+   * @returns {any} The operation result
+   */
+
       if (filtered.length === 0) {return false;}
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {any} filters.types && filters.types.length > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} filters.types && filters.types.length > 0
+   * @returns {any} The operation result
+   */
+
 
     if (filters.types && filters.types.length > 0) {
       if (!filters.types.includes(event.type)) {return false;}
@@ -347,7 +561,17 @@ export class RealtimeEventEmitter extends EventEmitter {
   addToBuffer(event) {
     this.eventBuffer.push(event);
 
-    // Maintain buffer size
+    // Maintain buffer size    /**
+   * Performs the specified operation
+   * @param {Object} this.eventBuffer.length > this.config.bufferSize
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.eventBuffer.length > this.config.bufferSize
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.eventBuffer.length > this.config.bufferSize) {
       this.eventBuffer = this.eventBuffer.slice(-this.config.bufferSize);
     }
@@ -357,7 +581,17 @@ export class RealtimeEventEmitter extends EventEmitter {
    * Send buffered events to newly connected client
    */
   sendBufferedEvents(clientId) {
-    const client = this.clients.get(clientId);
+    const client = this.clients.get(clientId);    /**
+   * Performs the specified operation
+   * @param {any} !client
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !client
+   * @returns {any} The operation result
+   */
+
     if (!client) {return;}
 
     // Send last 10 important events
@@ -368,7 +602,17 @@ export class RealtimeEventEmitter extends EventEmitter {
         event.priority === PRIORITY_LEVELS.CRITICAL ||
         event.type === EVENT_TYPES.SCORE_UPDATE
       )
-      .slice(-10); // Last 10 important events
+      .slice(-10); // Last 10 important events    /**
+   * Performs the specified operation
+   * @param {any} const event of recentEvents
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const event of recentEvents
+   * @returns {any} The operation result
+   */
+
 
     for (const event of recentEvents) {
       if (this.shouldSendToClient(clientId, event)) {
@@ -381,8 +625,28 @@ export class RealtimeEventEmitter extends EventEmitter {
    * Handle client subscription
    */
   handleSubscription(clientId, data) {
-    const client = this.clients.get(clientId);
-    if (!client) {return;}
+    const client = this.clients.get(clientId);    /**
+   * Performs the specified operation
+   * @param {any} !client
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !client
+   * @returns {any} The operation result
+   */
+
+    if (!client) {return;}    /**
+   * Performs the specified operation
+   * @param {any} data.types
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} data.types
+   * @returns {any} The operation result
+   */
+
 
     if (data.types) {
       data.types.forEach(type => client.subscriptions.add(type));
@@ -398,8 +662,28 @@ export class RealtimeEventEmitter extends EventEmitter {
    * Handle client unsubscription
    */
   handleUnsubscription(clientId, data) {
-    const client = this.clients.get(clientId);
-    if (!client) {return;}
+    const client = this.clients.get(clientId);    /**
+   * Performs the specified operation
+   * @param {any} !client
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !client
+   * @returns {any} The operation result
+   */
+
+    if (!client) {return;}    /**
+   * Performs the specified operation
+   * @param {any} data.types
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} data.types
+   * @returns {any} The operation result
+   */
+
 
     if (data.types) {
       data.types.forEach(type => client.subscriptions.delete(type));
@@ -410,7 +694,17 @@ export class RealtimeEventEmitter extends EventEmitter {
    * Handle client filter updates
    */
   handleFilterUpdate(clientId, filters) {
-    const client = this.clients.get(clientId);
+    const client = this.clients.get(clientId);    /**
+   * Performs the specified operation
+   * @param {any} !client
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !client
+   * @returns {any} The operation result
+   */
+
     if (!client) {return;}
 
     client.filters = { ...client.filters, ...filters };
@@ -448,7 +742,17 @@ export class RealtimeEventEmitter extends EventEmitter {
     const requests = this.rateLimitMap.get(clientId);
 
     // Remove old requests
-    const recentRequests = requests.filter(time => time > windowStart);
+    const recentRequests = requests.filter(time => time > windowStart);    /**
+   * Performs the specified operation
+   * @param {any} recentRequests.length > - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} recentRequests.length > - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (recentRequests.length >= this.rateLimitMax) {
       return false;
@@ -465,15 +769,47 @@ export class RealtimeEventEmitter extends EventEmitter {
    * Start heartbeat to keep connections alive
    */
   startHeartbeat() {
-    this.heartbeatTimer = setInterval(() => {
-      for (const [clientId, client] of this.clients) {
+    this.heartbeatTimer = setInterval(() => {      /**
+   * Performs the specified operation
+   * @param {number} const [clientId
+   * @param {boolean} client] of this.clients
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {number} const [clientId
+   * @param {boolean} client] of this.clients
+   * @returns {boolean} True if successful, false otherwise
+   */
+
+      for (const [clientId, client] of this.clients) {        /**
+   * Performs the specified operation
+   * @param {boolean} !client.isAlive
+   * @returns {boolean} True if successful, false otherwise
+   */
+        /**
+   * Performs the specified operation
+   * @param {boolean} !client.isAlive
+   * @returns {boolean} True if successful, false otherwise
+   */
+
         if (!client.isAlive) {
           client.ws.terminate();
           this.handleDisconnect(clientId);
           continue;
         }
 
-        client.isAlive = false;
+        client.isAlive = false;        /**
+   * Performs the specified operation
+   * @param {any} client.ws.readyState - Optional parameter
+   * @returns {string} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} client.ws.readyState - Optional parameter
+   * @returns {string} The operation result
+   */
+
         if (client.ws.readyState === WebSocket.OPEN) {
           client.ws.ping();
         }
@@ -519,23 +855,89 @@ export class RealtimeEventEmitter extends EventEmitter {
    */
   emitAnalysisStart(step) {
     this.broadcastEvent(EventCreators.analysisStart(step, this.sessionId));
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} step
+   * @param {any} progress
+   * @param {any} message
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} step
+   * @param {any} progress
+   * @param {any} message
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   emitAnalysisProgress(step, progress, message) {
     this.broadcastEvent(EventCreators.analysisProgress(step, progress, message, this.sessionId));
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} step
+   * @param {any} results
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} step
+   * @param {any} results
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   emitAnalysisComplete(step, results) {
     this.broadcastEvent(EventCreators.analysisComplete(step, results, this.sessionId));
-  }
+  }  /**
+   * Updates existing data
+   * @param {any} newScore
+   * @param {any} previousScore
+   * @param {any} changes
+   * @returns {any} The operation result
+   */
+  /**
+   * Updates existing data
+   * @param {any} newScore
+   * @param {any} previousScore
+   * @param {any} changes
+   * @returns {any} The operation result
+   */
+
 
   emitScoreUpdate(newScore, previousScore, changes) {
     this.broadcastEvent(EventCreators.scoreUpdate(newScore, previousScore, changes, this.sessionId));
-  }
+  }  /**
+   * Updates existing data
+   * @param {boolean} phase
+   * @param {any} progress
+   * @param {any} message
+   * @returns {any} The operation result
+   */
+  /**
+   * Updates existing data
+   * @param {boolean} phase
+   * @param {any} progress
+   * @param {any} message
+   * @returns {any} The operation result
+   */
+
 
   emitStatusUpdate(phase, progress, message) {
     this.broadcastEvent(EventCreators.statusUpdate(phase, progress, message, this.sessionId));
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} error
+   * @param {any} context
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} error
+   * @param {any} context
+   * @returns {any} The operation result
+   */
+
 
   emitError(error, context) {
     this.broadcastEvent(EventCreators.errorOccurred(error, context, this.sessionId));

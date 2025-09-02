@@ -76,7 +76,7 @@ describe('CLI Commands Integration', () => {
     it('should display version', async () => {
       const result = await runCLICommand(['--version']);
 
-      expect(result.stdout).toMatch(/\d+\.\d+\.\d+/);
+      expect(result.stdout).toMatch(/\d+.\d+.\d+/);
       expect(result.exitCode).toBe(0);
     });
 

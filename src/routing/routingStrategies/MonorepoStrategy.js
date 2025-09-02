@@ -10,6 +10,36 @@
 import path from 'path';
 import { BaseStrategy } from './BaseStrategy.js';
 
+/**
+
+
+ * MonorepoStrategy class implementation
+
+
+ *
+
+
+ * Provides functionality for monorepostrategy operations
+
+
+ */
+
+
+/**
+
+
+ * MonorepoStrategy class implementation
+
+
+ *
+
+
+ * Provides functionality for monorepostrategy operations
+
+
+ */
+
+
 export class MonorepoStrategy extends BaseStrategy {
   constructor(config) {
     super(config);
@@ -24,17 +54,27 @@ export class MonorepoStrategy extends BaseStrategy {
    */
   async getBasePath(format) {
     // Check for custom path first
-    const customPath = this.getCustomPath(format);
+    const customPath = this.getCustomPath(format);    /**
+   * Performs the specified operation
+   * @param {string} customPath
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {string} customPath
+   * @returns {any} The operation result
+   */
+
     if (customPath) {
       return path.resolve(this.projectRoot, customPath);
     }
 
     // Find workspace root
     const workspaceRoot = await this.findWorkspaceRoot();
-    
+
     // Default monorepo structure: <workspace-root>/reports/
     const basePath = path.join(workspaceRoot, 'reports');
-    
+
     // Apply organization structure
     return this.buildOrganizedPath(basePath, format);
   }
@@ -46,17 +86,17 @@ export class MonorepoStrategy extends BaseStrategy {
    */
   async findWorkspaceRoot() {
     let currentDir = this.projectRoot;
-    
+
     // Walk up the directory tree to find workspace root
     while (currentDir !== path.dirname(currentDir)) {
       // Check for workspace indicators
       if (await this.isWorkspaceRoot(currentDir)) {
         return currentDir;
       }
-      
+
       currentDir = path.dirname(currentDir);
     }
-    
+
     // Fallback to project root if workspace root not found
     return this.projectRoot;
   }
@@ -75,7 +115,17 @@ export class MonorepoStrategy extends BaseStrategy {
       'rush.json',
       'pnpm-workspace.yaml',
       'pnpm-workspace.yml'
-    ];
+    ];    /**
+   * Performs the specified operation
+   * @param {any} const indicator of indicators
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const indicator of indicators
+   * @returns {any} The operation result
+   */
+
 
     for (const indicator of indicators) {
       if (await this.fileExists(path.join(dirPath, indicator))) {
@@ -86,8 +136,18 @@ export class MonorepoStrategy extends BaseStrategy {
     // Check for workspace configuration in package.json
     try {
       const packageJsonPath = path.join(dirPath, 'package.json');
-      const packageJson = JSON.parse(await this.readFile(packageJsonPath));
-      
+      const packageJson = JSON.parse(await this.readFile(packageJsonPath));      /**
+   * Performs the specified operation
+   * @param {number} packageJson.workspaces || packageJson.pnpm?.overrides
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {number} packageJson.workspaces || packageJson.pnpm?.overrides
+   * @returns {any} The operation result
+   */
+
+
       if (packageJson.workspaces || packageJson.pnpm?.overrides) {
         return true;
       }
@@ -106,15 +166,25 @@ export class MonorepoStrategy extends BaseStrategy {
   getProjectSubdirectory() {
     const projectName = this.getProjectName();
     const workspaceRoot = this.findWorkspaceRoot();
-    
+
     // Get relative path from workspace root to project
     const relativePath = path.relative(workspaceRoot, this.projectRoot);
-    
-    // Use relative path if different from project name
+
+    // Use relative path if different from project name    /**
+   * Performs the specified operation
+   * @param {string} relativePath && relativePath ! - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {string} relativePath && relativePath ! - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (relativePath && relativePath !== projectName) {
       return relativePath.replace(/[\\/]/g, '-');
     }
-    
+
     return projectName;
   }
 
@@ -129,7 +199,17 @@ export class MonorepoStrategy extends BaseStrategy {
     const organization = this.getOrganization();
     const parts = [basePath];
 
-    // Add date organization
+    // Add date organization    /**
+   * Performs the specified operation
+   * @param {any} organization.byDate
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} organization.byDate
+   * @returns {any} The operation result
+   */
+
     if (organization.byDate) {
       const dateStr = this.formatDate(new Date(), organization.dateFormat);
       parts.push(dateStr);
@@ -142,7 +222,17 @@ export class MonorepoStrategy extends BaseStrategy {
     return path.join(...parts);
   }
 
-  // Utility methods
+  // Utility methods  /**
+   * Performs the specified operation
+   * @param {string} filePath
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @param {string} filePath
+   * @returns {Promise} Promise that resolves with the result
+   */
+
   async fileExists(filePath) {
     try {
       const fs = await import('fs/promises');
@@ -151,7 +241,17 @@ export class MonorepoStrategy extends BaseStrategy {
     } catch {
       return false;
     }
-  }
+  }  /**
+   * Reads data from file
+   * @param {string} filePath
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Reads data from file
+   * @param {string} filePath
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async readFile(filePath) {
     const fs = await import('fs/promises');

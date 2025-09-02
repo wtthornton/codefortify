@@ -20,6 +20,36 @@ import ora from 'ora';
 import { ProjectScorer } from '../../scoring/ProjectScorer.js';
 import { QualityGates } from '../../gates/QualityGates.js';
 
+/**
+
+
+ * GatesCommand class implementation
+
+
+ * 
+
+
+ * Provides functionality for gatescommand operations
+
+
+ */
+
+
+/**
+
+
+ * GatesCommand class implementation
+
+
+ * 
+
+
+ * Provides functionality for gatescommand operations
+
+
+ */
+
+
 export class GatesCommand {
   /**
    * Create a new GatesCommand instance
@@ -88,7 +118,17 @@ export class GatesCommand {
       spinner.stop();
 
       // Extract quality gates results
-      const gatesResult = results.qualityGates;
+      const gatesResult = results.qualityGates;  /**
+   * Performs the specified operation
+   * @param {any} !gatesResult
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} !gatesResult
+   * @returns {any} The operation result
+   */
+
       
       if (!gatesResult) {
         throw new Error('Quality gates evaluation failed - no results available');
@@ -97,7 +137,17 @@ export class GatesCommand {
       // Output results
       await this.outputResults(gatesResult, options);
 
-      // Handle blocking behavior
+      // Handle blocking behavior  /**
+   * Performs the specified operation
+   * @param {Object} options.blocking ! - Optional parameter
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {Object} options.blocking ! - Optional parameter
+   * @returns {any} The operation result
+   */
+
       if (options.blocking !== false && !gatesResult.passed) {
         console.error(chalk.red('\n❌ Quality gates failed - blocking deployment'));
         process.exit(1);
@@ -105,7 +155,17 @@ export class GatesCommand {
 
     } catch (error) {
       spinner.fail('Failed to evaluate quality gates');
-      console.error(chalk.red('Error:'), error.message);
+      console.error(chalk.red('Error:'), error.message);  /**
+   * Performs the specified operation
+   * @param {Object} this.globalConfig.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @param {Object} this.globalConfig.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.globalConfig.verbose) {
         console.error(error.stack);
       }
@@ -127,7 +187,17 @@ export class GatesCommand {
     // Console output
     this.outputConsole(gatesResult);
 
-    // CI/CD output if format specified
+    // CI/CD output if format specified  /**
+   * Performs the specified operation
+   * @param {any} format ! - Optional parameter
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} format ! - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (format !== 'console') {
       await this.outputCI(gatesResult, format, outputFile);
     }
@@ -154,7 +224,17 @@ export class GatesCommand {
     // Summary
     console.log(`\n${chalk.bold('Summary:')}`);
     console.log(`  Gates Passed: ${chalk.green(summary.passed)}/${summary.total}`);
-    console.log(`  Gates Failed: ${chalk.red(summary.failed)}`);
+    console.log(`  Gates Failed: ${chalk.red(summary.failed)}`);  /**
+   * Performs the specified operation
+   * @param {any} summary.warnings > 0
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} summary.warnings > 0
+   * @returns {any} The operation result
+   */
+
     if (summary.warnings > 0) {
       console.log(`  Warnings: ${chalk.yellow(summary.warnings)}`);
     }
@@ -171,11 +251,31 @@ export class GatesCommand {
     });
 
     // Failed gates details
-    const failedGates = gates.filter(gate => !gate.passed);
+    const failedGates = gates.filter(gate => !gate.passed);  /**
+   * Performs the specified operation
+   * @param {any} failedGates.length > 0
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} failedGates.length > 0
+   * @returns {any} The operation result
+   */
+
     if (failedGates.length > 0) {
       console.log('\n' + chalk.bold.red('Failed Gates:'));
       failedGates.forEach(gate => {
-        console.log(`  ❌ ${gate.name}: ${gate.message}`);
+        console.log(`  ❌ ${gate.name}: ${gate.message}`);  /**
+   * Performs the specified operation
+   * @param {boolean} gate.details.issues && gate.details.issues.length > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @param {boolean} gate.details.issues && gate.details.issues.length > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+
         if (gate.details.issues && gate.details.issues.length > 0) {
           gate.details.issues.slice(0, 3).forEach(issue => {
             console.log(`    - ${issue}`);
@@ -185,7 +285,17 @@ export class GatesCommand {
     }
 
     // Warning gates details
-    const warningGates = gates.filter(gate => gate.warning);
+    const warningGates = gates.filter(gate => gate.warning);  /**
+   * Performs the specified operation
+   * @param {any} warningGates.length > 0
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} warningGates.length > 0
+   * @returns {any} The operation result
+   */
+
     if (warningGates.length > 0) {
       console.log('\n' + chalk.bold.yellow('Warning Gates:'));
       warningGates.forEach(gate => {
@@ -214,7 +324,17 @@ export class GatesCommand {
       const ciOutput = await qualityGates.generateCIOutput(gatesResult, {
         format,
         outputPath: outputFile
-      });
+      });  /**
+   * Performs the specified operation
+   * @param {any} outputFile
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} outputFile
+   * @returns {any} The operation result
+   */
+
 
       if (outputFile) {
         console.log(chalk.green(`✓ CI output written to: ${outputFile}`));
@@ -281,7 +401,7 @@ quality-gates:
   image: node:18
   script:
     - npm ci
-    - npx codefortify gates --format=gitlab-ci --output=quality-gates.md
+    - npx codefortify gates --format=gitlab-ci --output quality-gates.md
   artifacts:
     reports:
       markdown: quality-gates.md
@@ -292,7 +412,17 @@ quality-gates:
 // Jenkinsfile
 pipeline {
     agent any
-    stages {
+    stages {  /**
+   * Performs the specified operation
+   * @param {any} 'Quality Gates'
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} 'Quality Gates'
+   * @returns {any} The operation result
+   */
+
         stage('Quality Gates') {
             steps {
                 sh 'npm ci'

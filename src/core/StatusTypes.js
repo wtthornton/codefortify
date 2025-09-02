@@ -111,7 +111,17 @@ export class StatusData {
   /**
    * Get estimated remaining time
    */
-  getEstimatedRemainingTime() {
+  getEstimatedRemainingTime() {  /**
+   * Performs the specified operation
+   * @param {boolean} !this.estimatedCompletion || this.progress - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} !this.estimatedCompletion || this.progress - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (!this.estimatedCompletion || this.progress === 0) {
       return null;
     }
@@ -159,19 +169,63 @@ export class AgentStatus {
     this.results = null;
     this.errors = [];
     this.metrics = {};
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} message - Optional parameter
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} message - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
   start(message = '') {
     this.status = AGENT_STATUS.RUNNING;
     this.startTime = new Date();
     this.message = message || `${this.agentType} agent started`;
     this.progress = 0;
-  }
+  }  /**
+   * Updates existing data
+   * @param {any} progress
+   * @param {any} message - Optional parameter
+   * @returns {any} The operation result
+   */
+  /**
+   * Updates existing data
+   * @param {any} progress
+   * @param {any} message - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
   updateProgress(progress, message = '') {
-    this.progress = Math.min(100, Math.max(0, progress));
+    this.progress = Math.min(100, Math.max(0, progress));    /**
+   * Performs the specified operation
+   * @param {any} message
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} message
+   * @returns {any} The operation result
+   */
+
     if (message) {this.message = message;}
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} results - Optional parameter
+   * @param {any} message - Optional parameter
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} results - Optional parameter
+   * @param {any} message - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
   complete(results = null, message = '') {
     this.status = AGENT_STATUS.COMPLETED;
@@ -179,7 +233,19 @@ export class AgentStatus {
     this.progress = 100;
     this.results = results;
     this.message = message || `${this.agentType} agent completed`;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} error
+   * @param {any} message - Optional parameter
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} error
+   * @param {any} message - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
   fail(error, message = '') {
     this.status = AGENT_STATUS.FAILED;
@@ -190,7 +256,15 @@ export class AgentStatus {
       stack: error.stack
     });
     this.message = message || `${this.agentType} agent failed: ${error.message}`;
-  }
+  }  /**
+   * Performs the specified operation
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @returns {any} The operation result
+   */
+
 
   toJSON() {
     return {
@@ -222,7 +296,19 @@ export class ScoreStatus {
     this.history = [];
     this.lastCalculation = null;
     this.trend = 'stable'; // 'improving', 'declining', 'stable'
-  }
+  }  /**
+   * Updates existing data
+   * @param {any} newScore
+   * @param {any} categoryScores - Optional parameter
+   * @returns {any} The operation result
+   */
+  /**
+   * Updates existing data
+   * @param {any} newScore
+   * @param {any} categoryScores - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
   updateScore(newScore, categoryScores = {}) {
     this.previousScore = this.currentScore;
@@ -237,16 +323,44 @@ export class ScoreStatus {
       timestamp: new Date()
     });
 
-    // Keep only last 100 entries
+    // Keep only last 100 entries    /**
+   * Performs the specified operation
+   * @param {boolean} this.history.length > 100
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.history.length > 100
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.history.length > 100) {
       this.history = this.history.slice(-100);
     }
 
     // Calculate trend
     this.calculateTrend();
-  }
+  }  /**
+   * Calculates the result
+   * @returns {number} The calculated result
+   */
+  /**
+   * Calculates the result
+   * @returns {number} The calculated result
+   */
 
-  calculateTrend() {
+
+  calculateTrend() {  /**
+   * Performs the specified operation
+   * @param {boolean} this.history.length < 2
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.history.length < 2
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.history.length < 2) {
       this.trend = 'stable';
       return;
@@ -257,7 +371,17 @@ export class ScoreStatus {
       entry.score - recent[index].score
     );
 
-    const avgChange = changes.reduce((sum, change) => sum + change, 0) / changes.length;
+    const avgChange = changes.reduce((sum, change) => sum + change, 0) / changes.length;    /**
+   * Performs the specified operation
+   * @param {any} avgChange > 0.5
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} avgChange > 0.5
+   * @returns {any} The operation result
+   */
+
 
     if (avgChange > 0.5) {
       this.trend = 'improving';
@@ -266,15 +390,39 @@ export class ScoreStatus {
     } else {
       this.trend = 'stable';
     }
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   getScoreChange() {
     return this.currentScore - this.previousScore;
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   getProgressToTarget() {
     return Math.min(100, (this.currentScore / this.targetScore) * 100);
-  }
+  }  /**
+   * Performs the specified operation
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @returns {any} The operation result
+   */
+
 
   toJSON() {
     return {

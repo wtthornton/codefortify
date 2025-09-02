@@ -20,6 +20,36 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { ProjectScorer } from '../../scoring/ProjectScorer.js';
 
+/**
+
+
+ * ScoreCommand class implementation
+
+
+ *
+
+
+ * Provides functionality for scorecommand operations
+
+
+ */
+
+
+/**
+
+
+ * ScoreCommand class implementation
+
+
+ *
+
+
+ * Provides functionality for scorecommand operations
+
+
+ */
+
+
 export class ScoreCommand {
   /**
    * Create a new ScoreCommand instance
@@ -82,15 +112,45 @@ export class ScoreCommand {
 
     } catch (error) {
       spinner.fail('Failed to analyze project quality');
-      console.error(chalk.red('Error:'), error.message);
+      console.error(chalk.red('Error:'), error.message);      /**
+   * Performs the specified operation
+   * @param {Object} this.globalConfig.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.globalConfig.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.globalConfig.verbose) {
         console.error(error.stack);
       }
       process.exit(1);
     }
-  }
+  }  /**
+   * Parses the input data
+   * @param {any} categoriesString
+   * @returns {any} The operation result
+   */
+  /**
+   * Parses the input data
+   * @param {any} categoriesString
+   * @returns {any} The operation result
+   */
 
-  parseCategories(categoriesString) {
+
+  parseCategories(categoriesString) {  /**
+   * Performs the specified operation
+   * @param {any} !categoriesString || categoriesString - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !categoriesString || categoriesString - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (!categoriesString || categoriesString === 'all') {
       return ['structure', 'quality', 'performance', 'testing', 'security', 'developerExperience', 'completeness'];
     }
@@ -98,17 +158,49 @@ export class ScoreCommand {
     const validCategories = ['structure', 'quality', 'performance', 'testing', 'security', 'developerExperience', 'completeness'];
     const requested = categoriesString.split(',').map(cat => cat.trim());
 
-    const invalid = requested.filter(cat => !validCategories.includes(cat));
+    const invalid = requested.filter(cat => !validCategories.includes(cat));    /**
+   * Performs the specified operation
+   * @param {number} invalid.length > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {number} invalid.length > 0
+   * @returns {any} The operation result
+   */
+
     if (invalid.length > 0) {
       throw new Error(`Invalid categories: ${invalid.join(', ')}. Valid options: ${validCategories.join(', ')}`);
     }
 
     return requested;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} results
+   * @param {Object} options
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} results
+   * @param {Object} options
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async outputResults(results, options) {
     const format = options.format || 'console';
-    const outputFile = options.output;
+    const outputFile = options.output;    /**
+   * Performs the specified operation
+   * @param {any} format
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} format
+   * @returns {any} The operation result
+   */
+
 
     switch (format) {
     case 'console':
@@ -126,7 +218,19 @@ export class ScoreCommand {
     default:
       throw new Error(`Unsupported format: ${format}. Use console, json, or html.`);
     }
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} results
+   * @param {Object} options
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} results
+   * @param {Object} options
+   * @returns {any} The operation result
+   */
+
 
   outputConsole(results, options) {
     const { overall, categories, recommendations } = results;
@@ -137,7 +241,17 @@ export class ScoreCommand {
 
     // Overall score
     const gradeColor = this.getGradeColor(overall.grade);
-    console.log(`\n${chalk.bold('Overall Score:')} ${chalk.bold.white(overall.score)}/${overall.maxScore} (${overall.percentage}%) ${gradeColor(overall.grade)}`);
+    console.log(`\n${chalk.bold('Overall Score:')} ${chalk.bold.white(overall.score)}/${overall.maxScore} (${overall.percentage}%) ${gradeColor(overall.grade)}`);    /**
+   * Performs the specified operation
+   * @param {any} overall.timestamp
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} overall.timestamp
+   * @returns {any} The operation result
+   */
+
 
     if (overall.timestamp) {
       console.log(`${chalk.gray('Generated:')} ${new Date(overall.timestamp).toLocaleString()}`);
@@ -151,7 +265,17 @@ export class ScoreCommand {
       const progressBar = this.createProgressBar(percentage);
 
       console.log(`\n  ${chalk.bold(category.categoryName)}`);
-      console.log(`  ${progressBar} ${percentage}% ${gradeColor(category.grade)} (${category.score}/${category.maxScore})`);
+      console.log(`  ${progressBar} ${percentage}% ${gradeColor(category.grade)} (${category.score}/${category.maxScore})`);      /**
+   * Performs the specified operation
+   * @param {Object} options.detailed && category.issues?.length > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} options.detailed && category.issues?.length > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
       if (options.detailed && category.issues?.length > 0) {
         category.issues.forEach(issue => {
@@ -160,7 +284,17 @@ export class ScoreCommand {
       }
     });
 
-    // Recommendations
+    // Recommendations    /**
+   * Performs the specified operation
+   * @param {Object} options.recommendations && recommendations?.length > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} options.recommendations && recommendations?.length > 0
+   * @returns {any} The operation result
+   */
+
     if (options.recommendations && recommendations?.length > 0) {
       console.log('\n' + chalk.bold('🚀 Priority Recommendations:'));
       recommendations.slice(0, 5).forEach((rec, index) => {
@@ -171,12 +305,34 @@ export class ScoreCommand {
     }
 
     console.log(''); // Final newline
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} results
+   * @param {any} outputFile
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} results
+   * @param {any} outputFile
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async outputJSON(results, outputFile) {
     const { ScoringReport } = await import('../../scoring/ScoringReportRefactored.js');
     const report = new ScoringReport();
-    const json = await report.generateJSON(results);
+    const json = await report.generateJSON(results);    /**
+   * Performs the specified operation
+   * @param {any} outputFile
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} outputFile
+   * @returns {any} The operation result
+   */
+
 
     if (outputFile) {
       const fs = await import('fs-extra');
@@ -185,7 +341,21 @@ export class ScoreCommand {
     } else {
       console.log(json);
     }
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} results
+   * @param {any} outputFile
+   * @param {any} openInBrowser - Optional parameter
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} results
+   * @param {any} outputFile
+   * @param {any} openInBrowser - Optional parameter
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async outputHTML(results, outputFile, openInBrowser = false) {
     const { ScoringReport } = await import('../../scoring/ScoringReport.js');
@@ -198,13 +368,33 @@ export class ScoreCommand {
     const savedPath = await report.saveReport(results, 'html', filename, {
       openBrowser: openInBrowser
     });
-    
-    console.log(chalk.green(`✓ HTML report generated: ${savedPath}`));
+
+    console.log(chalk.green(`✓ HTML report generated: ${savedPath}`));    /**
+   * Performs the specified operation
+   * @param {any} openInBrowser
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} openInBrowser
+   * @returns {any} The operation result
+   */
+
 
     if (openInBrowser) {
       console.log(chalk.blue('🌐 Opening report in browser...'));
     }
-  }
+  }  /**
+   * Retrieves data
+   * @param {any} grade
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @param {any} grade
+   * @returns {string} The retrieved data
+   */
+
 
   getGradeColor(grade) {
     const gradeColors = {
@@ -215,13 +405,37 @@ export class ScoreCommand {
       'F': chalk.red.bold
     };
     return gradeColors[grade] || chalk.white;
-  }
+  }  /**
+   * Creates a new resource
+   * @param {any} percentage
+   * @param {number} width - Optional parameter
+   * @returns {any} The created resource
+   */
+  /**
+   * Creates a new resource
+   * @param {any} percentage
+   * @param {number} width - Optional parameter
+   * @returns {any} The created resource
+   */
+
 
   createProgressBar(percentage, width = 20) {
-    const filled = Math.round((percentage / 100) * width);
+    // Ensure percentage is within valid bounds
+    const safePercentage = Math.max(0, Math.min(100, percentage));
+    const filled = Math.round((safePercentage / 100) * width);
     const empty = width - filled;
 
-    let color = chalk.red;
+    let color = chalk.red;    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (percentage >= 80) {color = chalk.green;}
     else if (percentage >= 60) {color = chalk.yellow;}
 

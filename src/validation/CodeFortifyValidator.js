@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /**
  * CodeFortify Validation System - AI-Powered Code Security
  *
@@ -9,6 +7,36 @@
 
 import fs from 'fs/promises';
 import path from 'path';
+
+/**
+
+
+ * CodeFortifyValidator class implementation
+
+
+ *
+
+
+ * Provides functionality for codefortifyvalidator operations
+
+
+ */
+
+
+/**
+
+
+ * CodeFortifyValidator class implementation
+
+
+ *
+
+
+ * Provides functionality for codefortifyvalidator operations
+
+
+ */
+
 
 export class CodeFortifyValidator {
   constructor(config = {}) {
@@ -22,7 +50,15 @@ export class CodeFortifyValidator {
 
     this.validationResults = [];
     this.setupValidationRules();
-  }
+  }  /**
+   * Sets configuration
+   * @returns {any} The operation result
+   */
+  /**
+   * Sets configuration
+   * @returns {any} The operation result
+   */
+
 
   setupValidationRules() {
     // Base required files for all projects
@@ -31,7 +67,17 @@ export class CodeFortifyValidator {
       'CLAUDE.md'
     ];
 
-    // Add CodeFortify files if they should exist (disabled by default)
+    // Add CodeFortify files if they should exist (disabled by default)    /**
+   * Performs the specified operation
+   * @param {Object} this.config.codefortifyEnabled - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.config.codefortifyEnabled - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.config.codefortifyEnabled === true) {
       this.requiredFiles.push(
         '.codefortify/config.yml',
@@ -43,7 +89,17 @@ export class CodeFortifyValidator {
       );
     }
 
-    // Add MCP server file if MCP is enabled
+    // Add MCP server file if MCP is enabled    /**
+   * Performs the specified operation
+   * @param {Object} this.config.mcpEnabled ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.config.mcpEnabled ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.config.mcpEnabled !== false) {
       this.requiredFiles.push('src/mcp-server.js');
     }
@@ -56,14 +112,42 @@ export class CodeFortifyValidator {
 
     // Add project-type specific requirements
     this.addProjectTypeRequirements();
-  }
+  }  /**
+   * Adds an item
+   * @returns {any} The operation result
+   */
+  /**
+   * Adds an item
+   * @returns {any} The operation result
+   */
 
-  addProjectTypeRequirements() {
+
+  addProjectTypeRequirements() {  /**
+   * Performs the specified operation
+   * @param {Object} this.config.projectType
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.config.projectType
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     switch (this.config.projectType) {
     case 'react-webapp':
     case 'vue-webapp':
     case 'svelte-webapp':
-      this.requiredDirectories.push('examples');
+      this.requiredDirectories.push('examples');      /**
+   * Performs the specified operation
+   * @param {Object} this.config.codefortifyEnabled ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.codefortifyEnabled ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.config.codefortifyEnabled !== false) {
         this.requiredDirectories.push(
           '.codefortify/instructions',
@@ -81,14 +165,21 @@ export class CodeFortifyValidator {
       // JavaScript project defaults
       break;
     }
-  }
+  }  /**
+   * Runs the specified task
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Runs the specified task
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async runValidation() {
-    console.log('🚀 Starting Context7 Validation');
-    console.log(`Project: ${this.config.projectRoot}`);
-    console.log(`Type: ${this.config.projectType}`);
-    console.log('=' .repeat(60));
-
+    // LOG: 🚀 Starting Context7 Validation
+    // LOG: `Project: ${this.config.projectRoot}`
+    // LOG: `Type: ${this.config.projectType}`
+    // LOG: = .repeat(60)
     try {
       await this.validateFileStructure();
       await this.validateAgentOSConfig();
@@ -106,18 +197,35 @@ export class CodeFortifyValidator {
       };
 
     } catch (error) {
-      console.error('💥 Validation failed:', error.message);
+      // ERROR: 💥 Validation failed:, error.message
       return {
         success: false,
         error: error.message
       };
     }
-  }
+  }  /**
+   * Validates input data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Validates input data
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async validateFileStructure() {
-    console.log('🔍 Validating Context7 file structure...');
+    // LOG: 🔍 Validating Context7 file structure...
+    // Check required directories  /**
+   * Performs the specified operation
+   * @param {boolean} const dir of this.requiredDirectories
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} const dir of this.requiredDirectories
+   * @returns {boolean} True if successful, false otherwise
+   */
 
-    // Check required directories
     for (const dir of this.requiredDirectories) {
       const dirPath = path.join(this.config.projectRoot, dir);
       try {
@@ -132,7 +240,17 @@ export class CodeFortifyValidator {
       }
     }
 
-    // Check required files
+    // Check required files    /**
+   * Performs the specified operation
+   * @param {boolean} const file of this.requiredFiles
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} const file of this.requiredFiles
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     for (const file of this.requiredFiles) {
       const filePath = path.join(this.config.projectRoot, file);
       try {
@@ -147,11 +265,18 @@ export class CodeFortifyValidator {
         this.addResult('Required Files', file, 'FAIL', 'File does not exist');
       }
     }
-  }
+  }  /**
+   * Validates input data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Validates input data
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async validateAgentOSConfig() {
-    console.log('🔍 Validating Agent OS configuration...');
-
+    // LOG: 🔍 Validating Agent OS configuration...
     try {
       const configPath = path.join(this.config.projectRoot, '.codefortify/config.yml');
       const configContent = await fs.readFile(configPath, 'utf-8');
@@ -162,10 +287,30 @@ export class CodeFortifyValidator {
         'agents:'
       ];
 
-      // Add MCP sections if MCP should be enabled
+      // Add MCP sections if MCP should be enabled      /**
+   * Performs the specified operation
+   * @param {Object} this.config.mcpEnabled ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.mcpEnabled ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.config.mcpEnabled !== false) {
         requiredSections.push('mcp:', 'context7:');
-      }
+      }      /**
+   * Performs the specified operation
+   * @param {any} const section of requiredSections
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const section of requiredSections
+   * @returns {any} The operation result
+   */
+
 
       for (const section of requiredSections) {
         if (configContent.includes(section)) {
@@ -175,7 +320,17 @@ export class CodeFortifyValidator {
         }
       }
 
-      // Check MCP configuration if enabled
+      // Check MCP configuration if enabled      /**
+   * Performs the specified operation
+   * @param {Object} this.config.mcpEnabled ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.mcpEnabled ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.config.mcpEnabled !== false) {
         if (configContent.includes('mcp:') && configContent.includes('enabled: true')) {
           this.addResult('MCP Configuration', 'MCP Enabled', 'PASS', 'MCP is enabled');
@@ -193,13 +348,30 @@ export class CodeFortifyValidator {
     } catch (error) {
       this.addResult('Agent OS Config', 'Config File', 'FAIL', `Cannot read config: ${error.message}`);
     }
-  }
+  }  /**
+   * Validates input data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Validates input data
+   * @returns {Promise} Promise that resolves with the result
+   */
 
-  async validateMCPServer() {
+
+  async validateMCPServer() {  /**
+   * Performs the specified operation
+   * @param {Object} this.config.mcpEnabled - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.config.mcpEnabled - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.config.mcpEnabled === false) {return;}
 
-    console.log('🔍 Validating MCP server implementation...');
-
+    // LOG: 🔍 Validating MCP server implementation...
     try {
       const serverPath = path.join(this.config.projectRoot, 'src/mcp-server.js');
       const serverContent = await fs.readFile(serverPath, 'utf-8');
@@ -211,7 +383,17 @@ export class CodeFortifyValidator {
         'ListResourcesRequestSchema',
         'ListToolsRequestSchema',
         'Context7MCPServer'
-      ];
+      ];      /**
+   * Performs the specified operation
+   * @param {any} const component of requiredComponents
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const component of requiredComponents
+   * @returns {any} The operation result
+   */
+
 
       for (const component of requiredComponents) {
         if (serverContent.includes(component)) {
@@ -227,7 +409,17 @@ export class CodeFortifyValidator {
         'get_pattern_examples',
         'check_naming_conventions',
         'suggest_improvements'
-      ];
+      ];      /**
+   * Performs the specified operation
+   * @param {any} const tool of requiredTools
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const tool of requiredTools
+   * @returns {any} The operation result
+   */
+
 
       for (const tool of requiredTools) {
         if (serverContent.includes(tool)) {
@@ -240,18 +432,45 @@ export class CodeFortifyValidator {
     } catch (error) {
       this.addResult('MCP Server', 'Server File', 'FAIL', `Cannot read server: ${error.message}`);
     }
-  }
+  }  /**
+   * Validates input data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Validates input data
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async validatePackageJson() {
-    console.log('🔍 Validating package.json configuration...');
-
+    // LOG: 🔍 Validating package.json configuration...
     try {
       const packagePath = path.join(this.config.projectRoot, 'package.json');
       const packageContent = await fs.readFile(packagePath, 'utf-8');
       const packageJson = JSON.parse(packageContent);
 
-      // Check for MCP dependency if MCP is enabled
-      if (this.config.mcpEnabled !== false) {
+      // Check for MCP dependency if MCP is enabled      /**
+   * Performs the specified operation
+   * @param {Object} this.config.mcpEnabled ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.mcpEnabled ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
+      if (this.config.mcpEnabled !== false) {        /**
+   * Performs the specified operation
+   * @param {any} packageJson.dependencies && packageJson.dependencies['@modelcontextprotocol/sdk']
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} packageJson.dependencies && packageJson.dependencies['@modelcontextprotocol/sdk']
+   * @returns {any} The operation result
+   */
+
         if (packageJson.dependencies && packageJson.dependencies['@modelcontextprotocol/sdk']) {
           this.addResult('Package Dependencies', 'MCP SDK', 'PASS', 'MCP SDK dependency present');
         } else {
@@ -263,9 +482,29 @@ export class CodeFortifyValidator {
           'mcp:dev',
           'mcp:test',
           'context7:validate'
-        ];
+        ];        /**
+   * Performs the specified operation
+   * @param {any} const script of requiredScripts
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} const script of requiredScripts
+   * @returns {any} The operation result
+   */
 
-        for (const script of requiredScripts) {
+
+        for (const script of requiredScripts) {          /**
+   * Performs the specified operation
+   * @param {any} packageJson.scripts && packageJson.scripts[script]
+   * @returns {any} The operation result
+   */
+          /**
+   * Performs the specified operation
+   * @param {any} packageJson.scripts && packageJson.scripts[script]
+   * @returns {any} The operation result
+   */
+
           if (packageJson.scripts && packageJson.scripts[script]) {
             this.addResult('Package Scripts', script, 'PASS', 'Script present');
           } else {
@@ -280,13 +519,43 @@ export class CodeFortifyValidator {
     } catch (error) {
       this.addResult('Package Configuration', 'package.json', 'FAIL', `Cannot read package.json: ${error.message}`);
     }
-  }
+  }  /**
+   * Validates input data
+   * @param {any} packageJson
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Validates input data
+   * @param {any} packageJson
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async validateProjectTypeDependencies(packageJson) {
-    const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };
+    const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };    /**
+   * Performs the specified operation
+   * @param {Object} this.config.projectType
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.config.projectType
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     switch (this.config.projectType) {
-    case 'react-webapp':
+    case 'react-webapp':      /**
+   * Performs the specified operation
+   * @param {any} deps.react
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} deps.react
+   * @returns {any} The operation result
+   */
+
       if (deps.react) {
         this.addResult('Project Dependencies', 'React', 'PASS', 'React dependency present');
       } else {
@@ -294,7 +563,17 @@ export class CodeFortifyValidator {
       }
       break;
 
-    case 'vue-webapp':
+    case 'vue-webapp':      /**
+   * Performs the specified operation
+   * @param {any} deps.vue
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} deps.vue
+   * @returns {any} The operation result
+   */
+
       if (deps.vue) {
         this.addResult('Project Dependencies', 'Vue', 'PASS', 'Vue dependency present');
       } else {
@@ -302,7 +581,17 @@ export class CodeFortifyValidator {
       }
       break;
 
-    case 'node-api':
+    case 'node-api':      /**
+   * Performs the specified operation
+   * @param {any} deps.express || deps.fastify || deps.koa
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} deps.express || deps.fastify || deps.koa
+   * @returns {any} The operation result
+   */
+
       if (deps.express || deps.fastify || deps.koa) {
         this.addResult('Project Dependencies', 'Web Framework', 'PASS', 'Web framework dependency present');
       } else {
@@ -310,11 +599,18 @@ export class CodeFortifyValidator {
       }
       break;
     }
-  }
+  }  /**
+   * Validates input data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Validates input data
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async validateDocumentation() {
-    console.log('🔍 Validating Context7 documentation...');
-
+    // LOG: 🔍 Validating Context7 documentation...
     const docFiles = [
       {
         file: 'AGENTS.md',
@@ -328,7 +624,17 @@ export class CodeFortifyValidator {
       }
     ];
 
-    // Add optional CodeFortify docs if they should exist
+    // Add optional CodeFortify docs if they should exist    /**
+   * Performs the specified operation
+   * @param {Object} this.config.codefortifyEnabled ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.config.codefortifyEnabled ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.config.codefortifyEnabled !== false) {
       docFiles.push(
         {
@@ -342,19 +648,49 @@ export class CodeFortifyValidator {
           required: true
         }
       );
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {any} const doc of docFiles
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const doc of docFiles
+   * @returns {any} The operation result
+   */
+
 
     for (const doc of docFiles) {
       try {
         const docPath = path.join(this.config.projectRoot, doc.file);
         const docContent = await fs.readFile(docPath, 'utf-8');
 
-        const missingContent = [];
+        const missingContent = [];        /**
+   * Performs the specified operation
+   * @param {any} const expectedContent of doc.content
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} const expectedContent of doc.content
+   * @returns {any} The operation result
+   */
+
         for (const expectedContent of doc.content) {
           if (!docContent.includes(expectedContent)) {
             missingContent.push(expectedContent);
           }
-        }
+        }        /**
+   * Performs the specified operation
+   * @param {boolean} missingContent.length - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+        /**
+   * Performs the specified operation
+   * @param {boolean} missingContent.length - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
         if (missingContent.length === 0) {
           this.addResult('Documentation', doc.file, 'PASS', 'All required content present');
@@ -368,21 +704,56 @@ export class CodeFortifyValidator {
         this.addResult('Documentation', doc.file, status, `Cannot read file: ${error.message}`);
       }
     }
-  }
+  }  /**
+   * Validates input data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Validates input data
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async validateProjectSpecificFiles() {
-    // This can be overridden by specific project types
+    // This can be overridden by specific project types  /**
+   * Performs the specified operation
+   * @param {Object} this.config.projectType - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.config.projectType - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.config.projectType === 'react-webapp') {
       await this.validateReactSpecificFiles();
     }
-  }
+  }  /**
+   * Validates input data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Validates input data
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async validateReactSpecificFiles() {
-    console.log('🔍 Validating React-specific files...');
-
+    // LOG: 🔍 Validating React-specific files...
     try {
       const examplesDir = path.join(this.config.projectRoot, 'examples');
-      const files = await fs.readdir(examplesDir);
+      const files = await fs.readdir(examplesDir);      /**
+   * Performs the specified operation
+   * @param {any} files.length > 0
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} files.length > 0
+   * @returns {any} The operation result
+   */
+
 
       if (files.length > 0) {
         this.addResult('Example Patterns', 'Examples Directory', 'PASS', `${files.length} example files found`);
@@ -390,7 +761,17 @@ export class CodeFortifyValidator {
         // Check for component patterns file
         const hasPatternFile = files.some(file =>
           file.includes('pattern') || file.includes('demo') || file.includes('component')
-        );
+        );        /**
+   * Performs the specified operation
+   * @param {boolean} hasPatternFile
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {boolean} hasPatternFile
+   * @returns {any} The operation result
+   */
+
 
         if (hasPatternFile) {
           this.addResult('Example Patterns', 'Component Patterns', 'PASS', 'Pattern file present');
@@ -404,7 +785,23 @@ export class CodeFortifyValidator {
     } catch (error) {
       this.addResult('Example Patterns', 'Examples Directory', 'WARN', `Cannot read examples: ${error.message}`);
     }
-  }
+  }  /**
+   * Adds an item
+   * @param {any} category
+   * @param {any} item
+   * @param {any} status
+   * @param {any} details
+   * @returns {any} The operation result
+   */
+  /**
+   * Adds an item
+   * @param {any} category
+   * @param {any} item
+   * @param {any} status
+   * @param {any} details
+   * @returns {any} The operation result
+   */
+
 
   addResult(category, item, status, details) {
     this.validationResults.push({
@@ -413,41 +810,75 @@ export class CodeFortifyValidator {
       status,
       details
     });
-  }
+  }  /**
+   * Generates new data
+   * @returns {any} The created resource
+   */
+  /**
+   * Generates new data
+   * @returns {any} The created resource
+   */
+
 
   generateReport() {
-    console.log('\\n📊 Context7 Validation Report');
-    console.log('=' .repeat(60));
-
+    // LOG: \\n📊 Context7 Validation Report
+    // LOG: = .repeat(60)
     const categories = [...new Set(this.validationResults.map(r => r.category))];
     const totalTests = this.validationResults.length;
     const passedTests = this.validationResults.filter(r => r.status === 'PASS').length;
     const failedTests = this.validationResults.filter(r => r.status === 'FAIL').length;
     const warnTests = this.validationResults.filter(r => r.status === 'WARN').length;
 
-    console.log('\\nOverall Results:');
-    console.log(`Total Validations: ${totalTests}`);
-    console.log(`Passed: ${passedTests} ✅`);
+    // LOG: \\nOverall Results:
+    // LOG: `Total Validations: ${totalTests}`
+    // LOG: `Passed: ${passedTests} ✅`
+    /**
+   * Performs the specified operation
+   * @param {any} warnTests > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} warnTests > 0
+   * @returns {any} The operation result
+   */
     if (warnTests > 0) {
-      console.log(`Warnings: ${warnTests} ⚠️`);
+      // LOG: `Warnings: ${warnTests} ⚠️`
     }
-    console.log(`Failed: ${failedTests} ❌`);
-    console.log(`Success Rate: ${Math.round((passedTests / totalTests) * 100)}%`);
+    // LOG: `Failed: ${failedTests} ❌`
+    // LOG: `Success Rate: ${Math.round((passedTests / totalTests) * 100)}%`
+    // Results by category    /**
+   * Performs the specified operation
+   * @param {any} const category of categories
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const category of categories
+   * @returns {any} The operation result
+   */
 
-    // Results by category
     for (const category of categories) {
-      console.log(`\\n${category}:`);
-      console.log('-' .repeat(40));
-
+      // LOG: `\\n${category}:`
+      // LOG: - .repeat(40)
       const categoryResults = this.validationResults.filter(r => r.category === category);
       const categoryPassed = categoryResults.filter(r => r.status === 'PASS').length;
       const categoryTotal = categoryResults.length;
 
-      console.log(`${categoryPassed}/${categoryTotal} validations passed`);
-
+      // LOG: `${categoryPassed}/${categoryTotal} validations passed`
+      /**
+   * Performs the specified operation
+   * @param {any} const result of categoryResults
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const result of categoryResults
+   * @returns {any} The operation result
+   */
       for (const result of categoryResults) {
         const status = result.status === 'PASS' ? '✅' : result.status === 'WARN' ? '⚠️' : '❌';
-        console.log(`  ${status} ${result.item}: ${result.details}`);
+        // LOG: `  ${status} ${result.item}: ${result.details}`
       }
     }
 
@@ -462,40 +893,90 @@ export class CodeFortifyValidator {
       successRate: Math.round((passedTests / totalTests) * 100),
       categories: categories.length
     };
-  }
+  }  /**
+   * Generates new data
+   * @param {any} failedTests
+   * @param {any} warnTests
+   * @returns {any} The created resource
+   */
+  /**
+   * Generates new data
+   * @param {any} failedTests
+   * @param {any} warnTests
+   * @returns {any} The created resource
+   */
+
 
   generateRecommendations(failedTests, warnTests) {
-    console.log('\\n💡 Recommendations:');
-    console.log('-' .repeat(40));
-
+    // LOG: \\n💡 Recommendations:
+    // LOG: - .repeat(40)
     const failedResults = this.validationResults.filter(r => r.status === 'FAIL');
-    const warnResults = this.validationResults.filter(r => r.status === 'WARN');
+    const warnResults = this.validationResults.filter(r => r.status === 'WARN');    /**
+   * Performs the specified operation
+   * @param {any} failedTests - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} failedTests - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
     if (failedTests === 0 && warnTests === 0) {
-      console.log('🎉 Excellent! Your project fully complies with Context7 standards.');
-      console.log('All AI assistants should have optimal integration capabilities.');
-    } else {
-      if (failedTests > 0) {
-        console.log(`Found ${failedTests} critical issues that must be addressed:`);
+      // LOG: 🎉 Excellent! Your project fully complies with Context7 standards.
+      // LOG: All AI assistants should have optimal integration capabilities.
+    } else {      /**
+   * Performs the specified operation
+   * @param {any} failedTests > 0
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} failedTests > 0
+   * @returns {any} The operation result
+   */
 
+      if (failedTests > 0) {
+        // LOG: `Found ${failedTests} critical issues that must be addressed:`
         const priorityFixes = failedResults.filter(r =>
           r.category === 'Required Files' ||
           r.category === 'MCP Configuration' ||
           r.category === 'Agent OS Config'
-        );
+        );        /**
+   * Performs the specified operation
+   * @param {any} priorityFixes.length > 0
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} priorityFixes.length > 0
+   * @returns {any} The operation result
+   */
+
 
         if (priorityFixes.length > 0) {
-          console.log('\\nHigh Priority Fixes:');
+          // LOG: \\nHigh Priority Fixes:
           priorityFixes.forEach((fix, index) => {
-            console.log(`${index + 1}. ${fix.category} - ${fix.item}: ${fix.details}`);
+            // LOG: `${index + 1}. ${fix.category} - ${fix.item}: ${fix.details}`
           });
         }
-      }
+      }      /**
+   * Performs the specified operation
+   * @param {any} warnTests > 0
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} warnTests > 0
+   * @returns {any} The operation result
+   */
+
 
       if (warnTests > 0) {
-        console.log(`\\nFound ${warnTests} warnings (recommended improvements):`);
+        // LOG: `\\nFound ${warnTests} warnings (recommended improvements):`
         warnResults.slice(0, 5).forEach((warn, index) => {
-          console.log(`${index + 1}. ${warn.category} - ${warn.item}: ${warn.details}`);
+          // LOG: `${index + 1}. ${warn.category} - ${warn.item}: ${warn.details}`
         });
       }
     }
@@ -518,7 +999,17 @@ export class CodeFortifyValidator {
     try {
       const packageJsonPath = path.join(projectRoot, 'package.json');
       const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'));
-      const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };
+      const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };      /**
+   * Performs the specified operation
+   * @param {any} deps.react
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} deps.react
+   * @returns {any} The operation result
+   */
+
 
       if (deps.react) {projectType = 'react-webapp';}
       else if (deps.vue) {projectType = 'vue-webapp';}
@@ -540,7 +1031,7 @@ if (import.meta.url === new URL(process.argv[1], 'file:').href) {
       process.exit(result.success ? 0 : 1);
     })
     .catch(error => {
-      console.error('Validation error:', error);
+      // ERROR: Validation error:, error
       process.exit(1);
     });
 }

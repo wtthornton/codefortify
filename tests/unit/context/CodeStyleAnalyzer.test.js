@@ -124,7 +124,7 @@ describe('CodeStyleAnalyzer', () => {
         path.join(testProjectDir, 'src', 'file1.js'),
         `function example() {
   const message = "Hello World";
-  console.log(message);
+  // LOG: message
 }`
       );
 
@@ -132,7 +132,7 @@ describe('CodeStyleAnalyzer', () => {
         path.join(testProjectDir, 'src', 'file2.js'),
         `function anotherExample() {
   const message = 'Hello World';
-  console.log(message);
+  // LOG: message
 }`
       );
 
@@ -298,7 +298,7 @@ function example() {
         path.join(testProjectDir, 'src', 'test.js'),
         `function example() {
   if (true) {
-    console.log('indented');
+    // LOG: indented
   }
 }`
       );
@@ -338,7 +338,7 @@ export default class MyClass {}`
         `const single = 'single';
 const double = "double";
 function example() {
-  console.log('mixed quotes');
+  // LOG: mixed quotes
 }`
       );
 
@@ -433,7 +433,7 @@ function example() {
         await fs.writeFile(
           path.join(testProjectDir, 'src', `file${i}.js`),
           `function example${i}() {
-  console.log('test ${i}');
+  // LOG: test ${i}
 }`
         );
       }

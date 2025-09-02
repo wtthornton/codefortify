@@ -22,25 +22,64 @@ export function initializeCodeFortify(options = {}) {
  * 🎯 Quick Quality Check
  * Perfect for getting an immediate assessment of code quality
  */
-export async function quickCheck() {
+export async function quickCheck() {  /**
+   * Performs the specified operation
+   * @param {any} !codefortify
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} !codefortify
+   * @returns {any} The operation result
+   */
+
   if (!codefortify) {initializeCodeFortify();}
 
-  console.log('🎯 Running quick quality check...');
-  const result = await codefortify.quickHealthCheck();
+  // LOG: 🎯 Running quick quality check...
+  const result = await codefortify.quickHealthCheck();  /**
+   * Performs the specified operation
+   * @param {any} result.success
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} result.success
+   * @returns {any} The operation result
+   */
+
 
   if (result.success) {
-    console.log(`\n${result.health.icon} **Project Health: ${result.health.level}**`);
-    console.log(`📊 Current Score: ${result.health.score}/100`);
-
+    // LOG: `\n${result.health.icon} **Project Health: ${result.health.level}**`
+    // LOG: `📊 Current Score: ${result.health.score}/100`
+  /**
+   * Performs the specified operation
+   * @param {boolean} result.urgentIssues.length > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} result.urgentIssues.length > 0
+   * @returns {any} The operation result
+   */
     if (result.urgentIssues.length > 0) {
-      console.log('\n🚨 **Urgent Issues:**');
+      // LOG: \n🚨 **Urgent Issues:**
       result.urgentIssues.forEach(issue => {
-        console.log(`  • ${issue.category}: ${issue.score}% (${issue.severity})`);
+        // LOG: `  • ${issue.category}: ${issue.score}% (${issue.severity})`
       });
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {any} result.quickFixes.length > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} result.quickFixes.length > 0
+   * @returns {any} The operation result
+   */
+
 
     if (result.quickFixes.length > 0) {
-      console.log('\n⚡ **Quick Fixes:**');
+      // LOG: \n⚡ **Quick Fixes:**
       result.quickFixes.forEach(fix => console.log(`  • ${fix}`));
     }
   }
@@ -52,33 +91,82 @@ export async function quickCheck() {
  * 🔍 Analyze Code Quality
  * Comprehensive analysis with actionable insights
  */
-export async function analyzeQuality(options = {}) {
+export async function analyzeQuality(options = {}) {  /**
+   * Performs the specified operation
+   * @param {any} !codefortify
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} !codefortify
+   * @returns {any} The operation result
+   */
+
   if (!codefortify) {initializeCodeFortify();}
 
-  console.log('🔍 Analyzing code quality...');
-  const result = await codefortify.analyzeQuality(options);
+  // LOG: 🔍 Analyzing code quality...
+  const result = await codefortify.analyzeQuality(options);  /**
+   * Performs the specified operation
+   * @param {any} result.success
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} result.success
+   * @returns {any} The operation result
+   */
+
 
   if (result.success) {
-    console.log(`\n📊 **Overall Score: ${result.analysis.overallScore}/100** (${result.analysis.overallGrade})`);
+    // LOG: `\n📊 **Overall Score: ${result.analysis.overallScore}/100** (${result.analysis.overallGrade})`
+    // Show insights  /**
+   * Performs the specified operation
+   * @param {any} result.insights.length > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} result.insights.length > 0
+   * @returns {any} The operation result
+   */
 
-    // Show insights
     if (result.insights.length > 0) {
-      console.log('\n💡 **Key Insights:**');
+      // LOG: \n💡 **Key Insights:**
       result.insights.forEach(insight => console.log(`  ${insight}`));
     }
 
-    // Show prioritized recommendations
+    // Show prioritized recommendations    /**
+   * Performs the specified operation
+   * @param {any} result.recommendations.length > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} result.recommendations.length > 0
+   * @returns {any} The operation result
+   */
+
     if (result.recommendations.length > 0) {
-      console.log('\n🎯 **Priority Actions:**');
+      // LOG: \n🎯 **Priority Actions:**
       result.recommendations.forEach(rec => {
-        console.log(`  ${rec.priority} ${rec.category} (${rec.score}%)`);
-        console.log(`    → ${rec.action}`);
+        // LOG: `  ${rec.priority} ${rec.category} (${rec.score}%)`
+        // LOG: `    → ${rec.action}`
       });
     }
   } else {
-    console.log(`❌ Analysis failed: ${result.error}`);
+    // LOG: `❌ Analysis failed: ${result.error}`
+  /**
+   * Performs the specified operation
+   * @param {any} result.suggestion
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} result.suggestion
+   * @returns {any} The operation result
+   */
     if (result.suggestion) {
-      console.log(`💡 Suggestion: ${result.suggestion}`);
+      // LOG: `💡 Suggestion: ${result.suggestion}`
     }
   }
 
@@ -89,34 +177,104 @@ export async function analyzeQuality(options = {}) {
  * 🚀 Enhance Code
  * Autonomous code improvement with intelligent defaults
  */
-export async function enhanceCode(options = {}) {
+export async function enhanceCode(options = {}) {  /**
+   * Performs the specified operation
+   * @param {any} !codefortify
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} !codefortify
+   * @returns {any} The operation result
+   */
+
   if (!codefortify) {initializeCodeFortify();}
 
-  console.log('🚀 Starting code enhancement...');
-  const result = await codefortify.enhanceCode(options);
+  // LOG: 🚀 Starting code enhancement...
+  const result = await codefortify.enhanceCode(options);  /**
+   * Performs the specified operation
+   * @param {any} result.success
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} result.success
+   * @returns {any} The operation result
+   */
 
-  if (result.success) {
+
+  if (result.success) {  /**
+   * Performs the specified operation
+   * @param {any} result.dryRun
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} result.dryRun
+   * @returns {any} The operation result
+   */
+
     if (result.dryRun) {
-      console.log('\n🧪 **Dry Run Preview:**');
-      console.log(`Command: ${result.command}`);
-      console.log(`Target: ${result.estimatedImpact.targetScore}% (+${result.estimatedImpact.expectedImprovement}%)`);
-      console.log(`Estimated Time: ${result.estimatedImpact.estimatedTime}`);
+      // LOG: \n🧪 **Dry Run Preview:**
+      // LOG: `Command: ${result.command}`
+      // LOG: `Target: ${result.estimatedImpact.targetScore}% (+${result.estimatedImpact.expectedImprovement}%)`
+      // LOG: `Estimated Time: ${result.estimatedImpact.estimatedTime}`
     } else {
-      console.log('\n✅ **Enhancement Complete!**');
+      // LOG: \n✅ **Enhancement Complete!**
+      /**
+   * Performs the specified operation
+   * @param {any} result.improvement
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} result.improvement
+   * @returns {any} The operation result
+   */
       if (result.improvement) {
-        console.log(`📈 Score Change: ${result.improvement.before}% → ${result.improvement.after}%`);
-      }
+        // LOG: `📈 Score Change: ${result.improvement.before}% → ${result.improvement.after}%`
+      }      /**
+   * Performs the specified operation
+   * @param {any} result.nextSteps.length > 0
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} result.nextSteps.length > 0
+   * @returns {any} The operation result
+   */
+
 
       if (result.nextSteps.length > 0) {
-        console.log('\n🎯 **Next Steps:**');
+        // LOG: \n🎯 **Next Steps:**
         result.nextSteps.forEach(step => console.log(`  • ${step}`));
       }
     }
   } else {
-    console.log(`❌ Enhancement failed: ${result.error}`);
-    if (result.suggestion) {console.log(`💡 ${result.suggestion}`);}
+    // LOG: `❌ Enhancement failed: ${result.error}`
+  /**
+   * Performs the specified operation
+   * @param {any} result.suggestion
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} result.suggestion
+   * @returns {any} The operation result
+   */
+    if (result.suggestion) {console.log(`💡 ${result.suggestion}`);}    /**
+   * Performs the specified operation
+   * @param {any} result.recovery
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} result.recovery
+   * @returns {any} The operation result
+   */
+
     if (result.recovery) {
-      console.log('🔧 **Recovery Actions:**');
+      // LOG: 🔧 **Recovery Actions:**
       result.recovery.forEach(action => console.log(`  • ${action}`));
     }
   }
@@ -128,29 +286,89 @@ export async function enhanceCode(options = {}) {
  * 📊 Generate Report
  * Create professional HTML quality report
  */
-export async function generateReport(options = {}) {
+export async function generateReport(options = {}) {  /**
+   * Performs the specified operation
+   * @param {any} !codefortify
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} !codefortify
+   * @returns {any} The operation result
+   */
+
   if (!codefortify) {initializeCodeFortify();}
 
-  console.log('📊 Generating quality report...');
-  const result = await codefortify.generateReport(options);
+  // LOG: 📊 Generating quality report...
+  const result = await codefortify.generateReport(options);  /**
+   * Performs the specified operation
+   * @param {any} result.success
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} result.success
+   * @returns {any} The operation result
+   */
+
 
   if (result.success) {
-    console.log('\n✅ **Report Generated!**');
+    // LOG: \n✅ **Report Generated!**
+  /**
+   * Performs the specified operation
+   * @param {string} result.reportPath
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {string} result.reportPath
+   * @returns {any} The operation result
+   */
     if (result.reportPath) {
-      console.log(`📄 Location: ${result.reportPath}`);
-      console.log(`📏 Size: ${result.reportSize}`);
-    }
+      // LOG: `📄 Location: ${result.reportPath}`
+      // LOG: `📏 Size: ${result.reportSize}`
+    }    /**
+   * Performs the specified operation
+   * @param {any} result.summary
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} result.summary
+   * @returns {any} The operation result
+   */
+
 
     if (result.summary) {
-      console.log(`📋 ${result.summary}`);
-    }
+      // LOG: `📋 ${result.summary}`
+    }    /**
+   * Performs the specified operation
+   * @param {any} result.recommendations?.length > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} result.recommendations?.length > 0
+   * @returns {any} The operation result
+   */
+
 
     if (result.recommendations?.length > 0) {
-      console.log('\n🎯 **Key Recommendations:**');
+      // LOG: \n🎯 **Key Recommendations:**
       result.recommendations.slice(0, 3).forEach(rec => console.log(`  • ${rec}`));
     }
   } else {
-    console.log(`❌ Report generation failed: ${result.error}`);
+    // LOG: `❌ Report generation failed: ${result.error}`
+  /**
+   * Performs the specified operation
+   * @param {any} result.fallback
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} result.fallback
+   * @returns {any} The operation result
+   */
     if (result.fallback) {console.log(`💡 Fallback: ${result.fallback}`);}
   }
 
@@ -161,27 +379,76 @@ export async function generateReport(options = {}) {
  * ✅ Validate Project
  * Check CodeFortify compliance and project setup
  */
-export async function validateProject() {
+export async function validateProject() {  /**
+   * Performs the specified operation
+   * @param {any} !codefortify
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} !codefortify
+   * @returns {any} The operation result
+   */
+
   if (!codefortify) {initializeCodeFortify();}
 
-  console.log('✅ Validating project...');
-  const result = await codefortify.validateProject();
+  // LOG: ✅ Validating project...
+  const result = await codefortify.validateProject();  /**
+   * Performs the specified operation
+   * @param {any} result.success
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} result.success
+   * @returns {any} The operation result
+   */
+
 
   if (result.success) {
-    console.log('\n✅ **Project Validation Passed!**');
+    // LOG: \n✅ **Project Validation Passed!**
+  /**
+   * Performs the specified operation
+   * @param {number} result.setup?.valid
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {number} result.setup?.valid
+   * @returns {any} The operation result
+   */
     if (result.setup?.valid) {
-      console.log('📋 Project setup is complete and compliant');
+      // LOG: 📋 Project setup is complete and compliant
     }
   } else {
-    console.log(`❌ Validation failed: ${result.error}`);
-
+    // LOG: `❌ Validation failed: ${result.error}`
+  /**
+   * Performs the specified operation
+   * @param {any} result.fixes?.length > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} result.fixes?.length > 0
+   * @returns {any} The operation result
+   */
     if (result.fixes?.length > 0) {
-      console.log('\n🔧 **Suggested Fixes:**');
+      // LOG: \n🔧 **Suggested Fixes:**
       result.fixes.forEach(fix => console.log(`  • ${fix}`));
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {any} result.setup
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} result.setup
+   * @returns {any} The operation result
+   */
+
 
     if (result.setup) {
-      console.log('\n📋 **Setup Recommendations:**');
+      // LOG: \n📋 **Setup Recommendations:**
       result.setup.forEach(setup => console.log(`  • ${setup}`));
     }
   }
@@ -196,8 +463,7 @@ export async function validateProject() {
  * Full analysis + report generation in one command
  */
 export async function fullAssessment(options = {}) {
-  console.log('🎯 Running complete quality assessment...');
-
+  // LOG: 🎯 Running complete quality assessment...
   // Step 1: Quick health check
   const health = await quickCheck();
 
@@ -208,7 +474,17 @@ export async function fullAssessment(options = {}) {
   });
 
   // Step 3: Generate report if requested
-  let report = null;
+  let report = null;  /**
+   * Performs the specified operation
+   * @param {Object} options.generateReport ! - Optional parameter
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {Object} options.generateReport ! - Optional parameter
+   * @returns {any} The operation result
+   */
+
   if (options.generateReport !== false) {
     report = await generateReport({
       includeRecommendations: true,
@@ -234,8 +510,7 @@ export async function fullAssessment(options = {}) {
  * Analysis + Enhancement + Validation in sequence
  */
 export async function smartEnhancementWorkflow(options = {}) {
-  console.log('🚀 Starting smart enhancement workflow...');
-
+  // LOG: 🚀 Starting smart enhancement workflow...
   // Step 1: Pre-enhancement analysis
   const beforeAnalysis = await analyzeQuality();
 
@@ -246,7 +521,17 @@ export async function smartEnhancementWorkflow(options = {}) {
   });
 
   // Step 3: Post-enhancement validation (if not dry run)
-  let validation = null;
+  let validation = null;  /**
+   * Performs the specified operation
+   * @param {Object} !options.dryRun && enhancement.success
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {Object} !options.dryRun && enhancement.success
+   * @returns {any} The operation result
+   */
+
   if (!options.dryRun && enhancement.success) {
     validation = await validateProject();
   }

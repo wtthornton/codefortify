@@ -12,6 +12,36 @@ import { createReadStream } from 'fs';
 import { readFile } from 'fs/promises';
 import path from 'path';
 
+/**
+
+
+ * RealtimeStatus class implementation
+
+
+ *
+
+
+ * Provides functionality for realtimestatus operations
+
+
+ */
+
+
+/**
+
+
+ * RealtimeStatus class implementation
+
+
+ *
+
+
+ * Provides functionality for realtimestatus operations
+
+
+ */
+
+
 export class RealtimeStatus {
   constructor(options = {}) {
     this.options = {
@@ -68,14 +98,44 @@ export class RealtimeStatus {
   /**
      * Stop the status monitor
      */
-  stop() {
+  stop() {  /**
+   * Performs the specified operation
+   * @param {boolean} this.spinner
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.spinner
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.spinner) {
       this.spinner.stop();
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {boolean} this.displayInterval
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.displayInterval
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (this.displayInterval) {
       clearInterval(this.displayInterval);
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {boolean} this.ws
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.ws
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (this.ws) {
       this.ws.close();
@@ -112,7 +172,17 @@ export class RealtimeStatus {
 
       this.ws.on('close', () => {
         this.currentStatus.connected = false;
-        this.currentStatus.message = 'Disconnected from server';
+        this.currentStatus.message = 'Disconnected from server';        /**
+   * Performs the specified operation
+   * @param {boolean} this.spinner && !this.spinner.isSpinning
+   * @returns {boolean} True if successful, false otherwise
+   */
+        /**
+   * Performs the specified operation
+   * @param {boolean} this.spinner && !this.spinner.isSpinning
+   * @returns {boolean} True if successful, false otherwise
+   */
+
         if (this.spinner && !this.spinner.isSpinning) {
           console.log(chalk.red('\n❌ Connection lost - attempting reconnect...'));
           setTimeout(() => this.reconnect(), 3000);
@@ -120,7 +190,17 @@ export class RealtimeStatus {
       });
 
       // Connection timeout
-      setTimeout(() => {
+      setTimeout(() => {        /**
+   * Performs the specified operation
+   * @param {boolean} !this.currentStatus.connected
+   * @returns {boolean} True if successful, false otherwise
+   */
+        /**
+   * Performs the specified operation
+   * @param {boolean} !this.currentStatus.connected
+   * @returns {boolean} True if successful, false otherwise
+   */
+
         if (!this.currentStatus.connected) {
           reject(new Error('Connection timeout'));
         }
@@ -133,7 +213,17 @@ export class RealtimeStatus {
      */
   handleMessage(message) {
     try {
-      const { type, data } = message;
+      const { type, data } = message;      /**
+   * Performs the specified operation
+   * @param {any} type
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} type
+   * @returns {any} The operation result
+   */
+
 
       switch (type) {
       case 'status_update':
@@ -172,7 +262,17 @@ export class RealtimeStatus {
       message: data.message || this.currentStatus.message,
       elapsedTime: data.elapsedTime || this.currentStatus.elapsedTime,
       estimatedRemaining: data.estimatedRemainingTime
-    });
+    });    /**
+   * Performs the specified operation
+   * @param {boolean} data.issues
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} data.issues
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (data.issues) {
       this.currentStatus.issues = { ...data.issues };
@@ -186,8 +286,28 @@ export class RealtimeStatus {
     const previousScore = this.currentStatus.score;
     this.currentStatus.score = data.score;
 
-    // Calculate trend
-    if (previousScore !== null) {
+    // Calculate trend    /**
+   * Performs the specified operation
+   * @param {any} previousScore ! - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} previousScore ! - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (previousScore !== null) {      /**
+   * Performs the specified operation
+   * @param {any} data.score > previousScore + 0.5
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} data.score > previousScore + 0.5
+   * @returns {any} The operation result
+   */
+
       if (data.score > previousScore + 0.5) {
         this.currentStatus.trend = 'up';
       } else if (data.score < previousScore - 0.5) {
@@ -224,7 +344,17 @@ export class RealtimeStatus {
   render() {
     // Clear screen and show header
     console.clear();
-    this.showHeader();
+    this.showHeader();    /**
+   * Performs the specified operation
+   * @param {Object} this.options.compactMode
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.options.compactMode
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (this.options.compactMode) {
       this.renderCompact();
@@ -263,7 +393,17 @@ export class RealtimeStatus {
     // Connection Status Line
     console.log(`${chalk.gray('│')} Connection: ${this.getConnectionStatus()}`);
 
-    // Score Line with Trend
+    // Score Line with Trend    /**
+   * Performs the specified operation
+   * @param {any} status.score ! - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} status.score ! - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (status.score !== null) {
       const scoreColor = this.getScoreColor(status.score);
       const trendIcon = this.getTrendIcon(status.trend);
@@ -277,7 +417,17 @@ export class RealtimeStatus {
     // Current Status Line
     console.log(`${chalk.gray('│')} Current Status: ${this.getPhaseDisplay()}`);
 
-    // Progress Bar
+    // Progress Bar    /**
+   * Performs the specified operation
+   * @param {any} status.progress > 0 && status.progress < 100
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} status.progress > 0 && status.progress < 100
+   * @returns {any} The operation result
+   */
+
     if (status.progress > 0 && status.progress < 100) {
       console.log(`${chalk.gray('│')} Progress: ${this.getProgressBar()}`);
     }
@@ -285,10 +435,30 @@ export class RealtimeStatus {
     // Issues Summary
     console.log(`${chalk.gray('│')} Issues Found: ${this.getIssuesDisplay()}`);
 
-    // Timing Information
+    // Timing Information    /**
+   * Performs the specified operation
+   * @param {any} status.elapsedTime > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} status.elapsedTime > 0
+   * @returns {any} The operation result
+   */
+
     if (status.elapsedTime > 0) {
       const elapsed = this.formatDuration(status.elapsedTime);
-      let timeLine = `${chalk.gray('│')} Time Elapsed: ${elapsed}`;
+      let timeLine = `${chalk.gray('│')} Time Elapsed: ${elapsed}`;      /**
+   * Performs the specified operation
+   * @param {any} status.estimatedRemaining
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} status.estimatedRemaining
+   * @returns {any} The operation result
+   */
+
 
       if (status.estimatedRemaining) {
         const remaining = this.formatDuration(status.estimatedRemaining);
@@ -298,13 +468,33 @@ export class RealtimeStatus {
       console.log(timeLine);
     }
 
-    // Last Update
+    // Last Update    /**
+   * Performs the specified operation
+   * @param {any} status.lastUpdate
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} status.lastUpdate
+   * @returns {any} The operation result
+   */
+
     if (status.lastUpdate) {
       const updateTime = this.formatRelativeTime(status.lastUpdate);
       console.log(`${chalk.gray('│')} Last Update: ${updateTime}`);
     }
 
-    // Current Message
+    // Current Message    /**
+   * Performs the specified operation
+   * @param {any} status.message && status.message ! - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} status.message && status.message ! - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (status.message && status.message !== 'Connected to CodeFortify') {
       console.log(`${chalk.gray('│')} Status: ${chalk.cyan(status.message)}`);
     }
@@ -314,7 +504,17 @@ export class RealtimeStatus {
      * Show footer with controls
      */
   showFooter() {
-    console.log(chalk.gray('└────────────────────────────────────────────────────────────┘'));
+    console.log(chalk.gray('└────────────────────────────────────────────────────────────┘'));    /**
+   * Performs the specified operation
+   * @param {Object} !this.options.compactMode
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} !this.options.compactMode
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (!this.options.compactMode) {
       console.log(chalk.gray('\nControls: Ctrl+C to exit | r to refresh | c for compact mode'));
@@ -324,7 +524,17 @@ export class RealtimeStatus {
   /**
      * Get connection status display
      */
-  getConnectionStatus() {
+  getConnectionStatus() {  /**
+   * Performs the specified operation
+   * @param {boolean} this.currentStatus.connected
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.currentStatus.connected
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.currentStatus.connected) {
       return chalk.green('✓ Connected');
     } else {
@@ -337,7 +547,17 @@ export class RealtimeStatus {
      */
   getPhaseDisplay() {
     const phase = this.currentStatus.phase;
-    const progress = this.currentStatus.progress;
+    const progress = this.currentStatus.progress;    /**
+   * Performs the specified operation
+   * @param {boolean} phase
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} phase
+   * @returns {any} The operation result
+   */
+
 
     switch (phase) {
     case 'idle':
@@ -379,11 +599,51 @@ export class RealtimeStatus {
      */
   getIssuesDisplay() {
     const issues = this.currentStatus.issues;
-    const parts = [];
+    const parts = [];    /**
+   * Performs the specified operation
+   * @param {boolean} issues.critical > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} issues.critical > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
 
-    if (issues.critical > 0) {parts.push(chalk.red(`${issues.critical} Critical`));}
-    if (issues.high > 0) {parts.push(chalk.yellow(`${issues.high} High`));}
-    if (issues.medium > 0) {parts.push(chalk.blue(`${issues.medium} Medium`));}
+
+    if (issues.critical > 0) {parts.push(chalk.red(`${issues.critical} Critical`));}    /**
+   * Performs the specified operation
+   * @param {boolean} issues.high > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} issues.high > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+
+    if (issues.high > 0) {parts.push(chalk.yellow(`${issues.high} High`));}    /**
+   * Performs the specified operation
+   * @param {boolean} issues.medium > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} issues.medium > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+
+    if (issues.medium > 0) {parts.push(chalk.blue(`${issues.medium} Medium`));}    /**
+   * Performs the specified operation
+   * @param {boolean} issues.low > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} issues.low > 0
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (issues.low > 0) {parts.push(chalk.gray(`${issues.low} Low`));}
 
     return parts.length > 0 ? parts.join(', ') : chalk.green('None');
@@ -392,10 +652,50 @@ export class RealtimeStatus {
   /**
      * Get score color based on value
      */
-  getScoreColor(score) {
-    if (score === null || score === undefined) {return chalk.gray;}
-    if (score >= 90) {return chalk.green;}
-    if (score >= 80) {return chalk.yellow;}
+  getScoreColor(score) {  /**
+   * Performs the specified operation
+   * @param {any} score - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score === null || score === undefined) {return chalk.gray;}    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 90) {return chalk.green;}    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 80) {return chalk.yellow;}    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (score >= 70) {return chalk.orange;}
     return chalk.red;
   }
@@ -403,10 +703,50 @@ export class RealtimeStatus {
   /**
      * Get score label
      */
-  getScoreLabel(score) {
-    if (score >= 95) {return chalk.green('Excellent');}
-    if (score >= 85) {return chalk.green('Good');}
-    if (score >= 75) {return chalk.yellow('Fair');}
+  getScoreLabel(score) {  /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 95) {return chalk.green('Excellent');}    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 85) {return chalk.green('Good');}    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 75) {return chalk.yellow('Fair');}    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (score >= 65) {return chalk.orange('Poor');}
     return chalk.red('Critical');
   }
@@ -414,7 +754,17 @@ export class RealtimeStatus {
   /**
      * Get trend icon
      */
-  getTrendIcon(trend) {
+  getTrendIcon(trend) {  /**
+   * Performs the specified operation
+   * @param {any} trend
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} trend
+   * @returns {any} The operation result
+   */
+
     switch (trend) {
     case 'up': return chalk.green('↗');
     case 'down': return chalk.red('↘');
@@ -429,7 +779,17 @@ export class RealtimeStatus {
   formatDuration(ms) {
     const seconds = Math.floor(ms / 1000);
     const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
+    const hours = Math.floor(minutes / 60);    /**
+   * Performs the specified operation
+   * @param {any} hours > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} hours > 0
+   * @returns {any} The operation result
+   */
+
 
     if (hours > 0) {
       return `${hours}h ${minutes % 60}m ${seconds % 60}s`;
@@ -446,12 +806,42 @@ export class RealtimeStatus {
   formatRelativeTime(date) {
     const now = new Date();
     const diff = now - date;
-    const seconds = Math.floor(diff / 1000);
+    const seconds = Math.floor(diff / 1000);    /**
+   * Performs the specified operation
+   * @param {any} seconds < 5
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} seconds < 5
+   * @returns {any} The operation result
+   */
 
-    if (seconds < 5) {return 'just now';}
+
+    if (seconds < 5) {return 'just now';}    /**
+   * Performs the specified operation
+   * @param {any} seconds < 60
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} seconds < 60
+   * @returns {any} The operation result
+   */
+
     if (seconds < 60) {return `${seconds} seconds ago`;}
 
-    const minutes = Math.floor(seconds / 60);
+    const minutes = Math.floor(seconds / 60);    /**
+   * Performs the specified operation
+   * @param {any} minutes < 60
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} minutes < 60
+   * @returns {any} The operation result
+   */
+
     if (minutes < 60) {return `${minutes} minutes ago`;}
 
     const hours = Math.floor(minutes / 60);
@@ -461,7 +851,17 @@ export class RealtimeStatus {
   /**
      * Attempt reconnection
      */
-  async reconnect() {
+  async reconnect() {  /**
+   * Performs the specified operation
+   * @param {boolean} this.currentStatus.connected
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.currentStatus.connected
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.currentStatus.connected) {return;}
 
     console.log(chalk.yellow('🔄 Attempting to reconnect...'));
@@ -497,7 +897,17 @@ export async function createStatusMonitor(options = {}) {
   process.stdin.setRawMode(true);
   process.stdin.resume();
   process.stdin.on('data', (key) => {
-    const char = key.toString();
+    const char = key.toString();    /**
+   * Performs the specified operation
+   * @param {any} char
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} char
+   * @returns {any} The operation result
+   */
+
 
     switch (char) {
     case '\u0003': // Ctrl+C

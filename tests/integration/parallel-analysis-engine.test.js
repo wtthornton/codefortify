@@ -10,9 +10,7 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-
-// Add performance global for Node.js environments
-const { performance } = globalThis;
+import { performance } from 'perf_hooks';
 import { ParallelProjectScorer } from '../../src/scoring/ParallelProjectScorer.js';
 import { ProjectScorer } from '../../src/scoring/ProjectScorer.js';
 import { AgentOrchestrator } from '../../src/core/AgentOrchestrator.js';
@@ -55,7 +53,7 @@ describe('Parallel Analysis Engine Integration', () => {
       };
 
       // Benchmark traditional analysis
-      console.log('🔄 Running traditional analysis benchmark...');
+      // LOG: 🔄 Running traditional analysis benchmark...
       const traditionalScorer = new ProjectScorer(config);
       const traditionalStart = performance.now();
       await traditionalScorer.scoreProject({
@@ -64,7 +62,7 @@ describe('Parallel Analysis Engine Integration', () => {
       const traditionalDuration = performance.now() - traditionalStart;
 
       // Benchmark parallel analysis
-      console.log('⚡ Running parallel analysis benchmark...');
+      // LOG: ⚡ Running parallel analysis benchmark...
       const parallelScorer = new ParallelProjectScorer(config);
       const parallelStart = performance.now();
       const parallelResults = await parallelScorer.scoreProject({
@@ -75,11 +73,10 @@ describe('Parallel Analysis Engine Integration', () => {
       // Calculate performance improvement
       const improvement = ((traditionalDuration - parallelDuration) / traditionalDuration) * 100;
 
-      console.log('📊 Performance Results:');
-      console.log(`   Traditional: ${Math.round(traditionalDuration)}ms`);
-      console.log(`   Parallel: ${Math.round(parallelDuration)}ms`);
-      console.log(`   Improvement: ${Math.round(improvement)}%`);
-
+      // LOG: 📊 Performance Results:
+      // LOG: `   Traditional: ${Math.round(traditionalDuration)}ms`
+      // LOG: `   Parallel: ${Math.round(parallelDuration)}ms`
+      // LOG: `   Improvement: ${Math.round(improvement)}%`
       // Validate performance improvement
       expect(improvement).toBeGreaterThanOrEqual(40); // At least 40% improvement
       expect(improvement).toBeLessThanOrEqual(90); // Realistic upper bound
@@ -506,7 +503,7 @@ const UserProfile = ({ user }) => {
     setLoading(true);
     // Potential security issue - eval usage
     const result = eval('user.name + " profile"');
-    console.log(result);
+    // LOG: result
     setLoading(false);
   };
 
@@ -554,7 +551,7 @@ export class UserService {
       this.cache.set(id, user);
       return user;
     } catch (error) {
-      console.error('Error fetching user:', error);
+      // ERROR: Error fetching user:, error
       throw error;
     }
   }

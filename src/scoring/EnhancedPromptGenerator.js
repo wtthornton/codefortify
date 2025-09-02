@@ -1,6 +1,6 @@
 /**
  * Enhanced Prompt Generator - Creates small, perfect prompts for auto-execution
- * 
+ *
  * Generates optimized prompts that can be leveraged by codefortify to auto-execute
  * recommendations with minimal tokens, cost, and maximum first-try success rate.
  */
@@ -9,6 +9,36 @@ import { PromptEnhancer } from '../enhancement/PromptEnhancer.js';
 import { SuggestionGenerator } from '../monitoring/SuggestionGenerator.js';
 import { PatternProvider } from '../server/PatternProvider.js';
 import { ResourceManager } from '../server/ResourceManager.js';
+
+/**
+
+
+ * EnhancedPromptGenerator class implementation
+
+
+ *
+
+
+ * Provides functionality for enhancedpromptgenerator operations
+
+
+ */
+
+
+/**
+
+
+ * EnhancedPromptGenerator class implementation
+
+
+ *
+
+
+ * Provides functionality for enhancedpromptgenerator operations
+
+
+ */
+
 
 export class EnhancedPromptGenerator {
   constructor(config = {}) {
@@ -22,7 +52,7 @@ export class EnhancedPromptGenerator {
       enableSuggestionIntegration: config.enableSuggestionIntegration !== false,
       ...config
     };
-    
+
     // Initialize all enhancement systems
     this.promptEnhancer = new PromptEnhancer({
       maxTokens: this.config.maxPromptTokens,
@@ -30,7 +60,7 @@ export class EnhancedPromptGenerator {
       projectRoot: config.projectRoot || process.cwd(),
       ...config
     });
-    
+
     this.suggestionGenerator = new SuggestionGenerator({
       maxSuggestions: 5,
       suggestionPriority: {
@@ -42,20 +72,20 @@ export class EnhancedPromptGenerator {
         complexity: 'high'
       }
     });
-    
+
     this.patternProvider = new PatternProvider({
       projectType: config.projectType || 'javascript',
       ...config
     });
-    
+
     this.resourceManager = new ResourceManager({
       projectRoot: config.projectRoot || process.cwd(),
       ...config
     });
-    
+
     // Prompt templates for different recommendation types
     this.promptTemplates = this.initializePromptTemplates();
-    
+
     // Learning system for continuous improvement
     this.learningSystem = {
       successRates: new Map(),
@@ -71,34 +101,54 @@ export class EnhancedPromptGenerator {
   async generateEnhancedPrompt(recommendation, projectContext = {}) {
     try {
       // Step 1: Get base template and build initial prompt
-      const template = this.getTemplateForRecommendation(recommendation);
+      const template = this.getTemplateForRecommendation(recommendation);      /**
+   * Performs the specified operation
+   * @param {any} !template
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} !template
+   * @returns {any} The operation result
+   */
+
       if (!template) {
         return this.generateFallbackPrompt(recommendation);
       }
 
       const basePrompt = this.buildPromptFromTemplate(template, recommendation, projectContext);
-      
+
       // Step 2: Generate comprehensive context using all enhancement systems
       const enhancedContext = await this.generateComprehensiveContext(recommendation, projectContext);
-      
+
       // Step 3: Apply full enhancement pipeline
       const enhanced = await this.applyFullEnhancementPipeline(basePrompt, enhancedContext, recommendation);
-      
+
       // Step 4: Apply learning-based optimizations
       const optimized = await this.applyLearningOptimizations(enhanced, recommendation);
-      
+
       // Step 5: Final validation and metrics
       const finalPrompt = await this.validateAndFinalizePrompt(optimized, recommendation);
-      
-      // Step 6: Record for learning (if enabled)
+
+      // Step 6: Record for learning (if enabled)      /**
+   * Performs the specified operation
+   * @param {Object} this.config.enableLearning
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.enableLearning
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.config.enableLearning) {
         await this.recordPromptGeneration(recommendation, finalPrompt);
       }
-      
+
       return finalPrompt;
-      
+
     } catch (error) {
-      console.warn(`⚠️  Enhanced prompt generation failed: ${error.message}`);
+      // WARN: `⚠️  Enhanced prompt generation failed: ${error.message}`
       return this.generateFallbackPrompt(recommendation);
     }
   }
@@ -120,27 +170,87 @@ export class EnhancedPromptGenerator {
     };
 
     try {
-      // Get relevant patterns from PatternProvider
+      // Get relevant patterns from PatternProvider      /**
+   * Performs the specified operation
+   * @param {Object} this.config.enablePatternInjection
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.enablePatternInjection
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.config.enablePatternInjection) {
-        const patternType = this.getPatternTypeForRecommendation(recommendation);
+        const patternType = this.getPatternTypeForRecommendation(recommendation);        /**
+   * Performs the specified operation
+   * @param {any} patternType
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} patternType
+   * @returns {any} The operation result
+   */
+
         if (patternType) {
           context.patterns = await this.patternProvider.getPattern(patternType, context.projectType);
         }
       }
 
-      // Get additional suggestions from SuggestionGenerator
+      // Get additional suggestions from SuggestionGenerator      /**
+   * Performs the specified operation
+   * @param {Object} this.config.enableSuggestionIntegration
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.enableSuggestionIntegration
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.config.enableSuggestionIntegration) {
         const mockCode = this.generateMockCodeForRecommendation(recommendation);
         const mockIssues = this.generateMockIssuesForRecommendation(recommendation);
         context.suggestions = await this.suggestionGenerator.generateSuggestions(mockIssues, mockCode, context);
       }
 
-      // Get relevant documentation from ResourceManager
+      // Get relevant documentation from ResourceManager      /**
+   * Performs the specified operation
+   * @param {Object} this.config.enableContextInjection
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.enableContextInjection
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.config.enableContextInjection) {
-        const technologies = this.extractTechnologiesFromRecommendation(recommendation);
+        const technologies = this.extractTechnologiesFromRecommendation(recommendation);        /**
+   * Performs the specified operation
+   * @param {any} const tech of technologies
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} const tech of technologies
+   * @returns {any} The operation result
+   */
+
         for (const tech of technologies) {
           try {
-            const docs = await this.resourceManager.getVersionSpecificDocs(tech);
+            const docs = await this.resourceManager.getVersionSpecificDocs(tech);            /**
+   * Performs the specified operation
+   * @param {any} docs
+   * @returns {any} The operation result
+   */
+            /**
+   * Performs the specified operation
+   * @param {any} docs
+   * @returns {any} The operation result
+   */
+
             if (docs) {
               context.documentation[tech] = docs;
             }
@@ -154,7 +264,7 @@ export class EnhancedPromptGenerator {
       context.metrics = this.calculateContextMetrics(context);
 
     } catch (error) {
-      console.warn(`⚠️  Context generation failed: ${error.message}`);
+      // WARN: `⚠️  Context generation failed: ${error.message}`
     }
 
     return context;
@@ -180,7 +290,17 @@ export class EnhancedPromptGenerator {
       enhanced.enhancedPrompt = await this.injectPatternContext(enhanced.enhancedPrompt, context.patterns);
     }
 
-    // Add suggestion-specific enhancements
+    // Add suggestion-specific enhancements    /**
+   * Performs the specified operation
+   * @param {any} context.suggestions && context.suggestions.length > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} context.suggestions && context.suggestions.length > 0
+   * @returns {any} The operation result
+   */
+
     if (context.suggestions && context.suggestions.length > 0) {
       enhanced.enhancedPrompt = await this.injectSuggestionContext(enhanced.enhancedPrompt, context.suggestions);
     }
@@ -207,63 +327,63 @@ export class EnhancedPromptGenerator {
     return {
       // ESLint fixes
       eslint: {
-        template: "Fix {errorCount} ESLint {errorType} in {projectType} project. Run: {command}",
+        template: 'Fix {errorCount} ESLint {errorType} in {projectType} project. Run: {command}',
         variables: ['errorCount', 'errorType', 'projectType', 'command'],
         maxTokens: 50,
         successRate: 0.95
       },
-      
+
       // Security vulnerabilities
       security: {
-        template: "Fix {vulnerabilityCount} {severity} security vulnerabilities. Command: {command}",
+        template: 'Fix {vulnerabilityCount} {severity} security vulnerabilities. Command: {command}',
         variables: ['vulnerabilityCount', 'severity', 'command'],
         maxTokens: 45,
         successRate: 0.90
       },
-      
+
       // Test coverage
       testing: {
-        template: "Increase test coverage from {currentCoverage}% to {targetCoverage}%. Focus on {focusArea}.",
+        template: 'Increase test coverage from {currentCoverage}% to {targetCoverage}%. Focus on {focusArea}.',
         variables: ['currentCoverage', 'targetCoverage', 'focusArea'],
         maxTokens: 60,
         successRate: 0.85
       },
-      
+
       // Bundle optimization
       performance: {
-        template: "Reduce bundle size from {currentSize}KB. {optimizationStrategy}",
+        template: 'Reduce bundle size from {currentSize}KB. {optimizationStrategy}',
         variables: ['currentSize', 'optimizationStrategy'],
         maxTokens: 55,
         successRate: 0.80
       },
-      
+
       // Documentation
       documentation: {
-        template: "Add JSDoc to {targetCount} {targetType}. Include @param, @returns, @throws.",
+        template: 'Add JSDoc to {targetCount} {targetType}. Include @param, @returns, @throws.',
         variables: ['targetCount', 'targetType'],
         maxTokens: 50,
         successRate: 0.88
       },
-      
+
       // Code structure
       structure: {
-        template: "Reorganize {fileCount} files into {structureType}. Create {directories}.",
+        template: 'Reorganize {fileCount} files into {structureType}. Create {directories}.',
         variables: ['fileCount', 'structureType', 'directories'],
         maxTokens: 55,
         successRate: 0.75
       },
-      
+
       // Dependencies
       dependencies: {
-        template: "Replace {packageName} ({size}KB) with {alternative} for {benefit}.",
+        template: 'Replace {packageName} ({size}KB) with {alternative} for {benefit}.',
         variables: ['packageName', 'size', 'alternative', 'benefit'],
         maxTokens: 50,
         successRate: 0.82
       },
-      
+
       // Error handling
       errorHandling: {
-        template: "Add try-catch blocks to {functionCount} functions. Handle {errorTypes}.",
+        template: 'Add try-catch blocks to {functionCount} functions. Handle {errorTypes}.',
         variables: ['functionCount', 'errorTypes'],
         maxTokens: 50,
         successRate: 0.85
@@ -277,47 +397,47 @@ export class EnhancedPromptGenerator {
   getTemplateForRecommendation(recommendation) {
     const suggestion = recommendation.suggestion.toLowerCase();
     const action = recommendation.action.toLowerCase();
-    
+
     // ESLint related
     if (suggestion.includes('eslint') || action.includes('eslint')) {
       return this.promptTemplates.eslint;
     }
-    
+
     // Security related
     if (suggestion.includes('security') || suggestion.includes('vulnerabilit')) {
       return this.promptTemplates.security;
     }
-    
+
     // Testing related
     if (suggestion.includes('test') || suggestion.includes('coverage')) {
       return this.promptTemplates.testing;
     }
-    
+
     // Performance related
     if (suggestion.includes('bundle') || suggestion.includes('performance') || suggestion.includes('size')) {
       return this.promptTemplates.performance;
     }
-    
+
     // Documentation related
     if (suggestion.includes('document') || suggestion.includes('jsdoc')) {
       return this.promptTemplates.documentation;
     }
-    
+
     // Structure related
     if (suggestion.includes('structure') || suggestion.includes('organize') || suggestion.includes('reorganize')) {
       return this.promptTemplates.structure;
     }
-    
+
     // Dependencies related
     if (suggestion.includes('dependenc') || suggestion.includes('package') || suggestion.includes('replace')) {
       return this.promptTemplates.dependencies;
     }
-    
+
     // Error handling related
     if (suggestion.includes('error') || suggestion.includes('try-catch')) {
       return this.promptTemplates.errorHandling;
     }
-    
+
     return null;
   }
 
@@ -326,16 +446,26 @@ export class EnhancedPromptGenerator {
    */
   buildPromptFromTemplate(template, recommendation, projectContext) {
     let prompt = template.template;
-    
+
     // Extract data from recommendation
     const data = this.extractDataFromRecommendation(recommendation, projectContext);
-    
-    // Replace template variables
+
+    // Replace template variables    /**
+   * Performs the specified operation
+   * @param {any} const variable of template.variables
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const variable of template.variables
+   * @returns {any} The operation result
+   */
+
     for (const variable of template.variables) {
       const value = data[variable] || this.getDefaultValue(variable, recommendation);
       prompt = prompt.replace(`{${variable}}`, value);
     }
-    
+
     return prompt;
   }
 
@@ -346,9 +476,19 @@ export class EnhancedPromptGenerator {
     const data = {};
     const suggestion = recommendation.suggestion;
     const action = recommendation.action;
-    
+
     // Extract numbers
-    const numbers = suggestion.match(/\d+/g) || [];
+    const numbers = suggestion.match(/\d+/g) || [];    /**
+   * Performs the specified operation
+   * @param {any} numbers.length > 0
+   * @returns {number} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} numbers.length > 0
+   * @returns {number} The operation result
+   */
+
     if (numbers.length > 0) {
       data.errorCount = numbers[0];
       data.vulnerabilityCount = numbers[0];
@@ -356,79 +496,129 @@ export class EnhancedPromptGenerator {
       data.fileCount = numbers[0];
       data.functionCount = numbers[0];
     }
-    
+
     // Extract percentages
-    const percentages = suggestion.match(/(\d+)%/g) || [];
+    const percentages = suggestion.match(/(\d+)%/g) || [];    /**
+   * Performs the specified operation
+   * @param {any} percentages.length > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentages.length > 0
+   * @returns {any} The operation result
+   */
+
     if (percentages.length > 0) {
-      data.currentCoverage = percentages[0].replace('%', '');
+      data.currentCoverage = percentages[0].replace('%', '');      /**
+   * Performs the specified operation
+   * @param {any} percentages.length > 1
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} percentages.length > 1
+   * @returns {any} The operation result
+   */
+
       if (percentages.length > 1) {
         data.targetCoverage = percentages[1].replace('%', '');
       }
     }
-    
+
     // Extract sizes
-    const sizes = suggestion.match(/(\d+)KB/g) || [];
+    const sizes = suggestion.match(/(\d+)KB/g) || [];    /**
+   * Performs the specified operation
+   * @param {any} sizes.length > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} sizes.length > 0
+   * @returns {any} The operation result
+   */
+
     if (sizes.length > 0) {
       data.currentSize = sizes[0].replace('KB', '');
       data.size = sizes[0].replace('KB', '');
     }
-    
+
     // Extract project type
     data.projectType = projectContext.type || 'JavaScript';
-    
+
     // Extract commands from action
-    const commands = action.match(/npx [^,]+|npm [^,]+/g) || [];
+    const commands = action.match(/npx [^,]+|npm [^,]+/g) || [];    /**
+   * Performs the specified operation
+   * @param {any} commands.length > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} commands.length > 0
+   * @returns {any} The operation result
+   */
+
     if (commands.length > 0) {
       data.command = commands[0];
     }
-    
+
     // Extract severity levels
-    if (suggestion.includes('critical')) data.severity = 'critical';
-    else if (suggestion.includes('high')) data.severity = 'high';
-    else if (suggestion.includes('moderate')) data.severity = 'moderate';
-    else if (suggestion.includes('low')) data.severity = 'low';
-    
+    if (suggestion.includes('critical')) {data.severity = 'critical';}
+    else if (suggestion.includes('high')) {data.severity = 'high';}
+    else if (suggestion.includes('moderate')) {data.severity = 'moderate';}
+    else if (suggestion.includes('low')) {data.severity = 'low';}
+
     // Extract focus areas
-    if (suggestion.includes('branch')) data.focusArea = 'branch coverage';
-    else if (suggestion.includes('function')) data.focusArea = 'function coverage';
-    else if (suggestion.includes('line')) data.focusArea = 'line coverage';
-    else data.focusArea = 'business logic';
-    
+    if (suggestion.includes('branch')) {data.focusArea = 'branch coverage';}
+    else if (suggestion.includes('function')) {data.focusArea = 'function coverage';}
+    else if (suggestion.includes('line')) {data.focusArea = 'line coverage';}
+    else {data.focusArea = 'business logic';}
+
     // Extract optimization strategies
-    if (suggestion.includes('code splitting')) data.optimizationStrategy = 'Implement code splitting';
-    else if (suggestion.includes('tree shaking')) data.optimizationStrategy = 'Enable tree shaking';
-    else if (suggestion.includes('lazy loading')) data.optimizationStrategy = 'Add lazy loading';
-    else data.optimizationStrategy = 'Remove unused dependencies';
-    
+    if (suggestion.includes('code splitting')) {data.optimizationStrategy = 'Implement code splitting';}
+    else if (suggestion.includes('tree shaking')) {data.optimizationStrategy = 'Enable tree shaking';}
+    else if (suggestion.includes('lazy loading')) {data.optimizationStrategy = 'Add lazy loading';}
+    else {data.optimizationStrategy = 'Remove unused dependencies';}
+
     // Extract target types
-    if (suggestion.includes('method')) data.targetType = 'methods';
-    else if (suggestion.includes('class')) data.targetType = 'classes';
-    else if (suggestion.includes('function')) data.targetType = 'functions';
-    else data.targetType = 'functions';
-    
+    if (suggestion.includes('method')) {data.targetType = 'methods';}
+    else if (suggestion.includes('class')) {data.targetType = 'classes';}
+    else if (suggestion.includes('function')) {data.targetType = 'functions';}
+    else {data.targetType = 'functions';}
+
     // Extract structure types
-    if (suggestion.includes('feature')) data.structureType = 'feature-based structure';
-    else if (suggestion.includes('layer')) data.structureType = 'layered architecture';
-    else data.structureType = 'logical structure';
-    
+    if (suggestion.includes('feature')) {data.structureType = 'feature-based structure';}
+    else if (suggestion.includes('layer')) {data.structureType = 'layered architecture';}
+    else {data.structureType = 'logical structure';}
+
     // Extract directories
-    if (suggestion.includes('component')) data.directories = 'components, services, utils';
-    else if (suggestion.includes('api')) data.directories = 'routes, controllers, models';
-    else data.directories = 'src, lib, test';
-    
+    if (suggestion.includes('component')) {data.directories = 'components, services, utils';}
+    else if (suggestion.includes('api')) {data.directories = 'routes, controllers, models';}
+    else {data.directories = 'src, lib, test';}
+
     // Extract package names and alternatives
-    const packageMatch = suggestion.match(/Replace (\w+)/);
+    const packageMatch = suggestion.match(/Replace (\w+)/);    /**
+   * Performs the specified operation
+   * @param {any} packageMatch
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} packageMatch
+   * @returns {any} The operation result
+   */
+
     if (packageMatch) {
       data.packageName = packageMatch[1];
       data.alternative = this.getPackageAlternative(packageMatch[1]);
       data.benefit = 'smaller bundle size';
     }
-    
+
     // Extract error types
-    if (suggestion.includes('API')) data.errorTypes = 'API errors';
-    else if (suggestion.includes('validation')) data.errorTypes = 'validation errors';
-    else data.errorTypes = 'runtime errors';
-    
+    if (suggestion.includes('API')) {data.errorTypes = 'API errors';}
+    else if (suggestion.includes('validation')) {data.errorTypes = 'validation errors';}
+    else {data.errorTypes = 'runtime errors';}
+
     return data;
   }
 
@@ -460,7 +650,7 @@ export class EnhancedPromptGenerator {
       functionCount: '5',
       errorTypes: 'runtime errors'
     };
-    
+
     return defaults[variable] || 'N/A';
   }
 
@@ -476,7 +666,7 @@ export class EnhancedPromptGenerator {
       'bootstrap': 'Tailwind CSS',
       'webpack': 'Vite'
     };
-    
+
     return alternatives[packageName.toLowerCase()] || 'lighter alternative';
   }
 
@@ -486,20 +676,30 @@ export class EnhancedPromptGenerator {
   generateFallbackPrompt(recommendation) {
     const action = recommendation.action;
     const suggestion = recommendation.suggestion;
-    
+
     // Create a simple, direct prompt
     let prompt = suggestion;
-    
+
     // Add action if it's a command
     if (action.includes('npx ') || action.includes('npm ')) {
       prompt += ` Command: ${action}`;
     }
-    
-    // Limit length
+
+    // Limit length    /**
+   * Performs the specified operation
+   * @param {Object} prompt.length > this.config.maxPromptTokens * 4
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} prompt.length > this.config.maxPromptTokens * 4
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (prompt.length > this.config.maxPromptTokens * 4) {
       prompt = prompt.substring(0, this.config.maxPromptTokens * 4) + '...';
     }
-    
+
     return {
       prompt,
       originalPrompt: prompt,
@@ -525,11 +725,31 @@ export class EnhancedPromptGenerator {
    */
   estimateSuccessRate(confidence, recommendation) {
     let baseRate = confidence;
-    
-    // Adjust based on recommendation complexity
-    if (recommendation.priority === 'critical') baseRate += 0.1;
-    if (recommendation.priority === 'high') baseRate += 0.05;
-    
+
+    // Adjust based on recommendation complexity    /**
+   * Performs the specified operation
+   * @param {any} recommendation.priority - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} recommendation.priority - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (recommendation.priority === 'critical') {baseRate += 0.1;}    /**
+   * Performs the specified operation
+   * @param {any} recommendation.priority - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} recommendation.priority - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (recommendation.priority === 'high') {baseRate += 0.05;}
+
     // Adjust based on category
     const categoryRates = {
       'quality': 0.9,
@@ -540,7 +760,7 @@ export class EnhancedPromptGenerator {
       'documentation': 0.85,
       'developerExperience': 0.8
     };
-    
+
     const categoryRate = categoryRates[recommendation.category] || 0.75;
     return Math.min((baseRate + categoryRate) / 2, 0.95);
   }
@@ -549,8 +769,18 @@ export class EnhancedPromptGenerator {
    * Generate batch enhanced prompts for multiple recommendations
    */
   async generateBatchPrompts(recommendations, projectContext = {}) {
-    const results = [];
-    
+    const results = [];    /**
+   * Performs the specified operation
+   * @param {any} const recommendation of recommendations
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const recommendation of recommendations
+   * @returns {any} The operation result
+   */
+
+
     for (const recommendation of recommendations) {
       try {
         const enhanced = await this.generateEnhancedPrompt(recommendation, projectContext);
@@ -566,35 +796,55 @@ export class EnhancedPromptGenerator {
         });
       }
     }
-    
+
     return results;
   }
 
   /**
    * Apply learning-based optimizations
    */
-  async applyLearningOptimizations(enhanced, recommendation) {
+  async applyLearningOptimizations(enhanced, recommendation) {  /**
+   * Performs the specified operation
+   * @param {Object} !this.config.enableLearning
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} !this.config.enableLearning
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (!this.config.enableLearning) {
       return enhanced;
     }
 
     const category = recommendation.category;
     const priority = recommendation.priority;
-    
+
     // Get historical success rates for this category/priority combination
     const key = `${category}-${priority}`;
     const historicalSuccess = this.learningSystem.successRates.get(key) || 0.8;
-    
-    // Adjust confidence based on historical performance
+
+    // Adjust confidence based on historical performance    /**
+   * Performs the specified operation
+   * @param {boolean} historicalSuccess > 0.9
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} historicalSuccess > 0.9
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (historicalSuccess > 0.9) {
       enhanced.confidence = Math.min(enhanced.confidence + 0.1, 1.0);
     } else if (historicalSuccess < 0.7) {
       enhanced.confidence = Math.max(enhanced.confidence - 0.1, 0.5);
     }
-    
+
     // Adjust success rate based on learning
     enhanced.successRate = this.estimateSuccessRate(enhanced.confidence, recommendation, historicalSuccess);
-    
+
     return enhanced;
   }
 
@@ -602,15 +852,25 @@ export class EnhancedPromptGenerator {
    * Validate and finalize prompt
    */
   async validateAndFinalizePrompt(enhanced, recommendation) {
-    // Ensure prompt is within token limits
+    // Ensure prompt is within token limits  /**
+   * Performs the specified operation
+   * @param {Object} enhanced.estimatedTokens > this.config.maxPromptTokens
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} enhanced.estimatedTokens > this.config.maxPromptTokens
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (enhanced.estimatedTokens > this.config.maxPromptTokens) {
       enhanced.prompt = this.truncatePrompt(enhanced.prompt, this.config.maxPromptTokens);
       enhanced.estimatedTokens = this.estimateTokens(enhanced.prompt);
     }
-    
+
     // Ensure auto-executable flag is set
     enhanced.autoExecutable = true;
-    
+
     // Add final validation
     enhanced.validation = {
       tokenCount: enhanced.estimatedTokens,
@@ -619,7 +879,7 @@ export class EnhancedPromptGenerator {
       confidence: enhanced.confidence,
       successRate: enhanced.successRate
     };
-    
+
     return enhanced;
   }
 
@@ -628,7 +888,7 @@ export class EnhancedPromptGenerator {
    */
   async recordPromptGeneration(recommendation, finalPrompt) {
     const key = `${recommendation.category}-${recommendation.priority}`;
-    
+
     // Record success rate
     if (!this.learningSystem.successRates.has(key)) {
       this.learningSystem.successRates.set(key, finalPrompt.successRate);
@@ -637,8 +897,18 @@ export class EnhancedPromptGenerator {
       const newRate = (current + finalPrompt.successRate) / 2;
       this.learningSystem.successRates.set(key, newRate);
     }
-    
-    // Record pattern effectiveness
+
+    // Record pattern effectiveness    /**
+   * Performs the specified operation
+   * @param {any} finalPrompt.context && finalPrompt.context.patterns
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} finalPrompt.context && finalPrompt.context.patterns
+   * @returns {any} The operation result
+   */
+
     if (finalPrompt.context && finalPrompt.context.patterns) {
       const patternKey = Object.keys(finalPrompt.context.patterns).join(',');
       if (!this.learningSystem.patternEffectiveness.has(patternKey)) {
@@ -657,7 +927,7 @@ export class EnhancedPromptGenerator {
    */
   getPatternTypeForRecommendation(recommendation) {
     const suggestion = recommendation.suggestion.toLowerCase();
-    
+
     if (suggestion.includes('component') || suggestion.includes('react')) {
       return 'component';
     }
@@ -670,7 +940,7 @@ export class EnhancedPromptGenerator {
     if (suggestion.includes('function') || suggestion.includes('method')) {
       return 'function';
     }
-    
+
     return null;
   }
 
@@ -679,7 +949,7 @@ export class EnhancedPromptGenerator {
    */
   generateMockCodeForRecommendation(recommendation) {
     const suggestion = recommendation.suggestion.toLowerCase();
-    
+
     if (suggestion.includes('eslint')) {
       return 'function example() { var x = 1; if (x == 1) { console.log("test"); } }';
     }
@@ -689,7 +959,7 @@ export class EnhancedPromptGenerator {
     if (suggestion.includes('performance')) {
       return 'for (let i = 0; i < array.length; i++) { process(array[i]); }';
     }
-    
+
     return 'function example() { return "mock code"; }';
   }
 
@@ -699,7 +969,7 @@ export class EnhancedPromptGenerator {
   generateMockIssuesForRecommendation(recommendation) {
     const issues = [];
     const suggestion = recommendation.suggestion.toLowerCase();
-    
+
     if (suggestion.includes('eslint')) {
       issues.push({ type: 'maintainability', value: 45 });
     }
@@ -709,7 +979,7 @@ export class EnhancedPromptGenerator {
     if (suggestion.includes('performance')) {
       issues.push({ type: 'performance', value: 50 });
     }
-    
+
     return issues;
   }
 
@@ -720,7 +990,7 @@ export class EnhancedPromptGenerator {
     const technologies = [];
     const suggestion = recommendation.suggestion.toLowerCase();
     const action = recommendation.action.toLowerCase();
-    
+
     if (suggestion.includes('react') || action.includes('react')) {
       technologies.push('react');
     }
@@ -736,7 +1006,7 @@ export class EnhancedPromptGenerator {
     if (suggestion.includes('vitest') || action.includes('vitest')) {
       technologies.push('vitest');
     }
-    
+
     return technologies;
   }
 
@@ -759,7 +1029,7 @@ export class EnhancedPromptGenerator {
   calculateOverallRelevance(context) {
     let score = 0;
     let factors = 0;
-    
+
     if (Object.keys(context.patterns).length > 0) {
       score += 0.3;
       factors++;
@@ -772,7 +1042,7 @@ export class EnhancedPromptGenerator {
       score += 0.4;
       factors++;
     }
-    
+
     return factors > 0 ? score / factors : 0;
   }
 
@@ -781,11 +1051,11 @@ export class EnhancedPromptGenerator {
    */
   assessContextComplexity(context) {
     let complexity = 0;
-    
+
     complexity += Object.keys(context.patterns).length * 0.1;
     complexity += (Array.isArray(context.suggestions) ? context.suggestions.length : 0) * 0.05;
     complexity += Object.keys(context.documentation).length * 0.1;
-    
+
     return Math.min(complexity, 1.0);
   }
 
@@ -796,27 +1066,47 @@ export class EnhancedPromptGenerator {
     if (!patterns || Object.keys(patterns).length === 0) {
       return prompt;
     }
-    
+
     // Limit pattern injection to avoid token overflow
     const maxPatternLength = 50; // Maximum characters for pattern info
-    let patternInfo = '';
-    
+    let patternInfo = '';    /**
+   * Performs the specified operation
+   * @param {any} typeof patterns - Optional parameter
+   * @returns {string} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} typeof patterns - Optional parameter
+   * @returns {string} The operation result
+   */
+
+
     if (typeof patterns === 'string') {
       // If patterns is a string (like test pattern), extract key info
       const lines = patterns.split('\n');
-      const keyLines = lines.filter(line => 
-        line.includes('import') || 
-        line.includes('describe') || 
+      const keyLines = lines.filter(line =>
+        line.includes('import') ||
+        line.includes('describe') ||
         line.includes('it(') ||
         line.includes('expect')
       ).slice(0, 3); // Take first 3 relevant lines
-      
+
       patternInfo = keyLines.join(' ').substring(0, maxPatternLength);
     } else if (typeof patterns === 'object') {
       // If patterns is an object, extract descriptions
       const entries = Object.entries(patterns).slice(0, 2); // Limit to 2 patterns
       patternInfo = entries
-        .map(([type, pattern]) => {
+        .map(([type, pattern]) => {          /**
+   * Performs the specified operation
+   * @param {any} typeof pattern - Optional parameter
+   * @returns {string} The operation result
+   */
+          /**
+   * Performs the specified operation
+   * @param {any} typeof pattern - Optional parameter
+   * @returns {string} The operation result
+   */
+
           if (typeof pattern === 'string') {
             return `${type}: ${pattern.substring(0, 20)}...`;
           }
@@ -824,23 +1114,43 @@ export class EnhancedPromptGenerator {
         })
         .join(', ')
         .substring(0, maxPatternLength);
-    }
-    
+    }    /**
+   * Performs the specified operation
+   * @param {any} patternInfo
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} patternInfo
+   * @returns {any} The operation result
+   */
+
+
     if (patternInfo) {
       return `${prompt}\n\nPattern: ${patternInfo}`;
     }
-    
+
     return prompt;
   }
 
   /**
    * Inject suggestion context into prompt
    */
-  async injectSuggestionContext(prompt, suggestions) {
+  async injectSuggestionContext(prompt, suggestions) {  /**
+   * Performs the specified operation
+   * @param {any} !suggestions || suggestions.length - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !suggestions || suggestions.length - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (!suggestions || suggestions.length === 0) {
       return prompt;
     }
-    
+
     // Limit suggestion injection to avoid token overflow
     const maxSuggestionLength = 60; // Maximum characters for suggestions
     const topSuggestions = suggestions.slice(0, 2)
@@ -849,12 +1159,22 @@ export class EnhancedPromptGenerator {
         return text.substring(0, 25); // Limit each suggestion to 25 chars
       })
       .join(', ')
-      .substring(0, maxSuggestionLength);
-    
+      .substring(0, maxSuggestionLength);    /**
+   * Performs the specified operation
+   * @param {any} topSuggestions
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} topSuggestions
+   * @returns {any} The operation result
+   */
+
+
     if (topSuggestions) {
       return `${prompt}\n\nRelated: ${topSuggestions}`;
     }
-    
+
     return prompt;
   }
 
@@ -862,11 +1182,21 @@ export class EnhancedPromptGenerator {
    * Truncate prompt to fit token limits
    */
   truncatePrompt(prompt, maxTokens) {
-    const maxChars = maxTokens * 4; // Rough estimation
+    const maxChars = maxTokens * 4; // Rough estimation    /**
+   * Performs the specified operation
+   * @param {any} prompt.length < - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} prompt.length < - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (prompt.length <= maxChars) {
       return prompt;
     }
-    
+
     return prompt.substring(0, maxChars - 3) + '...';
   }
 
@@ -882,11 +1212,31 @@ export class EnhancedPromptGenerator {
    */
   estimateSuccessRate(confidence, recommendation, historicalSuccess = null) {
     let baseRate = confidence;
-    
-    // Adjust based on recommendation complexity
-    if (recommendation.priority === 'critical') baseRate += 0.1;
-    if (recommendation.priority === 'high') baseRate += 0.05;
-    
+
+    // Adjust based on recommendation complexity    /**
+   * Performs the specified operation
+   * @param {any} recommendation.priority - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} recommendation.priority - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (recommendation.priority === 'critical') {baseRate += 0.1;}    /**
+   * Performs the specified operation
+   * @param {any} recommendation.priority - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} recommendation.priority - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (recommendation.priority === 'high') {baseRate += 0.05;}
+
     // Adjust based on category
     const categoryRates = {
       'quality': 0.9,
@@ -897,15 +1247,25 @@ export class EnhancedPromptGenerator {
       'documentation': 0.85,
       'developerExperience': 0.8
     };
-    
+
     const categoryRate = categoryRates[recommendation.category] || 0.75;
     let finalRate = (baseRate + categoryRate) / 2;
-    
-    // Apply historical learning if available
+
+    // Apply historical learning if available    /**
+   * Performs the specified operation
+   * @param {boolean} historicalSuccess ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} historicalSuccess ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (historicalSuccess !== null) {
       finalRate = (finalRate + historicalSuccess) / 2;
     }
-    
+
     return Math.min(finalRate, 0.95);
   }
 
@@ -921,7 +1281,17 @@ export class EnhancedPromptGenerator {
       enhancementStats: this.promptEnhancer.getEnhancementStats()
     };
 
-    // Add learning statistics
+    // Add learning statistics    /**
+   * Performs the specified operation
+   * @param {Object} this.config.enableLearning
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.config.enableLearning
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.config.enableLearning) {
       baseStats.learningStats = {
         categoriesTracked: this.learningSystem.successRates.size,

@@ -13,6 +13,36 @@ import { ProjectScorer } from '../scoring/ProjectScorer.js';
 import { PatternProvider } from '../server/PatternProvider.js';
 import { PerformanceMonitor } from '../scoring/core/PerformanceMonitor.js';
 
+/**
+
+
+ * EnhancementAgent class implementation
+
+
+ *
+
+
+ * Provides functionality for enhancementagent operations
+
+
+ */
+
+
+/**
+
+
+ * EnhancementAgent class implementation
+
+
+ *
+
+
+ * Provides functionality for enhancementagent operations
+
+
+ */
+
+
 export class EnhancementAgent {
   constructor(config = {}) {
     this.config = {
@@ -120,11 +150,31 @@ export class EnhancementAgent {
   async applyEnhancements(code, opportunities) {
     let enhancedCode = code;
     const improvements = [];
-    const tokenUsage = { input: 0, output: 0, total: 0 };
+    const tokenUsage = { input: 0, output: 0, total: 0 };    /**
+   * Performs the specified operation
+   * @param {any} const opportunity of opportunities
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const opportunity of opportunities
+   * @returns {any} The operation result
+   */
+
 
     for (const opportunity of opportunities) {
       try {
-        const enhancement = await this.applyEnhancement(enhancedCode, opportunity);
+        const enhancement = await this.applyEnhancement(enhancedCode, opportunity);        /**
+   * Performs the specified operation
+   * @param {any} enhancement.success
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} enhancement.success
+   * @returns {any} The operation result
+   */
+
 
         if (enhancement.success) {
           enhancedCode = enhancement.code;
@@ -137,7 +187,17 @@ export class EnhancementAgent {
             changes: enhancement.changes || []
           });
 
-          // Track token usage if available
+          // Track token usage if available          /**
+   * Performs the specified operation
+   * @param {any} enhancement.tokenUsage
+   * @returns {any} The operation result
+   */
+          /**
+   * Performs the specified operation
+   * @param {any} enhancement.tokenUsage
+   * @returns {any} The operation result
+   */
+
           if (enhancement.tokenUsage) {
             tokenUsage.input += enhancement.tokenUsage.input || 0;
             tokenUsage.output += enhancement.tokenUsage.output || 0;
@@ -170,7 +230,17 @@ export class EnhancementAgent {
    * Apply a single enhancement
    */
   async applyEnhancement(code, opportunity) {
-    const enhancementMethod = this.enhancementRules[opportunity.type];
+    const enhancementMethod = this.enhancementRules[opportunity.type];    /**
+   * Performs the specified operation
+   * @param {any} !enhancementMethod
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !enhancementMethod
+   * @returns {any} The operation result
+   */
+
 
     if (!enhancementMethod) {
       throw new Error(`No enhancement method for type: ${opportunity.type}`);
@@ -235,7 +305,17 @@ export class EnhancementAgent {
         impact: 5,
         effort: 3
       }
-    ];
+    ];    /**
+   * Performs the specified operation
+   * @param {any} const check of securityChecks
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const check of securityChecks
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     for (const check of securityChecks) {
       if (check.pattern.test(code)) {
@@ -280,7 +360,17 @@ export class EnhancementAgent {
         impact: 4,
         effort: 3
       }
-    ];
+    ];    /**
+   * Performs the specified operation
+   * @param {any} const check of performanceChecks
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const check of performanceChecks
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     for (const check of performanceChecks) {
       if (check.pattern.test(code)) {
@@ -315,7 +405,7 @@ export class EnhancementAgent {
         effort: 2
       },
       {
-        pattern: /console\.(log|error|warn|info)\(/g,
+        pattern: /console.(log|error|warn|info)\(/g,
         type: 'code-quality',
         category: 'quality',
         description: 'Replace console statements with proper logging',
@@ -330,7 +420,17 @@ export class EnhancementAgent {
         impact: 2,
         effort: 1
       }
-    ];
+    ];    /**
+   * Performs the specified operation
+   * @param {any} const check of qualityChecks
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const check of qualityChecks
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     for (const check of qualityChecks) {
       if (check.pattern.test(code)) {
@@ -354,7 +454,17 @@ export class EnhancementAgent {
         'component'
       );
 
-      // Check if code could benefit from known patterns
+      // Check if code could benefit from known patterns      /**
+   * Performs the specified operation
+   * @param {Object} this.config.projectType - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.projectType - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.config.projectType === 'react-webapp') {
         // Check for React-specific patterns
         if (!/import.*useState.*from\s+['"]react['"]/.test(code) && /function\s+\w+.*\{/.test(code)) {
@@ -471,7 +581,7 @@ export class EnhancementAgent {
 
     if (opportunity.description.includes('console statements')) {
       enhancedCode = enhancedCode.replace(
-        /console\.(log|error|warn|info)\(/g,
+        /console.(log|error|warn|info)\(/g,
         '// TODO: Replace with proper logging\n// logger.$1('
       );
       changes.push('Marked console statements for proper logging replacement');
@@ -583,7 +693,17 @@ export class EnhancementAgent {
     if (code.includes('Vue.') || code.includes('export default {')) {return 'vue';}
     if (code.includes('express') || code.includes('app.get')) {return 'node';}
     return 'javascript';
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} code
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} code
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async analyzeStructure(code) {
     return {
@@ -592,7 +712,17 @@ export class EnhancementAgent {
       classes: (code.match(/class\s+\w+/g) || []).length,
       imports: (code.match(/import\s+.*from/g) || []).length
     };
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} code
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} code
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async analyzeQuality(code) {
     return {
@@ -600,7 +730,17 @@ export class EnhancementAgent {
       maintainability: this.calculateMaintainability(code),
       readability: this.calculateReadability(code)
     };
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} code
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} code
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async analyzeSecurity(code) {
     const issues = [];
@@ -608,14 +748,34 @@ export class EnhancementAgent {
     if (/innerHTML\s*=/.test(code)) {issues.push('innerHTML-xss');}
     if (/(?:password|token|key)\s*[:=]\s*["']/.test(code)) {issues.push('hardcoded-secrets');}
     return { issues, count: issues.length };
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} code
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {any} code
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async analyzePerformance(code) {
     const issues = [];
     if (/(document\.getElementById|querySelector).*\)/g.test(code)) {issues.push('uncached-dom-queries');}
     if (/for\s*\([^)]*\.length[^)]*\)/.test(code)) {issues.push('uncached-array-length');}
     return { issues, count: issues.length };
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} code
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} code
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async identifyExistingPatterns(code) {
     const patterns = [];
@@ -623,7 +783,17 @@ export class EnhancementAgent {
     if (/class\s+\w+\s+extends\s+Component/.test(code)) {patterns.push('react-class-component');}
     if (/export\s+default\s+\{/.test(code)) {patterns.push('vue-options-api');}
     return patterns;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} enhancements
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} enhancements
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async extractPatterns(enhancements) {
     return enhancements.improvements
@@ -634,7 +804,17 @@ export class EnhancementAgent {
         effectiveness: 1.0, // Will be updated based on success
         context: { category: imp.category }
       }));
-  }
+  }  /**
+   * Calculates the result
+   * @param {any} code
+   * @returns {number} The calculated result
+   */
+  /**
+   * Calculates the result
+   * @param {any} code
+   * @returns {number} The calculated result
+   */
+
 
   calculateComplexity(code) {
     // Simplified cyclomatic complexity
@@ -643,13 +823,33 @@ export class EnhancementAgent {
       const matches = code.match(new RegExp(`\\b${keyword}\\b`, 'g'));
       return count + (matches ? matches.length : 0);
     }, 1);
-  }
+  }  /**
+   * Calculates the result
+   * @param {any} code
+   * @returns {number} The calculated result
+   */
+  /**
+   * Calculates the result
+   * @param {any} code
+   * @returns {number} The calculated result
+   */
+
 
   calculateMaintainability(code) {
     const lines = code.split('\n').length;
     const complexity = this.calculateComplexity(code);
     return Math.max(0, 100 - (complexity * 2) - (lines / 10));
-  }
+  }  /**
+   * Reads data from file
+   * @param {any} code
+   * @returns {number} The calculated result
+   */
+  /**
+   * Reads data from file
+   * @param {any} code
+   * @returns {number} The calculated result
+   */
+
 
   calculateReadability(code) {
     const avgLineLength = code.split('\n').reduce((sum, line) => sum + line.length, 0) / code.split('\n').length;

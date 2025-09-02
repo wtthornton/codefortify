@@ -47,7 +47,17 @@ export class EffectivenessTracker {
       const metrics = this.metrics.get(patternId);
 
       // Update usage statistics
-      metrics.totalUsage++;
+      metrics.totalUsage++;      /**
+   * Performs the specified operation
+   * @param {any} pattern.effectiveness > 0.5
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} pattern.effectiveness > 0.5
+   * @returns {any} The operation result
+   */
+
       if (pattern.effectiveness > 0.5) {
         metrics.successfulUsage++;
       }
@@ -69,7 +79,7 @@ export class EffectivenessTracker {
       this.recordEffectiveness(patternId, pattern.effectiveness, now);
 
     } catch (error) {
-      console.error(`❌ Error updating pattern metrics: ${error.message}`);
+      // ERROR: `❌ Error updating pattern metrics: ${error.message}`
     }
   }
 
@@ -98,37 +108,109 @@ export class EffectivenessTracker {
       const now = new Date();
       const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
       const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-      const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+      const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);      /**
+   * Performs the specified operation
+   * @param {number} const [patternId
+   * @param {boolean} metrics] of this.metrics
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {number} const [patternId
+   * @param {boolean} metrics] of this.metrics
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
       for (const [patternId, metrics] of this.metrics) {
         // Calculate average effectiveness
         totalEffectiveness += metrics.averageEffectiveness;
 
-        // Count high effectiveness patterns
+        // Count high effectiveness patterns        /**
+   * Performs the specified operation
+   * @param {any} metrics.averageEffectiveness > 0.8
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} metrics.averageEffectiveness > 0.8
+   * @returns {any} The operation result
+   */
+
         if (metrics.averageEffectiveness > 0.8) {
           stats.highEffectivenessPatterns++;
         }
 
-        // Count reliable patterns
+        // Count reliable patterns        /**
+   * Performs the specified operation
+   * @param {any} metrics.reliability > 0.8
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} metrics.reliability > 0.8
+   * @returns {any} The operation result
+   */
+
         if (metrics.reliability > 0.8) {
           stats.reliablePatterns++;
         }
 
         // Analyze trends
-        const trend = this.analyzeTrend(patternId);
+        const trend = this.analyzeTrend(patternId);        /**
+   * Performs the specified operation
+   * @param {any} trend - Optional parameter
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} trend - Optional parameter
+   * @returns {any} The operation result
+   */
+
         if (trend === 'up') {
           stats.trendingUp++;
         } else if (trend === 'down') {
           stats.trendingDown++;
         }
 
-        // Count by timeframe
+        // Count by timeframe        /**
+   * Performs the specified operation
+   * @param {any} metrics.lastUpdated > oneDayAgo
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} metrics.lastUpdated > oneDayAgo
+   * @returns {any} The operation result
+   */
+
         if (metrics.lastUpdated > oneDayAgo) {
           stats.byTimeframe.last24h++;
-        }
+        }        /**
+   * Performs the specified operation
+   * @param {any} metrics.lastUpdated > sevenDaysAgo
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} metrics.lastUpdated > sevenDaysAgo
+   * @returns {any} The operation result
+   */
+
         if (metrics.lastUpdated > sevenDaysAgo) {
           stats.byTimeframe.last7d++;
-        }
+        }        /**
+   * Performs the specified operation
+   * @param {any} metrics.lastUpdated > thirtyDaysAgo
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} metrics.lastUpdated > thirtyDaysAgo
+   * @returns {any} The operation result
+   */
+
         if (metrics.lastUpdated > thirtyDaysAgo) {
           stats.byTimeframe.last30d++;
         }
@@ -140,7 +222,7 @@ export class EffectivenessTracker {
       return stats;
 
     } catch (error) {
-      console.error(`❌ Error getting effectiveness stats: ${error.message}`);
+      // ERROR: `❌ Error getting effectiveness stats: ${error.message}`
       return {
         error: error.message
       };
@@ -163,7 +245,7 @@ export class EffectivenessTracker {
         .sort((a, b) => a.timestamp - b.timestamp);
 
     } catch (error) {
-      console.error(`❌ Error getting effectiveness over time: ${error.message}`);
+      // ERROR: `❌ Error getting effectiveness over time: ${error.message}`
       return [];
     }
   }
@@ -186,7 +268,7 @@ export class EffectivenessTracker {
       return patterns;
 
     } catch (error) {
-      console.error(`❌ Error getting most effective patterns: ${error.message}`);
+      // ERROR: `❌ Error getting most effective patterns: ${error.message}`
       return [];
     }
   }
@@ -209,7 +291,7 @@ export class EffectivenessTracker {
       return patterns;
 
     } catch (error) {
-      console.error(`❌ Error getting least effective patterns: ${error.message}`);
+      // ERROR: `❌ Error getting least effective patterns: ${error.message}`
       return [];
     }
   }
@@ -222,7 +304,17 @@ export class EffectivenessTracker {
   async getUsageStats(patternId) {
     try {
       const metrics = this.metrics.get(patternId);
-      const history = this.usageHistory.get(patternId) || [];
+      const history = this.usageHistory.get(patternId) || [];      /**
+   * Performs the specified operation
+   * @param {any} !metrics
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} !metrics
+   * @returns {any} The operation result
+   */
+
 
       if (!metrics) {
         return {
@@ -248,7 +340,7 @@ export class EffectivenessTracker {
       };
 
     } catch (error) {
-      console.error(`❌ Error getting usage stats: ${error.message}`);
+      // ERROR: `❌ Error getting usage stats: ${error.message}`
       return {
         error: error.message
       };
@@ -265,18 +357,62 @@ export class EffectivenessTracker {
       const cutoffDate = new Date(Date.now() - maxAge);
       let cleaned = 0;
 
-      // Clean up usage history
+      // Clean up usage history      /**
+   * Performs the specified operation
+   * @param {number} const [patternId
+   * @param {boolean} history] of this.usageHistory
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {number} const [patternId
+   * @param {boolean} history] of this.usageHistory
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       for (const [patternId, history] of this.usageHistory) {
-        const filteredHistory = history.filter(entry => entry.timestamp > cutoffDate);
+        const filteredHistory = history.filter(entry => entry.timestamp > cutoffDate);        /**
+   * Performs the specified operation
+   * @param {boolean} filteredHistory.length ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+        /**
+   * Performs the specified operation
+   * @param {boolean} filteredHistory.length ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
         if (filteredHistory.length !== history.length) {
           this.usageHistory.set(patternId, filteredHistory);
           cleaned += history.length - filteredHistory.length;
         }
       }
 
-      // Clean up effectiveness history
+      // Clean up effectiveness history      /**
+   * Performs the specified operation
+   * @param {number} const [patternId
+   * @param {boolean} history] of this.effectivenessHistory
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {number} const [patternId
+   * @param {boolean} history] of this.effectivenessHistory
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       for (const [patternId, history] of this.effectivenessHistory) {
-        const filteredHistory = history.filter(entry => entry.timestamp > cutoffDate);
+        const filteredHistory = history.filter(entry => entry.timestamp > cutoffDate);        /**
+   * Performs the specified operation
+   * @param {boolean} filteredHistory.length ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+        /**
+   * Performs the specified operation
+   * @param {boolean} filteredHistory.length ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
         if (filteredHistory.length !== history.length) {
           this.effectivenessHistory.set(patternId, filteredHistory);
           cleaned += history.length - filteredHistory.length;
@@ -289,7 +425,7 @@ export class EffectivenessTracker {
       };
 
     } catch (error) {
-      console.error(`❌ Error cleaning up old metrics: ${error.message}`);
+      // ERROR: `❌ Error cleaning up old metrics: ${error.message}`
       return {
         success: false,
         error: error.message
@@ -297,7 +433,21 @@ export class EffectivenessTracker {
     }
   }
 
-  // Private methods
+  // Private methods  /**
+   * Performs the specified operation
+   * @param {number} patternId
+   * @param {any} effectiveness
+   * @param {any} timestamp
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {number} patternId
+   * @param {any} effectiveness
+   * @param {any} timestamp
+   * @returns {any} The operation result
+   */
+
 
   recordUsage(patternId, effectiveness, timestamp) {
     if (!this.usageHistory.has(patternId)) {
@@ -311,11 +461,35 @@ export class EffectivenessTracker {
     });
 
     // Keep only recent history to prevent memory issues
-    const maxHistorySize = 1000;
+    const maxHistorySize = 1000;    /**
+   * Performs the specified operation
+   * @param {boolean} history.length > maxHistorySize
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} history.length > maxHistorySize
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (history.length > maxHistorySize) {
       history.splice(0, history.length - maxHistorySize);
     }
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {number} patternId
+   * @param {any} effectiveness
+   * @param {any} timestamp
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {number} patternId
+   * @param {any} effectiveness
+   * @param {any} timestamp
+   * @returns {any} The operation result
+   */
+
 
   recordEffectiveness(patternId, effectiveness, timestamp) {
     if (!this.effectivenessHistory.has(patternId)) {
@@ -329,14 +503,44 @@ export class EffectivenessTracker {
     });
 
     // Keep only recent history to prevent memory issues
-    const maxHistorySize = 1000;
+    const maxHistorySize = 1000;    /**
+   * Performs the specified operation
+   * @param {boolean} history.length > maxHistorySize
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} history.length > maxHistorySize
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (history.length > maxHistorySize) {
       history.splice(0, history.length - maxHistorySize);
     }
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {number} patternId
+   * @returns {any} The operation result
+   */
+  /**
+   * Analyzes the provided data
+   * @param {number} patternId
+   * @returns {any} The operation result
+   */
+
 
   analyzeTrend(patternId) {
-    const history = this.effectivenessHistory.get(patternId) || [];
+    const history = this.effectivenessHistory.get(patternId) || [];    /**
+   * Performs the specified operation
+   * @param {boolean} history.length < 5
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} history.length < 5
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (history.length < 5) {
       return 'insufficient_data';
@@ -344,7 +548,17 @@ export class EffectivenessTracker {
 
     // Get recent and older effectiveness values
     const recent = history.slice(-5);
-    const older = history.slice(-10, -5);
+    const older = history.slice(-10, -5);    /**
+   * Performs the specified operation
+   * @param {any} older.length - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} older.length - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
     if (older.length === 0) {
       return 'insufficient_data';
@@ -354,7 +568,17 @@ export class EffectivenessTracker {
     const olderAvg = older.reduce((sum, entry) => sum + entry.effectiveness, 0) / older.length;
 
     const change = recentAvg - olderAvg;
-    const threshold = 0.05; // 5% change threshold
+    const threshold = 0.05; // 5% change threshold    /**
+   * Performs the specified operation
+   * @param {any} change > threshold
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} change > threshold
+   * @returns {any} The operation result
+   */
+
 
     if (change > threshold) {
       return 'up';

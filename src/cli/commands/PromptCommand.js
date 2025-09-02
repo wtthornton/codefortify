@@ -1,6 +1,6 @@
 /**
  * Prompt Command - CLI interface for enhanced prompt generation
- * 
+ *
  * Allows users to generate and test enhanced prompts for recommendations
  */
 
@@ -11,11 +11,49 @@ import { ProjectScorer } from '../../scoring/ProjectScorer.js';
 import { existsSync, readFileSync } from 'fs';
 import path from 'path';
 
+/**
+
+
+ * PromptCommand class implementation
+
+
+ *
+
+
+ * Provides functionality for promptcommand operations
+
+
+ */
+
+
+/**
+
+
+ * PromptCommand class implementation
+
+
+ *
+
+
+ * Provides functionality for promptcommand operations
+
+
+ */
+
+
 export class PromptCommand {
   constructor() {
     this.command = new Command('prompt');
     this.setupCommand();
-  }
+  }  /**
+   * Sets configuration
+   * @returns {any} The operation result
+   */
+  /**
+   * Sets configuration
+   * @returns {any} The operation result
+   */
+
 
   setupCommand() {
     this.command
@@ -30,24 +68,64 @@ export class PromptCommand {
         try {
           await this.execute(options);
         } catch (error) {
-          console.error('❌ Error:', error.message);
+          console.error('❌ Error:', error.message);          /**
+   * Performs the specified operation
+   * @param {Object} options.verbose
+   * @returns {any} The operation result
+   */
+          /**
+   * Performs the specified operation
+   * @param {Object} options.verbose
+   * @returns {any} The operation result
+   */
+
           if (options.verbose) {
             console.error(error.stack);
           }
           process.exit(1);
         }
       });
-  }
+  }  /**
+   * Executes the operation
+   * @param {Object} options
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Executes the operation
+   * @param {Object} options
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async execute(options) {
-    const { project, config, output, file, test, verbose } = options;
+    const { project, config, output, file, test, verbose } = options;    /**
+   * Performs the specified operation
+   * @param {any} verbose
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} verbose
+   * @returns {any} The operation result
+   */
+
 
     if (verbose) {
       console.log('🚀 Starting enhanced prompt generation...');
     }
 
     let results;
-    let recommendations;
+    let recommendations;    /**
+   * Performs the specified operation
+   * @param {any} test
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} test
+   * @returns {any} The operation result
+   */
+
 
     if (test) {
       // Use test data for demonstration
@@ -60,15 +138,35 @@ export class PromptCommand {
       }
 
       const scoringConfig = this.loadConfig(config, project);
-      const scorer = new ProjectScorer(scoringConfig);
-      
+      const scorer = new ProjectScorer(scoringConfig);      /**
+   * Performs the specified operation
+   * @param {any} verbose
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} verbose
+   * @returns {any} The operation result
+   */
+
+
       if (verbose) {
         console.log('📊 Analyzing project...');
       }
-      
+
       results = await scorer.scoreProject();
       recommendations = results.recommendations || [];
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {any} verbose
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} verbose
+   * @returns {any} The operation result
+   */
+
 
     if (verbose) {
       console.log(`📝 Found ${recommendations.length} recommendations`);
@@ -85,15 +183,35 @@ export class PromptCommand {
       type: results.metadata?.projectType || 'javascript',
       currentFile: null,
       recentFiles: []
-    });
+    });    /**
+   * Performs the specified operation
+   * @param {any} verbose
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} verbose
+   * @returns {any} The operation result
+   */
+
 
     if (verbose) {
       console.log(`🤖 Generated ${enhancedPrompts.length} enhanced prompts`);
     }
 
     // Output results
-    const outputContent = this.formatOutput(enhancedPrompts, output, verbose);
-    
+    const outputContent = this.formatOutput(enhancedPrompts, output, verbose);    /**
+   * Performs the specified operation
+   * @param {any} file
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} file
+   * @returns {any} The operation result
+   */
+
+
     if (file) {
       await this.saveToFile(outputContent, file, output);
       console.log(`💾 Enhanced prompts saved to: ${file}`);
@@ -101,25 +219,61 @@ export class PromptCommand {
       console.log(outputContent);
     }
 
-    // Show statistics
+    // Show statistics    /**
+   * Performs the specified operation
+   * @param {any} verbose
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} verbose
+   * @returns {any} The operation result
+   */
+
     if (verbose) {
       this.showStatistics(enhancedPrompts, promptGenerator);
     }
-  }
+  }  /**
+   * Formats the data
+   * @param {any} enhancedPrompts
+   * @param {any} format
+   * @param {any} verbose
+   * @returns {any} The operation result
+   */
+  /**
+   * Formats the data
+   * @param {any} enhancedPrompts
+   * @param {any} format
+   * @param {any} verbose
+   * @returns {any} The operation result
+   */
+
 
   formatOutput(enhancedPrompts, format, verbose) {
     switch (format.toLowerCase()) {
     case 'json':
       return JSON.stringify(enhancedPrompts, null, 2);
-    
+
     case 'html':
       return this.generateHTMLOutput(enhancedPrompts);
-    
+
     case 'text':
     default:
       return this.generateTextOutput(enhancedPrompts, verbose);
     }
-  }
+  }  /**
+   * Generates new data
+   * @param {any} enhancedPrompts
+   * @param {any} verbose
+   * @returns {any} The created resource
+   */
+  /**
+   * Generates new data
+   * @param {any} enhancedPrompts
+   * @param {any} verbose
+   * @returns {any} The created resource
+   */
+
 
   generateTextOutput(enhancedPrompts, verbose) {
     let output = '🤖 Enhanced Prompts for Code Quality Recommendations\n';
@@ -127,31 +281,51 @@ export class PromptCommand {
 
     enhancedPrompts.forEach((item, index) => {
       const { recommendation, enhancedPrompt } = item;
-      
+
       output += `${index + 1}. ${recommendation.suggestion}\n`;
       output += `   Category: ${recommendation.category}\n`;
       output += `   Priority: ${recommendation.priority}\n`;
       output += `   Impact: +${recommendation.impact} points\n\n`;
-      
-      output += `   🤖 Auto-Execute Prompt:\n`;
+
+      output += '   🤖 Auto-Execute Prompt:\n';
       output += `   ${'─'.repeat(50)}\n`;
       output += `   ${enhancedPrompt.prompt}\n`;
-      output += `   ${'─'.repeat(50)}\n\n`;
-      
+      output += `   ${'─'.repeat(50)}\n\n`;      /**
+   * Performs the specified operation
+   * @param {any} verbose
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} verbose
+   * @returns {any} The operation result
+   */
+
+
       if (verbose) {
-        output += `   📊 Metrics:\n`;
+        output += '   📊 Metrics:\n';
         output += `   • Tokens: ${enhancedPrompt.estimatedTokens}\n`;
         output += `   • Success Rate: ${Math.round(enhancedPrompt.successRate * 100)}%\n`;
         output += `   • Confidence: ${Math.round(enhancedPrompt.confidence * 100)}%\n`;
         output += `   • Token Reduction: ${Math.round(enhancedPrompt.tokenReduction || 0)}%\n`;
         output += `   • Auto-Executable: ${enhancedPrompt.autoExecutable ? 'Yes' : 'No'}\n\n`;
       }
-      
+
       output += '\n';
     });
 
     return output;
-  }
+  }  /**
+   * Generates new data
+   * @param {any} enhancedPrompts
+   * @returns {any} The created resource
+   */
+  /**
+   * Generates new data
+   * @param {any} enhancedPrompts
+   * @returns {any} The created resource
+   */
+
 
   generateHTMLOutput(enhancedPrompts) {
     return `<!DOCTYPE html>
@@ -172,8 +346,8 @@ export class PromptCommand {
     <h1>🤖 Enhanced Prompts for Code Quality Recommendations</h1>
     
     ${enhancedPrompts.map((item, index) => {
-      const { recommendation, enhancedPrompt } = item;
-      return `
+    const { recommendation, enhancedPrompt } = item;
+    return `
         <div class="prompt">
             <h3>${index + 1}. ${recommendation.suggestion}</h3>
             <p><strong>Category:</strong> ${recommendation.category} | <strong>Priority:</strong> ${recommendation.priority} | <strong>Impact:</strong> +${recommendation.impact} points</p>
@@ -188,37 +362,75 @@ export class PromptCommand {
             </div>
         </div>
       `;
-    }).join('')}
+  }).join('')}
     
     <footer style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #ddd; color: #666;">
         Generated by Context7 Enhanced Prompt Generator
     </footer>
 </body>
 </html>`;
-  }
+  }  /**
+   * Saves data to storage
+   * @param {any} content
+   * @param {string} filePath
+   * @param {any} format
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Saves data to storage
+   * @param {any} content
+   * @param {string} filePath
+   * @param {any} format
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async saveToFile(content, filePath, format) {
     const fs = await import('fs/promises');
     await fs.writeFile(filePath, content);
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} enhancedPrompts
+   * @param {any} promptGenerator
+   * @returns {boolean} True if successful, false otherwise
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} enhancedPrompts
+   * @param {any} promptGenerator
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   showStatistics(enhancedPrompts, promptGenerator) {
     const stats = promptGenerator.getPromptStats();
-    
+
     console.log('\n📊 Enhanced Prompt Statistics:');
     console.log('─'.repeat(40));
     console.log(`Total Prompts Generated: ${enhancedPrompts.length}`);
     console.log(`Templates Available: ${stats.templatesAvailable}`);
     console.log(`Max Tokens per Prompt: ${stats.maxTokensPerPrompt}`);
     console.log(`Average Success Rate: ${Math.round(stats.averageSuccessRate * 100)}%`);
-    
+
     const totalTokens = enhancedPrompts.reduce((sum, item) => sum + item.enhancedPrompt.estimatedTokens, 0);
     const avgTokens = Math.round(totalTokens / enhancedPrompts.length);
     console.log(`Average Tokens per Prompt: ${avgTokens}`);
-    
+
     const autoExecutable = enhancedPrompts.filter(item => item.enhancedPrompt.autoExecutable).length;
     console.log(`Auto-Executable Prompts: ${autoExecutable}/${enhancedPrompts.length}`);
-  }
+  }  /**
+   * Loads data from source
+   * @param {Object} configPath
+   * @param {string} projectPath
+   * @returns {any} The operation result
+   */
+  /**
+   * Loads data from source
+   * @param {Object} configPath
+   * @param {string} projectPath
+   * @returns {any} The operation result
+   */
+
 
   loadConfig(configPath, projectPath) {
     if (configPath && existsSync(configPath)) {
@@ -240,7 +452,15 @@ export class PromptCommand {
         optimizeForFirstTry: true
       }
     };
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   getTestResults() {
     return {
@@ -255,7 +475,15 @@ export class PromptCommand {
         grade: 'B'
       }
     };
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   getTestRecommendations() {
     return [
@@ -292,7 +520,15 @@ export class PromptCommand {
         action: 'Add code splitting and tree shaking'
       }
     ];
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   getCommand() {
     return this.command;

@@ -20,7 +20,17 @@ export class JSONReportGenerator {
       timestamp: new Date().toISOString()
     };
 
-    // Clean category data
+    // Clean category data    /**
+   * Performs the specified operation
+   * @param {any} results.categories
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} results.categories
+   * @returns {any} The operation result
+   */
+
     if (results.categories) {
       for (const [key, category] of Object.entries(results.categories)) {
         cleanResults.categories[key] = {

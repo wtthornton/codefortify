@@ -10,6 +10,36 @@ import { existsSync } from 'fs';
 import path from 'path';
 import { EventEmitter } from 'events';
 
+/**
+
+
+ * FileStatusWriter class implementation
+
+
+ *
+
+
+ * Provides functionality for filestatuswriter operations
+
+
+ */
+
+
+/**
+
+
+ * FileStatusWriter class implementation
+
+
+ *
+
+
+ * Provides functionality for filestatuswriter operations
+
+
+ */
+
+
 export class FileStatusWriter extends EventEmitter {
   constructor(options = {}) {
     super();
@@ -89,7 +119,17 @@ export class FileStatusWriter extends EventEmitter {
   /**
      * Start periodic file writing
      */
-  startPeriodicWrite() {
+  startPeriodicWrite() {  /**
+   * Performs the specified operation
+   * @param {boolean} this.writeTimer
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.writeTimer
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.writeTimer) {
       clearInterval(this.writeTimer);
     }
@@ -106,7 +146,17 @@ export class FileStatusWriter extends EventEmitter {
   /**
      * Stop periodic writing
      */
-  stop() {
+  stop() {  /**
+   * Performs the specified operation
+   * @param {boolean} this.writeTimer
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.writeTimer
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.writeTimer) {
       clearInterval(this.writeTimer);
       this.writeTimer = null;
@@ -150,7 +200,17 @@ export class FileStatusWriter extends EventEmitter {
         version: '1.0.0',
         format: 'codefortify-status-v1'
       }
-    };
+    };    /**
+   * Performs the specified operation
+   * @param {Object} this.options.includeHistory
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.options.includeHistory
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (this.options.includeHistory) {
       jsonData.history = this.statusHistory;
@@ -210,12 +270,32 @@ export class FileStatusWriter extends EventEmitter {
       markdown += '\n';
     }
 
-    // Recommendations
+    // Recommendations    /**
+   * Performs the specified operation
+   * @param {any} status.recommendations && status.recommendations.length > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} status.recommendations && status.recommendations.length > 0
+   * @returns {any} The operation result
+   */
+
     if (status.recommendations && status.recommendations.length > 0) {
       markdown += '## Top Recommendations\n\n';
       status.recommendations.slice(0, 5).forEach((rec, index) => {
         markdown += `${index + 1}. **${rec.title}** (${rec.priority})\n`;
-        markdown += `   - ${rec.description}\n`;
+        markdown += `   - ${rec.description}\n`;        /**
+   * Performs the specified operation
+   * @param {any} rec.file
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} rec.file
+   * @returns {any} The operation result
+   */
+
         if (rec.file) {
           markdown += `   - File: \`${rec.file}:${rec.line || ''}\`\n`;
         }
@@ -357,7 +437,17 @@ export class FileStatusWriter extends EventEmitter {
 
     this.statusHistory.push(historyEntry);
 
-    // Limit history size
+    // Limit history size    /**
+   * Performs the specified operation
+   * @param {Object} this.statusHistory.length > this.options.maxHistoryEntries
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.statusHistory.length > this.options.maxHistoryEntries
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.statusHistory.length > this.options.maxHistoryEntries) {
       this.statusHistory = this.statusHistory.slice(-this.options.maxHistoryEntries);
     }
@@ -366,7 +456,17 @@ export class FileStatusWriter extends EventEmitter {
   /**
      * Check if this is a significant change worth recording
      */
-  isSignificantChange(status) {
+  isSignificantChange(status) {  /**
+   * Performs the specified operation
+   * @param {boolean} !this.statusHistory.length
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} !this.statusHistory.length
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (!this.statusHistory.length) {return true;}
 
     const lastEntry = this.statusHistory[this.statusHistory.length - 1];
@@ -374,7 +474,17 @@ export class FileStatusWriter extends EventEmitter {
     // Score changed by more than 0.5 points
     if (Math.abs((status.score || 0) - (lastEntry.score || 0)) > 0.5) {return true;}
 
-    // Phase changed
+    // Phase changed    /**
+   * Performs the specified operation
+   * @param {boolean} status.phase ! - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} status.phase ! - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (status.phase !== lastEntry.phase) {return true;}
 
     // Progress changed by more than 10%
@@ -402,11 +512,61 @@ export class FileStatusWriter extends EventEmitter {
   /**
      * Get color for score badge
      */
-  getScoreColor(score) {
-    if (score === null || score === undefined) {return 'lightgrey';}
-    if (score >= 90) {return 'brightgreen';}
-    if (score >= 80) {return 'green';}
-    if (score >= 70) {return 'yellow';}
+  getScoreColor(score) {  /**
+   * Performs the specified operation
+   * @param {any} score - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score === null || score === undefined) {return 'lightgrey';}    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 90) {return 'brightgreen';}    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 80) {return 'green';}    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 70) {return 'yellow';}    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (score >= 60) {return 'orange';}
     return 'red';
   }
@@ -414,7 +574,17 @@ export class FileStatusWriter extends EventEmitter {
   /**
      * Get color for phase badge
      */
-  getPhaseColor(phase) {
+  getPhaseColor(phase) {  /**
+   * Performs the specified operation
+   * @param {boolean} phase
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} phase
+   * @returns {any} The operation result
+   */
+
     switch (phase) {
     case 'idle': return 'lightgrey';
     case 'analyzing': return 'blue';
@@ -429,7 +599,17 @@ export class FileStatusWriter extends EventEmitter {
   /**
      * Format phase name for display
      */
-  formatPhase(phase) {
+  formatPhase(phase) {  /**
+   * Performs the specified operation
+   * @param {boolean} phase
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} phase
+   * @returns {any} The operation result
+   */
+
     switch (phase) {
     case 'idle': return 'Idle';
     case 'analyzing': return 'Analyzing';
@@ -444,7 +624,17 @@ export class FileStatusWriter extends EventEmitter {
   /**
      * Get status icon for markdown
      */
-  getStatusIcon(status) {
+  getStatusIcon(status) {  /**
+   * Performs the specified operation
+   * @param {any} status
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} status
+   * @returns {any} The operation result
+   */
+
     switch (status) {
     case 'complete': return '✅';
     case 'error': return '❌';

@@ -10,12 +10,50 @@
 
 import { BaseAnalyzer } from './BaseAnalyzer.js';
 
+/**
+
+
+ * CompletenessAnalyzer class implementation
+
+
+ *
+
+
+ * Provides functionality for completenessanalyzer operations
+
+
+ */
+
+
+/**
+
+
+ * CompletenessAnalyzer class implementation
+
+
+ *
+
+
+ * Provides functionality for completenessanalyzer operations
+
+
+ */
+
+
 export class CompletenessAnalyzer extends BaseAnalyzer {
   constructor(config) {
     super(config);
     this.categoryName = 'Completeness & Production Readiness';
     this.description = 'TODO completion, production configuration, and project metadata';
-  }
+  }  /**
+   * Runs the specified task
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Runs the specified task
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async runAnalysis() {
     this.results.score = 0;
@@ -42,29 +80,65 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
 
     try {
       // 1. AGENTS.md deep validation (0.5pts)
-      const agentsCompliance = await this.validateAgentsFileStructure();
+      const agentsCompliance = await this.validateAgentsFileStructure();      /**
+   * Performs the specified operation
+   * @param {number} agentsCompliance.isValid
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {number} agentsCompliance.isValid
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (agentsCompliance.isValid) {
         score += 0.5;
         complianceFeatures.push('AGENTS.md structure');
-      } else {
+      }
+
+      else {
         complianceIssues.push(...agentsCompliance.issues);
       }
 
       // 2. CLAUDE.md deep validation (0.5pts)
-      const claudeCompliance = await this.validateClaudeFileStructure();
+      const claudeCompliance = await this.validateClaudeFileStructure();      /**
+   * Performs the specified operation
+   * @param {number} claudeCompliance.isValid
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {number} claudeCompliance.isValid
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (claudeCompliance.isValid) {
         score += 0.5;
         complianceFeatures.push('CLAUDE.md structure');
-      } else {
+      }
+
+      else {
         complianceIssues.push(...claudeCompliance.issues);
       }
 
       // 3. MCP Server implementation quality (0.5pts)
-      const mcpServerQuality = await this.analyzeMCPServerImplementation();
+      const mcpServerQuality = await this.analyzeMCPServerImplementation();      /**
+   * Performs the specified operation
+   * @param {number} mcpServerQuality.isValid
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {number} mcpServerQuality.isValid
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (mcpServerQuality.isValid) {
         score += 0.5;
         complianceFeatures.push('MCP server implementation');
-      } else {
+      }
+
+      else {
         complianceIssues.push(...mcpServerQuality.issues);
       }
 
@@ -72,12 +146,32 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
       // Agent OS is not required for Context7 MCP projects
       score += 0.5; // Auto-pass since Agent OS is disabled
 
-      // Apply scoring
+      // Apply scoring      /**
+   * Performs the specified operation
+   * @param {any} score > 0
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} score > 0
+   * @returns {any} The operation result
+   */
+
       if (score > 0) {
         this.addScore(score, maxBonusScore, `Context7/MCP compliance features: ${complianceFeatures.join(', ')}`);
       }
 
-      // Report issues
+      // Report issues      /**
+   * Performs the specified operation
+   * @param {boolean} const issue of complianceIssues
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} const issue of complianceIssues
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       for (const issue of complianceIssues) {
         this.addIssue(issue.title, issue.description);
       }
@@ -88,7 +182,9 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
         issues: complianceIssues.length
       });
 
-    } catch (error) {
+    }
+
+    catch (error) {
       this.addIssue('Context7/MCP compliance analysis failed', error.message);
     }
   }
@@ -112,12 +208,24 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
         'Dev Environment Tips',
         'Testing Instructions',
         'PR Instructions'
-      ];
+      ];      /**
+   * Performs the specified operation
+   * @param {any} const section of requiredSections
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const section of requiredSections
+   * @returns {any} The operation result
+   */
+
 
       for (const section of requiredSections) {
         if (content.includes(section) || content.includes(section.toLowerCase())) {
           validSections++;
-        } else {
+        }
+
+        else {
           issues.push({ title: `AGENTS.md missing ${section}`, description: `Add ${section} section to AGENTS.md` });
         }
       }
@@ -125,12 +233,16 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
       // Check for development commands
       if (!content.includes('npm') && !content.includes('yarn') && !content.includes('scripts')) {
         issues.push({ title: 'AGENTS.md missing development commands', description: 'Add setup and development commands section' });
-      } else {
+      }
+
+      else {
         validSections++;
       }
 
       return { isValid: validSections >= 4, issues };
-    } catch (error) {
+    }
+
+    catch (error) {
       return { isValid: false, issues: [{ title: 'AGENTS.md validation failed', description: error.message }] };
     }
   }
@@ -151,26 +263,34 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
       // Check for development commands section
       if (content.includes('Development Commands') || content.includes('Scripts')) {
         validSections++;
-      } else {
+      }
+
+      else {
         issues.push({ title: 'CLAUDE.md missing development commands', description: 'Add Development Commands section' });
       }
 
       // Check for project architecture description
       if (content.includes('Architecture') || content.includes('Project Structure') || content.includes('Components')) {
         validSections++;
-      } else {
+      }
+
+      else {
         issues.push({ title: 'CLAUDE.md missing architecture info', description: 'Add project architecture description' });
       }
 
       // Check for dependency information
       if (content.includes('Dependencies') || content.includes('Key Dependencies')) {
         validSections++;
-      } else {
+      }
+
+      else {
         issues.push({ title: 'CLAUDE.md missing dependency info', description: 'Add key dependencies section' });
       }
 
       return { isValid: validSections >= 2, issues };
-    } catch (error) {
+    }
+
+    catch (error) {
       return { isValid: false, issues: [{ title: 'CLAUDE.md validation failed', description: error.message }] };
     }
   }
@@ -186,7 +306,17 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
       // Check for MCP server file
       const mcpServerExists = await this.fileExists('src/mcp-server.js') ||
                             await this.fileExists('mcp-server.js') ||
-                            await this.fileExists('src/server/mcp-server.js');
+                            await this.fileExists('src/server/mcp-server.js');      /**
+   * Performs the specified operation
+   * @param {boolean} !mcpServerExists
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {boolean} !mcpServerExists
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
       if (!mcpServerExists) {
         return { isValid: false, issues: [{ title: 'MCP server missing', description: 'Create MCP server implementation' }] };
@@ -194,14 +324,34 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
 
       // Find and analyze MCP server file
       const serverFiles = ['src/mcp-server.js', 'mcp-server.js', 'src/server/mcp-server.js'];
-      let serverContent = '';
+      let serverContent = '';      /**
+   * Performs the specified operation
+   * @param {any} const file of serverFiles
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} const file of serverFiles
+   * @returns {any} The operation result
+   */
+
 
       for (const file of serverFiles) {
         if (await this.fileExists(file)) {
           serverContent = await this.readFile(file);
           break;
         }
-      }
+      }      /**
+   * Performs the specified operation
+   * @param {any} serverContent
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} serverContent
+   * @returns {any} The operation result
+   */
+
 
       if (serverContent) {
         // Check for MCP protocol implementation
@@ -228,7 +378,9 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
       return { isValid: qualityScore >= 3, issues: qualityScore < 3 ?
         [{ title: 'MCP server implementation incomplete', description: 'Enhance MCP server with proper resource/tool handlers' }] : [] };
 
-    } catch (error) {
+    }
+
+    catch (error) {
       return { isValid: false, issues: [{ title: 'MCP server analysis failed', description: error.message }] };
     }
   }
@@ -243,16 +395,34 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
       issues: [],
       message: 'Agent OS validation disabled for Context7 MCP projects'
     };
-  }
+  }  /**
+   * Analyzes the provided data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async analyzeTodoAndPlaceholders() {
-    let _score = 0;
-    const _maxScore = 2;
+    let score = 0;
+    const maxScore = 2;
 
     const files = await this.getAllFiles('', ['.js', '.ts', '.jsx', '.tsx', '.md', '.json']);
     let todoCount = 0;
     let placeholderCount = 0;
-    let fixmeCount = 0;
+    let fixmeCount = 0;    /**
+   * Performs the specified operation
+   * @param {any} const file of files
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const file of files
+   * @returns {any} The operation result
+   */
+
 
     for (const file of files) {
       try {
@@ -261,32 +431,80 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
         // Count TODOs, FIXMEs, and placeholder patterns
         const todoMatches = content.match(/\/\/\s*TODO|\/\*\s*TODO|\btodo\b/gi);
         const fixmeMatches = content.match(/\/\/\s*FIXME|\/\*\s*FIXME|\bfixme\b/gi);
-        const placeholderMatches = content.match(/placeholder|xxx|changeme|replace.*this|implement.*here/gi);
+        const placeholderMatches = content.match(/placeholder|xxx|changeme|replace.*this|implement.*here/gi);        /**
+   * Performs the specified operation
+   * @param {any} todoMatches
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} todoMatches
+   * @returns {any} The operation result
+   */
 
-        if (todoMatches) {todoCount += todoMatches.length;}
-        if (fixmeMatches) {fixmeCount += fixmeMatches.length;}
+
+        if (todoMatches) {todoCount += todoMatches.length;}        /**
+   * Performs the specified operation
+   * @param {any} fixmeMatches
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} fixmeMatches
+   * @returns {any} The operation result
+   */
+
+        if (fixmeMatches) {fixmeCount += fixmeMatches.length;}        /**
+   * Performs the specified operation
+   * @param {any} placeholderMatches
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} placeholderMatches
+   * @returns {any} The operation result
+   */
+
         if (placeholderMatches) {placeholderCount += placeholderMatches.length;}
 
-      } catch (error) {
+      }
+
+      catch (error) {
         // Skip files that can't be read
       }
     }
 
-    const totalIncomplete = todoCount + fixmeCount + placeholderCount;
+    const totalIncomplete = todoCount + fixmeCount + placeholderCount;    /**
+   * Performs the specified operation
+   * @param {any} totalIncomplete - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} totalIncomplete - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
     if (totalIncomplete === 0) {
-      _score += 2;
+      score += 2;
       this.addScore(2, 2, 'No TODO or placeholder code found');
-    } else if (totalIncomplete <= 5) {
-      _score += 1.5;
+    }
+
+    else if (totalIncomplete <= 5) {
+      score += 1.5;
       this.addScore(1.5, 2, `Few incomplete items (${totalIncomplete})`);
       this.addIssue('Some TODO items remain', 'Complete remaining TODO and FIXME items');
-    } else if (totalIncomplete <= 15) {
-      _score += 1;
+    }
+
+    else if (totalIncomplete <= 15) {
+      score += 1;
       this.addScore(1, 2, `Moderate incomplete items (${totalIncomplete})`);
       this.addIssue('Many TODO items found', 'Address TODO, FIXME, and placeholder code');
-    } else {
-      _score += 0.5;
+    }
+
+    else {
+      score += 0.5;
       this.addScore(0.5, 2, `Many incomplete items (${totalIncomplete})`);
       this.addIssue('High number of incomplete items', 'Project appears unfinished - complete TODO and placeholder code');
     }
@@ -295,13 +513,31 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
     this.setDetail('fixmeCount', fixmeCount);
     this.setDetail('placeholderCount', placeholderCount);
     this.setDetail('totalIncomplete', totalIncomplete);
-  }
+  }  /**
+   * Analyzes the provided data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async analyzeProductionReadiness() {
-    let _score = 0;
-    const _maxScore = 2;
+    let score = 0;
+    const maxScore = 2;
 
-    const packageJson = await this.readPackageJson();
+    const packageJson = await this.readPackageJson();    /**
+   * Performs the specified operation
+   * @param {any} !packageJson
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !packageJson
+   * @returns {any} The operation result
+   */
+
     if (!packageJson) {
       this.addIssue('No package.json found', 'Cannot assess production configuration');
       return;
@@ -309,12 +545,24 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
 
     // Check for production scripts
     const scripts = packageJson.scripts || {};
-    const hasProductionScripts = ['build', 'start'].every(script => scripts[script]);
+    const hasProductionScripts = ['build', 'start'].every(script => scripts[script]);    /**
+   * Performs the specified operation
+   * @param {boolean} hasProductionScripts
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} hasProductionScripts
+   * @returns {any} The operation result
+   */
+
 
     if (hasProductionScripts) {
-      _score += 0.5;
+      score += 0.5;
       this.addScore(0.5, 0.5, 'Production scripts (build, start) configured');
-    } else {
+    }
+
+    else {
       this.addIssue('Missing production scripts', 'Add build and start scripts for production deployment');
     }
 
@@ -322,12 +570,24 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
     const hasEnvConfig = await this.fileExists('.env.example') ||
                         await this.fileExists('.env.template') ||
                         await this.fileExists('config/') ||
-                        (packageJson.config !== undefined);
+                        (packageJson.config !== undefined);    /**
+   * Performs the specified operation
+   * @param {Object} hasEnvConfig
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} hasEnvConfig
+   * @returns {any} The operation result
+   */
+
 
     if (hasEnvConfig) {
-      _score += 0.5;
+      score += 0.5;
       this.addScore(0.5, 0.5, 'Environment configuration detected');
-    } else {
+    }
+
+    else {
       this.addIssue('No environment configuration', 'Add .env.example or config documentation');
     }
 
@@ -338,12 +598,24 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
       'app.json', 'Procfile', 'railway.json'
     ];
 
-    const hasDeploymentConfig = deploymentFiles.some(file => this.fileExists(file));
+    const hasDeploymentConfig = deploymentFiles.some(file => this.fileExists(file));    /**
+   * Performs the specified operation
+   * @param {Object} await hasDeploymentConfig
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} await hasDeploymentConfig
+   * @returns {any} The operation result
+   */
+
 
     if (await hasDeploymentConfig) {
-      _score += 0.5;
+      score += 0.5;
       this.addScore(0.5, 0.5, 'Deployment configuration found');
-    } else {
+    }
+
+    else {
       this.addIssue('No deployment configuration', 'Add Dockerfile or platform-specific config');
     }
 
@@ -353,18 +625,40 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
       'azure-pipelines.yml', 'Jenkinsfile', '.circleci/'
     ];
 
-    let hasCiCd = false;
+    let hasCiCd = false;    /**
+   * Performs the specified operation
+   * @param {any} const ciFile of ciFiles
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const ciFile of ciFiles
+   * @returns {any} The operation result
+   */
+
     for (const ciFile of ciFiles) {
       if (await this.fileExists(ciFile)) {
         hasCiCd = true;
         break;
       }
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {boolean} hasCiCd
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} hasCiCd
+   * @returns {any} The operation result
+   */
+
 
     if (hasCiCd) {
-      _score += 0.5;
+      score += 0.5;
       this.addScore(0.5, 0.5, 'CI/CD pipeline configured');
-    } else {
+    }
+
+    else {
       this.addIssue('No CI/CD pipeline', 'Set up automated testing and deployment');
     }
 
@@ -372,13 +666,31 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
     this.setDetail('hasEnvConfig', hasEnvConfig);
     this.setDetail('hasDeploymentConfig', await hasDeploymentConfig);
     this.setDetail('hasCiCd', hasCiCd);
-  }
+  }  /**
+   * Analyzes the provided data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Analyzes the provided data
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async analyzeProjectMetadata() {
-    let _score = 0;
-    const _maxScore = 1;
+    let score = 0;
+    const maxScore = 1;
 
-    const packageJson = await this.readPackageJson();
+    const packageJson = await this.readPackageJson();    /**
+   * Performs the specified operation
+   * @param {any} !packageJson
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !packageJson
+   * @returns {any} The operation result
+   */
+
     if (!packageJson) {
       this.addIssue('No package.json found', 'Cannot assess project metadata');
       return;
@@ -386,12 +698,24 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
 
     // Check for essential package.json fields
     const essentialFields = ['name', 'version', 'description'];
-    const hasEssentialFields = essentialFields.every(field => packageJson[field]);
+    const hasEssentialFields = essentialFields.every(field => packageJson[field]);    /**
+   * Performs the specified operation
+   * @param {boolean} hasEssentialFields
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} hasEssentialFields
+   * @returns {any} The operation result
+   */
+
 
     if (hasEssentialFields) {
-      _score += 0.3;
+      score += 0.3;
       this.addScore(0.3, 0.3, 'Essential package.json fields present');
-    } else {
+    }
+
+    else {
       this.addIssue('Missing package.json metadata', 'Add name, version, and description');
     }
 
@@ -399,33 +723,69 @@ export class CompletenessAnalyzer extends BaseAnalyzer {
     const metadataFields = [
       'author', 'repository', 'homepage', 'bugs', 'keywords', 'license'
     ];
-    const metadataCount = metadataFields.filter(field => packageJson[field]).length;
+    const metadataCount = metadataFields.filter(field => packageJson[field]).length;    /**
+   * Performs the specified operation
+   * @param {number} metadataCount > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {number} metadataCount > - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
     if (metadataCount >= 4) {
-      _score += 0.4;
+      score += 0.4;
       this.addScore(0.4, 0.4, `Comprehensive metadata (${metadataCount}/6 fields)`);
-    } else if (metadataCount >= 2) {
-      _score += 0.2;
+    }
+
+    else if (metadataCount >= 2) {
+      score += 0.2;
       this.addScore(0.2, 0.4, `Basic metadata (${metadataCount}/6 fields)`);
-    } else {
+    }
+
+    else {
       this.addIssue('Limited project metadata', 'Add author, repository, license info');
     }
 
     // Check for license file
     const licenseFiles = ['LICENSE', 'LICENSE.md', 'LICENSE.txt', 'LICENCE'];
-    let hasLicenseFile = false;
+    let hasLicenseFile = false;    /**
+   * Performs the specified operation
+   * @param {any} const licenseFile of licenseFiles
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const licenseFile of licenseFiles
+   * @returns {any} The operation result
+   */
+
 
     for (const licenseFile of licenseFiles) {
       if (await this.fileExists(licenseFile)) {
         hasLicenseFile = true;
         break;
       }
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {boolean} hasLicenseFile || packageJson.license
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} hasLicenseFile || packageJson.license
+   * @returns {any} The operation result
+   */
+
 
     if (hasLicenseFile || packageJson.license) {
-      _score += 0.3;
+      score += 0.3;
       this.addScore(0.3, 0.3, 'License information provided');
-    } else {
+    }
+
+    else {
       this.addIssue('No license specified', 'Add LICENSE file and license field to package.json');
     }
 

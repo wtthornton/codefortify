@@ -128,7 +128,7 @@ describe('DynamicPatternLearner', () => {
         filePath: path.join(testProjectDir, 'src', 'bad-example.js'),
         code: `function badFunction() {
   var unused = 'this is bad';
-  console.log('debugging');
+  // LOG: debugging
   return null;
 }`,
         context: { language: 'javascript', pattern: 'anti-pattern' },

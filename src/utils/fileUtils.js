@@ -47,7 +47,17 @@ export function getExtension(filePath) {
  * @returns {Promise<number>} Line count
  */
 export async function countLines(filePath) {
-  const content = await safeReadFile(filePath);
+  const content = await safeReadFile(filePath);  /**
+   * Performs the specified operation
+   * @param {any} !content
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} !content
+   * @returns {any} The operation result
+   */
+
   if (!content) {return 0;}
   return content.split('\n').length;
 }
@@ -105,7 +115,17 @@ export async function getAllFiles(dirPath) {
   const files = [];
 
   try {
-    const entries = await fs.readdir(dirPath, { withFileTypes: true });
+    const entries = await fs.readdir(dirPath, { withFileTypes: true });    /**
+   * Performs the specified operation
+   * @param {any} const entry of entries
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const entry of entries
+   * @returns {any} The operation result
+   */
+
 
     for (const entry of entries) {
       const fullPath = path.join(dirPath, entry.name);
@@ -118,7 +138,7 @@ export async function getAllFiles(dirPath) {
       }
     }
   } catch (error) {
-    console.error(`Error reading directory ${dirPath}: ${error.message}`);
+    // ERROR: `Error reading directory ${dirPath}: ${error.message}`
   }
 
   return files;
@@ -155,7 +175,17 @@ export async function getDirectoryTree(dirPath) {
     }
 
     const entries = await fs.readdir(dirPath, { withFileTypes: true });
-    const children = [];
+    const children = [];    /**
+   * Performs the specified operation
+   * @param {any} const entry of entries
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} const entry of entries
+   * @returns {any} The operation result
+   */
+
 
     for (const entry of entries) {
       const fullPath = path.join(dirPath, entry.name);
@@ -170,7 +200,7 @@ export async function getDirectoryTree(dirPath) {
       children
     };
   } catch (error) {
-    console.error(`Error reading directory tree ${dirPath}: ${error.message}`);
+    // ERROR: `Error reading directory tree ${dirPath}: ${error.message}`
     return {
       name: path.basename(dirPath),
       type: 'error',

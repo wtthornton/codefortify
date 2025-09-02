@@ -6,6 +6,36 @@
 import { EventEmitter } from 'events';
 import chalk from 'chalk';
 
+/**
+
+
+ * CursorStatusPanel class implementation
+
+
+ *
+
+
+ * Provides functionality for cursorstatuspanel operations
+
+
+ */
+
+
+/**
+
+
+ * CursorStatusPanel class implementation
+
+
+ *
+
+
+ * Provides functionality for cursorstatuspanel operations
+
+
+ */
+
+
 export class CursorStatusPanel extends EventEmitter {
   constructor(statusManager) {
     super();
@@ -31,7 +61,15 @@ export class CursorStatusPanel extends EventEmitter {
       devexp: { name: 'DevExp', score: 0, trend: '→' },
       complete: { name: 'Complete', score: 0, trend: '→' }
     };
-  }
+  }  /**
+   * Performs the specified operation
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @returns {any} The operation result
+   */
+
 
   start() {
     this.updateTimer = setInterval(() => {
@@ -41,13 +79,39 @@ export class CursorStatusPanel extends EventEmitter {
 
     // Initial render
     this.render();
-  }
+  }  /**
+   * Performs the specified operation
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @returns {any} The operation result
+   */
 
-  stop() {
+
+  stop() {  /**
+   * Performs the specified operation
+   * @param {boolean} this.updateTimer
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.updateTimer
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.updateTimer) {
       clearInterval(this.updateTimer);
     }
-  }
+  }  /**
+   * Updates existing data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Updates existing data
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async updateStatus() {
     try {
@@ -81,19 +145,47 @@ export class CursorStatusPanel extends EventEmitter {
       }
 
     } catch (error) {
-      console.error('Failed to update status:', error.message);
+      // ERROR: Failed to update status:, error.message
     }
-  }
+  }  /**
+   * Adds an item
+   * @param {any} message
+   * @returns {any} The operation result
+   */
+  /**
+   * Adds an item
+   * @param {any} message
+   * @returns {any} The operation result
+   */
+
 
   addActivityItem(message) {
     const timestamp = new Date().toLocaleTimeString('en-US', { hour12: false });
     this.activityFeed.unshift(`${timestamp} ${message}`);
 
-    // Keep only the latest items
+    // Keep only the latest items    /**
+   * Performs the specified operation
+   * @param {boolean} this.activityFeed.length > this.maxFeedItems
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {boolean} this.activityFeed.length > this.maxFeedItems
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.activityFeed.length > this.maxFeedItems) {
       this.activityFeed = this.activityFeed.slice(0, this.maxFeedItems);
     }
-  }
+  }  /**
+   * Generates new data
+   * @returns {any} The created resource
+   */
+  /**
+   * Generates new data
+   * @returns {any} The created resource
+   */
+
 
   generateActivityMessage() {
     const activities = [
@@ -110,28 +202,138 @@ export class CursorStatusPanel extends EventEmitter {
     ];
 
     return activities[Math.floor(Math.random() * activities.length)];
-  }
+  }  /**
+   * Retrieves data
+   * @param {any} score
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @param {any} score
+   * @returns {string} The retrieved data
+   */
 
-  getScoreGrade(score) {
-    if (score >= 90) {return 'A';}
-    if (score >= 80) {return 'B';}
-    if (score >= 70) {return 'C';}
+
+  getScoreGrade(score) {  /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 90) {return 'A';}    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 80) {return 'B';}    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 70) {return 'C';}    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (score >= 60) {return 'D';}
     return 'F';
-  }
+  }  /**
+   * Retrieves data
+   * @param {any} score
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @param {any} score
+   * @returns {string} The retrieved data
+   */
 
-  getScoreColor(score) {
-    if (score >= 80) {return chalk.green;}
-    if (score >= 70) {return chalk.yellow;}
+
+  getScoreColor(score) {  /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 80) {return chalk.green;}    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 70) {return chalk.yellow;}    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (score >= 60) {return chalk.orange;}
     return chalk.red;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} progress
+   * @param {number} width - Optional parameter
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} progress
+   * @param {number} width - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
   renderProgressBar(progress, width = 20) {
     const filled = Math.round((progress / 100) * width);
     const empty = width - filled;
     return '█'.repeat(filled) + '░'.repeat(empty);
-  }
+  }  /**
+   * Performs the specified operation
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @returns {any} The operation result
+   */
+
 
   render() {
     const width = 75;
@@ -148,15 +350,24 @@ export class CursorStatusPanel extends EventEmitter {
                `🔥 ${this.runtime}min runtime `.padEnd(20) + '─┐');
 
     // Agents and Categories sections
-    console.log('├─ AGENTS ─────────────────┬─ CATEGORIES ──────────────────────────┤');
-
+    // LOG: ├─ AGENTS ─────────────────┬─ CATEGORIES ──────────────────────────┤
     const agentEntries = Object.entries(this.agents);
     const categoryEntries = Object.entries(this.categories);
 
     for (let i = 0; i < Math.max(agentEntries.length, categoryEntries.length); i++) {
       let line = '│ ';
 
-      // Agent section (left)
+      // Agent section (left)      /**
+   * Performs the specified operation
+   * @param {any} i < agentEntries.length
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} i < agentEntries.length
+   * @returns {any} The operation result
+   */
+
       if (i < agentEntries.length) {
         const [key, agent] = agentEntries[i];
         const bar = this.renderProgressBar(agent.progress, 10);
@@ -167,7 +378,17 @@ export class CursorStatusPanel extends EventEmitter {
 
       line += '│ ';
 
-      // Category section (right)
+      // Category section (right)      /**
+   * Performs the specified operation
+   * @param {any} i < categoryEntries.length
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} i < categoryEntries.length
+   * @returns {any} The operation result
+   */
+
       if (i < categoryEntries.length) {
         const [key, category] = categoryEntries[i];
         const bar = this.renderProgressBar(category.score, 20);
@@ -177,24 +398,41 @@ export class CursorStatusPanel extends EventEmitter {
       }
 
       line += ' │';
-      console.log(line);
+      // LOG: line
     }
 
     // Activity Feed
-    console.log('├─ ACTIVITY FEED ──────────┴───────────────────────────────────────┤');
-
+    // LOG: ├─ ACTIVITY FEED ──────────┴───────────────────────────────────────┤
+    /**
+   * Performs the specified operation
+   * @param {any} let i - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} let i - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
     for (let i = 0; i < this.maxFeedItems; i++) {
       const activity = this.activityFeed[i] || '';
-      console.log('│ ' + activity.padEnd(width - 2) + ' │');
+      // LOG: │  + activity.padEnd(width - 2) +  │
     }
 
     // Controls
-    console.log('├─ CONTROLS ───────────────────────────────────────────────────────┤');
-    console.log('│ ▶️ Active │ ⏸️ Pause │ 🎛️ Settings │ 📊 Report │ 🎯 Focus: Quality │');
-    console.log('└' + '─'.repeat(width) + '┘');
+    // LOG: ├─ CONTROLS ───────────────────────────────────────────────────────┤
+    // LOG: │ ▶️ Active │ ⏸️ Pause │ 🎛️ Settings │ 📊 Report │ 🎯 Focus: Quality │
+    // LOG: └ + ─.repeat(width) + ┘
   }
 
-  // Cursor Integration Methods
+  // Cursor Integration Methods  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
   getCursorStatusBarConfig() {
     return {
       id: 'codefortify-status',
@@ -205,7 +443,15 @@ export class CursorStatusPanel extends EventEmitter {
       text: `🚀 ${this.currentScore} │ ${this.runtime}min`,
       color: this.getScoreColor(this.currentScore || 73)
     };
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   getDetailedTooltip() {
     const activeAgents = Object.values(this.agents)

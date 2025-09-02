@@ -20,6 +20,36 @@ import { GitLabCIFormat } from './formats/GitLabCIFormat.js';
 import { JenkinsFormat } from './formats/JenkinsFormat.js';
 import { GenericFormat } from './formats/GenericFormat.js';
 
+/**
+
+
+ * QualityGates class implementation
+
+
+ *
+
+
+ * Provides functionality for qualitygates operations
+
+
+ */
+
+
+/**
+
+
+ * QualityGates class implementation
+
+
+ *
+
+
+ * Provides functionality for qualitygates operations
+
+
+ */
+
+
 export class QualityGates {
   /**
    * Create a new QualityGates instance
@@ -61,7 +91,17 @@ export class QualityGates {
    * const result = await gates.evaluateResults(scoringResults);
    * console.log(`Quality gates: ${result.passed ? 'PASSED' : 'FAILED'}`);
    */
-  async evaluateResults(results, options = {}) {
+  async evaluateResults(results, options = {}) {  /**
+   * Performs the specified operation
+   * @param {Object} !this.config.enabled
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} !this.config.enabled
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (!this.config.enabled) {
       return {
         passed: true,
@@ -88,10 +128,10 @@ export class QualityGates {
 
     // Calculate summary
     const summary = this.calculateSummary(gates);
-    
+
     // Determine overall pass/fail
-    const passed = strict ? 
-      gates.every(gate => gate.passed) : 
+    const passed = strict ?
+      gates.every(gate => gate.passed) :
       summary.passed > 0 && summary.failed === 0;
 
     this.evaluationResults = {
@@ -107,7 +147,17 @@ export class QualityGates {
           Object.entries(categories).map(([key, cat]) => [key, cat.score])
         )
       }
-    };
+    };    /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (this.config.verbose) {
       this.logEvaluationResults();
@@ -154,8 +204,18 @@ export class QualityGates {
    * @returns {Object} Gate evaluation result
    */
   evaluateCategoryGate(categoryKey, categoryResult) {
-    const threshold = this.config.thresholds.categories?.[categoryKey];
-    
+    const threshold = this.config.thresholds.categories?.[categoryKey];    /**
+   * Performs the specified operation
+   * @param {any} !threshold
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !threshold
+   * @returns {any} The operation result
+   */
+
+
     if (!threshold) {
       return {
         name: this.getCategoryDisplayName(categoryKey),
@@ -205,8 +265,18 @@ export class QualityGates {
    * @returns {Promise<Object>} CI/CD output result
    */
   async generateCIOutput(evaluationResults = null, options = {}) {
-    const results = evaluationResults || this.evaluationResults;
-    
+    const results = evaluationResults || this.evaluationResults;    /**
+   * Performs the specified operation
+   * @param {any} !results
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !results
+   * @returns {any} The operation result
+   */
+
+
     if (!results) {
       throw new Error('No evaluation results available. Run evaluateResults() first.');
     }
@@ -218,7 +288,17 @@ export class QualityGates {
 
     // Determine output format
     const outputFormat = format === 'auto' ? this.detectCIFormat() : format;
-    const formatter = this.formatters[outputFormat];
+    const formatter = this.formatters[outputFormat];    /**
+   * Performs the specified operation
+   * @param {any} !formatter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !formatter
+   * @returns {any} The operation result
+   */
+
 
     if (!formatter) {
       throw new Error(`Unsupported CI format: ${outputFormat}`);
@@ -227,12 +307,32 @@ export class QualityGates {
     // Generate formatted output
     const output = await formatter.format(results, this.config);
 
-    // Write to file if output path specified
+    // Write to file if output path specified    /**
+   * Performs the specified operation
+   * @param {string} outputPath
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {string} outputPath
+   * @returns {any} The operation result
+   */
+
     if (outputPath) {
       await this.writeCIOutput(output, outputPath, outputFormat);
     }
 
-    // Set CI environment variables if configured
+    // Set CI environment variables if configured    /**
+   * Performs the specified operation
+   * @param {Object} this.config.ci.setEnvironment
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.config.ci.setEnvironment
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.config.ci.setEnvironment) {
       this.setCIEnvironmentVariables(results);
     }
@@ -257,10 +357,20 @@ export class QualityGates {
   async writeCIOutput(output, outputPath, format) {
     try {
       await fs.mkdir(path.dirname(outputPath), { recursive: true });
-      await fs.writeFile(outputPath, output);
-      
+      await fs.writeFile(outputPath, output);      /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+      /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
+
       if (this.config.verbose) {
-        console.log(`📄 CI output written to: ${outputPath}`);
+        // LOG: `📄 CI output written to: ${outputPath}`
       }
     } catch (error) {
       throw new Error(`Failed to write CI output: ${error.message}`);
@@ -275,14 +385,24 @@ export class QualityGates {
    */
   setCIEnvironmentVariables(results) {
     const prefix = this.config.ci.environmentPrefix || 'QUALITY_GATES_';
-    
+
     process.env[`${prefix}PASSED`] = results.passed.toString();
     process.env[`${prefix}SCORE`] = results.results.overall.toString();
     process.env[`${prefix}FAILED_GATES`] = results.summary.failed.toString();
-    process.env[`${prefix}TOTAL_GATES`] = results.summary.total.toString();
-    
+    process.env[`${prefix}TOTAL_GATES`] = results.summary.total.toString();    /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
+
     if (this.config.verbose) {
-      console.log(`🔧 Set CI environment variables with prefix: ${prefix}`);
+      // LOG: `🔧 Set CI environment variables with prefix: ${prefix}`
     }
   }
 
@@ -292,24 +412,64 @@ export class QualityGates {
    * @returns {string} Detected CI format
    */
   detectCIFormat() {
-    // Check environment variables for CI detection
+    // Check environment variables for CI detection  /**
+   * Performs the specified operation
+   * @param {any} process.env.GITHUB_ACTIONS - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} process.env.GITHUB_ACTIONS - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (process.env.GITHUB_ACTIONS === 'true') {
       return 'github-actions';
-    }
-    
+    }    /**
+   * Performs the specified operation
+   * @param {any} process.env.GITLAB_CI - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} process.env.GITLAB_CI - Optional parameter
+   * @returns {any} The operation result
+   */
+
+
     if (process.env.GITLAB_CI === 'true') {
       return 'gitlab-ci';
-    }
-    
+    }    /**
+   * Performs the specified operation
+   * @param {string} process.env.JENKINS_URL
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {string} process.env.JENKINS_URL
+   * @returns {any} The operation result
+   */
+
+
     if (process.env.JENKINS_URL) {
       return 'jenkins';
     }
-    
-    // Check for configured format
+
+    // Check for configured format    /**
+   * Performs the specified operation
+   * @param {Object} this.config.ci.format
+   * @returns {boolean} True if successful, false otherwise
+   */
+    /**
+   * Performs the specified operation
+   * @param {Object} this.config.ci.format
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.config.ci.format) {
       return this.config.ci.format;
     }
-    
+
     // Default to generic
     return 'generic';
   }
@@ -388,8 +548,18 @@ export class QualityGates {
    * @returns {string} Evaluation message
    */
   generateGateMessage(gateName, score, threshold, passed, warning) {
-    const thresholdText = threshold.min ? ` (threshold: ${threshold.min})` : '';
-    
+    const thresholdText = threshold.min ? ` (threshold: ${threshold.min})` : '';    /**
+   * Performs the specified operation
+   * @param {any} passed && !warning
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} passed && !warning
+   * @returns {any} The operation result
+   */
+
+
     if (passed && !warning) {
       return `✅ ${gateName}: ${score}${thresholdText} - PASSED`;
     } else if (passed && warning) {
@@ -406,7 +576,17 @@ export class QualityGates {
    * @param {boolean} passed - Overall pass status
    * @returns {string} Overall message
    */
-  generateMessage(summary, passed) {
+  generateMessage(summary, passed) {  /**
+   * Performs the specified operation
+   * @param {any} passed
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} passed
+   * @returns {any} The operation result
+   */
+
     if (passed) {
       return `✅ Quality gates PASSED (${summary.passed}/${summary.total} gates passed)`;
     } else {
@@ -441,22 +621,31 @@ export class QualityGates {
    */
   logEvaluationResults() {
     const results = this.evaluationResults;
-    
-    console.log('\n🎯 Quality Gates Evaluation Results');
-    console.log('═'.repeat(50));
-    console.log(`Overall: ${results.passed ? '✅ PASSED' : '❌ FAILED'}`);
-    console.log(`Message: ${results.message}`);
-    console.log(`Summary: ${results.summary.passed}/${results.summary.total} gates passed`);
-    
+
+    // LOG: \n🎯 Quality Gates Evaluation Results
+    // LOG: ═.repeat(50)
+    // LOG: `Overall: ${results.passed ? ✅ PASSED : ❌ FAILED}`
+    // LOG: `Message: ${results.message}`
+    // LOG: `Summary: ${results.summary.passed}/${results.summary.total} gates passed`
+    /**
+   * Performs the specified operation
+   * @param {any} results.summary.warnings > 0
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} results.summary.warnings > 0
+   * @returns {any} The operation result
+   */
     if (results.summary.warnings > 0) {
-      console.log(`Warnings: ${results.summary.warnings}`);
+      // LOG: `Warnings: ${results.summary.warnings}`
     }
-    
-    console.log('\nGate Details:');
+
+    // LOG: \nGate Details:
     results.gates.forEach(gate => {
       const status = gate.passed ? '✅' : '❌';
       const warning = gate.warning ? ' ⚠️' : '';
-      console.log(`  ${status}${warning} ${gate.name}: ${gate.score}${gate.threshold ? `/${gate.threshold}` : ''}`);
+      // LOG: `  ${status}${warning} ${gate.name}: ${gate.score}${gate.threshold ? `/${gate.threshold}` : }`
     });
   }
 

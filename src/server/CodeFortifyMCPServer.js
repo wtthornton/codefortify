@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /**
  * CodeFortify MCP Server - AI-Powered Code Strengthening
  *
@@ -29,6 +27,36 @@ import { TemplateManager } from '../TemplateManager.js';
 const __filename = fileURLToPath(import.meta.url);
 // const _dirname = path.dirname(__filename); // Unused variable - commented out
 
+/**
+
+
+ * CodeFortifyMCPServer class implementation
+
+
+ *
+
+
+ * Provides functionality for codefortifymcpserver operations
+
+
+ */
+
+
+/**
+
+
+ * CodeFortifyMCPServer class implementation
+
+
+ *
+
+
+ * Provides functionality for codefortifymcpserver operations
+
+
+ */
+
+
 export class CodeFortifyMCPServer {
   constructor(config = {}) {
     this.config = {
@@ -56,31 +84,49 @@ export class CodeFortifyMCPServer {
     this.resourceManager = new ResourceManager(this.config);
     this.toolManager = new ToolManager(this.config);
     this.patternProvider = new PatternProvider(this.config);
-    
+
     // Initialize template manager
     this.templateManager = new TemplateManager({
       projectRoot: this.config.projectRoot,
       templatesPath: path.join(path.dirname(__filename), '..', '..', 'templates')
     });
-    
+
     // Detect project template
     this.detectProjectTemplate();
 
     this.setupHandlers();
-  }
+  }  /**
+   * Performs the specified operation
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async detectProjectTemplate() {
     try {
       const templates = await this.templateManager.discoverTemplates();
       const projectTemplates = templates.filter(t => t.type === 'project');
-      
+
       // Try to detect which template this project uses
       const packageJsonPath = path.join(this.config.projectRoot, 'package.json');
       if (await fs.access(packageJsonPath).then(() => true).catch(() => false)) {
         const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
         const dependencies = { ...packageJson.dependencies, ...packageJson.devDependencies };
-        
-        // Detect based on dependencies
+
+        // Detect based on dependencies        /**
+   * Performs the specified operation
+   * @param {any} dependencies.react && dependencies['react-dom']
+   * @returns {any} The operation result
+   */
+        /**
+   * Performs the specified operation
+   * @param {any} dependencies.react && dependencies['react-dom']
+   * @returns {any} The operation result
+   */
+
         if (dependencies.react && dependencies['react-dom']) {
           this.config.projectTemplate = 'react-webapp';
         } else if (dependencies.vue) {
@@ -89,48 +135,74 @@ export class CodeFortifyMCPServer {
           this.config.projectTemplate = 'node-api';
         }
       }
-      
+
       // Check for existing .codefortify directory
       const codefortifyPath = path.join(this.config.projectRoot, this.config.codefortifyPath);
       if (await fs.access(codefortifyPath).then(() => true).catch(() => false)) {
         // Project already has standards, use them
         this.config.projectTemplate = 'existing';
       }
-      
+
     } catch (error) {
-      console.warn('Could not detect project template:', error.message);
+      // WARN: Could not detect project template:, error.message
       this.config.projectTemplate = 'default';
     }
-  }
+  }  /**
+   * Sets configuration
+   * @returns {any} The operation result
+   */
+  /**
+   * Sets configuration
+   * @returns {any} The operation result
+   */
+
 
   setupHandlers() {
     this.setupResourceHandlers();
     this.setupToolHandlers();
     this.setupPromptHandlers();
-  }
+  }  /**
+   * Sets configuration
+   * @returns {any} The operation result
+   */
+  /**
+   * Sets configuration
+   * @returns {any} The operation result
+   */
+
 
   setupResourceHandlers() {
     // List available Context7 resources
     this.server.setRequestHandler(ListResourcesRequestSchema, async () => {
       try {
-        console.error('MCP: ✅ Received resource list request');
+        // ERROR: MCP: ✅ Received resource list request
         const result = await this.resourceManager.listResources();
-        
-        // Add template-specific resources if available
+
+        // Add template-specific resources if available        /**
+   * Performs the specified operation
+   * @param {Object} this.config.projectTemplate && this.config.projectTemplate ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+        /**
+   * Performs the specified operation
+   * @param {Object} this.config.projectTemplate && this.config.projectTemplate ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
         if (this.config.projectTemplate && this.config.projectTemplate !== 'existing') {
           try {
             const templateResources = await this.templateManager.getTemplateResources(this.config.projectTemplate);
             result.resources.push(...templateResources);
           } catch (error) {
-            console.warn('Could not load template resources:', error.message);
+            // WARN: Could not load template resources:, error.message
           }
         }
-        
-        console.error('MCP: ✅ Resources listed successfully');
+
+        // ERROR: MCP: ✅ Resources listed successfully
         return result;
       } catch (error) {
-        console.error('MCP: ❌ Resource listing failed:', error.message);
-        console.error('MCP: Stack:', error.stack);
+        // ERROR: MCP: ❌ Resource listing failed:, error.message
+        // ERROR: MCP: Stack:, error.stack
         throw error;
       }
     });
@@ -138,41 +210,58 @@ export class CodeFortifyMCPServer {
     // Read Context7 resources
     this.server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
       try {
-        console.error(`MCP: ✅ Received resource read request: ${request.params.uri}`);
-        
-        // Try template-specific resource first
+        // ERROR: `MCP: ✅ Received resource read request: ${request.params.uri}`
+        // Try template-specific resource first        /**
+   * Performs the specified operation
+   * @param {Object} this.config.projectTemplate && this.config.projectTemplate ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+        /**
+   * Performs the specified operation
+   * @param {Object} this.config.projectTemplate && this.config.projectTemplate ! - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
         if (this.config.projectTemplate && this.config.projectTemplate !== 'existing') {
           try {
             const templateContent = await this.templateManager.readTemplateResource(this.config.projectTemplate, request.params.uri);
-            console.error('MCP: ✅ Template resource read successfully');
+            // ERROR: MCP: ✅ Template resource read successfully
             return { contents: [{ uri: request.params.uri, text: templateContent }] };
           } catch (error) {
             // Fall back to default resource loading
           }
         }
-        
+
         const result = await this.resourceManager.readResource(request.params.uri);
-        console.error('MCP: ✅ Resource read successfully');
+        // ERROR: MCP: ✅ Resource read successfully
         return result;
       } catch (error) {
-        console.error('MCP: ❌ Resource read failed:', error.message);
-        console.error('MCP: Stack:', error.stack);
+        // ERROR: MCP: ❌ Resource read failed:, error.message
+        // ERROR: MCP: Stack:, error.stack
         throw error;
       }
     });
-  }
+  }  /**
+   * Sets configuration
+   * @returns {any} The operation result
+   */
+  /**
+   * Sets configuration
+   * @returns {any} The operation result
+   */
+
 
   setupToolHandlers() {
     // List available Context7 tools
     this.server.setRequestHandler(ListToolsRequestSchema, async () => {
       try {
-        console.error('MCP: ✅ Received tool list request');
+        // ERROR: MCP: ✅ Received tool list request
         const result = await this.toolManager.listTools();
-        console.error('MCP: ✅ Tools listed successfully');
+        // ERROR: MCP: ✅ Tools listed successfully
         return result;
       } catch (error) {
-        console.error('MCP: ❌ Tool listing failed:', error.message);
-        console.error('MCP: Stack:', error.stack);
+        // ERROR: MCP: ❌ Tool listing failed:, error.message
+        // ERROR: MCP: Stack:, error.stack
         throw error;
       }
     });
@@ -180,22 +269,30 @@ export class CodeFortifyMCPServer {
     // Handle Context7 tools
     this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
       try {
-        console.error(`MCP: ✅ Received tool execution request: ${request.params.name}`);
+        // ERROR: `MCP: ✅ Received tool execution request: ${request.params.name}`
         const result = await this.toolManager.executeTool(request.params.name, request.params.arguments);
-        console.error('MCP: ✅ Tool executed successfully');
+        // ERROR: MCP: ✅ Tool executed successfully
         return result;
       } catch (error) {
-        console.error('MCP: ❌ Tool execution failed:', error.message);
-        console.error('MCP: Stack:', error.stack);
+        // ERROR: MCP: ❌ Tool execution failed:, error.message
+        // ERROR: MCP: Stack:, error.stack
         throw error;
       }
     });
-  }
+  }  /**
+   * Sets configuration
+   * @returns {any} The operation result
+   */
+  /**
+   * Sets configuration
+   * @returns {any} The operation result
+   */
+
 
   setupPromptHandlers() {
     this.server.setRequestHandler(ListPromptsRequestSchema, async () => {
       try {
-        console.error('MCP: Listing prompts...');
+        // ERROR: MCP: Listing prompts...
         const result = {
           prompts: [
             {
@@ -232,10 +329,10 @@ export class CodeFortifyMCPServer {
             }
           ]
         };
-        console.error('MCP: Prompts listed successfully');
+        // ERROR: MCP: Prompts listed successfully
         return result;
       } catch (error) {
-        console.error('MCP: Prompt listing failed:', error.message);
+        // ERROR: MCP: Prompt listing failed:, error.message
         throw error;
       }
     });
@@ -243,21 +340,43 @@ export class CodeFortifyMCPServer {
     // Handle prompt execution (missing handler)
     this.server.setRequestHandler(GetPromptRequestSchema, async (request) => {
       try {
-        console.error(`MCP: Executing prompt: ${request.params.name}`);
+        // ERROR: `MCP: Executing prompt: ${request.params.name}`
         const result = await Promise.race([
           this.executePrompt(request.params.name, request.params.arguments),
           new Promise((_, reject) => setTimeout(() => reject(new Error('Prompt execution timeout')), 10000))
         ]);
-        console.error('MCP: Prompt executed successfully');
+        // ERROR: MCP: Prompt executed successfully
         return result;
       } catch (error) {
-        console.error('MCP: Prompt execution failed:', error.message);
+        // ERROR: MCP: Prompt execution failed:, error.message
         throw error;
       }
     });
-  }
+  }  /**
+   * Executes the operation
+   * @param {any} name
+   * @param {any} args
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Executes the operation
+   * @param {any} name
+   * @param {any} args
+   * @returns {Promise} Promise that resolves with the result
+   */
 
-  async executePrompt(name, args) {
+
+  async executePrompt(name, args) {  /**
+   * Performs the specified operation
+   * @param {any} name
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} name
+   * @returns {any} The operation result
+   */
+
     switch (name) {
     case 'context7_code_review':
       return await this.generateCodeReview(args);
@@ -266,7 +385,17 @@ export class CodeFortifyMCPServer {
     default:
       throw new Error(`Unknown prompt: ${name}`);
     }
-  }
+  }  /**
+   * Generates new data
+   * @param {any} args
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Generates new data
+   * @param {any} args
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async generateCodeReview(args) {
     const { code, file_type = 'javascript' } = args;
@@ -312,7 +441,17 @@ ${suggestions.content[0].text}
     } catch (error) {
       throw new Error(`Code review generation failed: ${error.message}`);
     }
-  }
+  }  /**
+   * Generates new data
+   * @param {any} args
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Generates new data
+   * @param {any} args
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async generateComponentScaffold(args) {
     const { component_name, component_type } = args;
@@ -355,23 +494,30 @@ ${scaffold.content[0].text}
     } catch (error) {
       throw new Error(`Component scaffold generation failed: ${error.message}`);
     }
-  }
+  }  /**
+   * Performs the specified operation
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async start() {
     try {
-      console.error('MCP: Starting Context7 MCP Server...');
-      console.error(`MCP: Project root: ${this.config.projectRoot}`);
-      console.error(`MCP: Project type: ${this.config.projectType}`);
-
+      // ERROR: MCP: Starting Context7 MCP Server...
+      // ERROR: `MCP: Project root: ${this.config.projectRoot}`
+      // ERROR: `MCP: Project type: ${this.config.projectType}`
       const transport = new StdioServerTransport();
       await this.server.connect(transport);
 
-      console.error(`Context7 MCP Server running for ${this.config.projectName}`);
-      console.error('MCP: Server started successfully');
-      console.error('MCP: Waiting for requests...');
+      // ERROR: `Context7 MCP Server running for ${this.config.projectName}`
+      // ERROR: MCP: Server started successfully
+      // ERROR: MCP: Waiting for requests...
     } catch (error) {
-      console.error('MCP: Failed to start server:', error.message);
-      console.error('MCP: Stack trace:', error.stack);
+      // ERROR: MCP: Failed to start server:, error.message
+      // ERROR: MCP: Stack trace:, error.stack
       throw error;
     }
   }
@@ -380,17 +526,17 @@ ${scaffold.content[0].text}
     try {
       const configFile = await fs.readFile(configPath, 'utf-8');
       const config = JSON.parse(configFile);
-      return new Context7MCPServer(config);
+      return new CodeFortifyMCPServer(config);
     } catch (error) {
-      console.error(`Failed to load config from ${configPath}:`, error.message);
-      return new Context7MCPServer();
+      // ERROR: `Failed to load config from ${configPath}:`, error.message
+      return new CodeFortifyMCPServer();
     }
   }
 
   static async autoDetectAndStart(projectRoot = process.cwd()) {
     // Auto-detect project type and configuration
-    const config = await Context7MCPServer.detectProjectConfig(projectRoot);
-    const server = new Context7MCPServer(config);
+    const config = await CodeFortifyMCPServer.detectProjectConfig(projectRoot);
+    const server = new CodeFortifyMCPServer(config);
     await server.start();
   }
 
@@ -408,7 +554,17 @@ ${scaffold.content[0].text}
       config.projectName = packageJson.name || 'project';
 
       // Detect project type based on dependencies
-      const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };
+      const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };      /**
+   * Performs the specified operation
+   * @param {any} deps.react
+   * @returns {any} The operation result
+   */
+      /**
+   * Performs the specified operation
+   * @param {any} deps.react
+   * @returns {any} The operation result
+   */
+
 
       if (deps.react) {
         config.projectType = 'react-webapp';
@@ -447,8 +603,8 @@ ${scaffold.content[0].text}
 
 // Start server if this file is executed directly
 if (import.meta.url === new URL(process.argv[1], 'file:').href) {
-  Context7MCPServer.autoDetectAndStart().catch((error) => {
-    console.error('Failed to start Context7 MCP server:', error);
+  CodeFortifyMCPServer.autoDetectAndStart().catch((error) => {
+    // ERROR: Failed to start Context7 MCP server:, error
     process.exit(1);
   });
 }

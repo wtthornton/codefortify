@@ -2,7 +2,15 @@
  * NodePatterns - Node.js-specific code patterns
  */
 
-export class NodePatterns {
+export class NodePatterns {  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
   static getServicePattern() {
     return `// Context7 Node.js Service Pattern
 import { z } from 'zod';
@@ -32,19 +40,47 @@ export class ExampleService {
     } catch (error) {
       throw new Error(\`Service operation failed: \${error.message}\`);
     }
-  }
+  }  /**
+   * Validates input data
+   * @param {any} input
+   * @returns {any} The operation result
+   */
+  /**
+   * Validates input data
+   * @param {any} input
+   * @returns {any} The operation result
+   */
+
 
   validateInput(input) {
     // Add input validation logic
     return input;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} data
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} data
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async performOperation(data) {
     // Implement business logic
     return data;
   }
 }`;
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   static getMiddlewarePattern() {
     return `// Context7 Express Middleware Pattern
@@ -66,20 +102,35 @@ export const exampleMiddleware = (options = {}) => {
       
       // Log request completion
       const duration = Date.now() - startTime;
-      console.log(\`Request completed in \${duration}ms\`);
-      
+      // LOG: \`Request completed in \${duration}ms\`
     } catch (error) {
       // Handle middleware errors
-      console.error('Middleware error:', error);
+      // ERROR: Middleware error:, error
       next(error);
     }
   };
-};
+};  /**
+   * Generates new data
+   * @returns {any} The created resource
+   */
+  /**
+   * Generates new data
+   * @returns {any} The created resource
+   */
+
 
 function generateRequestId() {
   return Math.random().toString(36).substring(2, 15);
 }`;
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   static getRoutePattern() {
     return `// Context7 Express Route Pattern
@@ -112,7 +163,17 @@ router.post('/items', async (req, res, next) => {
     });
     
   } catch (error) {
-    // Handle validation and business logic errors
+    // Handle validation and business logic errors  /**
+   * Performs the specified operation
+   * @param {any} error instanceof z.ZodError
+   * @returns {any} The operation result
+   */
+  /**
+   * Performs the specified operation
+   * @param {any} error instanceof z.ZodError
+   * @returns {any} The operation result
+   */
+
     if (error instanceof z.ZodError) {
       return res.status(400).json({
         success: false,
@@ -126,7 +187,15 @@ router.post('/items', async (req, res, next) => {
 });
 
 export default router;`;
-  }
+  }  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @returns {string} The retrieved data
+   */
+
 
   static getTestPattern() {
     return `// Context7 Node.js Test Pattern
@@ -181,11 +250,27 @@ describe('Example API', () => {
       expect(result).toBeDefined();
     });
   });
-});
+});  /**
+   * Function implementation
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Function implementation
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
 async function setupTestEnvironment() {
   // Initialize test database, create test data, etc.
-}
+}  /**
+   * Function implementation
+   * @returns {Promise} Promise that resolves with the result
+   */
+  /**
+   * Function implementation
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
 async function cleanupTestEnvironment() {
   // Clean up test data, close connections, etc.

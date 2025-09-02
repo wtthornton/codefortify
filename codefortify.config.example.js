@@ -1,6 +1,7 @@
+/* eslint-env node */
 /**
  * Context7-MCP Configuration Example
- * 
+ *
  * Copy this file to codefortify.config.js and customize for your project.
  * This configuration enables Smart Report Routing and Quality Gates Integration.
  */
@@ -14,17 +15,17 @@ module.exports = {
   routing: {
     // Strategy: 'auto' (detect), 'monorepo', 'single', 'workspace', 'custom'
     strategy: 'auto',
-    
+
     // Base directory for reports (relative to project root)
     basePath: './reports',
-    
+
     // Format-specific custom paths
     customPaths: {
       html: './docs/quality-reports',
       json: './data/quality-metrics',
       markdown: './docs'
     },
-    
+
     // Organization structure
     organization: {
       byDate: true,           // Organize by date (YYYY-MM-DD)
@@ -37,10 +38,10 @@ module.exports = {
   // Quality Gates Configuration
   gates: {
     enabled: true,
-    
+
     // Quality thresholds
     thresholds: {
-      overall: { 
+      overall: {
         min: 70,      // Minimum overall score
         warning: 80   // Warning threshold
       },
@@ -54,7 +55,7 @@ module.exports = {
         completeness: { min: 3, warning: 4 }
       }
     },
-    
+
     // CI/CD integration
     ci: {
       format: 'auto',  // 'auto', 'github-actions', 'gitlab-ci', 'jenkins', 'generic'

@@ -6,6 +6,21 @@ import { ProjectScorer } from '../scoring/ProjectScorer.js';
 import { CodeFortifyValidator } from '../validation/CodeFortifyValidator.js';
 import { PerformanceMonitor } from '../scoring/core/PerformanceMonitor.js';
 
+/**
+
+
+ * ReviewAgent class implementation
+
+
+ *
+
+
+ * Provides functionality for reviewagent operations
+
+
+ */
+
+
 export class ReviewAgent {
   constructor(config = {}) {
     this.config = {
@@ -21,7 +36,13 @@ export class ReviewAgent {
     this.performanceMonitor = new PerformanceMonitor();
 
     this.reviewCriteria = this.initializeReviewCriteria();
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} code
+   * @param {any} previousIteration - Optional parameter
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async review(code, previousIteration = null) {
     const startTime = Date.now();
@@ -60,10 +81,20 @@ export class ReviewAgent {
     } catch (error) {
       throw new Error(`Review failed: ${error.message}`);
     }
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} code
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async scoreCode(code) {
-    try {
+    try {      /**
+   * Performs the specified operation
+   * @param {any} typeof code - Optional parameter
+   * @returns {string} The operation result
+   */
+
       if (typeof code === 'string') {
         return await this.scoreCodeString(code);
       } else {
@@ -72,7 +103,12 @@ export class ReviewAgent {
     } catch (error) {
       return await this.basicScore(code);
     }
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} codeString
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async scoreCodeString(codeString) {
     const analysis = {
@@ -105,7 +141,13 @@ export class ReviewAgent {
       },
       categories: categories
     };
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} code
+   * @param {any} scoreResult
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async identifyIssues(code, scoreResult) {
     const issues = [];
@@ -115,14 +157,30 @@ export class ReviewAgent {
 
     return issues.sort((a, b) => {
       const severityOrder = { critical: 3, major: 2, minor: 1 };
-      const severityDiff = severityOrder[b.severity] - severityOrder[a.severity];
+      const severityDiff = severityOrder[b.severity] - severityOrder[a.severity];      /**
+   * Performs the specified operation
+   * @param {any} severityDiff ! - Optional parameter
+   * @returns {any} The operation result
+   */
+
       if (severityDiff !== 0) { return severityDiff; }
       return (b.impact || 0) - (a.impact || 0);
     });
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} code
+   * @param {any} scoreResult
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async identifyCriticalIssues(code, scoreResult) {
-    const issues = [];
+    const issues = [];    /**
+   * Performs the specified operation
+   * @param {any} typeof code - Optional parameter
+   * @returns {string} The operation result
+   */
+
 
     if (typeof code === 'string') {
       if (/eval\s*\(/.test(code)) {
@@ -137,7 +195,7 @@ export class ReviewAgent {
         });
       }
 
-      if (/(?:password|token|key|secret)\s*[:=]\s*["'][\w\-\.]+["']/gi.test(code)) {
+      if (/(?:password|token|key|secret)\s*[:=]\s*["'][\w\-.]+["']/gi.test(code)) {
         issues.push({
           type: 'security',
           severity: 'critical',
@@ -159,7 +217,12 @@ export class ReviewAgent {
           fix: 'Fix syntax errors to ensure code can execute'
         });
       }
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {any} scoreResult.overall.score < 50
+   * @returns {any} The operation result
+   */
+
 
     if (scoreResult.overall.score < 50) {
       issues.push({
@@ -173,13 +236,24 @@ export class ReviewAgent {
     }
 
     return issues;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} code
+   * @param {any} scoreResult
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async identifyMajorIssues(code, scoreResult) {
     const issues = [];
 
     Object.entries(scoreResult.categories).forEach(([category, result]) => {
-      const percentage = (result.score / result.maxScore) * 100;
+      const percentage = (result.score / result.maxScore) * 100;      /**
+   * Performs the specified operation
+   * @param {any} percentage < 60
+   * @returns {any} The operation result
+   */
+
       if (percentage < 60) {
         issues.push({
           type: 'category',
@@ -190,7 +264,12 @@ export class ReviewAgent {
           fix: `Improve ${category} to reach at least 60% score`
         });
       }
-    });
+    });    /**
+   * Performs the specified operation
+   * @param {any} typeof code - Optional parameter
+   * @returns {string} The operation result
+   */
+
 
     if (typeof code === 'string') {
       if (/(document\.getElementById|querySelector).*\)/g.test(code)) {
@@ -218,10 +297,21 @@ export class ReviewAgent {
     }
 
     return issues;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} code
+   * @param {any} _scoreResult
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async identifyMinorIssues(code, _scoreResult) {
-    const issues = [];
+    const issues = [];    /**
+   * Performs the specified operation
+   * @param {any} typeof code - Optional parameter
+   * @returns {string} The operation result
+   */
+
 
     if (typeof code === 'string') {
       if (/var\s+\w+/.test(code)) {
@@ -236,19 +326,24 @@ export class ReviewAgent {
         });
       }
 
-      if (/console\.(log|error|warn|info)/.test(code)) {
+      if (/console.(log|error|warn|info)/.test(code)) {
         issues.push({
           type: 'style',
           severity: 'minor',
           category: 'Code Quality',
           description: 'Console statements should be replaced with proper logging',
-          location: this.findCodeLocation(code, /console\./g),
+          location: this.findCodeLocation(code, /console./g),
           impact: 2,
           fix: 'Replace console statements with structured logging'
         });
       }
 
-      const complexFunctions = code.match(/function\s+\w+[^{]*\{[^}]{200,}\}/g);
+      const complexFunctions = code.match(/function\s+\w+[^{]*\{[^}]{200,}\}/g);      /**
+   * Performs the specified operation
+   * @param {any} complexFunctions && complexFunctions.length > 0
+   * @returns {any} The operation result
+   */
+
       if (complexFunctions && complexFunctions.length > 0) {
         issues.push({
           type: 'documentation',
@@ -262,7 +357,12 @@ export class ReviewAgent {
     }
 
     return issues;
-  }
+  }  /**
+   * Checks the condition
+   * @param {any} code
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async checkCompliance(code) {
     const compliance = {
@@ -274,7 +374,12 @@ export class ReviewAgent {
 
     try {
       const validationResult = await this.validator.validateProject(this.config.projectRoot);
-      compliance.codefortify = validationResult.valid;
+      compliance.codefortify = validationResult.valid;      /**
+   * Performs the specified operation
+   * @param {number} !validationResult.valid
+   * @returns {any} The operation result
+   */
+
       if (!validationResult.valid) {
         compliance.issues.push(...validationResult.errors.map(error => ({
           type: 'compliance',
@@ -288,9 +393,19 @@ export class ReviewAgent {
         description: 'Could not validate project compliance',
         severity: 'minor'
       });
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {any} typeof code - Optional parameter
+   * @returns {string} The operation result
+   */
 
-    if (typeof code === 'string') {
+
+    if (typeof code === 'string') {      /**
+   * Performs the specified operation
+   * @param {Object} this.config.projectType - Optional parameter
+   * @returns {boolean} True if successful, false otherwise
+   */
+
       if (this.config.projectType === 'react-webapp') {
         if (!code.includes('import React')) {
           compliance.bestPractices = false;
@@ -304,9 +419,20 @@ export class ReviewAgent {
     }
 
     return compliance;
-  }
+  }  /**
+   * Validates input data
+   * @param {any} code
+   * @param {any} previousIteration
+   * @returns {Promise} Promise that resolves with the result
+   */
 
-  async validateProgress(code, previousIteration) {
+
+  async validateProgress(code, previousIteration) {  /**
+   * Performs the specified operation
+   * @param {any} !previousIteration
+   * @returns {any} The operation result
+   */
+
     if (!previousIteration) { return null; }
 
     const currentScore = await this.scoreCode(code);
@@ -322,7 +448,15 @@ export class ReviewAgent {
       significantImprovement: improvement >= 5,
       categories: this.analyzeCategorialProgress(currentScore.categories, previousIteration.categories)
     };
-  }
+  }  /**
+   * Generates new data
+   * @param {any} scoreResult
+   * @param {boolean} issues
+   * @param {any} compliance
+   * @param {any} progress
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async generateReviewSummary(scoreResult, issues, compliance, progress) {
     const criticalIssues = issues.filter(i => i.severity === 'critical').length;
@@ -350,7 +484,13 @@ export class ReviewAgent {
     };
 
     return summary;
-  }
+  }  /**
+   * Generates new data
+   * @param {boolean} issues
+   * @param {any} scoreResult
+   * @returns {Promise} Promise that resolves with the result
+   */
+
 
   async generateRecommendations(issues, scoreResult) {
     const recommendations = [];
@@ -368,7 +508,12 @@ export class ReviewAgent {
     });
 
     Object.entries(scoreResult.categories).forEach(([category, result]) => {
-      const percentage = (result.score / result.maxScore) * 100;
+      const percentage = (result.score / result.maxScore) * 100;      /**
+   * Performs the specified operation
+   * @param {any} percentage < 70
+   * @returns {any} The operation result
+   */
+
       if (percentage < 70) {
         recommendations.push({
           priority: percentage < 50 ? 'high' : 'medium',
@@ -379,7 +524,12 @@ export class ReviewAgent {
           type: 'improvement'
         });
       }
-    });
+    });    /**
+   * Performs the specified operation
+   * @param {Object} scoreResult.overall.score < this.config.targetScore
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (scoreResult.overall.score < this.config.targetScore) {
       const gap = this.config.targetScore - scoreResult.overall.score;
@@ -395,11 +545,20 @@ export class ReviewAgent {
 
     return recommendations.sort((a, b) => {
       const priorityOrder = { high: 3, medium: 2, low: 1 };
-      const priorityDiff = priorityOrder[b.priority] - priorityOrder[a.priority];
+      const priorityDiff = priorityOrder[b.priority] - priorityOrder[a.priority];      /**
+   * Performs the specified operation
+   * @param {any} priorityDiff ! - Optional parameter
+   * @returns {any} The operation result
+   */
+
       if (priorityDiff !== 0) { return priorityDiff; }
       return (b.impact || 0) - (a.impact || 0);
     });
-  }
+  }  /**
+   * Initialize the component
+   * @returns {any} The operation result
+   */
+
 
   initializeReviewCriteria() {
     return {
@@ -415,7 +574,12 @@ export class ReviewAgent {
         testing: this.config.strictMode ? 70 : 50
       }
     };
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} codeString
+   * @returns {any} The operation result
+   */
+
 
   analyzeCodeStructure(codeString) {
     const lines = codeString.split('\n').length;
@@ -423,9 +587,24 @@ export class ReviewAgent {
     const classes = (codeString.match(/class\s+\w+/g) || []).length;
     const complexity = this.calculateComplexity(codeString);
 
-    let score = 20;
-    if (lines > 500) { score -= 3; }
-    if (complexity > 20) { score -= 5; }
+    let score = 20;    /**
+   * Performs the specified operation
+   * @param {any} lines > 500
+   * @returns {any} The operation result
+   */
+
+    if (lines > 500) { score -= 3; }    /**
+   * Performs the specified operation
+   * @param {any} complexity > 20
+   * @returns {any} The operation result
+   */
+
+    if (complexity > 20) { score -= 5; }    /**
+   * Performs the specified operation
+   * @param {any} functions - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (functions === 0 && classes === 0) { score -= 5; }
 
     return {
@@ -435,7 +614,12 @@ export class ReviewAgent {
       classes,
       complexity
     };
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} codeString
+   * @returns {any} The operation result
+   */
+
 
   analyzeCodeQuality(codeString) {
     let score = 20;
@@ -456,7 +640,12 @@ export class ReviewAgent {
       issues.push('no-comments');
     }
 
-    const avgLineLength = codeString.split('\n').reduce((sum, line) => sum + line.length, 0) / codeString.split('\n').length;
+    const avgLineLength = codeString.split('\n').reduce((sum, line) => sum + line.length, 0) / codeString.split('\n').length;    /**
+   * Performs the specified operation
+   * @param {any} avgLineLength > 120
+   * @returns {any} The operation result
+   */
+
     if (avgLineLength > 120) {
       score -= 2;
       issues.push('long-lines');
@@ -467,7 +656,12 @@ export class ReviewAgent {
       issues,
       avgLineLength
     };
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} codeString
+   * @returns {any} The operation result
+   */
+
 
   analyzeCodeSecurity(codeString) {
     let score = 15;
@@ -483,7 +677,7 @@ export class ReviewAgent {
       vulnerabilities.push('innerHTML-xss');
     }
 
-    if (/(?:password|token|key|secret)\s*[:=]\s*["'][\w\-\.]+["']/gi.test(codeString)) {
+    if (/(?:password|token|key|secret)\s*[:=]\s*["'][\w\-.]+["']/gi.test(codeString)) {
       score -= 6;
       vulnerabilities.push('hardcoded-secrets');
     }
@@ -497,7 +691,12 @@ export class ReviewAgent {
       score: Math.max(0, score),
       vulnerabilities
     };
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} codeString
+   * @returns {any} The operation result
+   */
+
 
   analyzeCodePerformance(codeString) {
     let score = 15;
@@ -523,7 +722,12 @@ export class ReviewAgent {
       score: Math.max(0, score),
       issues
     };
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} codeString
+   * @returns {any} The operation result
+   */
+
 
   analyzeTestCoverage(codeString) {
     let score = 10;
@@ -543,13 +747,23 @@ export class ReviewAgent {
       score: Math.min(15, score),
       indicators
     };
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} codeString
+   * @returns {any} The operation result
+   */
+
 
   analyzeDocumentation(codeString) {
     let score = 10;
     const features = [];
 
-    const commentRatio = (codeString.match(/\/\*[\s\S]*?\*\/|\/\/.*$/gm) || []).length / codeString.split('\n').length;
+    const commentRatio = (codeString.match(/\/\*[\s\S]*?\*\/|\/\/.*$/gm) || []).length / codeString.split('\n').length;    /**
+   * Performs the specified operation
+   * @param {any} commentRatio > 0.1
+   * @returns {any} The operation result
+   */
+
     if (commentRatio > 0.1) {
       features.push('good-comments');
     } else {
@@ -567,7 +781,12 @@ export class ReviewAgent {
       features,
       commentRatio
     };
-  }
+  }  /**
+   * Calculates the result
+   * @param {any} code
+   * @returns {number} The calculated result
+   */
+
 
   calculateComplexity(code) {
     const complexityKeywords = ['if', 'else', 'while', 'for', 'switch', 'case', 'catch', '&&', '||'];
@@ -575,17 +794,33 @@ export class ReviewAgent {
       const matches = code.match(new RegExp(`\\b${keyword}\\b`, 'g'));
       return count + (matches ? matches.length : 0);
     }, 1);
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} code
+   * @param {any} pattern
+   * @returns {any} The operation result
+   */
+
 
   findCodeLocation(code, pattern) {
-    const lines = code.split('\n');
+    const lines = code.split('\n');    /**
+   * Performs the specified operation
+   * @param {any} let i - Optional parameter
+   * @returns {any} The operation result
+   */
+
     for (let i = 0; i < lines.length; i++) {
       if (pattern.test(lines[i])) {
         return { line: i + 1, column: lines[i].search(pattern) };
       }
     }
     return null;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} code
+   * @returns {any} The operation result
+   */
+
 
   hasSyntaxErrors(code) {
     try {
@@ -595,50 +830,144 @@ export class ReviewAgent {
     } catch {
       return true;
     }
-  }
+  }  /**
+   * Calculates the result
+   * @param {any} score
+   * @returns {number} The calculated result
+   */
 
-  calculateGrade(score) {
-    if (score >= 90) { return 'A'; }
-    if (score >= 80) { return 'B'; }
-    if (score >= 70) { return 'C'; }
+
+  calculateGrade(score) {  /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 90) { return 'A'; }    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 80) { return 'B'; }    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (score >= 70) { return 'C'; }    /**
+   * Performs the specified operation
+   * @param {any} score > - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (score >= 60) { return 'D'; }
     return 'F';
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} score
+   * @param {boolean} issues
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   determineReviewStatus(score, issues) {
     const criticalIssues = issues.filter(i => i.severity === 'critical').length;
-    const majorIssues = issues.filter(i => i.severity === 'major').length;
+    const majorIssues = issues.filter(i => i.severity === 'major').length;    /**
+   * Performs the specified operation
+   * @param {boolean} criticalIssues > this.reviewCriteria.criticalIssueLimit
+   * @returns {boolean} True if successful, false otherwise
+   */
 
-    if (criticalIssues > this.reviewCriteria.criticalIssueLimit) { return false; }
-    if (majorIssues > this.reviewCriteria.majorIssueLimit) { return false; }
+
+    if (criticalIssues > this.reviewCriteria.criticalIssueLimit) { return false; }    /**
+   * Performs the specified operation
+   * @param {boolean} majorIssues > this.reviewCriteria.majorIssueLimit
+   * @returns {boolean} True if successful, false otherwise
+   */
+
+    if (majorIssues > this.reviewCriteria.majorIssueLimit) { return false; }    /**
+   * Performs the specified operation
+   * @param {boolean} score < this.reviewCriteria.minimumScore
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (score < this.reviewCriteria.minimumScore) { return false; }
 
     return true;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} score
+   * @param {boolean} criticalIssues
+   * @param {boolean} majorIssues
+   * @returns {any} The operation result
+   */
 
-  determineOverallStatus(score, criticalIssues, majorIssues) {
-    if (criticalIssues > 0) { return 'critical'; }
-    if (majorIssues > 3) { return 'needs-work'; }
-    if (score < 70) { return 'needs-improvement'; }
+
+  determineOverallStatus(score, criticalIssues, majorIssues) {  /**
+   * Performs the specified operation
+   * @param {boolean} criticalIssues > 0
+   * @returns {any} The operation result
+   */
+
+    if (criticalIssues > 0) { return 'critical'; }    /**
+   * Performs the specified operation
+   * @param {boolean} majorIssues > 3
+   * @returns {any} The operation result
+   */
+
+    if (majorIssues > 3) { return 'needs-work'; }    /**
+   * Performs the specified operation
+   * @param {any} score < 70
+   * @returns {any} The operation result
+   */
+
+    if (score < 70) { return 'needs-improvement'; }    /**
+   * Performs the specified operation
+   * @param {any} score < 85
+   * @returns {any} The operation result
+   */
+
     if (score < 85) { return 'good'; }
     return 'excellent';
-  }
+  }  /**
+   * Retrieves data
+   * @param {any} categories
+   * @returns {string} The retrieved data
+   */
+
 
   getTopCategories(categories) {
     return Object.entries(categories)
       .map(([name, data]) => ({ name, percentage: Math.round((data.score / data.maxScore) * 100) }))
       .sort((a, b) => b.percentage - a.percentage)
       .slice(0, 3);
-  }
+  }  /**
+   * Retrieves data
+   * @param {any} categories
+   * @returns {string} The retrieved data
+   */
+
 
   getWeakestCategories(categories) {
     return Object.entries(categories)
       .map(([name, data]) => ({ name, percentage: Math.round((data.score / data.maxScore) * 100) }))
       .sort((a, b) => a.percentage - b.percentage)
       .slice(0, 3);
-  }
+  }  /**
+   * Analyzes the provided data
+   * @param {any} current
+   * @param {any} previous
+   * @returns {any} The operation result
+   */
 
-  analyzeCategorialProgress(current, previous) {
+
+  analyzeCategorialProgress(current, previous) {  /**
+   * Performs the specified operation
+   * @param {any} !previous
+   * @returns {any} The operation result
+   */
+
     if (!previous) { return null; }
 
     const progress = {};
@@ -655,7 +984,12 @@ export class ReviewAgent {
     });
 
     return progress;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {boolean} issue
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
   estimateEffort(issue) {
     const effortMap = {
@@ -669,9 +1003,14 @@ export class ReviewAgent {
       'category': 3
     };
     return effortMap[issue.type] || 2;
-  }
+  }  /**
+   * Performs the specified operation
+   * @param {any} _code
+   * @returns {Promise} Promise that resolves with the result
+   */
 
-  async basicScore(code) {
+
+  async basicScore(_code) {
     return {
       overall: { score: 75, maxScore: 100, percentage: 75 },
       categories: {

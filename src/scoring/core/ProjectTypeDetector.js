@@ -2,9 +2,38 @@
  * ProjectTypeDetector - Detects project type from configuration files
  */
 
-import fs from 'fs/promises';
-import { existsSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import path from 'path';
+
+/**
+
+
+ * ProjectTypeDetector class implementation
+
+
+ *
+
+
+ * Provides functionality for projecttypedetector operations
+
+
+ */
+
+
+/**
+
+
+ * ProjectTypeDetector class implementation
+
+
+ *
+
+
+ * Provides functionality for projecttypedetector operations
+
+
+ */
+
 
 export class ProjectTypeDetector {
   constructor(config) {
@@ -17,27 +46,27 @@ export class ProjectTypeDetector {
    */
   detect() {
     const projectRoot = this.config.projectRoot;
-    
+
     // Check for React projects
     if (this.isReactProject(projectRoot)) {
       return 'react';
     }
-    
+
     // Check for Vue projects
     if (this.isVueProject(projectRoot)) {
       return 'vue';
     }
-    
+
     // Check for Node.js projects
     if (this.isNodeProject(projectRoot)) {
       return 'node';
     }
-    
+
     // Check for TypeScript projects
     if (this.isTypeScriptProject(projectRoot)) {
       return 'typescript';
     }
-    
+
     // Default to JavaScript
     return 'javascript';
   }
@@ -49,14 +78,14 @@ export class ProjectTypeDetector {
    */
   isReactProject(projectRoot) {
     const packageJsonPath = path.join(projectRoot, 'package.json');
-    
+
     if (!existsSync(packageJsonPath)) {
       return false;
     }
-    
+
     try {
-      const packageJson = JSON.parse(require('fs').readFileSync(packageJsonPath, 'utf8'));
-      
+      const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
+
       // Check for React dependencies
       const dependencies = { ...packageJson.dependencies, ...packageJson.devDependencies };
       return dependencies.react || dependencies['react-dom'] || dependencies['@types/react'];
@@ -72,14 +101,14 @@ export class ProjectTypeDetector {
    */
   isVueProject(projectRoot) {
     const packageJsonPath = path.join(projectRoot, 'package.json');
-    
+
     if (!existsSync(packageJsonPath)) {
       return false;
     }
-    
+
     try {
-      const packageJson = JSON.parse(require('fs').readFileSync(packageJsonPath, 'utf8'));
-      
+      const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
+
       // Check for Vue dependencies
       const dependencies = { ...packageJson.dependencies, ...packageJson.devDependencies };
       return dependencies.vue || dependencies['@vue/cli-service'] || dependencies['nuxt'];
@@ -106,21 +135,21 @@ export class ProjectTypeDetector {
   isTypeScriptProject(projectRoot) {
     const tsConfigPath = path.join(projectRoot, 'tsconfig.json');
     const packageJsonPath = path.join(projectRoot, 'package.json');
-    
+
     if (existsSync(tsConfigPath)) {
       return true;
     }
-    
+
     if (existsSync(packageJsonPath)) {
       try {
-        const packageJson = JSON.parse(require('fs').readFileSync(packageJsonPath, 'utf8'));
+        const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
         const dependencies = { ...packageJson.dependencies, ...packageJson.devDependencies };
         return dependencies.typescript || dependencies['@types/node'];
       } catch (error) {
         return false;
       }
     }
-    
+
     return false;
   }
 }

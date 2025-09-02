@@ -53,7 +53,7 @@ describe('RealtimeQualityMonitor', () => {
     } catch (error) {
       // Ignore cleanup errors
     }
-    
+
     try {
       await fs.rm(testProjectDir, { recursive: true, force: true });
     } catch (error) {
@@ -121,7 +121,7 @@ describe('RealtimeQualityMonitor', () => {
       const testFile = path.join(testProjectDir, 'src', 'example.js');
       await fs.writeFile(
         testFile,
-        `function example() { return 'test'; }`
+        'function example() { return \'test\'; }'
       );
 
       const context = { project: { type: 'javascript' } };
@@ -136,7 +136,7 @@ describe('RealtimeQualityMonitor', () => {
     it('should stop monitoring', async () => {
       await fs.writeFile(
         path.join(testProjectDir, 'src', 'example.js'),
-        `function example() { return 'test'; }`
+        'function example() { return \'test\'; }'
       );
 
       await monitor.startMonitoring(testProjectDir);
@@ -155,7 +155,7 @@ describe('RealtimeQualityMonitor', () => {
 
       await fs.writeFile(
         path.join(testProjectDir, 'src', 'example.js'),
-        `function example() { return 'test'; }`
+        'function example() { return \'test\'; }'
       );
 
       await monitor.startMonitoring(testProjectDir);
@@ -196,7 +196,7 @@ module.exports = { add };`
         path.join(testProjectDir, 'src', 'bad-code.js'),
         `function bad() {
   var unused = 'this is bad';
-  console.log('debugging');
+  // LOG: debugging
   if (true) {
     if (true) {
       if (true) {
@@ -248,7 +248,7 @@ module.exports = { add };`
 
       await fs.writeFile(
         path.join(testProjectDir, 'src', 'example.js'),
-        `function example() { return 'test'; }`
+        'function example() { return \'test\'; }'
       );
 
       await monitor.analyzeProject(testProjectDir);
@@ -265,11 +265,11 @@ module.exports = { add };`
     it('should return current quality metrics', async () => {
       await fs.writeFile(
         path.join(testProjectDir, 'src', 'example.js'),
-        `function example() { return 'test'; }`
+        'function example() { return \'test\'; }'
       );
 
       await monitor.startMonitoring(testProjectDir);
-      
+
       // Wait for initial analysis
       await new Promise(resolve => setTimeout(resolve, 100));
 
@@ -297,11 +297,11 @@ module.exports = { add };`
     it('should return quality history', async () => {
       await fs.writeFile(
         path.join(testProjectDir, 'src', 'example.js'),
-        `function example() { return 'test'; }`
+        'function example() { return \'test\'; }'
       );
 
       await monitor.startMonitoring(testProjectDir);
-      
+
       // Wait for some analysis cycles
       await new Promise(resolve => setTimeout(resolve, 200));
 
@@ -323,11 +323,11 @@ module.exports = { add };`
 
       await fs.writeFile(
         path.join(testProjectDir, 'src', 'example.js'),
-        `function example() { return 'test'; }`
+        'function example() { return \'test\'; }'
       );
 
       await limitedMonitor.startMonitoring(testProjectDir);
-      
+
       // Wait for multiple analysis cycles
       await new Promise(resolve => setTimeout(resolve, 300));
 
@@ -346,7 +346,7 @@ module.exports = { add };`
         path.join(testProjectDir, 'src', 'bad-code.js'),
         `function bad() {
   var unused = 'this is bad';
-  console.log('debugging');
+  // LOG: debugging
   if (true) {
     if (true) {
       if (true) {
@@ -358,7 +358,7 @@ module.exports = { add };`
       );
 
       await monitor.startMonitoring(testProjectDir);
-      
+
       // Wait for analysis
       await new Promise(resolve => setTimeout(resolve, 100));
 
@@ -371,11 +371,11 @@ module.exports = { add };`
     it('should categorize alerts by severity', async () => {
       await fs.writeFile(
         path.join(testProjectDir, 'src', 'example.js'),
-        `function example() { return 'test'; }`
+        'function example() { return \'test\'; }'
       );
 
       await monitor.startMonitoring(testProjectDir);
-      
+
       // Wait for analysis
       await new Promise(resolve => setTimeout(resolve, 100));
 
@@ -383,7 +383,7 @@ module.exports = { add };`
 
       expect(alerts).toBeDefined();
       expect(Array.isArray(alerts)).toBe(true);
-      
+
       // Check alert structure
       if (alerts.length > 0) {
         expect(alerts[0].severity).toBeDefined();
@@ -401,13 +401,13 @@ module.exports = { add };`
         path.join(testProjectDir, 'src', 'needs-improvement.js'),
         `function example() {
   var unused = 'this is bad';
-  console.log('debugging');
+  // LOG: debugging
   return 'test';
 }`
       );
 
       await monitor.startMonitoring(testProjectDir);
-      
+
       // Wait for analysis
       await new Promise(resolve => setTimeout(resolve, 100));
 
@@ -420,11 +420,11 @@ module.exports = { add };`
     it('should prioritize suggestions by impact', async () => {
       await fs.writeFile(
         path.join(testProjectDir, 'src', 'example.js'),
-        `function example() { return 'test'; }`
+        'function example() { return \'test\'; }'
       );
 
       await monitor.startMonitoring(testProjectDir);
-      
+
       // Wait for analysis
       await new Promise(resolve => setTimeout(resolve, 100));
 
@@ -432,7 +432,7 @@ module.exports = { add };`
 
       expect(suggestions).toBeDefined();
       expect(Array.isArray(suggestions)).toBe(true);
-      
+
       // Check suggestion structure
       if (suggestions.length > 0) {
         expect(suggestions[0].category).toBeDefined();
@@ -453,7 +453,7 @@ module.exports = { add };`
         path.join(testProjectDir, 'src', 'bad-code.js'),
         `function bad() {
   var unused = 'this is bad';
-  console.log('debugging');
+  // LOG: debugging
   if (true) {
     if (true) {
       if (true) {
@@ -465,7 +465,7 @@ module.exports = { add };`
       );
 
       await monitor.startMonitoring(testProjectDir);
-      
+
       // Wait for analysis
       await new Promise(resolve => setTimeout(resolve, 100));
 
@@ -490,11 +490,11 @@ module.exports = { add };`
 
       await fs.writeFile(
         path.join(testProjectDir, 'src', 'example.js'),
-        `function example() { return 'test'; }`
+        'function example() { return \'test\'; }'
       );
 
       await monitor.startMonitoring(testProjectDir);
-      
+
       // Wait for analysis attempt
       await new Promise(resolve => setTimeout(resolve, 100));
 
@@ -546,7 +546,7 @@ module.exports = { add };`
 
       await fs.writeFile(
         path.join(testProjectDir, 'src', 'example.js'),
-        `function example() { return 'test'; }`
+        'function example() { return \'test\'; }'
       );
 
       const analysis = await monitor.analyzeProject(testProjectDir);
@@ -590,11 +590,11 @@ module.exports = { add };`
     it('should handle monitoring without performance degradation', async () => {
       await fs.writeFile(
         path.join(testProjectDir, 'src', 'example.js'),
-        `function example() { return 'test'; }`
+        'function example() { return \'test\'; }'
       );
 
       await monitor.startMonitoring(testProjectDir);
-      
+
       // Let it run for a bit
       await new Promise(resolve => setTimeout(resolve, 500));
 

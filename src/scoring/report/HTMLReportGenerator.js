@@ -40,7 +40,15 @@ export class HTMLReportGenerator {
     ${this.generateScripts(categories)}
 </body>
 </html>`;
-  }
+  }  /**
+   * Generates new data
+   * @returns {any} The created resource
+   */
+  /**
+   * Generates new data
+   * @returns {any} The created resource
+   */
+
 
   generateStyles() {
     return `<style>
@@ -406,7 +414,17 @@ export class HTMLReportGenerator {
             }
         }
     </style>`;
-  }
+  }  /**
+   * Generates new data
+   * @param {any} metadata
+   * @returns {any} The created resource
+   */
+  /**
+   * Generates new data
+   * @param {any} metadata
+   * @returns {any} The created resource
+   */
+
 
   generateHeader(metadata) {
     return `
@@ -430,7 +448,21 @@ export class HTMLReportGenerator {
             </button>
         </div>
     </header>`;
-  }
+  }  /**
+   * Generates new data
+   * @param {any} overall
+   * @param {any} categories
+   * @param {any} recommendations
+   * @returns {any} The created resource
+   */
+  /**
+   * Generates new data
+   * @param {any} overall
+   * @param {any} categories
+   * @param {any} recommendations
+   * @returns {any} The created resource
+   */
+
 
   generateMainContent(overall, categories, recommendations) {
     return `
@@ -446,7 +478,17 @@ export class HTMLReportGenerator {
     </div>
     
     ${recommendations ? this.generateRecommendations(recommendations) : ''}`;
-  }
+  }  /**
+   * Generates new data
+   * @param {any} overall
+   * @returns {any} The created resource
+   */
+  /**
+   * Generates new data
+   * @param {any} overall
+   * @returns {any} The created resource
+   */
+
 
   generateScoreCard(overall) {
     const gradeClass = this.getGradeClass(overall.percentage);
@@ -463,7 +505,15 @@ export class HTMLReportGenerator {
             ${this.getScoreDescription(overall.percentage)}
         </p>
     </div>`;
-  }
+  }  /**
+   * Generates new data
+   * @returns {any} The created resource
+   */
+  /**
+   * Generates new data
+   * @returns {any} The created resource
+   */
+
 
   generateCharts() {
     return `
@@ -475,7 +525,17 @@ export class HTMLReportGenerator {
             <canvas id="radarChart"></canvas>
         </div>
     </div>`;
-  }
+  }  /**
+   * Generates new data
+   * @param {any} category
+   * @returns {any} The created resource
+   */
+  /**
+   * Generates new data
+   * @param {any} category
+   * @returns {any} The created resource
+   */
+
 
   generateCategoryCard(category) {
     const percentage = Math.round((category.score / category.maxScore) * 100);
@@ -516,7 +576,17 @@ export class HTMLReportGenerator {
         </div>
         ` : ''}
     </div>`;
-  }
+  }  /**
+   * Generates new data
+   * @param {any} recommendations
+   * @returns {any} The created resource
+   */
+  /**
+   * Generates new data
+   * @param {any} recommendations
+   * @returns {any} The created resource
+   */
+
 
   generateRecommendations(recommendations) {
     const priorityRecs = recommendations
@@ -543,7 +613,17 @@ export class HTMLReportGenerator {
             `).join('')}
         </div>
     </div>`;
-  }
+  }  /**
+   * Generates new data
+   * @param {any} categories
+   * @returns {any} The created resource
+   */
+  /**
+   * Generates new data
+   * @param {any} categories
+   * @returns {any} The created resource
+   */
+
 
   generateScripts(categories) {
     const categoryData = Object.entries(categories).map(([key, cat]) => ({
@@ -587,7 +667,17 @@ export class HTMLReportGenerator {
             });
         });
         
-        // Toggle category details
+        // Toggle category details  /**
+   * Function implementation
+   * @param {any} card
+   * @returns {any} The operation result
+   */
+  /**
+   * Function implementation
+   * @param {any} card
+   * @returns {any} The operation result
+   */
+
         function toggleCategory(card) {
             card.classList.toggle('expanded');
         }
@@ -665,21 +755,111 @@ export class HTMLReportGenerator {
             }
         });
     </script>`;
-  }
+  }  /**
+   * Retrieves data
+   * @param {any} percentage
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @param {any} percentage
+   * @returns {string} The retrieved data
+   */
 
-  getGradeClass(percentage) {
-    if (percentage >= 90) {return 'grade-excellent';}
-    if (percentage >= 70) {return 'grade-good';}
+
+  getGradeClass(percentage) {  /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 90) {return 'grade-excellent';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 70) {return 'grade-good';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (percentage >= 50) {return 'grade-warning';}
     return 'grade-poor';
-  }
+  }  /**
+   * Retrieves data
+   * @param {any} impact
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @param {any} impact
+   * @returns {string} The retrieved data
+   */
 
-  getImpactClass(impact) {
-    if (impact >= 5) {return 'grade-excellent';}
-    if (impact >= 3) {return 'grade-good';}
+
+  getImpactClass(impact) {  /**
+   * Performs the specified operation
+   * @param {any} impact > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} impact > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (impact >= 5) {return 'grade-excellent';}    /**
+   * Performs the specified operation
+   * @param {any} impact > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} impact > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (impact >= 3) {return 'grade-good';}    /**
+   * Performs the specified operation
+   * @param {any} impact > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} impact > - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (impact >= 2) {return 'grade-warning';}
     return 'grade-poor';
-  }
+  }  /**
+   * Retrieves data
+   * @param {any} categoryName
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @param {any} categoryName
+   * @returns {string} The retrieved data
+   */
+
 
   getCategoryIcon(categoryName) {
     const icons = {
@@ -692,13 +872,73 @@ export class HTMLReportGenerator {
       'Completeness & Production Readiness': 'fas fa-rocket'
     };
     return icons[categoryName] || 'fas fa-chart-bar';
-  }
+  }  /**
+   * Retrieves data
+   * @param {any} percentage
+   * @returns {string} The retrieved data
+   */
+  /**
+   * Retrieves data
+   * @param {any} percentage
+   * @returns {string} The retrieved data
+   */
 
-  getScoreDescription(percentage) {
-    if (percentage >= 95) {return 'Outstanding project quality! This codebase demonstrates excellence across all categories.';}
-    if (percentage >= 85) {return 'Very good project quality with strong fundamentals and minor areas for improvement.';}
-    if (percentage >= 70) {return 'Good quality with solid foundation. Some improvements recommended for production readiness.';}
-    if (percentage >= 60) {return 'Acceptable quality but significant improvements needed in several areas.';}
+
+  getScoreDescription(percentage) {  /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 95) {return 'Outstanding project quality! This codebase demonstrates excellence across all categories.';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 85) {return 'Very good project quality with strong fundamentals and minor areas for improvement.';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 70) {return 'Good quality with solid foundation. Some improvements recommended for production readiness.';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
+    if (percentage >= 60) {return 'Acceptable quality but significant improvements needed in several areas.';}    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} percentage > - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (percentage >= 50) {return 'Below average quality. Major improvements required across multiple categories.';}
     return 'Poor quality. Significant refactoring and improvements needed before production use.';
   }

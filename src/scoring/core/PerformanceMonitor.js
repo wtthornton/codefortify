@@ -1,3 +1,4 @@
+import { performance } from 'perf_hooks';
 /**
  * Performance Monitor
  *
@@ -8,7 +9,6 @@
 import fs from 'fs/promises';
 import { existsSync } from 'fs';
 import path from 'path';
-import { performance } from 'perf_hooks';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 
@@ -44,7 +44,12 @@ export class PerformanceMonitor {
   /**
    * Start tracking memory usage
    */
-  startMemoryTracking() {
+  startMemoryTracking() {  /**
+   * Performs the specified operation
+   * @param {Object} !this.config.enableMemoryTracking
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (!this.config.enableMemoryTracking) {return;}
 
     const initialMemory = process.memoryUsage();
@@ -63,7 +68,12 @@ export class PerformanceMonitor {
   /**
    * Record current memory usage
    */
-  recordMemoryUsage(type = 'checkpoint') {
+  recordMemoryUsage(type = 'checkpoint') {  /**
+   * Performs the specified operation
+   * @param {Object} !this.config.enableMemoryTracking
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (!this.config.enableMemoryTracking) {return;}
 
     const memory = process.memoryUsage();
@@ -71,11 +81,16 @@ export class PerformanceMonitor {
       timestamp: Date.now(),
       type,
       ...memory
-    });
+    });    /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (this.config.verbose) {
       const heapMB = Math.round(memory.heapUsed / 1024 / 1024);
-      console.log(`Memory [${type}]: ${heapMB}MB heap used`);
+      // LOG: `Memory [${type}]: ${heapMB}MB heap used`
     }
   }
 
@@ -100,10 +115,15 @@ export class PerformanceMonitor {
    */
   endTiming(operationName, metadata = {}) {
     const endTime = performance.now();
-    const timing = this.metrics.timing.get(operationName);
+    const timing = this.metrics.timing.get(operationName);    /**
+   * Performs the specified operation
+   * @param {any} !timing
+   * @returns {any} The operation result
+   */
+
 
     if (!timing) {
-      console.warn(`Timing for operation '${operationName}' was not started`);
+      // WARN: `Timing for operation ${operationName} was not started`
       return null;
     }
 
@@ -118,10 +138,15 @@ export class PerformanceMonitor {
       duration,
       timestamp: endTime,
       ...metadata
-    });
+    });    /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
 
     if (this.config.verbose) {
-      console.log(`⏱️  ${operationName}: ${Math.round(duration)}ms`);
+      // LOG: `⏱️  ${operationName}: ${Math.round(duration)}ms`
     }
 
     return timing;
@@ -130,7 +155,12 @@ export class PerformanceMonitor {
   /**
    * Analyze bundle size and composition
    */
-  async analyzeBundleSize() {
+  async analyzeBundleSize() {  /**
+   * Performs the specified operation
+   * @param {Object} !this.config.enableBundleAnalysis
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (!this.config.enableBundleAnalysis) {
       return { available: false, reason: 'Bundle analysis disabled' };
     }
@@ -295,7 +325,12 @@ export class PerformanceMonitor {
     const analysis = {
       available: false,
       directories: []
-    };
+    };    /**
+   * Performs the specified operation
+   * @param {any} const dir of buildDirs
+   * @returns {any} The operation result
+   */
+
 
     for (const dir of buildDirs) {
       const buildPath = path.join(this.config.projectRoot, dir);
@@ -426,7 +461,12 @@ export class PerformanceMonitor {
    * Analyze file types in a list of files
    */
   async analyzeFileTypes(files) {
-    const types = {};
+    const types = {};    /**
+   * Performs the specified operation
+   * @param {any} const file of files
+   * @returns {any} The operation result
+   */
+
 
     for (const file of files) {
       const ext = path.extname(file);
@@ -448,11 +488,21 @@ export class PerformanceMonitor {
    * Calculate total size from bundle info
    */
   calculateTotalSize(bundleInfo) {
-    let total = 0;
+    let total = 0;    /**
+   * Performs the specified operation
+   * @param {any} bundleInfo.sourceFiles?.totalSize
+   * @returns {any} The operation result
+   */
+
 
     if (bundleInfo.sourceFiles?.totalSize) {
       total += bundleInfo.sourceFiles.totalSize;
-    }
+    }    /**
+   * Performs the specified operation
+   * @param {any} bundleInfo.nodeModules?.size
+   * @returns {any} The operation result
+   */
+
 
     if (bundleInfo.nodeModules?.size) {
       total += bundleInfo.nodeModules.size;
@@ -471,13 +521,23 @@ export class PerformanceMonitor {
       insights: []
     };
 
-    // Check for heavy dependencies
+    // Check for heavy dependencies    /**
+   * Performs the specified operation
+   * @param {any} bundleInfo.packageJson?.heavyDependencies?.length > 0
+   * @returns {any} The operation result
+   */
+
     if (bundleInfo.packageJson?.heavyDependencies?.length > 0) {
       analysis.warnings.push('Heavy dependencies detected that may impact bundle size');
       analysis.recommendations.push('Consider lighter alternatives for heavy dependencies');
     }
 
-    // Check node_modules size
+    // Check node_modules size    /**
+   * Performs the specified operation
+   * @param {any} bundleInfo.nodeModules?.size > 500 * 1024 * 1024
+   * @returns {any} The operation result
+   */
+
     if (bundleInfo.nodeModules?.size > 500 * 1024 * 1024) { // 500MB
       analysis.warnings.push('Very large node_modules directory detected');
       analysis.recommendations.push('Review and remove unused dependencies');
@@ -498,7 +558,12 @@ export class PerformanceMonitor {
   async getDirectorySize(dirPath) {
     try {
       // Try different approaches based on platform
-      let command;
+      let command;      /**
+   * Performs the specified operation
+   * @param {any} process.platform - Optional parameter
+   * @returns {any} The operation result
+   */
+
 
       if (process.platform === 'win32') {
         command = `powershell -command "Get-ChildItem -Recurse '${dirPath}' | Measure-Object -Property Length -Sum | Select-Object -ExpandProperty Sum"`;
@@ -522,7 +587,12 @@ export class PerformanceMonitor {
     let totalSize = 0;
 
     try {
-      const items = await fs.readdir(dirPath, { withFileTypes: true });
+      const items = await fs.readdir(dirPath, { withFileTypes: true });      /**
+   * Performs the specified operation
+   * @param {Array} const item of items
+   * @returns {any} The operation result
+   */
+
 
       for (const item of items) {
         const fullPath = path.join(dirPath, item.name);
@@ -548,7 +618,12 @@ export class PerformanceMonitor {
     const files = [];
 
     try {
-      const items = await fs.readdir(dirPath, { withFileTypes: true });
+      const items = await fs.readdir(dirPath, { withFileTypes: true });      /**
+   * Performs the specified operation
+   * @param {Array} const item of items
+   * @returns {any} The operation result
+   */
+
 
       for (const item of items) {
         const fullPath = path.join(dirPath, item.name);
@@ -577,7 +652,12 @@ export class PerformanceMonitor {
     const now = performance.now();
     const totalDuration = now - this.metrics.performance.startTime;
 
-    // Stop memory tracking
+    // Stop memory tracking    /**
+   * Performs the specified operation
+   * @param {boolean} this.memoryInterval
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.memoryInterval) {
       clearInterval(this.memoryInterval);
       this.recordMemoryUsage('final');
@@ -617,7 +697,12 @@ export class PerformanceMonitor {
   /**
    * Format bytes to human readable
    */
-  formatBytes(bytes) {
+  formatBytes(bytes) {  /**
+   * Performs the specified operation
+   * @param {any} bytes - Optional parameter
+   * @returns {any} The operation result
+   */
+
     if (bytes === 0) {return '0 B';}
 
     const k = 1024;
@@ -630,7 +715,12 @@ export class PerformanceMonitor {
   /**
    * Clean up resources
    */
-  cleanup() {
+  cleanup() {  /**
+   * Performs the specified operation
+   * @param {boolean} this.memoryInterval
+   * @returns {boolean} True if successful, false otherwise
+   */
+
     if (this.memoryInterval) {
       clearInterval(this.memoryInterval);
     }

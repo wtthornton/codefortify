@@ -8,6 +8,36 @@
 import path from 'path';
 import fs from 'fs/promises';
 
+/**
+
+
+ * BaseStrategy class implementation
+
+
+ *
+
+
+ * Provides functionality for basestrategy operations
+
+
+ */
+
+
+/**
+
+
+ * BaseStrategy class implementation
+
+
+ *
+
+
+ * Provides functionality for basestrategy operations
+
+
+ */
+
+
 export class BaseStrategy {
   constructor(config) {
     this.config = config;
@@ -61,13 +91,33 @@ export class BaseStrategy {
     const organization = this.getOrganization();
     const parts = [basePath];
 
-    // Add date organization
+    // Add date organization    /**
+   * Performs the specified operation
+   * @param {any} organization.byDate
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} organization.byDate
+   * @returns {any} The operation result
+   */
+
     if (organization.byDate) {
       const dateStr = this.formatDate(new Date(), organization.dateFormat);
       parts.push(dateStr);
     }
 
-    // Add project organization (if applicable)
+    // Add project organization (if applicable)    /**
+   * Performs the specified operation
+   * @param {any} organization.byProject
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} organization.byProject
+   * @returns {any} The operation result
+   */
+
     if (organization.byProject) {
       const projectName = this.getProjectName();
       parts.push(projectName);

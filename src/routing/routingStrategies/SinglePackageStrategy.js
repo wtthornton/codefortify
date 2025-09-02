@@ -10,6 +10,36 @@
 import path from 'path';
 import { BaseStrategy } from './BaseStrategy.js';
 
+/**
+
+
+ * SinglePackageStrategy class implementation
+
+
+ *
+
+
+ * Provides functionality for singlepackagestrategy operations
+
+
+ */
+
+
+/**
+
+
+ * SinglePackageStrategy class implementation
+
+
+ *
+
+
+ * Provides functionality for singlepackagestrategy operations
+
+
+ */
+
+
 export class SinglePackageStrategy extends BaseStrategy {
   constructor(config) {
     super(config);
@@ -24,14 +54,24 @@ export class SinglePackageStrategy extends BaseStrategy {
    */
   async getBasePath(format) {
     // Check for custom path first
-    const customPath = this.getCustomPath(format);
+    const customPath = this.getCustomPath(format);    /**
+   * Performs the specified operation
+   * @param {string} customPath
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {string} customPath
+   * @returns {any} The operation result
+   */
+
     if (customPath) {
       return path.resolve(this.projectRoot, customPath);
     }
 
     // Default single package structure: <project-root>/reports/
     const basePath = path.join(this.projectRoot, 'reports');
-    
+
     // Apply organization structure
     return this.buildOrganizedPath(basePath, format);
   }
@@ -47,7 +87,17 @@ export class SinglePackageStrategy extends BaseStrategy {
     const organization = this.getOrganization();
     const parts = [basePath];
 
-    // Add date organization
+    // Add date organization    /**
+   * Performs the specified operation
+   * @param {any} organization.byDate
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} organization.byDate
+   * @returns {any} The operation result
+   */
+
     if (organization.byDate) {
       const dateStr = this.formatDate(new Date(), organization.dateFormat);
       parts.push(dateStr);

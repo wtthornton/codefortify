@@ -517,8 +517,8 @@ describe('Real-Time Integration Tests', () => {
       expect(receivedMessages.length).toBeGreaterThan(0);
 
       // Should receive updates efficiently (may be batched)
-      console.log(`Processed ${updateCount} updates in ${duration}ms`);
-      console.log(`Received ${receivedMessages.length} WebSocket messages`);
+      // LOG: `Processed ${updateCount} updates in ${duration}ms`
+      // LOG: `Received ${receivedMessages.length} WebSocket messages`
     }, TIMEOUT);
   });
 

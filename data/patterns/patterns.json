@@ -1,7 +1,160 @@
 {
   "patterns": [
     {
-      "id": "pattern_1756775824300_d0mh2dyji",
+      "id": "pattern_1756820555019_nbzvbytrs",
+      "type": "general",
+      "category": "function",
+      "context": {
+        "project": {
+          "type": "javascript",
+          "framework": "vanilla"
+        }
+      },
+      "effectiveness": 0.9,
+      "usageCount": 1,
+      "lastUsed": "2025-09-02T13:42:35.019Z",
+      "successRate": 1,
+      "codeExample": {
+        "before": "function calculateTotal(items) {\n  return items.reduce((sum, item) => sum + item.price, 0);\n}",
+        "after": "function calculateTotal(items) {\n  return items.reduce((sum, item) => sum + item.price, 0);\n}"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "vanilla",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-02T13:42:35.019Z",
+      "updatedAt": "2025-09-02T13:42:35.019Z"
+    },
+    {
+      "id": "pattern_1756820555028_fpanavvhr",
+      "type": "general",
+      "category": "function",
+      "context": {
+        "language": "javascript",
+        "pattern": "simple-function"
+      },
+      "effectiveness": 0.8,
+      "usageCount": 1,
+      "lastUsed": "2025-09-02T13:42:35.028Z",
+      "successRate": 0.5,
+      "codeExample": {
+        "before": "function add(a, b) {\n  return a + b;\n}",
+        "after": "function add(a, b) {\n  return a + b;\n}"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "vanilla",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-02T13:42:35.028Z",
+      "updatedAt": "2025-09-02T13:42:35.028Z"
+    },
+    {
+      "id": "pattern_1756820555031_1voxi4p5o",
+      "type": "general",
+      "category": "function",
+      "context": {
+        "language": "javascript",
+        "pattern": "simple-function"
+      },
+      "effectiveness": 0.8,
+      "usageCount": 1,
+      "lastUsed": "2025-09-02T13:42:35.031Z",
+      "successRate": 0.5,
+      "codeExample": {
+        "before": "function multiply(a, b) {\n  return a * b;\n}",
+        "after": "function multiply(a, b) {\n  return a * b;\n}"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "vanilla",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-02T13:42:35.031Z",
+      "updatedAt": "2025-09-02T13:42:35.031Z"
+    },
+    {
+      "id": "pattern_1756820555039_vrbuc75sg",
+      "type": "general",
+      "category": "function",
+      "context": {
+        "language": "javascript",
+        "pattern": "anti-pattern"
+      },
+      "effectiveness": 0.3,
+      "usageCount": 1,
+      "lastUsed": "2025-09-02T13:42:35.039Z",
+      "successRate": 0.5,
+      "codeExample": {
+        "before": "function badFunction() {\n  var unused = 'this is bad';\n  // LOG: debugging\n  return null;\n}",
+        "after": "function badFunction() {\n  var unused = 'this is bad';\n  // LOG: debugging\n  return null;\n}"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "vanilla",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-02T13:42:35.039Z",
+      "updatedAt": "2025-09-02T13:42:35.039Z"
+    },
+    {
+      "id": "pattern_1756820555046_59639s2km",
+      "type": "refactoring",
+      "category": "function",
+      "context": {
+        "language": "jsx",
+        "framework": "react",
+        "pattern": "component-with-state"
+      },
+      "effectiveness": 0.3,
+      "usageCount": 1,
+      "lastUsed": "2025-09-02T13:42:35.046Z",
+      "successRate": 0.5,
+      "codeExample": {
+        "before": "import React, { useState, useEffect } from 'react';\n\nexport function Counter() {\n  const [count, setCount] = useState(0);\n  \n  useEffect(() => {\n    document.title = `Count: ${count}`;\n  }, [count]);\n  \n  return (\n    <div>\n      <h1>Count: {count}</h1>\n      <button onClick={() => setCount(count + 1)}>\n        Increment\n      </button>\n    </div>\n  );\n}",
+        "after": "import React, { useState, useEffect } from 'react';\n\nexport function Counter() {\n  const [count, setCount] = useState(0);\n  \n  useEffect(() => {\n    document.title = `Count: ${count}`;\n  }, [count]);\n  \n  return (\n    <div>\n      <h1>Count: {count}</h1>\n      <button onClick={() => setCount(count + 1)}>\n        Increment\n      </button>\n    </div>\n  );\n}"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "react",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-02T13:42:35.046Z",
+      "updatedAt": "2025-09-02T13:42:35.046Z"
+    },
+    {
+      "id": "pattern_1756820555053_3iklzk3g5",
+      "type": "general",
+      "category": "function",
+      "context": {
+        "language": "javascript",
+        "pattern": "array-reduce"
+      },
+      "effectiveness": 0.8,
+      "usageCount": 1,
+      "lastUsed": "2025-09-02T13:42:35.053Z",
+      "successRate": 0.5,
+      "codeExample": {
+        "before": "function calculateTotal(items) {\n  return items.reduce((sum, item) => sum + item.price, 0);\n}",
+        "after": "function calculateTotal(items) {\n  return items.reduce((sum, item) => sum + item.price, 0);\n}"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "vanilla",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-02T13:42:35.053Z",
+      "updatedAt": "2025-09-02T13:42:35.053Z"
+    },
+    {
+      "id": "pattern_1756820555062_6dfdruqa2",
       "type": "general",
       "category": "function",
       "context": {
@@ -9,11 +162,11 @@
       },
       "effectiveness": 0.8,
       "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.300Z",
+      "lastUsed": "2025-09-02T13:42:35.062Z",
       "successRate": 0.5,
       "codeExample": {
-        "before": "function test() { return 'test'; }",
-        "after": "function test() { return 'test'; }"
+        "before": "function highQuality() { return 'excellent'; }",
+        "after": "function highQuality() { return 'excellent'; }"
       },
       "metadata": {
         "language": "javascript",
@@ -21,24 +174,23 @@
         "complexity": "similar",
         "linesChanged": 0
       },
-      "createdAt": "2025-09-02T01:17:04.300Z",
-      "updatedAt": "2025-09-02T01:17:04.300Z"
+      "createdAt": "2025-09-02T13:42:35.062Z",
+      "updatedAt": "2025-09-02T13:42:35.062Z"
     },
     {
-      "id": "pattern_1756775824308_r0estszbi",
+      "id": "pattern_1756820555064_kpnson1by",
       "type": "general",
       "category": "function",
       "context": {
-        "language": "javascript",
-        "pattern": "pattern-0"
+        "language": "javascript"
       },
       "effectiveness": 0.8,
       "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.308Z",
+      "lastUsed": "2025-09-02T13:42:35.064Z",
       "successRate": 0.5,
       "codeExample": {
-        "before": "function pattern0() { return 'test0'; }",
-        "after": "function pattern0() { return 'test0'; }"
+        "before": "function mediumQuality() { return 'good'; }",
+        "after": "function mediumQuality() { return 'good'; }"
       },
       "metadata": {
         "language": "javascript",
@@ -46,20 +198,71 @@
         "complexity": "similar",
         "linesChanged": 0
       },
-      "createdAt": "2025-09-02T01:17:04.308Z",
-      "updatedAt": "2025-09-02T01:17:04.308Z"
+      "createdAt": "2025-09-02T13:42:35.064Z",
+      "updatedAt": "2025-09-02T13:42:35.064Z"
     },
     {
-      "id": "pattern_1756775824310_jbni4jczk",
+      "id": "pattern_1756820555077_f5l1nw1gi",
       "type": "general",
       "category": "function",
       "context": {
         "language": "javascript",
-        "pattern": "pattern-1"
+        "pattern": "simple-function"
+      },
+      "effectiveness": 0.9,
+      "usageCount": 1,
+      "lastUsed": "2025-09-02T13:42:35.079Z",
+      "successRate": 0.5,
+      "codeExample": {
+        "before": "function example() { return 'test'; }",
+        "after": "function example() { return 'test'; }"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "vanilla",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-02T13:42:35.077Z",
+      "updatedAt": "2025-09-02T13:42:35.077Z"
+    },
+    {
+      "id": "pattern_1756820555088_t0y7rsoh3",
+      "type": "general",
+      "category": "function",
+      "context": {
+        "language": "javascript",
+        "pattern": "simple-function"
+      },
+      "effectiveness": 0.6400000000000001,
+      "usageCount": 1,
+      "lastUsed": "2025-09-02T13:42:35.089Z",
+      "successRate": 0.5,
+      "codeExample": {
+        "before": "function example() { return 'test'; }",
+        "after": "function example() { return 'test'; }"
+      },
+      "metadata": {
+        "language": "javascript",
+        "framework": "vanilla",
+        "complexity": "similar",
+        "linesChanged": 0
+      },
+      "createdAt": "2025-09-02T13:42:35.088Z",
+      "updatedAt": "2025-09-02T13:42:35.088Z"
+    },
+    {
+      "id": "pattern_1756820555098_nsgoq6349",
+      "type": "general",
+      "category": "function",
+      "context": {
+        "project": {
+          "type": "javascript"
+        }
       },
       "effectiveness": 0.8,
       "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.310Z",
+      "lastUsed": "2025-09-02T13:42:35.098Z",
       "successRate": 0.5,
       "codeExample": {
         "before": "function pattern1() { return 'test1'; }",
@@ -71,20 +274,21 @@
         "complexity": "similar",
         "linesChanged": 0
       },
-      "createdAt": "2025-09-02T01:17:04.310Z",
-      "updatedAt": "2025-09-02T01:17:04.310Z"
+      "createdAt": "2025-09-02T13:42:35.098Z",
+      "updatedAt": "2025-09-02T13:42:35.098Z"
     },
     {
-      "id": "pattern_1756775824312_56uj7g3hv",
+      "id": "pattern_1756820555100_unk6nkvrw",
       "type": "general",
       "category": "function",
       "context": {
-        "language": "javascript",
-        "pattern": "pattern-2"
+        "project": {
+          "type": "javascript"
+        }
       },
       "effectiveness": 0.8,
       "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.312Z",
+      "lastUsed": "2025-09-02T13:42:35.100Z",
       "successRate": 0.5,
       "codeExample": {
         "before": "function pattern2() { return 'test2'; }",
@@ -96,24 +300,24 @@
         "complexity": "similar",
         "linesChanged": 0
       },
-      "createdAt": "2025-09-02T01:17:04.312Z",
-      "updatedAt": "2025-09-02T01:17:04.312Z"
+      "createdAt": "2025-09-02T13:42:35.100Z",
+      "updatedAt": "2025-09-02T13:42:35.100Z"
     },
     {
-      "id": "pattern_1756775824314_taxkitzfu",
+      "id": "pattern_1756820555153_mk8emlllj",
       "type": "general",
       "category": "function",
       "context": {
         "language": "javascript",
-        "pattern": "pattern-3"
+        "pattern": "js-pattern"
       },
       "effectiveness": 0.8,
       "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.314Z",
+      "lastUsed": "2025-09-02T13:42:35.153Z",
       "successRate": 0.5,
       "codeExample": {
-        "before": "function pattern3() { return 'test3'; }",
-        "after": "function pattern3() { return 'test3'; }"
+        "before": "function jsPattern() { return 'js'; }",
+        "after": "function jsPattern() { return 'js'; }"
       },
       "metadata": {
         "language": "javascript",
@@ -121,24 +325,24 @@
         "complexity": "similar",
         "linesChanged": 0
       },
-      "createdAt": "2025-09-02T01:17:04.314Z",
-      "updatedAt": "2025-09-02T01:17:04.314Z"
+      "createdAt": "2025-09-02T13:42:35.153Z",
+      "updatedAt": "2025-09-02T13:42:35.153Z"
     },
     {
-      "id": "pattern_1756775824315_6be85q4qf",
+      "id": "pattern_1756820555155_p4rlvrbw7",
       "type": "general",
       "category": "function",
       "context": {
-        "language": "javascript",
-        "pattern": "pattern-4"
+        "language": "typescript",
+        "pattern": "ts-pattern"
       },
       "effectiveness": 0.8,
       "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.315Z",
+      "lastUsed": "2025-09-02T13:42:35.155Z",
       "successRate": 0.5,
       "codeExample": {
-        "before": "function pattern4() { return 'test4'; }",
-        "after": "function pattern4() { return 'test4'; }"
+        "before": "function tsPattern(): string { return 'ts'; }",
+        "after": "function tsPattern(): string { return 'ts'; }"
       },
       "metadata": {
         "language": "javascript",
@@ -146,24 +350,24 @@
         "complexity": "similar",
         "linesChanged": 0
       },
-      "createdAt": "2025-09-02T01:17:04.315Z",
-      "updatedAt": "2025-09-02T01:17:04.315Z"
+      "createdAt": "2025-09-02T13:42:35.155Z",
+      "updatedAt": "2025-09-02T13:42:35.155Z"
     },
     {
-      "id": "pattern_1756775824317_azpxz4hf9",
+      "id": "pattern_1756820555195_bif8gql5t",
       "type": "general",
       "category": "function",
       "context": {
         "language": "javascript",
-        "pattern": "pattern-5"
+        "pattern": "js-pattern"
       },
       "effectiveness": 0.8,
       "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.317Z",
+      "lastUsed": "2025-09-02T13:42:35.195Z",
       "successRate": 0.5,
       "codeExample": {
-        "before": "function pattern5() { return 'test5'; }",
-        "after": "function pattern5() { return 'test5'; }"
+        "before": "function jsPattern() { return 'js'; }",
+        "after": "function jsPattern() { return 'js'; }"
       },
       "metadata": {
         "language": "javascript",
@@ -171,24 +375,24 @@
         "complexity": "similar",
         "linesChanged": 0
       },
-      "createdAt": "2025-09-02T01:17:04.317Z",
-      "updatedAt": "2025-09-02T01:17:04.317Z"
+      "createdAt": "2025-09-02T13:42:35.195Z",
+      "updatedAt": "2025-09-02T13:42:35.195Z"
     },
     {
-      "id": "pattern_1756775824321_izvp0yzcx",
+      "id": "pattern_1756820555197_ex5w8jpdg",
       "type": "general",
       "category": "function",
       "context": {
-        "language": "javascript",
-        "pattern": "pattern-6"
+        "language": "typescript",
+        "pattern": "ts-pattern"
       },
       "effectiveness": 0.8,
       "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.321Z",
+      "lastUsed": "2025-09-02T13:42:35.197Z",
       "successRate": 0.5,
       "codeExample": {
-        "before": "function pattern6() { return 'test6'; }",
-        "after": "function pattern6() { return 'test6'; }"
+        "before": "function tsPattern(): string { return 'ts'; }",
+        "after": "function tsPattern(): string { return 'ts'; }"
       },
       "metadata": {
         "language": "javascript",
@@ -196,24 +400,24 @@
         "complexity": "similar",
         "linesChanged": 0
       },
-      "createdAt": "2025-09-02T01:17:04.321Z",
-      "updatedAt": "2025-09-02T01:17:04.321Z"
+      "createdAt": "2025-09-02T13:42:35.197Z",
+      "updatedAt": "2025-09-02T13:42:35.197Z"
     },
     {
-      "id": "pattern_1756775824323_p608fk28s",
+      "id": "pattern_1756820555208_h627371qc",
       "type": "general",
       "category": "function",
       "context": {
         "language": "javascript",
-        "pattern": "pattern-7"
+        "pattern": "js-pattern"
       },
       "effectiveness": 0.8,
       "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.323Z",
+      "lastUsed": "2025-09-02T13:42:35.208Z",
       "successRate": 0.5,
       "codeExample": {
-        "before": "function pattern7() { return 'test7'; }",
-        "after": "function pattern7() { return 'test7'; }"
+        "before": "function jsPattern() { return 'js'; }",
+        "after": "function jsPattern() { return 'js'; }"
       },
       "metadata": {
         "language": "javascript",
@@ -221,24 +425,24 @@
         "complexity": "similar",
         "linesChanged": 0
       },
-      "createdAt": "2025-09-02T01:17:04.323Z",
-      "updatedAt": "2025-09-02T01:17:04.323Z"
+      "createdAt": "2025-09-02T13:42:35.208Z",
+      "updatedAt": "2025-09-02T13:42:35.208Z"
     },
     {
-      "id": "pattern_1756775824326_31dpwsg9y",
+      "id": "pattern_1756820555211_jvnp7yghl",
       "type": "general",
       "category": "function",
       "context": {
-        "language": "javascript",
-        "pattern": "pattern-8"
+        "language": "typescript",
+        "pattern": "ts-pattern"
       },
       "effectiveness": 0.8,
       "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.326Z",
+      "lastUsed": "2025-09-02T13:42:35.211Z",
       "successRate": 0.5,
       "codeExample": {
-        "before": "function pattern8() { return 'test8'; }",
-        "after": "function pattern8() { return 'test8'; }"
+        "before": "function tsPattern(): string { return 'ts'; }",
+        "after": "function tsPattern(): string { return 'ts'; }"
       },
       "metadata": {
         "language": "javascript",
@@ -246,1037 +450,12 @@
         "complexity": "similar",
         "linesChanged": 0
       },
-      "createdAt": "2025-09-02T01:17:04.326Z",
-      "updatedAt": "2025-09-02T01:17:04.326Z"
-    },
-    {
-      "id": "pattern_1756775824329_uh7jbl8ev",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-9"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.329Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern9() { return 'test9'; }",
-        "after": "function pattern9() { return 'test9'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.329Z",
-      "updatedAt": "2025-09-02T01:17:04.329Z"
-    },
-    {
-      "id": "pattern_1756775824331_vlzi292cw",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-10"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.331Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern10() { return 'test10'; }",
-        "after": "function pattern10() { return 'test10'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.331Z",
-      "updatedAt": "2025-09-02T01:17:04.331Z"
-    },
-    {
-      "id": "pattern_1756775824332_8ffl50p19",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-11"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.332Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern11() { return 'test11'; }",
-        "after": "function pattern11() { return 'test11'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.332Z",
-      "updatedAt": "2025-09-02T01:17:04.332Z"
-    },
-    {
-      "id": "pattern_1756775824334_wuyzf83u3",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-12"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.334Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern12() { return 'test12'; }",
-        "after": "function pattern12() { return 'test12'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.334Z",
-      "updatedAt": "2025-09-02T01:17:04.334Z"
-    },
-    {
-      "id": "pattern_1756775824335_qfvwa9bue",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-13"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.335Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern13() { return 'test13'; }",
-        "after": "function pattern13() { return 'test13'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.335Z",
-      "updatedAt": "2025-09-02T01:17:04.335Z"
-    },
-    {
-      "id": "pattern_1756775824337_00y8gg6wj",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-14"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.337Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern14() { return 'test14'; }",
-        "after": "function pattern14() { return 'test14'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.337Z",
-      "updatedAt": "2025-09-02T01:17:04.337Z"
-    },
-    {
-      "id": "pattern_1756775824338_usoh2hjyn",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-15"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.338Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern15() { return 'test15'; }",
-        "after": "function pattern15() { return 'test15'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.338Z",
-      "updatedAt": "2025-09-02T01:17:04.338Z"
-    },
-    {
-      "id": "pattern_1756775824341_buqzpbv4g",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-16"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.341Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern16() { return 'test16'; }",
-        "after": "function pattern16() { return 'test16'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.341Z",
-      "updatedAt": "2025-09-02T01:17:04.341Z"
-    },
-    {
-      "id": "pattern_1756775824345_0o0of09a1",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-17"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.345Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern17() { return 'test17'; }",
-        "after": "function pattern17() { return 'test17'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.345Z",
-      "updatedAt": "2025-09-02T01:17:04.345Z"
-    },
-    {
-      "id": "pattern_1756775824347_pz0xqhakk",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-18"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.347Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern18() { return 'test18'; }",
-        "after": "function pattern18() { return 'test18'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.347Z",
-      "updatedAt": "2025-09-02T01:17:04.347Z"
-    },
-    {
-      "id": "pattern_1756775824348_m3iwo1bo4",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-19"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.348Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern19() { return 'test19'; }",
-        "after": "function pattern19() { return 'test19'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.348Z",
-      "updatedAt": "2025-09-02T01:17:04.348Z"
-    },
-    {
-      "id": "pattern_1756775824350_fmp2kfqb1",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-20"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.350Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern20() { return 'test20'; }",
-        "after": "function pattern20() { return 'test20'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.350Z",
-      "updatedAt": "2025-09-02T01:17:04.350Z"
-    },
-    {
-      "id": "pattern_1756775824351_061jtn1fm",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-21"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.351Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern21() { return 'test21'; }",
-        "after": "function pattern21() { return 'test21'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.351Z",
-      "updatedAt": "2025-09-02T01:17:04.351Z"
-    },
-    {
-      "id": "pattern_1756775824352_z1y5y0nn6",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-22"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.352Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern22() { return 'test22'; }",
-        "after": "function pattern22() { return 'test22'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.352Z",
-      "updatedAt": "2025-09-02T01:17:04.352Z"
-    },
-    {
-      "id": "pattern_1756775824355_dd91l7vwb",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-23"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.355Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern23() { return 'test23'; }",
-        "after": "function pattern23() { return 'test23'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.355Z",
-      "updatedAt": "2025-09-02T01:17:04.355Z"
-    },
-    {
-      "id": "pattern_1756775824357_usijug43o",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-24"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.357Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern24() { return 'test24'; }",
-        "after": "function pattern24() { return 'test24'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.357Z",
-      "updatedAt": "2025-09-02T01:17:04.357Z"
-    },
-    {
-      "id": "pattern_1756775824359_638ief662",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-25"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.359Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern25() { return 'test25'; }",
-        "after": "function pattern25() { return 'test25'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.359Z",
-      "updatedAt": "2025-09-02T01:17:04.359Z"
-    },
-    {
-      "id": "pattern_1756775824362_yma6j6n9w",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-26"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.362Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern26() { return 'test26'; }",
-        "after": "function pattern26() { return 'test26'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.362Z",
-      "updatedAt": "2025-09-02T01:17:04.362Z"
-    },
-    {
-      "id": "pattern_1756775824364_ug4711xws",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-27"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.364Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern27() { return 'test27'; }",
-        "after": "function pattern27() { return 'test27'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.364Z",
-      "updatedAt": "2025-09-02T01:17:04.364Z"
-    },
-    {
-      "id": "pattern_1756775824365_1lbsmkqv3",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-28"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.365Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern28() { return 'test28'; }",
-        "after": "function pattern28() { return 'test28'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.365Z",
-      "updatedAt": "2025-09-02T01:17:04.365Z"
-    },
-    {
-      "id": "pattern_1756775824367_b1qhayb9l",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-29"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.367Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern29() { return 'test29'; }",
-        "after": "function pattern29() { return 'test29'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.367Z",
-      "updatedAt": "2025-09-02T01:17:04.367Z"
-    },
-    {
-      "id": "pattern_1756775824368_bvmkadakn",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-30"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.368Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern30() { return 'test30'; }",
-        "after": "function pattern30() { return 'test30'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.368Z",
-      "updatedAt": "2025-09-02T01:17:04.368Z"
-    },
-    {
-      "id": "pattern_1756775824369_nndftdt6v",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-31"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.369Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern31() { return 'test31'; }",
-        "after": "function pattern31() { return 'test31'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.369Z",
-      "updatedAt": "2025-09-02T01:17:04.369Z"
-    },
-    {
-      "id": "pattern_1756775824371_b4kd9aylw",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-32"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.371Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern32() { return 'test32'; }",
-        "after": "function pattern32() { return 'test32'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.371Z",
-      "updatedAt": "2025-09-02T01:17:04.371Z"
-    },
-    {
-      "id": "pattern_1756775824372_scy1kxug8",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-33"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.372Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern33() { return 'test33'; }",
-        "after": "function pattern33() { return 'test33'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.372Z",
-      "updatedAt": "2025-09-02T01:17:04.372Z"
-    },
-    {
-      "id": "pattern_1756775824375_disijd7pj",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-34"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.375Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern34() { return 'test34'; }",
-        "after": "function pattern34() { return 'test34'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.375Z",
-      "updatedAt": "2025-09-02T01:17:04.375Z"
-    },
-    {
-      "id": "pattern_1756775824377_r1vb0k6ho",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-35"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.377Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern35() { return 'test35'; }",
-        "after": "function pattern35() { return 'test35'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.377Z",
-      "updatedAt": "2025-09-02T01:17:04.377Z"
-    },
-    {
-      "id": "pattern_1756775824380_86la4s2vs",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-36"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.380Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern36() { return 'test36'; }",
-        "after": "function pattern36() { return 'test36'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.380Z",
-      "updatedAt": "2025-09-02T01:17:04.380Z"
-    },
-    {
-      "id": "pattern_1756775824381_6jdy1dd02",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-37"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.381Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern37() { return 'test37'; }",
-        "after": "function pattern37() { return 'test37'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.381Z",
-      "updatedAt": "2025-09-02T01:17:04.381Z"
-    },
-    {
-      "id": "pattern_1756775824383_9y9k5g8cy",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-38"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.383Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern38() { return 'test38'; }",
-        "after": "function pattern38() { return 'test38'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.383Z",
-      "updatedAt": "2025-09-02T01:17:04.383Z"
-    },
-    {
-      "id": "pattern_1756775824384_lutap5ccn",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-39"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.384Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern39() { return 'test39'; }",
-        "after": "function pattern39() { return 'test39'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.384Z",
-      "updatedAt": "2025-09-02T01:17:04.384Z"
-    },
-    {
-      "id": "pattern_1756775824386_hck59lz43",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-40"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.386Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern40() { return 'test40'; }",
-        "after": "function pattern40() { return 'test40'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.386Z",
-      "updatedAt": "2025-09-02T01:17:04.386Z"
-    },
-    {
-      "id": "pattern_1756775824388_wreg660nz",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-41"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.388Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern41() { return 'test41'; }",
-        "after": "function pattern41() { return 'test41'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.388Z",
-      "updatedAt": "2025-09-02T01:17:04.388Z"
-    },
-    {
-      "id": "pattern_1756775824391_2t0ir7s91",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-42"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.391Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern42() { return 'test42'; }",
-        "after": "function pattern42() { return 'test42'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.391Z",
-      "updatedAt": "2025-09-02T01:17:04.391Z"
-    },
-    {
-      "id": "pattern_1756775824396_6msyviv46",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-43"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.396Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern43() { return 'test43'; }",
-        "after": "function pattern43() { return 'test43'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.396Z",
-      "updatedAt": "2025-09-02T01:17:04.396Z"
-    },
-    {
-      "id": "pattern_1756775824399_6l46efbhn",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-44"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.399Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern44() { return 'test44'; }",
-        "after": "function pattern44() { return 'test44'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.399Z",
-      "updatedAt": "2025-09-02T01:17:04.399Z"
-    },
-    {
-      "id": "pattern_1756775824400_omc6x8ab5",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-45"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.400Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern45() { return 'test45'; }",
-        "after": "function pattern45() { return 'test45'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.400Z",
-      "updatedAt": "2025-09-02T01:17:04.400Z"
-    },
-    {
-      "id": "pattern_1756775824402_xz83b5zii",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-46"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.402Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern46() { return 'test46'; }",
-        "after": "function pattern46() { return 'test46'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.402Z",
-      "updatedAt": "2025-09-02T01:17:04.402Z"
-    },
-    {
-      "id": "pattern_1756775824404_azt3dkmrh",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-47"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.404Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern47() { return 'test47'; }",
-        "after": "function pattern47() { return 'test47'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.404Z",
-      "updatedAt": "2025-09-02T01:17:04.404Z"
-    },
-    {
-      "id": "pattern_1756775824407_pr9of6t52",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-48"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.407Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern48() { return 'test48'; }",
-        "after": "function pattern48() { return 'test48'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.407Z",
-      "updatedAt": "2025-09-02T01:17:04.407Z"
-    },
-    {
-      "id": "pattern_1756775824413_1gt7zikz2",
-      "type": "general",
-      "category": "function",
-      "context": {
-        "language": "javascript",
-        "pattern": "pattern-49"
-      },
-      "effectiveness": 0.8,
-      "usageCount": 1,
-      "lastUsed": "2025-09-02T01:17:04.413Z",
-      "successRate": 0.5,
-      "codeExample": {
-        "before": "function pattern49() { return 'test49'; }",
-        "after": "function pattern49() { return 'test49'; }"
-      },
-      "metadata": {
-        "language": "javascript",
-        "framework": "vanilla",
-        "complexity": "similar",
-        "linesChanged": 0
-      },
-      "createdAt": "2025-09-02T01:17:04.413Z",
-      "updatedAt": "2025-09-02T01:17:04.413Z"
+      "createdAt": "2025-09-02T13:42:35.211Z",
+      "updatedAt": "2025-09-02T13:42:35.211Z"
     }
   ],
   "metadata": {
-    "exportedAt": "2025-09-02T01:17:04.413Z",
+    "exportedAt": "2025-09-02T13:42:35.211Z",
     "version": "1.0.0"
   }
 }

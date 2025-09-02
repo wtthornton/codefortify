@@ -10,6 +10,36 @@ import { SecurityAnalyzer } from '../analyzers/SecurityAnalyzer.js';
 import { DeveloperExperienceAnalyzer } from '../analyzers/DeveloperExperienceAnalyzer.js';
 import { CompletenessAnalyzer } from '../analyzers/CompletenessAnalyzer.js';
 
+/**
+
+
+ * AnalyzerOrchestrator class implementation
+
+
+ *
+
+
+ * Provides functionality for analyzerorchestrator operations
+
+
+ */
+
+
+/**
+
+
+ * AnalyzerOrchestrator class implementation
+
+
+ *
+
+
+ * Provides functionality for analyzerorchestrator operations
+
+
+ */
+
+
 export class AnalyzerOrchestrator {
   constructor(config) {
     this.config = config;
@@ -38,24 +68,44 @@ export class AnalyzerOrchestrator {
    */
   async runAll() {
     const results = {};
-    
+
     for (const [name, analyzer] of Object.entries(this.analyzers)) {
-      try {
+      try {        /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+        /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
         if (this.config.verbose) {
-          console.log(`🔍 Running ${name} analysis...`);
+          // LOG: `🔍 Running ${name} analysis...`
         }
-        
-        results[name] = await analyzer.analyze();
-        
+
+        results[name] = await analyzer.analyze();        /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+        /**
+   * Performs the specified operation
+   * @param {Object} this.config.verbose
+   * @returns {boolean} True if successful, false otherwise
+   */
+
+
         if (this.config.verbose) {
-          console.log(`✅ ${name} analysis completed`);
+          // LOG: `✅ ${name} analysis completed`
         }
       } catch (error) {
-        console.error(`❌ Error in ${name} analysis:`, error.message);
+        // ERROR: `❌ Error in ${name} analysis:`, error.message
         results[name] = { error: error.message, score: 0 };
       }
     }
-    
+
     return results;
   }
 
@@ -65,12 +115,22 @@ export class AnalyzerOrchestrator {
    * @returns {Promise<Object>} Analysis result
    */
   async runAnalyzer(analyzerName) {
-    const analyzer = this.analyzers[analyzerName];
-    
+    const analyzer = this.analyzers[analyzerName];    /**
+   * Performs the specified operation
+   * @param {any} !analyzer
+   * @returns {any} The operation result
+   */
+    /**
+   * Performs the specified operation
+   * @param {any} !analyzer
+   * @returns {any} The operation result
+   */
+
+
     if (!analyzer) {
       throw new Error(`Unknown analyzer: ${analyzerName}`);
     }
-    
+
     return await analyzer.analyze();
   }
 

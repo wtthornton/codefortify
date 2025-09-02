@@ -64,9 +64,8 @@ describe('Real-Time Performance Tests', () => {
       expect(connections).toHaveLength(connectionCount);
       expect(duration).toBeLessThan(3000); // Should connect within 3 seconds
 
-      console.log(`Connected ${connectionCount} clients in ${duration.toFixed(2)}ms`);
-      console.log(`Average connection time: ${(duration / connectionCount).toFixed(2)}ms per connection`);
-
+      // LOG: `Connected ${connectionCount} clients in ${duration.toFixed(2)}ms`
+      // LOG: `Average connection time: ${(duration / connectionCount).toFixed(2)}ms per connection`
       // Cleanup
       connections.forEach(conn => conn.close());
 
@@ -104,9 +103,8 @@ describe('Real-Time Performance Tests', () => {
       const endTime = performance.now();
       const duration = endTime - startTime;
 
-      console.log(`Broadcasted ${messageCount} messages to ${connectionCount} clients in ${duration.toFixed(2)}ms`);
-      console.log(`Messages per second: ${((messageCount * connectionCount) / (duration / 1000)).toFixed(2)}`);
-
+      // LOG: `Broadcasted ${messageCount} messages to ${connectionCount} clients in ${duration.toFixed(2)}ms`
+      // LOG: `Messages per second: ${((messageCount * connectionCount) / (duration / 1000)).toFixed(2)}`
       // Should handle efficiently
       expect(duration).toBeLessThan(5000);
 
@@ -155,10 +153,9 @@ describe('Real-Time Performance Tests', () => {
       // Wait for all messages to be received
       await new Promise(resolve => setTimeout(resolve, 2000));
 
-      console.log(`Sent ${updateCount} updates in ${sendDuration.toFixed(2)}ms`);
-      console.log(`Received ${messagesReceived.length} messages`);
-      console.log(`Updates per second: ${(updateCount / (sendDuration / 1000)).toFixed(2)}`);
-
+      // LOG: `Sent ${updateCount} updates in ${sendDuration.toFixed(2)}ms`
+      // LOG: `Received ${messagesReceived.length} messages`
+      // LOG: `Updates per second: ${(updateCount / (sendDuration / 1000)).toFixed(2)}`
       // Performance expectations
       expect(sendDuration).toBeLessThan(10000); // Should complete within 10 seconds
       expect(messagesReceived.length).toBeGreaterThan(0);
@@ -193,12 +190,11 @@ describe('Real-Time Performance Tests', () => {
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       const endTime = Date.now();
-      const totalDuration = endTime - startTime;
+      const _totalDuration = endTime - startTime;
 
-      console.log(`Sent ${rapidUpdateCount} rapid updates`);
-      console.log(`Received ${messagesReceived.length} messages (batching should reduce this)`);
-      console.log(`Processing took ${totalDuration}ms`);
-
+      // LOG: `Sent ${rapidUpdateCount} rapid updates`
+      // LOG: `Received ${messagesReceived.length} messages (batching should reduce this)`
+      // LOG: `Processing took ${totalDuration}ms`
       // Should batch effectively - fewer messages received than sent
       expect(messagesReceived.length).toBeLessThan(rapidUpdateCount);
       expect(messagesReceived.length).toBeGreaterThan(0);
@@ -247,10 +243,9 @@ describe('Real-Time Performance Tests', () => {
       const memoryIncrease = finalMemory.heapUsed - initialMemory.heapUsed;
       const memoryIncreaseMB = memoryIncrease / (1024 * 1024);
 
-      console.log(`Sent ${updateCount} updates over ${duration}ms`);
-      console.log(`Memory increase: ${memoryIncreaseMB.toFixed(2)}MB`);
-      console.log(`Memory per update: ${(memoryIncrease / updateCount).toFixed(2)} bytes`);
-
+      // LOG: `Sent ${updateCount} updates over ${duration}ms`
+      // LOG: `Memory increase: ${memoryIncreaseMB.toFixed(2)}MB`
+      // LOG: `Memory per update: ${(memoryIncrease / updateCount).toFixed(2)} bytes`
       // Memory should not increase excessively
       expect(memoryIncreaseMB).toBeLessThan(50); // Less than 50MB increase
       expect(updateCount).toBeGreaterThan(80); // Should have sent most updates
@@ -285,11 +280,10 @@ describe('Real-Time Performance Tests', () => {
       const cleanupDuration = endTime - startTime;
 
       const finalMemory = process.memoryUsage();
-      const memoryDifference = finalMemory.heapUsed - initialMemory.heapUsed;
+      const _memoryDifference = finalMemory.heapUsed - initialMemory.heapUsed;
 
-      console.log(`Cleaned up ${connectionCount} connections in ${cleanupDuration.toFixed(2)}ms`);
-      console.log(`Memory difference: ${(memoryDifference / (1024 * 1024)).toFixed(2)}MB`);
-
+      // LOG: `Cleaned up ${connectionCount} connections in ${cleanupDuration.toFixed(2)}ms`
+      // LOG: `Memory difference: ${(memoryDifference / (1024 * 1024)).toFixed(2)}MB`
       // Should cleanup efficiently
       expect(cleanupDuration).toBeLessThan(2000);
       expect(eventEmitter.getClientCount()).toBe(0);
@@ -345,15 +339,14 @@ describe('Real-Time Performance Tests', () => {
       }
 
       const endTime = performance.now();
-      const totalDuration = endTime - startTime;
+      const _totalDuration = endTime - startTime;
 
       // Wait for final message processing
       await new Promise(resolve => setTimeout(resolve, 1000));
 
-      console.log(`Stress test completed in ${totalDuration.toFixed(2)}ms`);
-      console.log(`Total messages received by stable connections: ${totalMessagesReceived}`);
-      console.log(`Stable connections remaining: ${eventEmitter.getClientCount()}`);
-
+      // LOG: `Stress test completed in ${totalDuration.toFixed(2)}ms`
+      // LOG: `Total messages received by stable connections: ${totalMessagesReceived}`
+      // LOG: `Stable connections remaining: ${eventEmitter.getClientCount()}`
       // System should remain stable
       expect(eventEmitter.getClientCount()).toBe(longLivedConnections);
       expect(totalMessagesReceived).toBeGreaterThan(0);
